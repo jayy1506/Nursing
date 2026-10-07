@@ -1,0 +1,3923 @@
+// Official 280+ Nutrition & Dietetics MCQs from the University Question Bank
+export const NUTRITION_OFFICIAL_MCQS = [
+  {
+    "id": "NUT-MCQ-OFFICIAL-1",
+    "srNo": 1,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "The deficiency of any essential constituent of food leads to",
+    "options": [
+      "Malnutrition",
+      "Malfunction",
+      "Malnation",
+      "Marination"
+    ],
+    "correctOption": "Malnutrition"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-2",
+    "srNo": 2,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "A substance needed by the body for growth , energy, repair and maintenance is called a",
+    "options": [
+      "Nutrient",
+      "Carbohydrate",
+      "Calorie",
+      "Fatty acid"
+    ],
+    "correctOption": "Nutrient"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-3",
+    "srNo": 3,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Body building food is also known as…",
+    "options": [
+      "Catabolic",
+      "Anabolic",
+      "Metabolic",
+      "None of the above"
+    ],
+    "correctOption": "Anabolic"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-4",
+    "srNo": 4,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Your body needs vitamins and minerals because",
+    "options": [
+      "They give the body energy",
+      "They help carry out metabolic reactions",
+      "They insulate the body's organs",
+      "They withdraw heat from the body"
+    ],
+    "correctOption": "They help carry out metabolic reactions"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-6",
+    "srNo": 6,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Which of the following nutrients is needed to build and maintain the structure components of the body",
+    "options": [
+      "Carbohydrate",
+      "Protein",
+      "Fats , oils and sweets",
+      "Fiber"
+    ],
+    "correctOption": "Protein"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-7",
+    "srNo": 7,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "The nutrient needed for making hormones, healthier skin and to make cell membranes is",
+    "options": [
+      "Fat",
+      "Carbohydrate",
+      "Fiber",
+      "Vitamin B12"
+    ],
+    "correctOption": "Fat"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-8",
+    "srNo": 8,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Most important nutrient for healthy vision is",
+    "options": [
+      "Vitamin K",
+      "Iron",
+      "Calcium",
+      "Vitamin A"
+    ],
+    "correctOption": "Vitamin A"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-9",
+    "srNo": 9,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "This nutrient is needed for a healthy immune system and strong connective tissue",
+    "options": [
+      "Fiber",
+      "Vitamin K",
+      "Vitamin C",
+      "Fluoride"
+    ],
+    "correctOption": "Vitamin C"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-10",
+    "srNo": 10,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Which of these nutrients is the preferred energy source for the body",
+    "options": [
+      "B complex vitamins",
+      "Carbohydrate",
+      "Fats , oils and sweets",
+      "Fiber"
+    ],
+    "correctOption": "Carbohydrate"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-12",
+    "srNo": 12,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Body building food is",
+    "options": [
+      "Fruits",
+      "Egg",
+      "Roots and tubers",
+      "Green leafy vegetables"
+    ],
+    "correctOption": "Egg"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-13",
+    "srNo": 13,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Composite mixture of substances including proteins, carbohydrates, fats, vitamins and minerals is…",
+    "options": [
+      "Food",
+      "Nutrition",
+      "Health",
+      "Diet"
+    ],
+    "correctOption": "Food"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-15",
+    "srNo": 15,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Which one of the following groups of chemicals is not a food nutrient",
+    "options": [
+      "Proteins",
+      "Enzymes",
+      "carbohydrates",
+      "Vitamins"
+    ],
+    "correctOption": "Enzymes"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-16",
+    "srNo": 16,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Most foods should be stored under cool, dry conditions. One of the following groups has a lohger life if conditions are not too dry",
+    "options": [
+      "Meat and Poultry",
+      "Fruit and  vegetables",
+      "Cereals",
+      "Dried fruits"
+    ],
+    "correctOption": "Fruit and  vegetables"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-17",
+    "srNo": 17,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Which chemicals has been associated with chemical food poisoning",
+    "options": [
+      "Lead",
+      "Iron",
+      "Calcium",
+      "Phosphorus"
+    ],
+    "correctOption": "Lead"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-18",
+    "srNo": 18,
+    "unit": "unit-nut-1-intro",
+    "topic": "I Introduction to Nutrition",
+    "question": "Which groups of foods is most likely to contain some food poisoning bacteria when purchased",
+    "options": [
+      "Breakfast cereals",
+      "Pasteurised milk",
+      "Fresh meat and poultry",
+      "Jams and marmalades"
+    ],
+    "correctOption": "Fresh meat and poultry"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-19",
+    "srNo": 19,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "The bread, cereal.rice and pasta group is a good source of",
+    "options": [
+      "Carbohydrate",
+      "Vitamin C",
+      "Calcium",
+      "Vitamin D"
+    ],
+    "correctOption": "Carbohydrate"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-20",
+    "srNo": 20,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "One of the following is disaccharide",
+    "options": [
+      "Glucose",
+      "Fructose",
+      "Maltose",
+      "Galactose"
+    ],
+    "correctOption": "Maltose"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-21",
+    "srNo": 21,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Whish of the following is an oligosaccharide",
+    "options": [
+      "Cellulose",
+      "Pectin",
+      "Raffinose",
+      "Dextrin"
+    ],
+    "correctOption": "Raffinose"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-22",
+    "srNo": 22,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "One of the following is also called levulose",
+    "options": [
+      "Glucose",
+      "Fructose",
+      "Galactose",
+      "Sucrose"
+    ],
+    "correctOption": "Fructose"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-23",
+    "srNo": 23,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Sugar found in fruits(grapes) and honey is",
+    "options": [
+      "Glucose",
+      "Fructose",
+      "Sucrose",
+      "Maltose"
+    ],
+    "correctOption": "Fructose"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-24",
+    "srNo": 24,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Which one of the following foods does not contain carbohydrate",
+    "options": [
+      "Potato",
+      "Sugars",
+      "Meat",
+      "Rice"
+    ],
+    "correctOption": "Meat"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-25",
+    "srNo": 25,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "The unit of energy is",
+    "options": [
+      "Label",
+      "Food guide pyramid",
+      "Calorie",
+      "Basket"
+    ],
+    "correctOption": "Calorie"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-26",
+    "srNo": 26,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "The amount of heat required to raise the temperature of 1 kg of water by 1° C is called",
+    "options": [
+      "Calorie",
+      "Kilocalorie",
+      "Joule",
+      "Kilojoule"
+    ],
+    "correctOption": "Kilocalorie"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-27",
+    "srNo": 27,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "One of the following is a mismatch regarding the potential energy of the food",
+    "options": [
+      "Carbohydrate-4 k cal/g",
+      "Fat-9 kcal/g",
+      "Vitamins- 2 kcal/g",
+      "Protein- 4 k cal/g"
+    ],
+    "correctOption": "Vitamins- 2 kcal/g"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-28",
+    "srNo": 28,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "How much energy is recommended for a reference Indian man (55kg) doing heavy work?",
+    "options": [
+      "3000 k cal",
+      "3300 k cal",
+      "3600 k cal",
+      "3900 k cal"
+    ],
+    "correctOption": "3900 k cal"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-29",
+    "srNo": 29,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "A woman weighing 65 kg having a height of 155 cm will have BMI",
+    "options": [
+      "21",
+      "23",
+      "27",
+      "29"
+    ],
+    "correctOption": "27"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-30",
+    "srNo": 30,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "The stucture within a cell that is concered with energy is",
+    "options": [
+      "The cytoplasm",
+      "The cell membrane",
+      "The nucleus",
+      "The mitochondrion"
+    ],
+    "correctOption": "The mitochondrion"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-31",
+    "srNo": 31,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Which one of the following provides the greastest energy value per gram nutrients",
+    "options": [
+      "Carbohydrate",
+      "Fat",
+      "Protein calcium maintains",
+      "Water"
+    ],
+    "correctOption": "Fat"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-32",
+    "srNo": 32,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Excess energy from the diet is most likely to be stored in the body as",
+    "options": [
+      "Fat",
+      "Fibre",
+      "Salt",
+      "Sugar"
+    ],
+    "correctOption": "Fat"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-33",
+    "srNo": 33,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "The hormone which affects the metabolic rate of the body is",
+    "options": [
+      "Thyroxin",
+      "Insulin",
+      "Glucagon",
+      "None of these"
+    ],
+    "correctOption": "Thyroxin"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-34",
+    "srNo": 34,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Identify  the following food components give energy to our body",
+    "options": [
+      "Proteins",
+      "Vitamins",
+      "Minerals",
+      "Carbohydrates"
+    ],
+    "correctOption": "Carbohydrates"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-35",
+    "srNo": 35,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Identify  the following food potatoes, cereals, beans, pulses and oats are rich in",
+    "options": [
+      "Proteins",
+      "Vitamins",
+      "Minerals",
+      "Carbohydrates"
+    ],
+    "correctOption": "Carbohydrates"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-36",
+    "srNo": 36,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Identify the 1 gm of alcohol gives",
+    "options": [
+      "5 Calories",
+      "6 Calories",
+      "7 Calories",
+      "8 Calories"
+    ],
+    "correctOption": "7 Calories"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-37",
+    "srNo": 37,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Recall the caloric requirement of a 60 kg person with sedentary lifestyle is",
+    "options": [
+      "1500",
+      "2000",
+      "2500",
+      "3000"
+    ],
+    "correctOption": "2000"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-38",
+    "srNo": 38,
+    "unit": "unit-nut-2-carbs",
+    "topic": "II Carbohydrates",
+    "question": "Recall the optimum ratio of cereals and pulses in normal diet is",
+    "options": [
+      "1:01",
+      "5:01",
+      "2:04",
+      "4:01"
+    ],
+    "correctOption": "2:04"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-39",
+    "srNo": 39,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Biological value of protein is dependent on…",
+    "options": [
+      "Relative proportion of essential amino acid",
+      "Relative proportion of minerals",
+      "Relative proportion of nitrogen",
+      "Relative proportion of oxygen"
+    ],
+    "correctOption": "Relative proportion of essential amino acid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-40",
+    "srNo": 40,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Eggs, milk and meat are usually classified as good sources of",
+    "options": [
+      "Carbohydrates",
+      "Protein",
+      "Fat",
+      "Vitamins and Minerals"
+    ],
+    "correctOption": "Protein"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-41",
+    "srNo": 41,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Protein are polymers of",
+    "options": [
+      "Sugars",
+      "Amino acids",
+      "Fatty acids",
+      "Nucleotides"
+    ],
+    "correctOption": "Amino acids"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-43",
+    "srNo": 43,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Conjugated protein is",
+    "options": [
+      "Zein",
+      "Albumin",
+      "Peptone",
+      "Haemoglobin"
+    ],
+    "correctOption": "Haemoglobin"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-44",
+    "srNo": 44,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify incomplete protein",
+    "options": [
+      "Albumin",
+      "Gelatin",
+      "Globulin",
+      "Globin"
+    ],
+    "correctOption": "Gelatin"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-45",
+    "srNo": 45,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Recognize  the protein of cereals and pulses",
+    "options": [
+      "Complete",
+      "Partially complete",
+      "Incomplete",
+      "None of the above"
+    ],
+    "correctOption": "Partially complete"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-46",
+    "srNo": 46,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify the the \"limiting\"amino acid of pulse",
+    "options": [
+      "Methionine",
+      "Lysine",
+      "Threonine",
+      "Zein"
+    ],
+    "correctOption": "Methionine"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-47",
+    "srNo": 47,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify the vegetarian food supplements of protein in rice",
+    "options": [
+      "Vegetables",
+      "Pulses",
+      "Fruits",
+      "Nuts"
+    ],
+    "correctOption": "Pulses"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-48",
+    "srNo": 48,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Proteins are made up of",
+    "options": [
+      "Amino acids",
+      "Monosaccharides and disaccharides",
+      "Glycerol units",
+      "Vitamins and  Minerals"
+    ],
+    "correctOption": "Amino acids"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-49",
+    "srNo": 49,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify daily requirement of protein for moderate worker (45kg) lactating mother",
+    "options": [
+      "50g",
+      "60g",
+      "70g",
+      "80g"
+    ],
+    "correctOption": "70g"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-50",
+    "srNo": 50,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify the amount of protein in daliy energy intake",
+    "options": [
+      "10-15%",
+      "15-20%",
+      "20-25%",
+      "25-30%"
+    ],
+    "correctOption": "15-20%"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-51",
+    "srNo": 51,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify the adult protein requirements according to lCMR is…",
+    "options": [
+      "1gm of protein per kg of body weight",
+      "2 gm of protein per kg of body weight",
+      "0.5 gm of protein per kg of body weight",
+      "10 gm of protein per kg of body weight"
+    ],
+    "correctOption": "10 gm of protein per kg of body weight"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-52",
+    "srNo": 52,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify the following has highest protein content/100g",
+    "options": [
+      "Meat( goat)",
+      "Liver ( goat)",
+      "Fish",
+      "Egg( hen)"
+    ],
+    "correctOption": "Meat( goat)"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-53",
+    "srNo": 53,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Choose the how much protein does an average adult male require each day",
+    "options": [
+      "24g",
+      "72g",
+      "120g",
+      "240g"
+    ],
+    "correctOption": "72g"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-54",
+    "srNo": 54,
+    "unit": "unit-nut-2-carbs",
+    "topic": "III Proteins",
+    "question": "Identify the following vegetables has a much higher protein content than the others",
+    "options": [
+      "Potatoes",
+      "Spinach",
+      "Haricot beans",
+      "Turnips"
+    ],
+    "correctOption": "Haricot beans"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-55",
+    "srNo": 55,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "A diet high in saturated fats can be linked with",
+    "options": [
+      "Kidney failure",
+      "Bulimia",
+      "Anorexia",
+      "Cardiovascular disease"
+    ],
+    "correctOption": "Cardiovascular disease"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-56",
+    "srNo": 56,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Identify the best source for omega -3 fatty acids",
+    "options": [
+      "Corn oil",
+      "Wheat products",
+      "Pork",
+      "Sardines"
+    ],
+    "correctOption": "Sardines"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-57",
+    "srNo": 57,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Select the example of a hydrogenated fat",
+    "options": [
+      "Butter",
+      "Margarine",
+      "Olive oil",
+      "None of the above"
+    ],
+    "correctOption": "Margarine"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-58",
+    "srNo": 58,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Recognize the food that  contains the most fat",
+    "options": [
+      "Graham crackers",
+      "Brownies",
+      "Pudding",
+      "Angel food cake"
+    ],
+    "correctOption": "Brownies"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-59",
+    "srNo": 59,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Derived lipids are derivatives of lipids possessing the general characteristics of lipids and are obtained by",
+    "options": [
+      "Hydrolysis",
+      "Oxidation",
+      "Reduction",
+      "Heating"
+    ],
+    "correctOption": "Hydrolysis"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-60",
+    "srNo": 60,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Fatty acids are generally",
+    "options": [
+      "Branched chain",
+      "Cyclic Chain",
+      "Linear chain with even number pf C- atoms",
+      "Linear chain with odd number pf C- atoms"
+    ],
+    "correctOption": "Linear chain with even number pf C- atoms"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-61",
+    "srNo": 61,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "State the  monounsaturated fatty acid",
+    "options": [
+      "Oleic acid",
+      "Linoleic acid",
+      "Linolenic acid",
+      "Arachidonic acid"
+    ],
+    "correctOption": "Oleic acid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-62",
+    "srNo": 62,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Cholesterol is a",
+    "options": [
+      "Glycolipid",
+      "Phospholipid",
+      "Fatty acid",
+      "Steroid"
+    ],
+    "correctOption": "Steroid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-63",
+    "srNo": 63,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "In intestinal canal, dietary fats are emulsified by",
+    "options": [
+      "Gastric juice",
+      "Saliva",
+      "Bile salts",
+      "Pancreatic juice"
+    ],
+    "correctOption": "Bile salts"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-64",
+    "srNo": 64,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Rancidity of fats is due to",
+    "options": [
+      "Hydrogenation of unsaturated bond",
+      "Oxidation of fats",
+      "Growth of micro-organisms",
+      "Addition of halogens"
+    ],
+    "correctOption": "Oxidation of fats"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-65",
+    "srNo": 65,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Identify an essential fatty acid",
+    "options": [
+      "Stearic acid",
+      "Palmitic acid",
+      "Linoleic acid",
+      "Butyric acid"
+    ],
+    "correctOption": "Linoleic acid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-66",
+    "srNo": 66,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Highest content of EFA (75%) is found in",
+    "options": [
+      "Sunflower oil",
+      "Safflower  oil",
+      "Lipoprotein",
+      "Sterol"
+    ],
+    "correctOption": "Safflower  oil"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-67",
+    "srNo": 67,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Simple lipids are made up of",
+    "options": [
+      "Glycerol+2FA",
+      "Cholesterol+2FA",
+      "Glycerol+3FA",
+      "Cholesterol+3FA"
+    ],
+    "correctOption": "Glycerol+3FA"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-68",
+    "srNo": 68,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Lecithin is a",
+    "options": [
+      "Glycolipid",
+      "Phodpholipid",
+      "Lipoprotein",
+      "Sterol"
+    ],
+    "correctOption": "Phodpholipid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-69",
+    "srNo": 69,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Identify the amount of fat in daily energy intake",
+    "options": [
+      "10-20%",
+      "20-30%",
+      "30-40%",
+      "40-50%"
+    ],
+    "correctOption": "20-30%"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-70",
+    "srNo": 70,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Select the cream which has a minimum fat content of 55%",
+    "options": [
+      "Whipped cream",
+      "Single cream",
+      "Double Cream",
+      "Clotted cream"
+    ],
+    "correctOption": "Clotted cream"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-71",
+    "srNo": 71,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Identify the foods which  contain a high percentage of fat in their structure.",
+    "options": [
+      "Lard",
+      "Margarine",
+      "Cheddar cheese",
+      "Cream Cheese"
+    ],
+    "correctOption": "Lard"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-72",
+    "srNo": 72,
+    "unit": "unit-nut-3-fats",
+    "topic": "Fats",
+    "question": "Select in comparison to butter and margarine , low fat spreads contain is more in",
+    "options": [
+      "Protein",
+      "Carbohydrate",
+      "Vitamin A",
+      "Water"
+    ],
+    "correctOption": "Water"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-73",
+    "srNo": 73,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Citrus fruits are an excellent source of",
+    "options": [
+      "Calcium",
+      "Vitamin C",
+      "Vitamin B",
+      "Calories"
+    ],
+    "correctOption": "Vitamin C"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-74",
+    "srNo": 74,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Select the nutrients which is known as the sunshine vitamin",
+    "options": [
+      "Vitamin C",
+      "Vitamin A",
+      "Vitamin K",
+      "Vitamin D"
+    ],
+    "correctOption": "Vitamin D"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-75",
+    "srNo": 75,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Identify the groups of  fat soluble vitamins",
+    "options": [
+      "ABEK",
+      "ABDK",
+      "ADEK",
+      "CDEK"
+    ],
+    "correctOption": "ADEK"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-76",
+    "srNo": 76,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Select the provitamin A",
+    "options": [
+      "b- carotene",
+      "Retinol",
+      "Retinal",
+      "Retinoic acid"
+    ],
+    "correctOption": "b- carotene"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-77",
+    "srNo": 77,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Recognize  the  vitamins which functions like a steroid hormone",
+    "options": [
+      "Vitamin A",
+      "Vitamin B1",
+      "Vitamin C",
+      "Vitamin D"
+    ],
+    "correctOption": "Vitamin D"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-78",
+    "srNo": 78,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Identify the  vitamins which regulates serum level of calcium and phosphate",
+    "options": [
+      "Vitamin A",
+      "Vitamin B1",
+      "Vitamin D",
+      "Vitamin K"
+    ],
+    "correctOption": "Vitamin D"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-79",
+    "srNo": 79,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Other name for vitamin H is",
+    "options": [
+      "Riboflavin",
+      "Biotin",
+      "Pyridoxin",
+      "Thamine"
+    ],
+    "correctOption": "Biotin"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-80",
+    "srNo": 80,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Which vitamin contains a cobalt atom and has only animal sources",
+    "options": [
+      "Vitamin B1",
+      "Vitamin B2",
+      "Vitamin B6",
+      "Vitamin B12"
+    ],
+    "correctOption": "Vitamin B12"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-82",
+    "srNo": 82,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Which one of the followinfg vitamins dissolves in water",
+    "options": [
+      "D",
+      "Retinol",
+      "Thiamin",
+      "K"
+    ],
+    "correctOption": "Thiamin"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-83",
+    "srNo": 83,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "The total number of essential vitamins required for the proper functioning of the humanbody is",
+    "options": [
+      "12",
+      "13",
+      "15",
+      "22"
+    ],
+    "correctOption": "13"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-84",
+    "srNo": 84,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Which of the following vitamins aids in blood clotting.",
+    "options": [
+      "Vitamins K",
+      "Vitamins C",
+      "Vitamins D",
+      "Vitamins A"
+    ],
+    "correctOption": "Vitamins K"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-85",
+    "srNo": 85,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Vitamins",
+    "question": "Which of the following vitamins function as both a visual pigment as well as a hormones",
+    "options": [
+      "Thiamine",
+      "Folic acid",
+      "Riboflavin",
+      "Retinal"
+    ],
+    "correctOption": "Retinal"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-86",
+    "srNo": 86,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Identify a mineral that the body needs to work properly i",
+    "options": [
+      "Calcium",
+      "Silver",
+      "Gold",
+      "Lead"
+    ],
+    "correctOption": "Calcium"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-87",
+    "srNo": 87,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Which of these is added to the food label because people sometimes don't eat ENOUGH of this",
+    "options": [
+      "Fat",
+      "Calcium",
+      "Sodium",
+      "Cholesterol"
+    ],
+    "correctOption": "Calcium"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-88",
+    "srNo": 88,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Foods from the meat , poultry, fish dry beans, eggs and nuts group are an important source of",
+    "options": [
+      "Iron",
+      "Fiber",
+      "Beta carotene",
+      "Calcium"
+    ],
+    "correctOption": "Iron"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-89",
+    "srNo": 89,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Identfy the mineral, essential for healthy red blood cells and a deficiency might cause anemia",
+    "options": [
+      "Iron",
+      "Magnesium",
+      "Oidine",
+      "Chromium"
+    ],
+    "correctOption": "Iron"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-90",
+    "srNo": 90,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Select minor mineral from the following",
+    "options": [
+      "Sodium",
+      "Potassium",
+      "Zinc",
+      "Magnesium"
+    ],
+    "correctOption": "Zinc"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-92",
+    "srNo": 92,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Identify the richest source of calcium (1800/100g)",
+    "options": [
+      "Sesame seed",
+      "Small fish dried",
+      "Milk powder(skimmed)",
+      "Sesbania leaves"
+    ],
+    "correctOption": "Small fish dried"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-93",
+    "srNo": 93,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Identfy the richest source of potassium(1500-2000mg)",
+    "options": [
+      "Leafy vegetables",
+      "Coffee, tea, cocoa",
+      "lentils",
+      "Dry peas"
+    ],
+    "correctOption": "Coffee, tea, cocoa"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-95",
+    "srNo": 95,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Average daily requiremnet of calcium is 400-500 mg for adult man and woman, but for pregnant and lactating woman, the requirment is",
+    "options": [
+      "600 mg",
+      "800mg",
+      "1000mg",
+      "1200mg"
+    ],
+    "correctOption": "1000mg"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-96",
+    "srNo": 96,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "The amount of calcium required per day in adults is",
+    "options": [
+      "5mg",
+      "50mg",
+      "250mg",
+      "500mg"
+    ],
+    "correctOption": "500mg"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-97",
+    "srNo": 97,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Recommended daily intake of iodine in pregnancy",
+    "options": [
+      "90 microgram",
+      "120 microgram",
+      "150 microgram",
+      "250 microgram"
+    ],
+    "correctOption": "250 microgram"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-98",
+    "srNo": 98,
+    "unit": "unit-nut-4-minerals",
+    "topic": "Minerals",
+    "question": "Jaggery contains a good amount of",
+    "options": [
+      "Vitamin C",
+      "Calcium",
+      "Iron",
+      "Vitamin D"
+    ],
+    "correctOption": "Iron"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-99",
+    "srNo": 99,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Balanced diet means",
+    "options": [
+      "A diet containing some nutrients in the correct proportions.",
+      "A diet containing most nutrients in the correct proportions",
+      "A diet containing none nutrients in the correct proportions",
+      "A diet containing all nutrients in the correct proportions."
+    ],
+    "correctOption": "A diet containing all nutrients in the correct proportions."
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-100",
+    "srNo": 100,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Not eating too much or too little means we are eating in",
+    "options": [
+      "Moderation",
+      "Sufficiently",
+      "Balanced",
+      "Variety"
+    ],
+    "correctOption": "Moderation"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-101",
+    "srNo": 101,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Compare to smaller and shorter people, taller and bigger people needs",
+    "options": [
+      "Same energy",
+      "More energy",
+      "Equal energy",
+      "Less energy"
+    ],
+    "correctOption": "More energy"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-102",
+    "srNo": 102,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "A diet containing right amount of energy, carbohydrates, proteins, fats, fiber, vitamins, minerals and water to fulfill requirement of body is called",
+    "options": [
+      "Nutrition",
+      "Balanced diet",
+      "Perfect diet",
+      "Food pyramid"
+    ],
+    "correctOption": "Balanced diet"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-103",
+    "srNo": 103,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Need to eat a balanced diet is",
+    "options": [
+      "To give us energy",
+      "In oder for our bodies to function properly",
+      "To help us grow",
+      "To prevent us getting fat"
+    ],
+    "correctOption": "In oder for our bodies to function properly"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-104",
+    "srNo": 104,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "A balanced diet will help prevent",
+    "options": [
+      "Illness",
+      "Appetite",
+      "Growth",
+      "Malnutrition"
+    ],
+    "correctOption": "Malnutrition"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-105",
+    "srNo": 105,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following involves science in meal planning",
+    "options": [
+      "Colour of the meal",
+      "Texture of the meal",
+      "Flavour of the meal",
+      "Optimum nutirion and digestion of the meal"
+    ],
+    "correctOption": "Optimum nutirion and digestion of the meal"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-106",
+    "srNo": 106,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following is the best method of controlling food expenditure",
+    "options": [
+      "Adjusting menu according to the best available purchase",
+      "By adequate storage facility of raw and cooked food",
+      "Control of waste from the point of purchase to the plate at the tabel",
+      "Using appropriate food preparation techniques"
+    ],
+    "correctOption": "Control of waste from the point of purchase to the plate at the tabel"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-107",
+    "srNo": 107,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "The \" bill of fare\" means",
+    "options": [
+      "The restaurant bill",
+      "The menu",
+      "The feedback form",
+      "A discount voucher"
+    ],
+    "correctOption": "The menu"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-108",
+    "srNo": 108,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "The shelf life of food is related to",
+    "options": [
+      "Quality of food",
+      "Decomposition of food",
+      "Freshness of food",
+      "Time limit for which food can be used"
+    ],
+    "correctOption": "Time limit for which food can be used"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-109",
+    "srNo": 109,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Same food are offered every day is known as",
+    "options": [
+      "Fixed menu",
+      "Cycle menu",
+      "Market menu",
+      "Hybrid menu"
+    ],
+    "correctOption": "Fixed menu"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-110",
+    "srNo": 110,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Menu changes with availability of food products",
+    "options": [
+      "Fixed menu",
+      "Cycle menu",
+      "Market menu",
+      "Hybrid menu"
+    ],
+    "correctOption": "Market menu"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-111",
+    "srNo": 111,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Combition of two menu types",
+    "options": [
+      "Fixed menu",
+      "Cycle menu",
+      "Market menu",
+      "Hybrid menu"
+    ],
+    "correctOption": "Hybrid menu"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-112",
+    "srNo": 112,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Interpert the length of baby at first year who measures 50 cm at birth",
+    "options": [
+      "75 cm",
+      "100 cm",
+      "125 cm",
+      "150 cm"
+    ],
+    "correctOption": "75 cm"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-113",
+    "srNo": 113,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Identify at what age, the circumference of head and chest of the infant are the same (40 cm)",
+    "options": [
+      "6 month",
+      "one year",
+      "One and half year",
+      "Two years"
+    ],
+    "correctOption": "one year"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-114",
+    "srNo": 114,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Identify when the  functional capacity of kidneys is fully developed",
+    "options": [
+      "6 month",
+      "9 months",
+      "one year",
+      "15 months"
+    ],
+    "correctOption": "one year"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-115",
+    "srNo": 115,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Average energy needs during the first year of infant life is",
+    "options": [
+      "93 kcal/kg",
+      "103 kcal/kg",
+      "113 kcal/kg",
+      "123 kcal/kg"
+    ],
+    "correctOption": "103 kcal/kg"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-116",
+    "srNo": 116,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Annual weight gain in pre school age (3-6 years) is",
+    "options": [
+      "1-1.5 kg",
+      "1.5-2 kg",
+      "2 - 2.5 kg",
+      "2.5-3 kg"
+    ],
+    "correctOption": "1.5-2 kg"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-117",
+    "srNo": 117,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Annual height  gain in pre school age is",
+    "options": [
+      "4-5 cm",
+      "5-6 cm",
+      "6-7 cm",
+      "7-8 cm"
+    ],
+    "correctOption": "6-7 cm"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-118",
+    "srNo": 118,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which is the latent time of growth ( growth rate slow) in children?",
+    "options": [
+      "1-3 years",
+      "3-6 years",
+      "6-12 years",
+      "12-15 years"
+    ],
+    "correctOption": "6-12 years"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-119",
+    "srNo": 119,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following nutrients is reqiured in greater quantity by girls as capred to boys of the 10-12 year age group",
+    "options": [
+      "Fat",
+      "Calcium",
+      "Iron",
+      "Retinal"
+    ],
+    "correctOption": "Iron"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-120",
+    "srNo": 120,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following nutrients is reqiured in greater quantity by boys as capred to girls of the 10-12 year age group",
+    "options": [
+      "Protein",
+      "Pyridoxin",
+      "Ascorbic acid",
+      "Calcium"
+    ],
+    "correctOption": "Protein"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-121",
+    "srNo": 121,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following problem of school going children is due to bulk eating or rapid intake of large amount of caloric foods",
+    "options": [
+      "Dental caries",
+      "Hyperactivity",
+      "Bulimia",
+      "Anorexia Nervosa"
+    ],
+    "correctOption": "Bulimia"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-122",
+    "srNo": 122,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Extreme weight loss(20-25%) in school going girls associated with amenorrhoea, constipation, hypotension and bradycardia are symptoms of",
+    "options": [
+      "Anamia",
+      "Hyperactivity",
+      "Bulimia",
+      "Anorexia Nervosa"
+    ],
+    "correctOption": "Anorexia Nervosa"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-123",
+    "srNo": 123,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "RDA for one of the following nutrients is unequal in boys and girls of 16-18 years age group",
+    "options": [
+      "Calcium",
+      "Iron",
+      "Retinal",
+      "Vitamin C"
+    ],
+    "correctOption": "Iron"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-124",
+    "srNo": 124,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "One of the following is a psychosocial change associated with aging",
+    "options": [
+      "Diminished sense of taste and smell",
+      "Changes in skeletal tissues",
+      "Hormonal changes",
+      "Anxiety"
+    ],
+    "correctOption": "Anxiety"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-125",
+    "srNo": 125,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "During her total pregnancy period, a pregnant womangains her weight from",
+    "options": [
+      "5-8 kg",
+      "7-10 kg",
+      "9-12 kg",
+      "11-14 kg"
+    ],
+    "correctOption": "9-12 kg"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-126",
+    "srNo": 126,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Mothers eating inadequate food during pregnancy will have babies",
+    "options": [
+      "With healthy birth weight",
+      "With mature birth",
+      "With intrauterine growth retardation",
+      "With good brain development"
+    ],
+    "correctOption": "With intrauterine growth retardation"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-127",
+    "srNo": 127,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Per day secreation of milk by a well nourished mother is about",
+    "options": [
+      "750 ml",
+      "850 ml",
+      "950 ml",
+      "1050 ml"
+    ],
+    "correctOption": "850 ml"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-128",
+    "srNo": 128,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Per day secreation of milk in severely malnourished mother  may go down as low as",
+    "options": [
+      "300 ml",
+      "400ml",
+      "500ml",
+      "600ml"
+    ],
+    "correctOption": "400ml"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-129",
+    "srNo": 129,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "The amount of which of the following nutrients is decresed in the milk of a malnourished mother",
+    "options": [
+      "Vitamin B group",
+      "Protein",
+      "Carbohydrate",
+      "Calcium"
+    ],
+    "correctOption": "Vitamin B group"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-130",
+    "srNo": 130,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following signifies anemia",
+    "options": [
+      "A low WBC",
+      "A low platelet count",
+      "A low hemoglobin test",
+      "A low sodium level"
+    ],
+    "correctOption": "A low hemoglobin test"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-131",
+    "srNo": 131,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Iron absorption is incresed in the presence of",
+    "options": [
+      "Vitamin A",
+      "Vitamin B",
+      "Vitamin C",
+      "Vitamin D"
+    ],
+    "correctOption": "Vitamin C"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-132",
+    "srNo": 132,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Aplastic anemia is a condition where",
+    "options": [
+      "The bone  marrow does not produce enogh blood cells",
+      "Red bllod cell are destroyed very fast in the circulation",
+      "There is deficiency of iorn",
+      "There is deficiency of vitamin B12"
+    ],
+    "correctOption": "The bone  marrow does not produce enogh blood cells"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-133",
+    "srNo": 133,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "The most common cause of anemia",
+    "options": [
+      "Too little sleep",
+      "Too much sugar",
+      "Too little iron in blood",
+      "Exposure to x- ray radiation"
+    ],
+    "correctOption": "Too little iron in blood"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-134",
+    "srNo": 134,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Group most likely to have anemia is",
+    "options": [
+      "Men",
+      "Women",
+      "Teenagers",
+      "Old adults"
+    ],
+    "correctOption": "Women"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-135",
+    "srNo": 135,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How many extra calories a day should you eat when breastfeeding?",
+    "options": [
+      "100",
+      "200",
+      "500",
+      "1000"
+    ],
+    "correctOption": "500"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-136",
+    "srNo": 136,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which hormone is responsible for the production of milk?",
+    "options": [
+      "Progesterone",
+      "Estrogen",
+      "Prolactin",
+      "Oxytocin"
+    ],
+    "correctOption": "Prolactin"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-137",
+    "srNo": 137,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Mothers suffering from which of these diseases should avoid breastfeeding?",
+    "options": [
+      "Allergies",
+      "HIV",
+      "Cancer",
+      "Hypothyroidism"
+    ],
+    "correctOption": "HIV"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-138",
+    "srNo": 138,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "What is the first milk produced after delivery known as?",
+    "options": [
+      "Colostrum",
+      "Lactose",
+      "Acidophilus",
+      "None of the above"
+    ],
+    "correctOption": "Colostrum"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-139",
+    "srNo": 139,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "If a sedentary male worker needs 2425 kcal of RDA, what would be the need of the same heavy worker",
+    "options": [
+      "3200 kcal",
+      "3400 kcal",
+      "3600 kcal",
+      "3800 kcal"
+    ],
+    "correctOption": "3800 kcal"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-140",
+    "srNo": 140,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "If a women doing moderate need 2225 kcal of RDA , what does she need for the heavy work",
+    "options": [
+      "2725 kcal",
+      "2925 kcal",
+      "3125 kcal",
+      "3325 kcal"
+    ],
+    "correctOption": "2925 kcal"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-141",
+    "srNo": 141,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "The RDA of which of the following nutrients does not increase with the increase in the amount of work in both male and feamel workers",
+    "options": [
+      "Folic acid",
+      "Niacin",
+      "Riboflavin",
+      "Thamine"
+    ],
+    "correctOption": "Folic acid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-142",
+    "srNo": 142,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following nutrients is required in greater quantity by a reference woman as compared to a reference man",
+    "options": [
+      "Fat",
+      "Calcium",
+      "Iron",
+      "Retinal"
+    ],
+    "correctOption": "Iron"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-143",
+    "srNo": 143,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "About half of your diet should be made up of",
+    "options": [
+      "Grains and vegetables",
+      "Fruits and milk",
+      "Milk and Cheese",
+      "Fats and Sugars"
+    ],
+    "correctOption": "Grains and vegetables"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-144",
+    "srNo": 144,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "According to the My Pramid food guidance system, A person should obtain most of their fat from",
+    "options": [
+      "Beef , Chicken and Fish",
+      "Vegetables oils, nuts and fish",
+      "Fats , oils and sweets",
+      "Milk, yogurt and cheese"
+    ],
+    "correctOption": "Vegetables oils, nuts and fish"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-145",
+    "srNo": 145,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "This food group is body's best source of energy",
+    "options": [
+      "Meat group",
+      "Fats, oils and sweets",
+      "Breads and cereals",
+      "Milk and cheese"
+    ],
+    "correctOption": "Breads and cereals"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-146",
+    "srNo": 146,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How manu servings of vegetables do we need each day",
+    "options": [
+      "1 to 2",
+      "2 to 3",
+      "3to 4",
+      "4 to 5"
+    ],
+    "correctOption": "4 to 5"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-147",
+    "srNo": 147,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which is the number of exchange lists for indian foods",
+    "options": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correctOption": "6"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-148",
+    "srNo": 148,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which one of the following is not the food exchange list",
+    "options": [
+      "Milk exchange list",
+      "Meat exchange list",
+      "Nuts and oil seeds exchange list",
+      "Pulse exhange list"
+    ],
+    "correctOption": "Nuts and oil seeds exchange list"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-149",
+    "srNo": 149,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How much carbohydrate content of the food stuff is taken as constant in the vegetable exchange list B",
+    "options": [
+      "6g",
+      "7g",
+      "8g",
+      "10g"
+    ],
+    "correctOption": "7g"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-150",
+    "srNo": 150,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How much carbohydrate content of the food stuff is taken as constant in the cereal exchange list",
+    "options": [
+      "5",
+      "10",
+      "15",
+      "20"
+    ],
+    "correctOption": "15"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-151",
+    "srNo": 151,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How much carbohydrate content of the food stuff is taken as constant in the fruit exchange list",
+    "options": [
+      "10",
+      "20",
+      "30",
+      "40"
+    ],
+    "correctOption": "10"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-152",
+    "srNo": 152,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How much protein  content of the food stuff is taken as constant in the milk exchange list",
+    "options": [
+      "4",
+      "8",
+      "12",
+      "16"
+    ],
+    "correctOption": "8"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-153",
+    "srNo": 153,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How much protein  content of the food stuff is taken as constant in the meat exchange list",
+    "options": [
+      "7",
+      "14",
+      "21",
+      "28"
+    ],
+    "correctOption": "7"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-154",
+    "srNo": 154,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How much protein  content of the food stuff is taken as constant in the pulses exchange list",
+    "options": [
+      "7",
+      "14",
+      "21",
+      "28"
+    ],
+    "correctOption": "7"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-155",
+    "srNo": 155,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "One of the following is a millet",
+    "options": [
+      "Rice",
+      "Maize",
+      "Jawar",
+      "Wheat"
+    ],
+    "correctOption": "Jawar"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-156",
+    "srNo": 156,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Protein content of cereals varies from",
+    "options": [
+      "4-8%",
+      "6-12%",
+      "8-16%",
+      "10-20%"
+    ],
+    "correctOption": "6-12%"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-157",
+    "srNo": 157,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Energy provided by cereals per 100g is about",
+    "options": [
+      "150 kcal",
+      "250 kcal",
+      "350 kcal",
+      "450 kcal"
+    ],
+    "correctOption": "350 kcal"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-158",
+    "srNo": 158,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Maize has highest fat conteny which is about",
+    "options": [
+      "0.60%",
+      "1.60%",
+      "2.60%",
+      "3.60%"
+    ],
+    "correctOption": "3.60%"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-159",
+    "srNo": 159,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Washing of rich in large quantities of water removes water soluble vitamins upto",
+    "options": [
+      "40%",
+      "50%",
+      "60%",
+      "70%"
+    ],
+    "correctOption": "60%"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-161",
+    "srNo": 161,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which one of the following is a true fruit in the biological sense",
+    "options": [
+      "Onion",
+      "Celery",
+      "Tomato",
+      "Rhubarb"
+    ],
+    "correctOption": "Tomato"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-162",
+    "srNo": 162,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "How much fiber should adults consume each day?",
+    "options": [
+      "15 to 20 grams",
+      "25 to 38 grams",
+      "35 to 50 grams",
+      "50 to 75 grams"
+    ],
+    "correctOption": "25 to 38 grams"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-163",
+    "srNo": 163,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Fiber helps prevent constipation. Fiber from which source seems to be better for accomplishing this?",
+    "options": [
+      "Fiber from fruits",
+      "Fiber from vegetables",
+      "Fiber from wheat and oat bran",
+      "Fibers from roots"
+    ],
+    "correctOption": "Fiber from wheat and oat bran"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-164",
+    "srNo": 164,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "The dietary fiber is also known as",
+    "options": [
+      "Roughage",
+      "Rhodopsin",
+      "Pepsin",
+      "Opsin"
+    ],
+    "correctOption": "Roughage"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-165",
+    "srNo": 165,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "Which of the following is a function of insoluble fiber only",
+    "options": [
+      "Regulating blood sugar",
+      "Regulating the pH of the body",
+      "Adding bulk to stool",
+      "Lowering cholesterol"
+    ],
+    "correctOption": "Adding bulk to stool"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-166",
+    "srNo": 166,
+    "unit": "unit-nut-5-balanced-diet",
+    "topic": "Balanced diet",
+    "question": "What is the main action of dietary fibers",
+    "options": [
+      "To ensure proper functioning of the liver",
+      "To secrete hormones",
+      "To maintain pH",
+      "To make changes to how nutrirnts and chemincals are absorbed"
+    ],
+    "correctOption": "To make changes to how nutrirnts and chemincals are absorbed"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-167",
+    "srNo": 167,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Protein energy malnutrition is also known as…",
+    "options": [
+      "Protein calcium malnutrition",
+      "Protein calorie malnutrition",
+      "Protein calcium maintains",
+      "Protein calorie marasmus"
+    ],
+    "correctOption": "Protein calorie malnutrition"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-168",
+    "srNo": 168,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "The condition wherein protein and energy reserves are depleted is…",
+    "options": [
+      "Obesity",
+      "Marasmus",
+      "Odema",
+      "Kwashiorkor"
+    ],
+    "correctOption": "Marasmus"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-169",
+    "srNo": 169,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Deficiency of which element may occur in PEM(Protein energy malnutrition)",
+    "options": [
+      "Copper",
+      "Chromium",
+      "Selenium",
+      "Cobalt"
+    ],
+    "correctOption": "Selenium"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-170",
+    "srNo": 170,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "The condition with adequate calorie intake but relative protein deficiency is…",
+    "options": [
+      "Odema",
+      "Kwashiorkor",
+      "Obesity",
+      "Marasmus"
+    ],
+    "correctOption": "Kwashiorkor"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-171",
+    "srNo": 171,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Childhood obesity is said to be present when the Body Mass Index (BMI) is",
+    "options": [
+      "Greater than or equal to the 75th percentile on the growth chart",
+      "Greater than or equal to the 85th percentile on the growth chart",
+      "Greater than or equal to the 95th percentile on the growth chart",
+      "Greater than or equal to the 100th percentile on the growth chart"
+    ],
+    "correctOption": "Greater than or equal to the 95th percentile on the growth chart"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-172",
+    "srNo": 172,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Overweight and obese children and teens are at increased risk for developing…",
+    "options": [
+      "Sickle cell anemia",
+      "Psoriasis",
+      "Type 2 diabetes",
+      "Folic acid anemia"
+    ],
+    "correctOption": "Type 2 diabetes"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-173",
+    "srNo": 173,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Factors that contributes to weight gain and obsity in children is",
+    "options": [
+      "Single- parent households",
+      "Incresed food allergies",
+      "Missed breakfast",
+      "All of the above"
+    ],
+    "correctOption": "Missed breakfast"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-174",
+    "srNo": 174,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Sadentary children means",
+    "options": [
+      "They are lazy",
+      "They get little to no exercise",
+      "They drink too much soda",
+      "They do not get enough sleep"
+    ],
+    "correctOption": "They get little to no exercise"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-175",
+    "srNo": 175,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Easily contributes to obesity",
+    "options": [
+      "Portion sizes",
+      "Children's friends",
+      "Lack of vitamins",
+      "Parents"
+    ],
+    "correctOption": "Portion sizes"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-176",
+    "srNo": 176,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which of the vitamin is needed to prevent a birth defect called spina bifida",
+    "options": [
+      "VitaminD",
+      "Vitamin A",
+      "Folate",
+      "Vitamin E"
+    ],
+    "correctOption": "Folate"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-177",
+    "srNo": 177,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Symtoms like \" bow legs\" , Knock knees\" in children, osteomalacia in adults and renal osteodystrophy indicate the deficiency of",
+    "options": [
+      "Vitanin A",
+      "Vitamin B6",
+      "Viatamin D",
+      "Viatmin E"
+    ],
+    "correctOption": "Viatamin D"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-178",
+    "srNo": 178,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Vitamin with antioxident effect, the deficiency of which causes hemolytic anemia, muscular dystrophy, dietary hepatic necrosis is",
+    "options": [
+      "Folic acid",
+      "Biotin",
+      "Ascorbic acid",
+      "Tocopherol( vit.E)"
+    ],
+    "correctOption": "Tocopherol( vit.E)"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-179",
+    "srNo": 179,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "A person suffering from swollen , spongy and bleeding gums with poor teeth requires",
+    "options": [
+      "Vitamin A",
+      "Vitamin C",
+      "Riboflavin",
+      "Niacin"
+    ],
+    "correctOption": "Vitamin C"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-180",
+    "srNo": 180,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Symtoms like cheilosis, magenta tongue, red and shining lips, inflammmation and burning of eyes , indicate deficiency of",
+    "options": [
+      "Vitamin B6",
+      "Vitamin B1",
+      "Vitamin B2",
+      "Vitamin B12"
+    ],
+    "correctOption": "Vitamin B2"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-181",
+    "srNo": 181,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which vitamin helps in the transfer and utilization of single- carbon moiety and megaloblastic anemia is caused in its deficiency",
+    "options": [
+      "Folic acid",
+      "Cobalamin",
+      "Pyridoxine",
+      "Biotin"
+    ],
+    "correctOption": "Folic acid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-182",
+    "srNo": 182,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "A conzyme of dehydrogeneses, the deficiency of which causes pellarea with GI, skin and neurologic change , is the vitamin",
+    "options": [
+      "Riboflavin",
+      "Niacin",
+      "Pridoxin",
+      "Folic acid"
+    ],
+    "correctOption": "Pridoxin"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-183",
+    "srNo": 183,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Rickets may arise in children that do not receive sufficient",
+    "options": [
+      "VitaminA",
+      "B grroup vitamins",
+      "Vitamin C",
+      "Vitamin D"
+    ],
+    "correctOption": "Vitamin D"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-184",
+    "srNo": 184,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Shortage of which vitamin may lead to an increase  in dental dacay because of its relationship with calcium, particularly in children",
+    "options": [
+      "A",
+      "B group",
+      "C",
+      "D"
+    ],
+    "correctOption": "D"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-185",
+    "srNo": 185,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "A lack of vitamin B1 may cause one of the following deficiency diseases",
+    "options": [
+      "Beri- Beri",
+      "Pellagra",
+      "Anaemia",
+      "Scurvy"
+    ],
+    "correctOption": "Beri- Beri"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-186",
+    "srNo": 186,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which of the following symptoms does not occur in scurvy",
+    "options": [
+      "Night blindness",
+      "Bleeding in the skin",
+      "Inability to recover quickly from illness",
+      "Anaemia"
+    ],
+    "correctOption": "Night blindness"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-187",
+    "srNo": 187,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which vitamin deficiency disease may be found in severe alcoholism",
+    "options": [
+      "Beri- beri",
+      "Rickets",
+      "Pellagra",
+      "Xerophthalmia"
+    ],
+    "correctOption": "Beri- beri"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-188",
+    "srNo": 188,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which of the following is dur to deficency of calcium",
+    "options": [
+      "Rickets in children",
+      "Kidney diseases",
+      "Diarrhoea",
+      "Conn's sydrome"
+    ],
+    "correctOption": "Rickets in children"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-189",
+    "srNo": 189,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which of the following is the first sign of iron deficiency",
+    "options": [
+      "Transferrin saturation is low",
+      "Serum ferritin is low",
+      "Erythrocyte protophyrin increses",
+      "Fall of Hb belo narmal"
+    ],
+    "correctOption": "Serum ferritin is low"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-190",
+    "srNo": 190,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which of the following mineral/ element causes pathological changes in bones and teeth in its excess as well as deficiency",
+    "options": [
+      "Chlorine",
+      "Fluorine",
+      "Zinc",
+      "Copper"
+    ],
+    "correctOption": "Fluorine"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-191",
+    "srNo": 191,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which of the following elements is essential for the synthesis of insulin and its deficiency causes growth failure, sexual infantilism in adolescents, delayed wound healing and loss of taste.",
+    "options": [
+      "Zinc",
+      "Copper",
+      "Cobalt",
+      "Chromium"
+    ],
+    "correctOption": "Zinc"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-192",
+    "srNo": 192,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Deficency of which element is observed in patient with nephrosis, wilson's disease and PEM",
+    "options": [
+      "Zinc",
+      "Copper",
+      "Chromium",
+      "Selenium"
+    ],
+    "correctOption": "Copper"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-193",
+    "srNo": 193,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which element when combined with vitamin E deficency reduces antibody production",
+    "options": [
+      "Copper",
+      "Chromium",
+      "Selenium",
+      "Cobalt"
+    ],
+    "correctOption": "Selenium"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-194",
+    "srNo": 194,
+    "unit": "unit-nut-6-deficiencies",
+    "topic": "Nutritional deficiency disorders",
+    "question": "Which one of the following mineral is often added to the water to reduce tooth decay",
+    "options": [
+      "Iodine",
+      "Fluorine",
+      "Chlorine",
+      "Potassium"
+    ],
+    "correctOption": "Fluorine"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-196",
+    "srNo": 196,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Who may order or plan a therapeutic diets",
+    "options": [
+      "physician",
+      "pharmacist",
+      "Friend",
+      "Parents"
+    ],
+    "correctOption": "physician"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-197",
+    "srNo": 197,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which type of therapeutic diet is used when preparing puree diet?",
+    "options": [
+      "Nutrient modification",
+      "Texture modification",
+      "Food allergy or food intolerance modification",
+      "Additional feeding"
+    ],
+    "correctOption": "Texture modification"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-198",
+    "srNo": 198,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which type of therapeutic diet Reduces the calorie intake for people who are overweight?",
+    "options": [
+      "Nutrient modification",
+      "low calorie diet",
+      "Food allergy or food intolerance modification",
+      "tube feeding"
+    ],
+    "correctOption": "low calorie diet"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-199",
+    "srNo": 199,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following method of feeding is used for post- operative and unconscious patients?",
+    "options": [
+      "Tube feeding",
+      "Gastrostomy feeding",
+      "Jejunostomy Feeding",
+      "Intravenous feeding"
+    ],
+    "correctOption": "Intravenous feeding"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-200",
+    "srNo": 200,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Low calorie diet is given in one of the following ailments?",
+    "options": [
+      "Malnourished and underweight",
+      "Tuberculosis",
+      "Increased metabolism due to prolonged fever or hyperthyroidism",
+      "Hepatic coma"
+    ],
+    "correctOption": "Hepatic coma"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-201",
+    "srNo": 201,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following diets is given in case of PEM, before and after surgery and burns?",
+    "options": [
+      "High calorie diet",
+      "Low calorie diet",
+      "Low protein diet",
+      "High fat diet"
+    ],
+    "correctOption": "Low protein diet"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-202",
+    "srNo": 202,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following diets will you recommend for jaundice, viral hepatitis and chronic renal failure?",
+    "options": [
+      "Low calorie diet",
+      "High protein diet",
+      "Low protein diet",
+      "High fat diet"
+    ],
+    "correctOption": "Low protein diet"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-203",
+    "srNo": 203,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following foods is to be avoided is gout",
+    "options": [
+      "Whole pulses like Rajmah, Channe and rongi",
+      "Wheat , rice, suji, maida, maize",
+      "All fruits",
+      "Tea, coffee and aerated beverages"
+    ],
+    "correctOption": "Whole pulses like Rajmah, Channe and rongi"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-204",
+    "srNo": 204,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following foods is to be used freely in diabetes mellitus?",
+    "options": [
+      "Glucose, sugar, honey, sweets, chocolates etc",
+      "Potatoes, jams, mangoes, grapes, bananas",
+      "Butter milk, sour chutneys, pickles without oil, tomatoes",
+      "Pakoras, dal moth, dry fruits, cakes, pastries"
+    ],
+    "correctOption": "Butter milk, sour chutneys, pickles without oil, tomatoes"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-205",
+    "srNo": 205,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following is a therapeutic modification of diet",
+    "options": [
+      "To provide change in consistency of food",
+      "To include greater ot lesser amount of one or more nutrients",
+      "To modify the interval between meals",
+      "To modify the meyhod of feeding"
+    ],
+    "correctOption": "To include greater ot lesser amount of one or more nutrients"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-206",
+    "srNo": 206,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following is a full fluid diet",
+    "options": [
+      "Fruits juices",
+      "Clear vegetables and dal soups",
+      "Milk shakes",
+      "Beverages"
+    ],
+    "correctOption": "Milk shakes"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-207",
+    "srNo": 207,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Khichdi, dalia, suji kheer, custard etc. have the consistency of",
+    "options": [
+      "Full fluid diets,",
+      "Liquid diet",
+      "Semisolid diet",
+      "Bland diet"
+    ],
+    "correctOption": "Semisolid diet"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-208",
+    "srNo": 208,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Which of the following method of feeding is used for post operative and uncounscious patients",
+    "options": [
+      "Tube feeding",
+      "Gastrostomy feeding",
+      "Jejunostomy feeding",
+      "Intravenous feeding"
+    ],
+    "correctOption": "Intravenous feeding"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-209",
+    "srNo": 209,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "A nurse is checking the nasogastric tube position of a patient by aspirating the stomach contents to check for the pH level. The nurse proves that correct tube placement if the pH level is?",
+    "options": [
+      "7.75",
+      "7.5",
+      "6.5",
+      "5.5"
+    ],
+    "correctOption": "5.5"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-210",
+    "srNo": 210,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "After inserting the nasogastric tube, nurse need to listen for the ___________ sound by using a stethoscope to ensure the tube is inserted into the stomach.",
+    "options": [
+      "Bubbling sound",
+      "Rumbling sound",
+      "No sound",
+      "Whooshing sound"
+    ],
+    "correctOption": "Whooshing sound"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-211",
+    "srNo": 211,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "What is the common size of nasogastric tube for adult?",
+    "options": [
+      "5 - 10 Fr",
+      "12 - 18 Fr",
+      "20 - 24 Fr",
+      "25- 28 Fr"
+    ],
+    "correctOption": "12 - 18 Fr"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-212",
+    "srNo": 212,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Feeding suitable for malnourished infants or children is",
+    "options": [
+      "Cyclic feeding",
+      "Continuous feeding",
+      "Bolus feeding",
+      "Intermittent feeding"
+    ],
+    "correctOption": "Continuous feeding"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-213",
+    "srNo": 213,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "How to determine the location of epigastric region?",
+    "options": [
+      "From xiphoid sternum, extend 5cm to the left",
+      "From xiphoid sternum, extend 5cm to the right",
+      "From the left xiphoid sternum, extend 5cm to the right",
+      "From xiphoid sternum, extend 3cm to the left"
+    ],
+    "correctOption": "From xiphoid sternum, extend 5cm to the left"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-214",
+    "srNo": 214,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "When the foods is directly given in the veins, it is called",
+    "options": [
+      "Parenternal Nutrition",
+      "Enternal Nutrition",
+      "Intervenous",
+      "Saline"
+    ],
+    "correctOption": "Parenternal Nutrition"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-215",
+    "srNo": 215,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "When food is given in the stomach or intestinedirectly than it is",
+    "options": [
+      "Intravenous nutrition",
+      "Saline nutrition",
+      "Enternal nutrition",
+      "Parenteral nutrition"
+    ],
+    "correctOption": "Enternal nutrition"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-217",
+    "srNo": 217,
+    "unit": "unit-nut-7-therapeutic",
+    "topic": "Therapeutic diets",
+    "question": "Nurses need to observed for this sign and symptoms during giving nasogastric tube feeding such as…",
+    "options": [
+      "Cyanosis, Fatigue, Bloating",
+      "Hyperglyceamia, Shivering, Choking",
+      "Nausea, Hypoxia, Vomiting",
+      "Cyanosis, Coughing,Vomiting"
+    ],
+    "correctOption": "Cyanosis, Coughing,Vomiting"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-218",
+    "srNo": 218,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Cooking below the boiling point ( about 85°C) as in case of meat and fish to prevent hardening of fibre is called",
+    "options": [
+      "Stewing",
+      "Simmering",
+      "Roasting",
+      "Baking"
+    ],
+    "correctOption": "Simmering"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-219",
+    "srNo": 219,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which of the following is unaffected by heat",
+    "options": [
+      "Carbohydrate",
+      "Proteins",
+      "Fats",
+      "Vitamins"
+    ],
+    "correctOption": "Fats"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-220",
+    "srNo": 220,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Rich should be cooked by using water equal to",
+    "options": [
+      "Half the volume of rice",
+      "Equal volume of rice",
+      "Two times the volume of rice",
+      "Three times the volume of rice"
+    ],
+    "correctOption": "Two times the volume of rice"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-221",
+    "srNo": 221,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "What should be done to retain maximum vitamins",
+    "options": [
+      "Wash fruits and vegetable before peeling",
+      "Soak inwater",
+      "use long cooking time",
+      "Cook in maximum water"
+    ],
+    "correctOption": "Wash fruits and vegetable before peeling"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-222",
+    "srNo": 222,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which of the following should be boiled thoroughly",
+    "options": [
+      "Cereals",
+      "Pulses",
+      "Green leafy vegetables",
+      "Fish"
+    ],
+    "correctOption": "Pulses"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-223",
+    "srNo": 223,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which one of the following cooking processes does not rely on coagulation taking place",
+    "options": [
+      "Frying chips",
+      "Making yoghurt",
+      "Whipping cream",
+      "Boiling an egg"
+    ],
+    "correctOption": "Frying chips"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-224",
+    "srNo": 224,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "The best conductor of heat amongst the following is",
+    "options": [
+      "Iron",
+      "Stainless steel",
+      "Aluminium",
+      "Copper"
+    ],
+    "correctOption": "Copper"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-225",
+    "srNo": 225,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "A method of cooking in which most of the heat transfer is by conduction is",
+    "options": [
+      "Deep fat frying",
+      "Shallow frying",
+      "Grilling",
+      "Roasting"
+    ],
+    "correctOption": "Shallow frying"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-226",
+    "srNo": 226,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "The transfer of heat in a boiling liquid or hot air in an oven is by",
+    "options": [
+      "Conduction",
+      "Convection",
+      "Infra-red radiation",
+      "Microwave radiation"
+    ],
+    "correctOption": "Convection"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-227",
+    "srNo": 227,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which one of the following materials refelects microwave radiation and therefore should not be used in a microwave oven",
+    "options": [
+      "Glass",
+      "China",
+      "Earthenware",
+      "Aluminium foil"
+    ],
+    "correctOption": "Aluminium foil"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-228",
+    "srNo": 228,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which vitamin is most likely to be lost from stewing beef if it is boiled for a long time",
+    "options": [
+      "Vitamin A",
+      "Vitamin C",
+      "Nicotinic acid",
+      "Vitamin D"
+    ],
+    "correctOption": "Nicotinic acid"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-229",
+    "srNo": 229,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "In which method cooking temperature is highest",
+    "options": [
+      "Deep fat frying",
+      "Boiling",
+      "Roasting",
+      "Steaming"
+    ],
+    "correctOption": "Roasting"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-230",
+    "srNo": 230,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which method of cooking is suitable foe thin tender foods",
+    "options": [
+      "Grilling",
+      "Roasting",
+      "Steaming",
+      "Poaching"
+    ],
+    "correctOption": "Grilling"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-231",
+    "srNo": 231,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "The temperature at which fat is udesd for deep frying is",
+    "options": [
+      "150°C",
+      "185°C",
+      "210°C",
+      "225°C"
+    ],
+    "correctOption": "185°C"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-232",
+    "srNo": 232,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which vitamin is least affected by cooking and preparations",
+    "options": [
+      "Vitamin A",
+      "Bgroup",
+      "Vitamin C",
+      "Vitamin D"
+    ],
+    "correctOption": "Vitamin D"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-233",
+    "srNo": 233,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which method of cooking may cause an increse in the intritional value of the food",
+    "options": [
+      "Boiling",
+      "Steaming",
+      "Deep frying",
+      "Roasting"
+    ],
+    "correctOption": "Deep frying"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-234",
+    "srNo": 234,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "The \" bottom line\" in derermining the quality of recipe is",
+    "options": [
+      "Nutritional value",
+      "Taste testing",
+      "Cost",
+      "Apperance"
+    ],
+    "correctOption": "Taste testing"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-235",
+    "srNo": 235,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "When starch is cooked in moist conditions it may",
+    "options": [
+      "Caramelise",
+      "Coagulate",
+      "Gelatineise",
+      "Oxidise"
+    ],
+    "correctOption": "Oxidise"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-236",
+    "srNo": 236,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "The dark layer that sometimes forms around the yolk of a hard boiled egg is caused by",
+    "options": [
+      "Lecithin",
+      "Cholestrol",
+      "Calcium carbonate",
+      "Iron sulphide"
+    ],
+    "correctOption": "Iron sulphide"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-237",
+    "srNo": 237,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Sutable temperature for the storage of most vegetables is",
+    "options": [
+      "0° C",
+      "5° C",
+      "15° C",
+      "20° C"
+    ],
+    "correctOption": "5° C"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-238",
+    "srNo": 238,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Most foods can be stored in a domestic freezer for approximately",
+    "options": [
+      "6 weeks",
+      "12 weeks",
+      "12 months",
+      "3 years"
+    ],
+    "correctOption": "12 weeks"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-239",
+    "srNo": 239,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "The time between consumption of contaminated food and the onset of the symptoms of food poisoning is",
+    "options": [
+      "Duration of illness",
+      "The infective period",
+      "The incubation period",
+      "The carrying period"
+    ],
+    "correctOption": "The incubation period"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-240",
+    "srNo": 240,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which organisms causes food poisoning that is often fatal",
+    "options": [
+      "Bacillus cereus",
+      "Staphylococcus",
+      "Clostridium perfringens",
+      "Clostridium botulinum"
+    ],
+    "correctOption": "Clostridium botulinum"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-241",
+    "srNo": 241,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "A \"sell by\" date is used for foods that cannot be kept for more than",
+    "options": [
+      "3 months",
+      "6 months",
+      "12 months",
+      "18 months"
+    ],
+    "correctOption": "3 months"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-242",
+    "srNo": 242,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which of the following food standard is international",
+    "options": [
+      "ISI standards",
+      "The AGMARK standards",
+      "PFA standards",
+      "CODEX alimentarius"
+    ],
+    "correctOption": "CODEX alimentarius"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-243",
+    "srNo": 243,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which of the following standards were set up by the Directorate of the Marketing and Inspection of the Govt. of India by introducing an agricultural Produce Act in 1937",
+    "options": [
+      "ISI standards",
+      "AGMARK standards",
+      "PFA standards",
+      "Standards of weigt and measures"
+    ],
+    "correctOption": "AGMARK standards"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-244",
+    "srNo": 244,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which of the following is class I food preservative",
+    "options": [
+      "Common salt",
+      "Benzonic acid",
+      "Sulphurous acid nitrates",
+      "acetic acid"
+    ],
+    "correctOption": "Common salt"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-245",
+    "srNo": 245,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which is the house hold method of food preservation and storage",
+    "options": [
+      "Canning",
+      "Salting and pickling",
+      "freezing",
+      "Creating a vaccum"
+    ],
+    "correctOption": "Salting and pickling"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-246",
+    "srNo": 246,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Yeasts reproduce by",
+    "options": [
+      "Binary fission",
+      "Production of hyphae",
+      "Budding",
+      "Spore formation"
+    ],
+    "correctOption": "Budding"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-247",
+    "srNo": 247,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which type of additive is required in foods containing fats and oils to prevent rancidity",
+    "options": [
+      "Preservatives",
+      "Emulsifiers",
+      "Solvents",
+      "Anti oxidants"
+    ],
+    "correctOption": "Anti oxidants"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-248",
+    "srNo": 248,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which type od additive is required to prevent separation in mayonnaise, salad cream",
+    "options": [
+      "An emulsifier",
+      "A solvent",
+      "A humectant",
+      "An anti-oxidant"
+    ],
+    "correctOption": "An emulsifier"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-249",
+    "srNo": 249,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "In which foods are fortifying agents added by law",
+    "options": [
+      "White flour",
+      "Coffee",
+      "Sugar",
+      "Sausages"
+    ],
+    "correctOption": "White flour"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-250",
+    "srNo": 250,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which additives is linked to hyperactivity in children",
+    "options": [
+      "Sulphur dioxide",
+      "Sorbitol",
+      "Monosodium glutamate",
+      "Tartrazine"
+    ],
+    "correctOption": "Tartrazine"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-251",
+    "srNo": 251,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "If you order hot oatmeal in a restaurant it may taste flat because",
+    "options": [
+      "No sugar was added",
+      "No salt was added",
+      "It was cooked in a microwave",
+      "No chilli was added"
+    ],
+    "correctOption": "No salt was added"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-252",
+    "srNo": 252,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Adultration is",
+    "options": [
+      "Giving true labels",
+      "removal of toxicants",
+      "Removal of of a vital elements",
+      "Display of quality"
+    ],
+    "correctOption": "Removal of of a vital elements"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-253",
+    "srNo": 253,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Mud, grits, soapstone bits are common adulterants of",
+    "options": [
+      "Cereals",
+      "Mustard seeds",
+      "Black pepper",
+      "Dals"
+    ],
+    "correctOption": "Cereals"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-254",
+    "srNo": 254,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Prevention of Food Adulteration Act 1954 was amendes in the year",
+    "options": [
+      "1965",
+      "1978",
+      "1986",
+      "2000"
+    ],
+    "correctOption": "1986"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-255",
+    "srNo": 255,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Central Food Laboratories have been established in",
+    "options": [
+      "Banglore",
+      "Mysore",
+      "Mumbai",
+      "Raipur"
+    ],
+    "correctOption": "Mysore"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-256",
+    "srNo": 256,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which one of the following is not a chemical preservative found in food",
+    "options": [
+      "Sulphur dioxide",
+      "Sorbic acid",
+      "Sodium nitrate",
+      "Carbon dioxide"
+    ],
+    "correctOption": "Carbon dioxide"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-257",
+    "srNo": 257,
+    "unit": "unit-nut-8-cookery",
+    "topic": "Cookery rules and preservation of nutrients",
+    "question": "Which foods would be suitable for spray drying",
+    "options": [
+      "French beans",
+      "Sultanas",
+      "Milk",
+      "Potato"
+    ],
+    "correctOption": "Milk"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-258",
+    "srNo": 258,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Body mass index is",
+    "options": [
+      "Weight (kg)/height (m)",
+      "Weight (kg)/height (m)2",
+      "Weight (kg)/height (m)3",
+      "None of the above"
+    ],
+    "correctOption": "Weight (kg)/height (m)2"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-259",
+    "srNo": 259,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "A woman is 1.60 m tall and weighs 72 kg. Is she:",
+    "options": [
+      "Underweight",
+      "Normal weight",
+      "Overweight",
+      "Obese"
+    ],
+    "correctOption": "Overweight"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-260",
+    "srNo": 260,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Which one of the following methods is a prospective method of dietary assessment?",
+    "options": [
+      "Diet history",
+      "24-hour recall",
+      "Weighed food record",
+      "None of the above"
+    ],
+    "correctOption": "Weighed food record"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-261",
+    "srNo": 261,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Which of the following is an anthropometric measurement of body composition?",
+    "options": [
+      "Nutrition History",
+      "Albumin",
+      "Tricep skinfold",
+      "Trasnferrin"
+    ],
+    "correctOption": "Tricep skinfold"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-262",
+    "srNo": 262,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "The process of identifying patients, clients, or groups who may have a nutrition diagnosis and benefit from nutrition assessment and intervention by a dietitian is called",
+    "options": [
+      "Nutritional care process",
+      "Nutritional assessment and care",
+      "Nutritional Screening",
+      "Dietetic consultation"
+    ],
+    "correctOption": "Nutritional Screening"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-263",
+    "srNo": 263,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "The number of reference curves in WHO growth chart is",
+    "options": [
+      "1",
+      "2",
+      "3",
+      "4"
+    ],
+    "correctOption": "2"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-264",
+    "srNo": 264,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "The number of refernce curves in growth chart used in India is",
+    "options": [
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "correctOption": "4"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-265",
+    "srNo": 265,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Degenerative diseases are most closely associated with",
+    "options": [
+      "Diets deficient in protein",
+      "Diets deficient in CHO",
+      "Heredity",
+      "Affluent lifestyles"
+    ],
+    "correctOption": "Affluent lifestyles"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-266",
+    "srNo": 266,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Genu valgum, characterised by osteoporosis of the lower limbs and reported in sorghum( jowar) eating areas of Tamil NADU AND Andhra Pardesh is a kind of",
+    "options": [
+      "Lathyrism",
+      "Fluorosis",
+      "Vitamin A deficiency",
+      "Iron deficiency"
+    ],
+    "correctOption": "Fluorosis"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-267",
+    "srNo": 267,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "The National Goitre Control Programme was launced by Govt. of India in",
+    "options": [
+      "1952",
+      "1962",
+      "1972",
+      "1982"
+    ],
+    "correctOption": "1962"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-268",
+    "srNo": 268,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "IDD programme has been initiated in",
+    "options": [
+      "All over India",
+      "Himalayan region",
+      "Tribal areas",
+      "Area- specific"
+    ],
+    "correctOption": "All over India"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-269",
+    "srNo": 269,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Mid day meal programme was initiated in the year",
+    "options": [
+      "1962-63",
+      "1967-68",
+      "1972-73",
+      "1977-78"
+    ],
+    "correctOption": "1962-63"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-270",
+    "srNo": 270,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Consumption of which of the following pulses is associated with lathyrism",
+    "options": [
+      "Red gram(Arhar)",
+      "Khesari dhal",
+      "Lentil ( Masur)",
+      "Black gram(urd)"
+    ],
+    "correctOption": "Khesari dhal"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-271",
+    "srNo": 271,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "National Nutrition Policy was adopted by government in the year",
+    "options": [
+      "1991",
+      "1993",
+      "1995",
+      "1997"
+    ],
+    "correctOption": "1993"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-272",
+    "srNo": 272,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "National Nutrition Policy was adopted under the department",
+    "options": [
+      "Departmwnt of women and child development",
+      "Health and Family welfare",
+      "Food and Civil Supplies",
+      "Food and Nutrition Board"
+    ],
+    "correctOption": "National Nutrition Policy was adopted under the department"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-273",
+    "srNo": 273,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "National Nutrition Mission was launched in 1993 in how many districts",
+    "options": [
+      "120",
+      "150",
+      "180",
+      "210"
+    ],
+    "correctOption": "180"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-274",
+    "srNo": 274,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Chairman of National nutrition mission is",
+    "options": [
+      "Prime minister",
+      "Minister of health and family wefare",
+      "Minister of human resource development",
+      "Minister of food and ciliv supplies"
+    ],
+    "correctOption": "Prime minister"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-275",
+    "srNo": 275,
+    "unit": "unit-nut-9-assessment",
+    "topic": "Nutrition assessment and nutrition education",
+    "question": "Permanent communication division for the effective implementation of nutritional policy will be established under",
+    "options": [
+      "The department of women and child development",
+      "Health and family welfare",
+      "Food and nutrition board",
+      "Ministry of human resource development"
+    ],
+    "correctOption": "The department of women and child development"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-276",
+    "srNo": 276,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Fruits and vegetables are usually considered as good sources of",
+    "options": [
+      "Protein",
+      "Vitamind & minerals",
+      "Unsaturated fats",
+      "Saturated fats"
+    ],
+    "correctOption": "Vitamind & minerals"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-277",
+    "srNo": 277,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Select the \"danger zone\" range of temperature in food handling\"",
+    "options": [
+      "50 - 100 deg F",
+      "80 - 120 deg F",
+      "40 - 140 deg F",
+      "100 - 212 deg F"
+    ],
+    "correctOption": "40 - 140 deg F"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-278",
+    "srNo": 278,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "FSSAI stands for:",
+    "options": [
+      "Food Safety and Standards Authority of India",
+      "Food Safety Satisfy All India",
+      "Food Safely Storage Authority of India",
+      "Food Storage Standards Authority of India"
+    ],
+    "correctOption": "Food Safety and Standards Authority of India"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-279",
+    "srNo": 279,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Food Safety and Standards Act, 2006 – operationalised on",
+    "options": [
+      "5th August, 2007",
+      "5th August, 2011",
+      "5th August, 2012",
+      "5th August, 2013"
+    ],
+    "correctOption": "5th August, 2011"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-280",
+    "srNo": 280,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Temperature of  refrigerator should be maintained at",
+    "options": [
+      "60°F",
+      "45°F",
+      "40°F",
+      "50°F"
+    ],
+    "correctOption": "40°F"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-281",
+    "srNo": 281,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "When sanitizing dishclothes or cutting boards at home using chlorine bleach, how much bleach should be added, per quart of water?",
+    "options": [
+      "1 teaspoon",
+      "½ cup",
+      "½ quart",
+      "½ glass"
+    ],
+    "correctOption": "1 teaspoon"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-282",
+    "srNo": 282,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Select  three major factors causing  food contamination",
+    "options": [
+      "Physical, biological, and chemical",
+      "Physical, biological, and radiological",
+      "Physical, psychological, and health",
+      "Physical, chemical, and psychosocial"
+    ],
+    "correctOption": "Physical, biological, and chemical"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-283",
+    "srNo": 283,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Select the  processes that  kills harmful bacteria in milk",
+    "options": [
+      "Sterilization",
+      "Preservation",
+      "Pasteurization",
+      "Fermentation"
+    ],
+    "correctOption": "Pasteurization"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-284",
+    "srNo": 284,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Select the most common symptom of food-borne illness",
+    "options": [
+      "kidney failure",
+      "diarrhea",
+      "skin rash",
+      "headache"
+    ],
+    "correctOption": "diarrhea"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-285",
+    "srNo": 285,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Select the  groups having the lowest risk for food-borne illness",
+    "options": [
+      "young adults",
+      "the elderly",
+      "infants",
+      "individuals with AIDS"
+    ],
+    "correctOption": "infants"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-286",
+    "srNo": 286,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "What is the minimum amount of time to wash hands under running water before and after handling of food",
+    "options": [
+      "10 sec",
+      "20 sec",
+      "1 minute",
+      "2 minute"
+    ],
+    "correctOption": "20 sec"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-287",
+    "srNo": 287,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Choose the bacteria are responsible for causing the greatest number of foodborne illnesses",
+    "options": [
+      "Salmonella",
+      "Campylobacter",
+      "E. coli",
+      "None of the above"
+    ],
+    "correctOption": "Campylobacter"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-288",
+    "srNo": 288,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Identify the  groups having a greater risk of getting food poisoning than the others",
+    "options": [
+      "Smokers",
+      "Heavy antacid users",
+      "People who drink alcohol at least weekly",
+      "They all have an equally high risk"
+    ],
+    "correctOption": "Heavy antacid users"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-289",
+    "srNo": 289,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "How long can high-acid canned food such as tomatoes be stored",
+    "options": [
+      "10 to 30 days",
+      "2 to 6 months",
+      "12 to 18 months",
+      "2 to 4 years"
+    ],
+    "correctOption": "12 to 18 months"
+  },
+  {
+    "id": "NUT-MCQ-OFFICIAL-290",
+    "srNo": 290,
+    "unit": "unit-nut-10-programs",
+    "topic": "Food safety",
+    "question": "Which of the following operation reduces the dietary fibre conrtent in cereal?",
+    "options": [
+      "Drying",
+      "Retro gradation",
+      "Grinding",
+      "Milling"
+    ],
+    "correctOption": "Milling"
+  }
+];
