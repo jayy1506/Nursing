@@ -120,6 +120,18 @@ export const BioChemistrySyllabus = () => {
 
           <div className="flex items-center gap-2">
             <span className="text-slate-500 text-[11px] hidden sm:inline">Curriculum:</span>
+            <Link
+              to="/anatomy-syllabus"
+              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+            >
+              🦴 Anatomy
+            </Link>
+            <Link
+              to="/physiology-syllabus"
+              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+            >
+              ⚡ Physiology
+            </Link>
             <span className="px-2.5 py-1 rounded-md bg-emerald-500/20 text-emerald-300 font-bold text-[11px] border border-emerald-500/30">
               🧬 Biochemistry (7 Units)
             </span>

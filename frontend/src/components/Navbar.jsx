@@ -76,11 +76,51 @@ const Navbar = () => {
           <NavLink
             to="/syllabus"
             className={({ isActive }) =>
-              `${navLinkBase} ${isActive || window.location.pathname.includes('syllabus') ? navLinkActive : navLinkInactive}`
+              `${navLinkBase} ${isActive && window.location.pathname === '/syllabus' ? navLinkActive : navLinkInactive}`
             }
           >
             <BookOpen className="w-3.5 h-3.5" />
-            <span>Syllabus</span>
+            <span>Syllabus Hub</span>
+          </NavLink>
+
+          <NavLink
+            to="/anatomy-syllabus"
+            className={({ isActive }) =>
+              `${navLinkBase} ${isActive || window.location.pathname.includes('/anatomy') ? "text-white bg-teal-600 shadow-sm" : navLinkInactive}`
+            }
+          >
+            <span>🦴</span>
+            <span>Anatomy</span>
+          </NavLink>
+
+          <NavLink
+            to="/physiology-syllabus"
+            className={({ isActive }) =>
+              `${navLinkBase} ${isActive || window.location.pathname.includes('/physiology') ? "text-white bg-sky-600 shadow-sm" : navLinkInactive}`
+            }
+          >
+            <span>⚡</span>
+            <span>Physiology</span>
+          </NavLink>
+
+          <NavLink
+            to="/bio-chem-syllabus"
+            className={({ isActive }) =>
+              `${navLinkBase} ${isActive ? navLinkActive : navLinkInactive}`
+            }
+          >
+            <span>🧬</span>
+            <span>Biochem</span>
+          </NavLink>
+
+          <NavLink
+            to="/nutrition-syllabus"
+            className={({ isActive }) =>
+              `${navLinkBase} ${isActive ? "text-white bg-amber-600 shadow-sm" : navLinkInactive}`
+            }
+          >
+            <span>🥗</span>
+            <span>Nutrition</span>
           </NavLink>
 
           <NavLink
@@ -310,10 +350,50 @@ const Navbar = () => {
             to="/syllabus"
             onClick={() => setOpen(false)}
             className={({ isActive }) =>
-              `block ${navLinkBase} ${isActive || window.location.pathname.includes('syllabus') ? navLinkActive : navLinkInactive}`
+              `block ${navLinkBase} ${isActive && window.location.pathname === '/syllabus' ? navLinkActive : navLinkInactive}`
             }
           >
-            Academic Syllabus (Biochem & Nutrition)
+            📚 Full Academic Syllabus Hub
+          </NavLink>
+
+          <NavLink
+            to="/anatomy-syllabus"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `block ${navLinkBase} ${isActive ? "text-white bg-teal-600" : navLinkInactive}`
+            }
+          >
+            🦴 Applied Anatomy (12 Units • 199+ Plates)
+          </NavLink>
+
+          <NavLink
+            to="/physiology-syllabus"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `block ${navLinkBase} ${isActive ? "text-white bg-sky-600" : navLinkInactive}`
+            }
+          >
+            ⚡ Applied Physiology (12 Units • 74+ Diagrams)
+          </NavLink>
+
+          <NavLink
+            to="/bio-chem-syllabus"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `block ${navLinkBase} ${isActive ? "text-white bg-emerald-600" : navLinkInactive}`
+            }
+          >
+            🧬 Applied Biochemistry (8 Units)
+          </NavLink>
+
+          <NavLink
+            to="/nutrition-syllabus"
+            onClick={() => setOpen(false)}
+            className={({ isActive }) =>
+              `block ${navLinkBase} ${isActive ? "text-white bg-amber-600" : navLinkInactive}`
+            }
+          >
+            🥗 Nutrition & Dietetics (10 Units)
           </NavLink>
 
           <NavLink

@@ -44,6 +44,10 @@ export const SignupPage = () => {
         setError('An account with this email already exists.');
       } else if (err.code === 'auth/weak-password') {
         setError('Password is too weak.');
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setError(
+          `Unauthorized domain (${window.location.hostname}). Please add this domain to Firebase Console: Authentication → Settings → Authorized domains.`
+        );
       } else {
         setError(err.message || 'Failed to create account.');
       }
@@ -60,7 +64,11 @@ export const SignupPage = () => {
       navigate('/', { replace: true });
     } catch (err) {
       console.error(err);
-      if (err.code !== 'auth/popup-closed-by-user') {
+      if (err.code === 'auth/unauthorized-domain') {
+        setError(
+          `Unauthorized domain (${window.location.hostname}). Please add this domain to Firebase Console: Authentication → Settings → Authorized domains.`
+        );
+      } else if (err.code !== 'auth/popup-closed-by-user') {
         setError(err.message || 'Failed to sign up with Google.');
       }
     } finally {

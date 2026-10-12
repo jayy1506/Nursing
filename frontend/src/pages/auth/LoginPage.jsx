@@ -45,6 +45,10 @@ export const LoginPage = () => {
         setError('Invalid email or password.');
       } else if (err.code === 'auth/too-many-requests') {
         setError('Too many failed attempts. Please try again later.');
+      } else if (err.code === 'auth/unauthorized-domain') {
+        setError(
+          `Unauthorized domain (${window.location.hostname}). Please add this domain to Firebase Console: Authentication → Settings → Authorized domains.`
+        );
       } else {
         setError(err.message || 'Failed to sign in. Please try again.');
       }
@@ -61,7 +65,11 @@ export const LoginPage = () => {
       navigate(redirectPath, { replace: true });
     } catch (err) {
       console.error(err);
-      if (err.code !== 'auth/popup-closed-by-user') {
+      if (err.code === 'auth/unauthorized-domain') {
+        setError(
+          `Unauthorized domain (${window.location.hostname}). Please add this domain to Firebase Console: Authentication → Settings → Authorized domains.`
+        );
+      } else if (err.code !== 'auth/popup-closed-by-user') {
         setError(err.message || 'Failed to sign in with Google.');
       }
     } finally {

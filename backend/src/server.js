@@ -2,8 +2,15 @@ import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 import { connectDB } from './config/db.js';
 import { initFirebaseAdmin } from './config/firebase.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');
 
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
@@ -33,16 +40,6 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 
-// Root Landing Route
-app.get('/', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'MetaNutriBio Nursing AI & LMS Backend API is running.',
-    frontendUrl: 'http://localhost:5173',
-    health: '/api/health'
-  });
-});
-
 // Healthcheck Route
 app.get('/api/health', (req, res) => {
   res.status(200).json({
@@ -62,7 +59,39 @@ app.use('/api/assessments', assessmentRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/rag', ragRoutes);
 
-// 404 Handler
+// In production or cloud deployments: Serve frontend from frontend/dist
+if (fs.existsSync(frontendDistPath)) {
+  console.log(`[Production] Serving frontend static assets from: ${frontendDistPath}`);
+  app.use(express.static(frontendDistPath));
+
+  // SPA fallback: any GET request that doesn't start with /api returns index.html
+  app.get('*', (req, res, next) => {
+    if (req.originalUrl.startsWith('/api/')) {
+      return next();
+    }
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+} else {
+  // Dev mode landing page if frontend build doesn't exist
+  app.get('/', (req, res) => {
+    res.status(200).json({
+      success: true,
+      message: 'MetaNutriBio Nursing AI & LMS Backend API is running.',
+      frontendUrl: 'http://localhost:5173',
+      health: '/api/health'
+    });
+  });
+}
+
+// 404 Handler for unmatched API routes
+app.use('/api/*', (req, res) => {
+  res.status(404).json({
+    success: false,
+    error: `API Route not found: ${req.method} ${req.originalUrl}`
+  });
+});
+
+// Fallback 404 handler
 app.use((req, res) => {
   res.status(404).json({
     success: false,

@@ -98,20 +98,20 @@ const Home = () => {
             <p
               className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
                 isDark
-                  ? "bg-emerald-500/20 text-emerald-200"
-                  : "bg-emerald-100 text-emerald-700"
+                  ? "bg-teal-500/20 text-teal-200"
+                  : "bg-teal-100 text-teal-800"
               }`}
             >
-              Learn the science of nutrition
+              INC Standardized Curriculum • Anatomy, Physiology & Biochemistry
             </p>
             <h1
               className={`mt-4 text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl ${
                 isDark ? "text-slate-50" : "text-slate-900"
               }`}
             >
-              Biochemistry, diet, and nutrients
-              <span className="block bg-gradient-to-r from-emerald-500 to-sky-500 bg-clip-text text-transparent">
-                explained in a simple way.
+              Anatomy, Physiology & Biochemistry
+              <span className="block bg-gradient-to-r from-teal-500 via-emerald-500 to-sky-500 bg-clip-text text-transparent">
+                mastered with clinical clarity.
               </span>
             </h1>
             <p
@@ -119,30 +119,29 @@ const Home = () => {
                 isDark ? "text-slate-300" : "text-slate-700"
               }`}
             >
-              Build a clear understanding of how food is broken down, how
-              nutrients travel in the body, and how your daily plate can support
-              energy, focus, and long‑term health.
+              Study structured human anatomy with 199+ labeled plates, physiological mechanisms, metabolic pathways, and official university exam question banks.
             </p>
 
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <button
                 onClick={handleStartLearning}
-                className={`rounded-full px-6 py-2 text-sm font-semibold text-white shadow-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                className={`rounded-full px-6 py-2 text-sm font-semibold text-white shadow-lg transition focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer ${
                   isDark
-                    ? "bg-emerald-500 shadow-emerald-500/40 hover:bg-emerald-400 focus:ring-emerald-400 focus:ring-offset-slate-950"
-                    : "bg-emerald-500 shadow-emerald-300/60 hover:bg-emerald-600 focus:ring-emerald-400 focus:ring-offset-emerald-50"
+                    ? "bg-teal-500 shadow-teal-500/40 hover:bg-teal-400 focus:ring-teal-400 focus:ring-offset-slate-950"
+                    : "bg-teal-600 shadow-teal-300/60 hover:bg-teal-700 focus:ring-teal-400 focus:ring-offset-emerald-50"
                 }`}
               >
                 Start learning now
               </button>
               <button
-                className={`rounded-full border px-6 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+                onClick={() => navigate('/syllabus')}
+                className={`rounded-full border px-6 py-2 text-sm font-semibold transition focus:outline-none focus:ring-2 focus:ring-offset-2 cursor-pointer ${
                   isDark
                     ? "border-slate-600 text-slate-100 hover:bg-slate-800 focus:ring-slate-500 focus:ring-offset-slate-950"
-                    : "border-sky-300 text-sky-700 hover:bg-sky-50 focus:ring-sky-300 focus:ring-offset-emerald-50"
+                    : "border-teal-300 text-teal-800 hover:bg-teal-50 focus:ring-teal-300 focus:ring-offset-emerald-50"
                 }`}
               >
-                View topics overview
+                View Full Syllabus Hub →
               </button>
             </div>
 
