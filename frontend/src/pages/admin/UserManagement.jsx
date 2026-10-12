@@ -21,12 +21,34 @@ import {
   ShieldCheck
 } from 'lucide-react';
 
+const PRIMARY_ADMIN_NAME = import.meta.env.VITE_ADMIN_NAME || 'Aachal Karande';
+const PRIMARY_ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || 'karandeaachal@gmail.com').toLowerCase().trim();
+const PRIMARY_ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'aachal2026';
+
+const SECONDARY_ADMIN_NAME = import.meta.env.VITE_SECONDARY_ADMIN_NAME || 'Jay Thakre';
+const SECONDARY_ADMIN_EMAIL = (import.meta.env.VITE_SECONDARY_ADMIN_EMAIL || 'jthakre62@gmail.com').toLowerCase().trim();
+const SECONDARY_ADMIN_PASSWORD = import.meta.env.VITE_SECONDARY_ADMIN_PASSWORD || 'Jay@1523';
+
+const PROTECTED_ADMIN_EMAILS = [PRIMARY_ADMIN_EMAIL, SECONDARY_ADMIN_EMAIL].filter(Boolean);
+const isProtectedAdminEmail = (email) => PROTECTED_ADMIN_EMAILS.includes(email?.toLowerCase()?.trim());
+
 const DEFAULT_USERS = [
   {
     _id: 'usr-admin-01',
-    name: 'Jay Thakre',
-    email: 'jthakre62@gmail.com',
-    password: 'Jay@1523',
+    name: PRIMARY_ADMIN_NAME,
+    email: PRIMARY_ADMIN_EMAIL,
+    password: PRIMARY_ADMIN_PASSWORD,
+    role: 'admin',
+    status: 'active',
+    isDefaultPassword: false,
+    isProtected: true,
+    createdAt: new Date().toISOString()
+  },
+  {
+    _id: 'usr-admin-02',
+    name: SECONDARY_ADMIN_NAME,
+    email: SECONDARY_ADMIN_EMAIL,
+    password: SECONDARY_ADMIN_PASSWORD,
     role: 'admin',
     status: 'active',
     isDefaultPassword: false,
@@ -64,12 +86,15 @@ export const UserManagement = () => {
       const saved = localStorage.getItem('nursing_admin_users');
       if (saved) {
         const parsed = JSON.parse(saved);
-        // Ensure Jay Thakre admin is always present and protected
-        const hasAdmin = parsed.some(u => u.email?.toLowerCase() === 'jthakre62@gmail.com');
-        if (!hasAdmin) {
-          return [DEFAULT_USERS[0], ...parsed];
+        // Ensure default system admins are always present and protected
+        let list = parsed;
+        if (!list.some((u) => u.email?.toLowerCase() === PRIMARY_ADMIN_EMAIL)) {
+          list = [DEFAULT_USERS[0], ...list];
         }
-        return parsed;
+        if (!list.some((u) => u.email?.toLowerCase() === SECONDARY_ADMIN_EMAIL)) {
+          list = [DEFAULT_USERS[1], ...list];
+        }
+        return list;
       }
     } catch {
       // ignore
@@ -128,7 +153,7 @@ export const UserManagement = () => {
       role: newUser.role,
       status: 'active',
       isDefaultPassword: true, // Requires password change on first login
-      isProtected: emailNorm === 'jthakre62@gmail.com',
+      isProtected: ['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(emailNorm),
       createdAt: new Date().toISOString()
     };
 
@@ -178,10 +203,10 @@ export const UserManagement = () => {
   const handleRoleChange = (userId, newRole) => {
     const targetUser = users.find((u) => u._id === userId);
     // Protected Admin can NOT be demoted or promoted
-    if (targetUser?.email?.toLowerCase() === 'jthakre62@gmail.com') {
+    if (['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(targetUser?.email?.toLowerCase())) {
       setMessage({
         type: 'error',
-        text: 'Admin role for jthakre62@gmail.com is permanent and cannot be modified.'
+        text: `Admin role for ${targetUser.email} is permanent and cannot be modified.`
       });
       return;
     }
@@ -194,7 +219,7 @@ export const UserManagement = () => {
 
   const handleToggleStatus = (userId) => {
     const targetUser = users.find((u) => u._id === userId);
-    if (targetUser?.email?.toLowerCase() === 'jthakre62@gmail.com') {
+    if (['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(targetUser?.email?.toLowerCase())) {
       setMessage({ type: 'error', text: 'Admin account cannot be disabled.' });
       return;
     }
@@ -212,7 +237,7 @@ export const UserManagement = () => {
 
   const handleDeleteUser = (userId) => {
     const targetUser = users.find((u) => u._id === userId);
-    if (targetUser?.email?.toLowerCase() === 'jthakre62@gmail.com') {
+    if (['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(targetUser?.email?.toLowerCase())) {
       setMessage({ type: 'error', text: 'Admin account is permanent and cannot be removed.' });
       return;
     }
@@ -328,7 +353,7 @@ export const UserManagement = () => {
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {filteredUsers.map((user) => {
-                  const isAdminProtected = user.email?.toLowerCase() === 'jthakre62@gmail.com';
+                  const isAdminProtected = ['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(user.email?.toLowerCase());
                   const isPassVisible = visiblePasswords[user._id];
 
                   return (

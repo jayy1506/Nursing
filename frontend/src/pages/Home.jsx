@@ -15,6 +15,16 @@ const Home = () => {
     setShowSubjects(false);
   };
 
+  const handleGoToAnatomy = () => {
+    setShowSubjects(false);
+    navigate("/anatomy-syllabus");
+  };
+
+  const handleGoToPhysiology = () => {
+    setShowSubjects(false);
+    navigate("/physiology-syllabus");
+  };
+
   const handleGoToBiochemistry = () => {
     setShowSubjects(false);
     navigate("/bio-chem-syllabus");
@@ -320,7 +330,85 @@ const Home = () => {
                 </button>
               </div>
 
-              <div className="mt-5 grid gap-5 md:grid-cols-2">
+              <div className="mt-5 grid gap-4 md:grid-cols-2">
+                {/* Applied Anatomy box */}
+                <section
+                  onClick={handleGoToAnatomy}
+                  className={`flex cursor-pointer flex-col rounded-2xl p-4 shadow-md transition hover:-translate-y-1 hover:shadow-xl ${
+                    isDark
+                      ? "bg-slate-900/80 ring-1 ring-teal-600/60"
+                      : "bg-teal-50 ring-1 ring-teal-200"
+                  }`}
+                >
+                  <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-teal-500/10 px-3 py-1">
+                    <span className="h-2 w-2 rounded-full bg-teal-500" />
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-teal-700">
+                      Applied Anatomy
+                    </span>
+                  </div>
+                  <h3 className="text-base font-semibold">
+                    Human Anatomy (ANAT 105)
+                  </h3>
+                  <p
+                    className={`mt-2 text-xs ${
+                      isDark ? "text-slate-200" : "text-slate-700"
+                    }`}
+                  >
+                    12 Units, 199+ plates, osteology, organs, neuroanatomy & CBME MCQs.
+                  </p>
+                  <ul
+                    className={`mt-3 space-y-1.5 text-xs ${
+                      isDark ? "text-slate-100" : "text-slate-800"
+                    }`}
+                  >
+                    <li>• Skeletal, Muscular, Visceral & CNS anatomy.</li>
+                    <li>• High-definition labeled diagrams & plates.</li>
+                    <li>• 440+ MCQs & University Exam Questions.</li>
+                  </ul>
+                  <div className="mt-4 text-xs font-semibold text-teal-700">
+                    Start Anatomy ↗
+                  </div>
+                </section>
+
+                {/* Applied Physiology box */}
+                <section
+                  onClick={handleGoToPhysiology}
+                  className={`flex cursor-pointer flex-col rounded-2xl p-4 shadow-md transition hover:-translate-y-1 hover:shadow-xl ${
+                    isDark
+                      ? "bg-slate-900/80 ring-1 ring-sky-600/60"
+                      : "bg-sky-50 ring-1 ring-sky-200"
+                  }`}
+                >
+                  <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-sky-500/10 px-3 py-1">
+                    <span className="h-2 w-2 rounded-full bg-sky-500" />
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-sky-700">
+                      Applied Physiology
+                    </span>
+                  </div>
+                  <h3 className="text-base font-semibold">
+                    Human Physiology (PHYS 110)
+                  </h3>
+                  <p
+                    className={`mt-2 text-xs ${
+                      isDark ? "text-slate-200" : "text-slate-700"
+                    }`}
+                  >
+                    12 Units, 74+ mechanism flowcharts, cardiac cycle, and feedback loops.
+                  </p>
+                  <ul
+                    className={`mt-3 space-y-1.5 text-xs ${
+                      isDark ? "text-slate-100" : "text-slate-800"
+                    }`}
+                  >
+                    <li>• Action potentials, hemodynamics & ventilation.</li>
+                    <li>• Renal clearance, GI hormones & reflexes.</li>
+                    <li>• 1,024 Verified CBME MCQs.</li>
+                  </ul>
+                  <div className="mt-4 text-xs font-semibold text-sky-700">
+                    Start Physiology ↗
+                  </div>
+                </section>
+
                 {/* Biochemistry box */}
                 <section
                   onClick={handleGoToBiochemistry}
@@ -354,7 +442,7 @@ const Home = () => {
                   >
                     <li>• Pathways like glycolysis and fat breakdown.</li>
                     <li>• Enzymes, ATP, and metabolic control.</li>
-                    <li>• Simple stories using everyday foods.</li>
+                    <li>• Clinical enzymology & MI biomarkers.</li>
                   </ul>
                   <div className="mt-4 text-xs font-semibold text-emerald-700">
                     Start Biochemistry ↗
@@ -366,13 +454,13 @@ const Home = () => {
                   onClick={handleGoToDiet}
                   className={`flex cursor-pointer flex-col rounded-2xl p-4 shadow-md transition hover:-translate-y-1 hover:shadow-xl ${
                     isDark
-                      ? "bg-slate-900/80 ring-1 ring-sky-600/60"
-                      : "bg-sky-50 ring-1 ring-sky-200"
+                      ? "bg-slate-900/80 ring-1 ring-amber-600/60"
+                      : "bg-amber-50 ring-1 ring-amber-200"
                   }`}
                 >
-                  <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-sky-500/10 px-3 py-1">
-                    <span className="h-2 w-2 rounded-full bg-sky-500" />
-                    <span className="text-[11px] font-semibold uppercase tracking-wide text-sky-700">
+                  <div className="mb-2 inline-flex items-center gap-2 rounded-full bg-amber-500/10 px-3 py-1">
+                    <span className="h-2 w-2 rounded-full bg-amber-500" />
+                    <span className="text-[11px] font-semibold uppercase tracking-wide text-amber-700">
                       Diet & nutrients
                     </span>
                   </div>
@@ -394,9 +482,9 @@ const Home = () => {
                   >
                     <li>• Plate templates for different goals.</li>
                     <li>• Food sources of essential nutrients.</li>
-                    <li>• Practical daily meal examples.</li>
+                    <li>• Therapeutic diets & 99 University Q&As.</li>
                   </ul>
-                  <div className="mt-4 text-xs font-semibold text-sky-700">
+                  <div className="mt-4 text-xs font-semibold text-amber-700">
                     Start Diet & Nutrients ↗
                   </div>
                 </section>

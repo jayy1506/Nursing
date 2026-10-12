@@ -1,3 +1,7 @@
+import { ANATOMY_CHAPTERS } from "./anatomyChaptersData";
+import { PHYSIOLOGY_CHAPTERS } from "./physiologyChaptersData";
+import { ANATOMY_UNITS } from "./anatomyData";
+import { PHYSIOLOGY_UNITS } from "./physiologyData";
 import { NUTRITION_99_QUESTIONS } from "./nutritionOfficialBank";
 import { NUTRITION_OFFICIAL_MCQS } from "./nutritionOfficialMcqs";
 
@@ -24,6 +28,26 @@ const nutritionVeryShortFrom99 = NUTRITION_99_QUESTIONS.filter(q => q.type === "
 // Contains Short Questions (5 Marks), Very Short Questions (2 Marks), and Multiple Choice Questions (MCQs) for all Curriculum Units.
 
 export const QUESTION_BANK_UNITS = [
+  // --- APPLIED ANATOMY CURRICULUM ---
+  ...ANATOMY_UNITS.map(u => ({
+    id: u.id,
+    curriculum: "anatomy",
+    number: u.unitNumber,
+    name: `Unit ${u.unitNumber} ${u.title}`,
+    label: `Anatomy Unit ${u.unitNumber}: ${u.title}`,
+    icon: u.icon || "🦴"
+  })),
+
+  // --- APPLIED PHYSIOLOGY CURRICULUM ---
+  ...PHYSIOLOGY_UNITS.map(u => ({
+    id: u.id,
+    curriculum: "physiology",
+    number: u.unitNumber,
+    name: `Unit ${u.unitNumber} ${u.title}`,
+    label: `Physiology Unit ${u.unitNumber}: ${u.title}`,
+    icon: u.icon || "⚡"
+  })),
+
   // --- BIOCHEMISTRY CURRICULUM ---
   { id: "unit-1-carbs", curriculum: "biochemistry", number: 1, name: "I Carbohydrates", label: "Biochem Unit 1: Carbohydrates & Metabolism", icon: "🧬" },
   { id: "unit-2-lipids", curriculum: "biochemistry", number: 2, name: "II Lipids", label: "Biochem Unit 2: Lipids & Fatty Acids", icon: "🥑" },
@@ -48,6 +72,8 @@ export const QUESTION_BANK_UNITS = [
 ];
 
 export const DESCRIPTIVE_QUESTIONS = [
+  ...ANATOMY_DESCRIPTIVE_QUESTIONS,
+  ...PHYSIOLOGY_DESCRIPTIVE_QUESTIONS,
   ...nutritionDescriptiveFrom99,
   // ==========================================
   // --- NUTRITION & DIETETICS CURRICULUM ---
@@ -892,6 +918,8 @@ export const DESCRIPTIVE_QUESTIONS = [
 ];
 
 export const VERY_SHORT_QUESTIONS = [
+  ...ANATOMY_VERY_SHORT_QUESTIONS,
+  ...PHYSIOLOGY_VERY_SHORT_QUESTIONS,
   ...nutritionVeryShortFrom99,
   // Nutrition & Dietetics Very Short Questions
   { id: "NUT-VSQ-1", srNo: 1, unit: "unit-nut-1-intro", type: "Very Short", question: "Define Nutrition.", answer: "Nutrition is the science of food and its relationship to health, concerned with the role of nutrients in body growth, development, repair, and maintenance." },
@@ -921,6 +949,8 @@ export const VERY_SHORT_QUESTIONS = [
 ];
 
 export const OFFICIAL_MCQS = [
+  ...ANATOMY_OFFICIAL_MCQS,
+  ...PHYSIOLOGY_OFFICIAL_MCQS,
   ...NUTRITION_OFFICIAL_MCQS,
   // Nutrition & Dietetics MCQs
   { id: "NUT-MCQ-1", srNo: 1, unit: "unit-nut-1-intro", topic: "Introduction to Nutrition", question: "According to WHO, health is defined as a state of complete", options: ["Physical well-being only", "Absence of disease only", "Physical, mental, and social well-being", "Financial and social well-being"], correctOption: "Physical, mental, and social well-being" },
@@ -948,3 +978,106 @@ export const OFFICIAL_MCQS = [
   { id: "MCQ-190", srNo: 190, unit: "unit-2-lipids", topic: "II Lipids", question: "The deficiency of Essential Fatty Acids in diet results in", options: ["Dermatitis", "Psoriasis", "Phrynoderma (Toad skin)", "Leukoderma"], correctOption: "Phrynoderma (Toad skin)" },
   { id: "MCQ-198", srNo: 198, unit: "unit-2-lipids", topic: "II Lipids", question: "Beta-oxidation of fatty acids occurs in the", options: ["Peroxisome", "Nucleus", "Mitochondria", "Lysosomes"], correctOption: "Mitochondria" }
 ];
+
+
+// =========================================================================
+// --- APPLIED ANATOMY & PHYSIOLOGY QUESTION BANK EXTRACTORS ---
+// =========================================================================
+
+export const ANATOMY_OFFICIAL_MCQS = [];
+export const ANATOMY_DESCRIPTIVE_QUESTIONS = [];
+export const ANATOMY_VERY_SHORT_QUESTIONS = [];
+
+Object.values(ANATOMY_CHAPTERS).forEach(ch => {
+  if (ch.mcqs) {
+    ch.mcqs.forEach((m) => {
+      ANATOMY_OFFICIAL_MCQS.push({
+        id: m.id,
+        unit: ch.id,
+        curriculum: "anatomy",
+        topic: ch.title,
+        question: m.question,
+        options: [m.correctAnswer],
+        correctOption: m.correctAnswer,
+        explanation: `CBME Verified Anatomy MCQ for ${ch.title} (${m.subtopic || 'General'}).`
+      });
+    });
+  }
+
+  if (ch.subjectiveQuestions) {
+    ch.subjectiveQuestions.forEach((sq) => {
+      if (sq.type === "Very Short" || sq.marks <= 2) {
+        ANATOMY_VERY_SHORT_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "anatomy",
+          type: "Very Short",
+          question: sq.question,
+          answer: `Review detailed anatomical relations in Chapter: ${ch.title}.`
+        });
+      } else {
+        ANATOMY_DESCRIPTIVE_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "anatomy",
+          type: sq.type || "Short",
+          topic: ch.title,
+          question: sq.question,
+          answerKeyPoints: [
+            `Official INC University Exam Question (${sq.marks} Marks).`,
+            `Refer to Unit ${ch.unitNumber}: ${ch.title} histological and gross anatomy sections.`
+          ]
+        });
+      }
+    });
+  }
+});
+
+export const PHYSIOLOGY_OFFICIAL_MCQS = [];
+export const PHYSIOLOGY_DESCRIPTIVE_QUESTIONS = [];
+export const PHYSIOLOGY_VERY_SHORT_QUESTIONS = [];
+
+Object.values(PHYSIOLOGY_CHAPTERS).forEach(ch => {
+  if (ch.mcqs) {
+    ch.mcqs.forEach((m) => {
+      PHYSIOLOGY_OFFICIAL_MCQS.push({
+        id: m.id,
+        unit: ch.id,
+        curriculum: "physiology",
+        topic: ch.title,
+        question: m.question,
+        options: [m.correctAnswer],
+        correctOption: m.correctAnswer,
+        explanation: `CBME Verified Physiology MCQ for ${ch.title} (${m.subtopic || 'General'}).`
+      });
+    });
+  }
+
+  if (ch.subjectiveQuestions) {
+    ch.subjectiveQuestions.forEach((sq) => {
+      if (sq.type === "Very Short" || sq.marks <= 2) {
+        PHYSIOLOGY_VERY_SHORT_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "physiology",
+          type: "Very Short",
+          question: sq.question,
+          answer: `Review physiological regulatory mechanisms in Chapter: ${ch.title}.`
+        });
+      } else {
+        PHYSIOLOGY_DESCRIPTIVE_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "physiology",
+          type: sq.type || "Short",
+          topic: ch.title,
+          question: sq.question,
+          answerKeyPoints: [
+            `Official INC University Exam Question (${sq.marks} Marks).`,
+            `Refer to Unit ${ch.unitNumber}: ${ch.title} physiological regulation and negative feedback loops.`
+          ]
+        });
+      }
+    });
+  }
+});

@@ -1,0 +1,388 @@
+import React, { useState, useMemo } from "react";
+import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import { PHYSIOLOGY_UNITS } from "../constants/physiologyData";
+import {
+  BookOpen,
+  ClipboardList,
+  Sparkles,
+  ChevronRight,
+  Search,
+  CheckCircle2,
+  Stethoscope,
+  ArrowRight,
+  Layers,
+  Award,
+  Image as ImageIcon,
+  HelpCircle,
+  FileText,
+  Activity
+} from "lucide-react";
+
+export const PhysiologySyllabus = () => {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [unitActiveTabs, setUnitActiveTabs] = useState({});
+
+  const categories = useMemo(() => {
+    const cats = new Set(PHYSIOLOGY_UNITS.map((u) => u.category));
+    return ["all", ...Array.from(cats)];
+  }, []);
+
+  const setUnitTab = (unitId, tab) => {
+    setUnitActiveTabs((prev) => ({ ...prev, [unitId]: tab }));
+  };
+
+  const getUnitTab = (unitId) => unitActiveTabs[unitId] || "sections";
+
+  const filteredUnits = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    return PHYSIOLOGY_UNITS.filter((unit) => {
+      const matchesCat = selectedCategory === "all" || unit.category === selectedCategory;
+      if (!matchesCat) return false;
+      if (!query) return true;
+
+      return (
+        unit.title.toLowerCase().includes(query) ||
+        unit.category.toLowerCase().includes(query) ||
+        unit.summary.toLowerCase().includes(query) ||
+        unit.topics.some((t) => t.label.toLowerCase().includes(query)) ||
+        unit.objectives.some((o) => o.toLowerCase().includes(query))
+      );
+    });
+  }, [searchQuery, selectedCategory]);
+
+  const totalImages = useMemo(() => PHYSIOLOGY_UNITS.reduce((sum, u) => sum + (u.totalImages || 0), 0), []);
+  const totalMcqs = useMemo(() => PHYSIOLOGY_UNITS.reduce((sum, u) => sum + (u.totalMcqs || 0), 0), []);
+  const totalSubjective = useMemo(() => PHYSIOLOGY_UNITS.reduce((sum, u) => sum + (u.totalSubjective || 0), 0), []);
+
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white pb-24">
+      <Navbar />
+
+      {/* Top Breadcrumb & Switcher Bar */}
+      <div className="bg-slate-900 border-b border-slate-800 text-slate-300 py-2.5 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+          <div className="flex items-center gap-2">
+            <Link
+              to="/syllabus"
+              className="text-slate-400 hover:text-sky-400 font-medium inline-flex items-center gap-1 transition-colors"
+            >
+              <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+              <span>Syllabus Hub</span>
+            </Link>
+            <span className="text-slate-600">/</span>
+            <span className="text-sky-400 font-semibold">Applied Physiology (PHYS 110)</span>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-slate-500 text-[11px] hidden sm:inline">Curriculum Tracks:</span>
+            <Link
+              to="/anatomy-syllabus"
+              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+            >
+              🦴 Applied Anatomy
+            </Link>
+            <span className="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-bold text-[11px] border border-sky-500/30">
+              ⚡ Applied Physiology (12 Units)
+            </span>
+            <Link
+              to="/bio-chem-syllabus"
+              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+            >
+              🧬 Biochemistry
+            </Link>
+            <Link
+              to="/nutrition-syllabus"
+              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+            >
+              🥗 Nutrition
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      {/* Hero Header */}
+      <section className="bg-white border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-800 text-xs font-bold border border-sky-200 mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+                <span>INC Standardized Syllabus • Course Code: PHYS 110 • Semester I</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+                Applied Human Physiology
+              </h1>
+              <p className="text-slate-600 text-sm mt-2 leading-relaxed max-w-2xl">
+                Explore organ systems, regulation mechanisms, negative feedback loops, action potentials, fluid balances, and clinical pathology alterations with high-definition physiological flowcharts and INC question banks.
+              </p>
+
+              {/* KPI Strip */}
+              <div className="mt-5 flex flex-wrap items-center gap-3 text-xs">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 border border-sky-200 text-sky-900 font-bold">
+                  <Activity className="w-4 h-4 text-sky-600" />
+                  <span>12 Core Functional Units</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold">
+                  <ImageIcon className="w-4 h-4 text-emerald-600" />
+                  <span>{totalImages} Mechanism & Flow Diagrams</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 font-bold">
+                  <HelpCircle className="w-4 h-4 text-amber-600" />
+                  <span>{totalMcqs} CBME MCQs</span>
+                </div>
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 border border-purple-200 text-purple-900 font-bold">
+                  <FileText className="w-4 h-4 text-purple-600" />
+                  <span>{totalSubjective} University Exam Questions</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Quick Action Box */}
+            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
+              <Link
+                to="/physiology/lesson/phys-unit-1"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-500/25 transition-all cursor-pointer"
+              >
+                <span>Start Chapter 1: General Physiology</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link
+                to="/question-bank"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs border border-slate-300 transition-all cursor-pointer"
+              >
+                <ClipboardList className="w-4 h-4 text-slate-600" />
+                <span>Practice Physiology Question Bank</span>
+              </Link>
+            </div>
+          </div>
+
+          {/* Search & Category Filter */}
+          <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search physiology mechanisms, receptors, reflexes, cardiac cycle..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+              />
+            </div>
+
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs">
+              <span className="text-slate-400 text-[11px] font-semibold mr-1 shrink-0">System:</span>
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                    selectedCategory === cat
+                      ? "bg-sky-600 text-white shadow-sm"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  {cat === "all" ? "All Systems (12)" : cat}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Units List */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        <div className="space-y-6">
+          {filteredUnits.map((unit) => {
+            const activeTab = getUnitTab(unit.id);
+            return (
+              <div
+                key={unit.id}
+                className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+              >
+                {/* Unit Header */}
+                <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-sm shrink-0">
+                      {unit.icon}
+                    </div>
+                    <div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-800 font-extrabold text-[11px] border border-sky-200">
+                          Unit {unit.unitNumber} • Semester I
+                        </span>
+                        <span className="text-xs font-semibold text-slate-400">
+                          {unit.category}
+                        </span>
+                      </div>
+                      <h2 className="text-xl font-extrabold text-slate-900 mt-1">
+                        {unit.title}
+                      </h2>
+                      <p className="text-xs text-slate-600 mt-1 max-w-3xl leading-relaxed">
+                        {unit.summary}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <Link
+                      to={`/physiology/lesson/${unit.id}`}
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-sm shadow-sky-500/20 transition-all cursor-pointer"
+                    >
+                      <span>Study Chapter</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Tab Navigation inside Card */}
+                <div className="px-6 bg-slate-50 border-b border-slate-100 flex items-center gap-2 overflow-x-auto text-xs font-bold text-slate-600">
+                  <button
+                    onClick={() => setUnitTab(unit.id, "sections")}
+                    className={`py-3 px-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
+                      activeTab === "sections"
+                        ? "border-sky-600 text-sky-700 font-extrabold"
+                        : "border-transparent hover:text-slate-900"
+                    }`}
+                  >
+                    <Layers className="w-3.5 h-3.5" />
+                    <span>Key Sections ({unit.topics.length})</span>
+                  </button>
+
+                  <button
+                    onClick={() => setUnitTab(unit.id, "objectives")}
+                    className={`py-3 px-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
+                      activeTab === "objectives"
+                        ? "border-sky-600 text-sky-700 font-extrabold"
+                        : "border-transparent hover:text-slate-900"
+                    }`}
+                  >
+                    <Award className="w-3.5 h-3.5" />
+                    <span>INC CBME Outcomes ({unit.objectives.length})</span>
+                  </button>
+
+                  <button
+                    onClick={() => setUnitTab(unit.id, "questions")}
+                    className={`py-3 px-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
+                      activeTab === "questions"
+                        ? "border-sky-600 text-sky-700 font-extrabold"
+                        : "border-transparent hover:text-slate-900"
+                    }`}
+                  >
+                    <HelpCircle className="w-3.5 h-3.5" />
+                    <span>Exam Q&A ({unit.totalMcqs} MCQs + {unit.totalSubjective} Subj)</span>
+                  </button>
+                </div>
+
+                {/* Tab Content */}
+                <div className="p-6">
+                  {activeTab === "sections" && (
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                        Mechanisms, Flowcharts & Core Modules
+                      </h4>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {unit.topics.map((t, idx) => (
+                          <Link
+                            key={idx}
+                            to={t.route}
+                            className="p-3.5 rounded-xl border border-slate-200/80 hover:border-sky-400 bg-slate-50/50 hover:bg-sky-50/30 transition-all group flex items-center justify-between"
+                          >
+                            <span className="text-xs font-bold text-slate-800 group-hover:text-sky-800">
+                              {t.label}
+                            </span>
+                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                          </Link>
+                        ))}
+                      </div>
+
+                      <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                        <span className="flex items-center gap-1.5">
+                          <ImageIcon className="w-4 h-4 text-sky-600" />
+                          <span>Includes <strong>{unit.totalImages}</strong> functional diagrams & physiological mechanisms</span>
+                        </span>
+                        <Link
+                          to={`/physiology/lesson/${unit.id}`}
+                          className="font-bold text-sky-700 hover:text-sky-800 flex items-center gap-1"
+                        >
+                          <span>Open full chapter reader</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+
+                  {activeTab === "objectives" && (
+                    <div className="space-y-2.5">
+                      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
+                        Official INC Competencies & Specific Learning Objectives
+                      </h4>
+                      {unit.objectives.map((obj, i) => (
+                        <div key={i} className="flex items-start gap-2.5 text-xs text-slate-700">
+                          <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+                          <span className="leading-relaxed">{obj}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {activeTab === "questions" && (
+                    <div>
+                      <div className="flex items-center justify-between mb-3">
+                        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                          Official University Examination Questions Bank
+                        </h4>
+                        <Link
+                          to={`/physiology/lesson/${unit.id}?tab=quiz`}
+                          className="text-xs font-extrabold text-sky-600 hover:text-sky-700 underline"
+                        >
+                          Launch Unit Quiz ({unit.totalMcqs} Questions) →
+                        </Link>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                        <div className="p-4 rounded-xl bg-sky-50/50 border border-sky-200">
+                          <span className="font-extrabold text-sky-900 block mb-1">
+                            CBME Multiple Choice Questions (MCQs)
+                          </span>
+                          <p className="text-slate-600 text-[11px] mb-3">
+                            {unit.totalMcqs} verified physiological MCQs aligned with INC Semester I guidelines.
+                          </p>
+                          <Link
+                            to={`/physiology/lesson/${unit.id}?tab=quiz`}
+                            className="inline-flex items-center gap-1.5 font-bold text-sky-700 hover:text-sky-800"
+                          >
+                            <span>Practice MCQs</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        </div>
+
+                        <div className="p-4 rounded-xl bg-purple-50/50 border border-purple-200">
+                          <span className="font-extrabold text-purple-900 block mb-1">
+                            University Exam Subjective Questions
+                          </span>
+                          <p className="text-slate-600 text-[11px] mb-3">
+                            {unit.totalSubjective} questions with mark weightage (2 Marks Very Short, 5 Marks Short Notes, 10 Marks Long Essay).
+                          </p>
+                          <Link
+                            to={`/physiology/lesson/${unit.id}?tab=subjective`}
+                            className="inline-flex items-center gap-1.5 font-bold text-purple-700 hover:text-purple-800"
+                          >
+                            <span>View University Questions</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default PhysiologySyllabus;

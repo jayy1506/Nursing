@@ -100,7 +100,13 @@ export const AIWidget = () => {
   const [copiedIndex, setCopiedIndex] = useState(null);
 
   const chatEndRef = useRef(null);
+  const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
+  const geminiBaseUrl = import.meta.env.VITE_GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com';
+  const geminiModel = import.meta.env.VITE_GEMINI_MODEL || 'gemini-1.5-flash';
+
   const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
+  const apiUrl = import.meta.env.VITE_OPENAI_API_URL || 'https://api.openai.com/v1/chat/completions';
+  const aiModel = import.meta.env.VITE_OPENAI_MODEL || 'gpt-3.5-turbo';
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -201,15 +207,46 @@ export const AIWidget = () => {
     try {
       let botResponse = '';
 
-      if (apiKey) {
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+      if (geminiApiKey) {
+        const systemPrompt =
+          'You are an expert AI Clinical Nursing & Biochemistry Tutor for medical and nursing students. Provide clear, concise, structured explanations with clinical rationales, NCLEX high-yield points, and memory hooks.';
+        const conversationText = messages
+          .slice(-4)
+          .map((m) => `${m.role === 'user' ? 'Student' : 'Tutor'}: ${m.content}`)
+          .join('\n');
+        const prompt = `${systemPrompt}\n\nRecent conversation:\n${conversationText}\n\nStudent: ${messageContent}\nTutor:`;
+
+        const response = await fetch(
+          `${geminiBaseUrl}/v1beta/models/${geminiModel}:generateContent?key=${geminiApiKey}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: prompt }] }],
+              generationConfig: {
+                temperature: 0.3,
+                maxOutputTokens: 600
+              }
+            })
+          }
+        );
+
+        const data = await response.json();
+        const geminiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (response.ok && geminiText) {
+          botResponse = geminiText;
+        } else {
+          botResponse = generateClinicalResponse(messageContent);
+        }
+      } else if (apiKey) {
+        const response = await fetch(apiUrl, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${apiKey}`
           },
           body: JSON.stringify({
-            model: 'gpt-3.5-turbo',
+            model: aiModel,
             messages: [
               {
                 role: 'system',

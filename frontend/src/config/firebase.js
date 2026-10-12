@@ -3,13 +3,13 @@ import { getAuth, GoogleAuthProvider, createUserWithEmailAndPassword, signOut } 
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyD2vdpUUglE2HaLIqVrvPWODst6Qrgkr-A",
-  authDomain: "nursing-8f7fd.firebaseapp.com",
-  projectId: "nursing-8f7fd",
-  storageBucket: "nursing-8f7fd.firebasestorage.app",
-  messagingSenderId: "54553531362",
-  appId: "1:54553531362:web:0097e449700828d7f61fbb",
-  measurementId: "G-PKDV10SNRV"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyD2vdpUUglE2HaLIqVrvPWODst6Qrgkr-A",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "nursing-8f7fd.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "nursing-8f7fd",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "nursing-8f7fd.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "54553531362",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:54553531362:web:0097e449700828d7f61fbb",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-PKDV10SNRV"
 };
 
 // Initialize Primary Firebase App

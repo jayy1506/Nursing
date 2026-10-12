@@ -11,6 +11,10 @@ const SignupPage = lazy(() => import('./pages/auth/SignupPage'));
 const Home = lazy(() => import('./pages/Home'));
 const SyllabusHub = lazy(() => import('./pages/SyllabusHub'));
 const BioChemistrySyllabus = lazy(() => import('./pages/BioChemistrySyllabus'));
+const AnatomySyllabus = lazy(() => import('./pages/AnatomySyllabus'));
+const AnatomyLessonView = lazy(() => import('./pages/AnatomyPages/AnatomyLessonView'));
+const PhysiologySyllabus = lazy(() => import('./pages/PhysiologySyllabus'));
+const PhysiologyLessonView = lazy(() => import('./pages/PhysiologyPages/PhysiologyLessonView'));
 const NutritionSyllabus = lazy(() => import('./pages/NutritionSyllabus'));
 const NutritionLessonView = lazy(() => import('./pages/NutritionPages/NutritionLessonView'));
 const QuestionBankView = lazy(() => import('./pages/QuestionBankView'));
@@ -81,6 +85,10 @@ const AppRoutes = () => {
             <Route path="/syllabus" element={<SyllabusHub />} />
             <Route path="/curriculum" element={<Navigate to="/syllabus" replace />} />
             <Route path="/bio-chem-syllabus" element={<BioChemistrySyllabus />} />
+            <Route path="/anatomy-syllabus" element={<AnatomySyllabus />} />
+            <Route path="/anatomy/lesson/:chapterId" element={<AnatomyLessonView />} />
+            <Route path="/physiology-syllabus" element={<PhysiologySyllabus />} />
+            <Route path="/physiology/lesson/:chapterId" element={<PhysiologyLessonView />} />
             <Route path="/nutrition-syllabus" element={<NutritionSyllabus />} />
             <Route path="/nutrition/lesson/:submoduleSlug" element={<NutritionLessonView />} />
             <Route path="/question-bank" element={<QuestionBankView />} />

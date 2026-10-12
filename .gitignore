@@ -1,17 +1,17 @@
 # Dependencies
 node_modules/
 */node_modules/
-package-lock.json
-*/package-lock.json
 
-# Environment variables
+# Environment Variables
 .env
 .env.*
 */.env
 */.env.*
 *.local
+!.env.example
+!*/.env.example
 
-# Build output
+# Build Output
 dist/
 */dist/
 build/
@@ -23,7 +23,7 @@ yarn-debug.log*
 yarn-error.log*
 *.log
 
-# Editor & OS files
+# Editor & OS Files
 .vscode/
 .idea/
 .DS_Store

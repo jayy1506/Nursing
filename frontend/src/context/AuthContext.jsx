@@ -8,6 +8,7 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db, googleProvider } from '../config/firebase';
+import { getApiUrl } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2500);
 
-      await fetch('/api/auth/signup', {
+      await fetch(getApiUrl('/api/auth/signup'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -63,11 +64,29 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const PRIMARY_ADMIN_NAME = import.meta.env.VITE_ADMIN_NAME || 'Aachal Karande';
+  const PRIMARY_ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || 'karandeaachal@gmail.com').toLowerCase().trim();
+  const PRIMARY_ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'aachal2026';
+
+  const SECONDARY_ADMIN_NAME = import.meta.env.VITE_SECONDARY_ADMIN_NAME || 'Jay Thakre';
+  const SECONDARY_ADMIN_EMAIL = (import.meta.env.VITE_SECONDARY_ADMIN_EMAIL || 'jthakre62@gmail.com').toLowerCase().trim();
+  const SECONDARY_ADMIN_PASSWORD = import.meta.env.VITE_SECONDARY_ADMIN_PASSWORD || 'Jay@1523';
+
+  const ADMIN_EMAILS = [PRIMARY_ADMIN_EMAIL, SECONDARY_ADMIN_EMAIL].filter(Boolean);
+  const isAdminEmailCheck = (email) => ADMIN_EMAILS.includes(email?.toLowerCase()?.trim());
+
   const DEFAULT_DIRECTORY = [
     {
-      name: 'Jay Thakre',
-      email: 'jthakre62@gmail.com',
-      password: 'Jay@1523',
+      name: PRIMARY_ADMIN_NAME,
+      email: PRIMARY_ADMIN_EMAIL,
+      password: PRIMARY_ADMIN_PASSWORD,
+      role: 'admin',
+      isDefaultPassword: false
+    },
+    {
+      name: SECONDARY_ADMIN_NAME,
+      email: SECONDARY_ADMIN_EMAIL,
+      password: SECONDARY_ADMIN_PASSWORD,
       role: 'admin',
       isDefaultPassword: false
     },
@@ -146,7 +165,7 @@ export const AuthProvider = ({ children }) => {
         console.warn('[Firestore Fetch Warning]:', firestoreErr);
       }
 
-      const isAdminEmail = user.email?.toLowerCase() === 'jthakre62@gmail.com';
+      const isAdminEmail = isAdminEmailCheck(user.email);
       const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || userDocData.role || 'student');
       const isDefaultPassword = isAdminEmail ? false : (directoryInfo ? directoryInfo.isDefaultPassword : (password === 'Srm123'));
 
@@ -178,12 +197,19 @@ export const AuthProvider = ({ children }) => {
 
       // Check if user exists in local/admin directory or is default master admin
       const directoryInfo = getDirectoryInfo(emailNorm);
-      const isMasterAdmin = emailNorm === 'jthakre62@gmail.com' && (password === 'Jay@1523' || !password);
+      const isMasterAdmin =
+        (emailNorm === PRIMARY_ADMIN_EMAIL && (password === PRIMARY_ADMIN_PASSWORD || !password)) ||
+        (emailNorm === SECONDARY_ADMIN_EMAIL && (password === SECONDARY_ADMIN_PASSWORD || !password));
       const isDirectoryMatch = directoryInfo && (!directoryInfo.password || directoryInfo.password === password || password === 'Srm123');
 
       if (isMasterAdmin || isDirectoryMatch) {
         const role = isMasterAdmin ? 'admin' : (directoryInfo?.role || 'student');
-        const name = isMasterAdmin ? 'Jay Thakre' : (directoryInfo?.name || emailNorm.split('@')[0]);
+        const adminNames = {
+          [PRIMARY_ADMIN_EMAIL]: PRIMARY_ADMIN_NAME,
+          [SECONDARY_ADMIN_EMAIL]: SECONDARY_ADMIN_NAME
+        };
+        const defaultAdminName = adminNames[emailNorm] || 'Administrator';
+        const name = isMasterAdmin ? (directoryInfo?.name || defaultAdminName) : (directoryInfo?.name || emailNorm.split('@')[0]);
         const isDefaultPassword = isMasterAdmin ? false : (directoryInfo?.isDefaultPassword ?? (password === 'Srm123'));
 
         const fallbackUser = {
@@ -231,7 +257,7 @@ export const AuthProvider = ({ children }) => {
         console.warn('[GetIdToken Warning]:', e);
       }
 
-      const isAdminEmail = email?.toLowerCase() === 'jthakre62@gmail.com';
+      const isAdminEmail = isAdminEmailCheck(email);
       const assignedRole = isAdminEmail ? 'admin' : (role || 'student');
 
       const profileData = {
@@ -312,7 +338,7 @@ export const AuthProvider = ({ children }) => {
         console.warn('[Firestore Google Sync Warning]:', firestoreErr);
       }
 
-      const isAdminEmail = user.email?.toLowerCase() === 'jthakre62@gmail.com';
+      const isAdminEmail = isAdminEmailCheck(user.email);
       const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || userDocData.role || 'student');
 
       const mergedUser = {
@@ -378,7 +404,7 @@ export const AuthProvider = ({ children }) => {
 
     // 3. Sync to backend if available
     try {
-      await fetch('/api/auth/change-password', {
+      await fetch(getApiUrl('/api/auth/change-password'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -432,7 +458,7 @@ export const AuthProvider = ({ children }) => {
             console.warn('[Auth State Change Firestore Warning]:', err);
           }
 
-          const isAdminEmail = user.email?.toLowerCase() === 'jthakre62@gmail.com';
+          const isAdminEmail = isAdminEmailCheck(user.email);
           const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || userData.role || 'student');
           const isDefaultPassword = isAdminEmail ? false : (directoryInfo ? directoryInfo.isDefaultPassword : false);
 

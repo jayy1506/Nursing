@@ -82,8 +82,11 @@ export const generateEmbedding = async (text) => {
   // If GEMINI_API_KEY is available and configured
   if (process.env.GEMINI_API_KEY) {
     try {
+      const baseUrl = process.env.GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com';
+      const embeddingModel = process.env.GEMINI_EMBEDDING_MODEL || 'text-embedding-004';
+
       const response = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent?key=${process.env.GEMINI_API_KEY}`,
+        `${baseUrl}/v1beta/models/${embeddingModel}:embedContent?key=${process.env.GEMINI_API_KEY}`,
         {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },

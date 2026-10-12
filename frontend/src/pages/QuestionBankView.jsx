@@ -50,8 +50,14 @@ const QuestionBankView = () => {
 
   const isUnitMatch = (itemUnit) => {
     if (selectedUnit === "all") return true;
+    if (selectedUnit === "curriculum-anatomy") {
+      return itemUnit.startsWith("anatomy-");
+    }
+    if (selectedUnit === "curriculum-physiology") {
+      return itemUnit.startsWith("phys-");
+    }
     if (selectedUnit === "curriculum-biochem") {
-      return !itemUnit.startsWith("unit-nut-");
+      return !itemUnit.startsWith("unit-nut-") && !itemUnit.startsWith("anatomy-") && !itemUnit.startsWith("phys-");
     }
     if (selectedUnit === "curriculum-nutrition") {
       return itemUnit.startsWith("unit-nut-");
@@ -228,6 +234,28 @@ const QuestionBankView = () => {
               }`}
             >
               All Subjects
+            </button>
+            <button
+              onClick={() => setSelectedUnit("curriculum-anatomy")}
+              className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 ${
+                selectedUnit === "curriculum-anatomy"
+                  ? "bg-teal-600 text-white shadow-xs"
+                  : "bg-teal-50 text-teal-800 hover:bg-teal-100"
+              }`}
+            >
+              <span>🦴</span>
+              <span>Applied Anatomy (12 Units)</span>
+            </button>
+            <button
+              onClick={() => setSelectedUnit("curriculum-physiology")}
+              className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 ${
+                selectedUnit === "curriculum-physiology"
+                  ? "bg-sky-600 text-white shadow-xs"
+                  : "bg-sky-50 text-sky-800 hover:bg-sky-100"
+              }`}
+            >
+              <span>⚡</span>
+              <span>Applied Physiology (12 Units)</span>
             </button>
             <button
               onClick={() => setSelectedUnit("curriculum-biochem")}

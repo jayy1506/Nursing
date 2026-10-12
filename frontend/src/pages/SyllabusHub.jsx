@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { ANATOMY_UNITS } from "../constants/anatomyData";
+import { PHYSIOLOGY_UNITS } from "../constants/physiologyData";
 import {
   Sparkles,
   BookOpen,
@@ -17,11 +19,14 @@ import {
   Activity,
   CheckCircle2,
   BrainCircuit,
-  ClipboardList
+  ClipboardList,
+  Eye,
+  Layers,
+  HelpCircle
 } from "lucide-react";
 
 const SyllabusHub = () => {
-  const [activeSubject, setActiveSubject] = useState("all"); // 'all' | 'biochem' | 'nutrition'
+  const [activeSubject, setActiveSubject] = useState("all"); // 'all' | 'anatomy' | 'physiology' | 'biochem' | 'nutrition'
 
   const biochemUnits = [
     { number: 1, title: "Carbohydrates & Metabolism", lessons: 8, icon: "🧬", color: "from-emerald-500 to-teal-600", desc: "Monosaccharides, Glycolysis, Digestion, Absorption, Diabetes Mellitus Type 1 & 2." },
@@ -52,18 +57,18 @@ const SyllabusHub = () => {
       <Navbar />
 
       {/* Hero Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-emerald-950 to-teal-950 text-white py-12 px-4 sm:px-6 lg:px-8 shadow-xl">
+      <div className="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 shadow-xl">
         <div className="max-w-7xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-extrabold border border-emerald-500/30 mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
-            <span>Official University & INC Nursing Curriculum</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-extrabold border border-teal-500/30 mb-3">
+            <Sparkles className="w-3.5 h-3.5 text-teal-400" />
+            <span>Official University & INC Nursing Curriculum • Semester I & II</span>
           </div>
 
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
             Academic Curriculum & Syllabus Portal
           </h1>
           <p className="text-slate-300 text-sm sm:text-base mt-2 max-w-3xl leading-relaxed">
-            Choose your core subject track below to explore structured lesson modules, clinical practice guidelines, diagnostic parameters, and end-of-unit mastery assessments.
+            Choose your core medical science track below to explore structured textbook chapters with anatomical plates, physiological mechanism flowcharts, clinical practice guidelines, and university exam question banks.
           </p>
 
           {/* Quick Track Switcher Tabs */}
@@ -72,11 +77,35 @@ const SyllabusHub = () => {
               onClick={() => setActiveSubject("all")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer ${
                 activeSubject === "all"
-                  ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/30"
+                  ? "bg-teal-500 text-white shadow-md shadow-teal-500/30"
                   : "bg-white/10 text-slate-200 hover:bg-white/20"
               }`}
             >
-              All Curriculum Tracks (2)
+              All Curriculum Tracks (4)
+            </button>
+
+            <button
+              onClick={() => setActiveSubject("anatomy")}
+              className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeSubject === "anatomy"
+                  ? "bg-teal-500 text-white shadow-md shadow-teal-500/30"
+                  : "bg-white/10 text-slate-200 hover:bg-white/20"
+              }`}
+            >
+              <span className="text-sm">🦴</span>
+              <span>Applied Anatomy (12 Units)</span>
+            </button>
+
+            <button
+              onClick={() => setActiveSubject("physiology")}
+              className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
+                activeSubject === "physiology"
+                  ? "bg-sky-500 text-white shadow-md shadow-sky-500/30"
+                  : "bg-white/10 text-slate-200 hover:bg-white/20"
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5 text-sky-300" />
+              <span>Applied Physiology (12 Units)</span>
             </button>
 
             <button
@@ -95,7 +124,7 @@ const SyllabusHub = () => {
               onClick={() => setActiveSubject("nutrition")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeSubject === "nutrition"
-                  ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/30"
+                  ? "bg-amber-500 text-white shadow-md shadow-amber-500/30"
                   : "bg-white/10 text-slate-200 hover:bg-white/20"
               }`}
             >
@@ -116,9 +145,111 @@ const SyllabusHub = () => {
 
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 space-y-12">
-        {/* TWO PRIMARY TRACK SELECTION CARDS */}
+        {/* FOUR PRIMARY TRACK SELECTION CARDS */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* TRACK 1: APPLIED BIOCHEMISTRY */}
+          {/* TRACK 1: APPLIED ANATOMY */}
+          {(activeSubject === "all" || activeSubject === "anatomy") && (
+            <div className="bg-white rounded-3xl border-2 border-teal-500/30 hover:border-teal-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-teal-500/25 group-hover:scale-105 transition-transform">
+                    🦴
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-teal-100 text-teal-800 font-extrabold text-xs uppercase tracking-wider border border-teal-200">
+                    12 Core Chapters • 199+ Plates • 440+ MCQs
+                  </span>
+                </div>
+
+                <h2 className="text-2xl font-extrabold text-slate-900 group-hover:text-teal-700 transition-colors">
+                  Applied Human Anatomy (ANAT 105)
+                </h2>
+                <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
+                  Comprehensive anatomical architecture, osteology, joints, myology, visceral systems, neuroanatomy of CNS/PNS, sensory organs, and lymphatic drainage with high-definition plates and university question bank.
+                </p>
+
+                <div className="mt-5 space-y-2 text-xs text-slate-700 font-medium">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                    <span>Skeletal & Muscular System (Axial/Appendicular Bones, Joints & Muscle Attachments)</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                    <span>Cardiovascular, Respiratory, Digestive & Renal Visceral Anatomy</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0" />
+                    <span>Neuroanatomy (Cerebrum, Brainstem, Cranial Nerves) & Sensory Organs</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-500">
+                  Includes 199+ Labeled Anatomical Diagrams
+                </span>
+                <Link
+                  to="/anatomy-syllabus"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs shadow-md shadow-teal-500/25 group-hover:translate-x-0.5 transition-all cursor-pointer"
+                >
+                  <span>Enter Anatomy Syllabus</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {/* TRACK 2: APPLIED PHYSIOLOGY */}
+          {(activeSubject === "all" || activeSubject === "physiology") && (
+            <div className="bg-white rounded-3xl border-2 border-sky-500/30 hover:border-sky-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+              <div className="p-6 sm:p-8">
+                <div className="flex items-center justify-between gap-4 mb-4">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-sky-500/25 group-hover:scale-105 transition-transform">
+                    ⚡
+                  </div>
+                  <span className="px-3 py-1 rounded-full bg-sky-100 text-sky-800 font-extrabold text-xs uppercase tracking-wider border border-sky-200">
+                    12 Core Chapters • 74+ Diagrams • 1000+ MCQs
+                  </span>
+                </div>
+
+                <h2 className="text-2xl font-extrabold text-slate-900 group-hover:text-sky-700 transition-colors">
+                  Applied Human Physiology (PHYS 110)
+                </h2>
+                <p className="text-slate-600 text-xs sm:text-sm mt-2 leading-relaxed">
+                  Cell transport mechanisms, cardiac cycle and hemodynamics, respiratory ventilation, neuromuscular excitation, renal clearance, endocrine negative feedback loops, and neurophysiology.
+                </p>
+
+                <div className="mt-5 space-y-2 text-xs text-slate-700 font-medium">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                    <span>Hemostasis, Blood Groups, Cardiac Cycle & Arterial Blood Pressure</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                    <span>Pulmonary Gas Exchange, Surfactant, Renal GFR & Countercurrent Mechanism</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0" />
+                    <span>Sliding Filament Theory, Action Potentials & Hormonal Regulation</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                <span className="text-xs font-bold text-slate-500">
+                  Includes 1,024 Verified CBME MCQs
+                </span>
+                <Link
+                  to="/physiology-syllabus"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-500/25 group-hover:translate-x-0.5 transition-all cursor-pointer"
+                >
+                  <span>Enter Physiology Syllabus</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {/* TRACK 3: APPLIED BIOCHEMISTRY */}
           {(activeSubject === "all" || activeSubject === "biochem") && (
             <div className="bg-white rounded-3xl border-2 border-emerald-500/30 hover:border-emerald-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
               <div className="p-6 sm:p-8">
@@ -138,7 +269,6 @@ const SyllabusHub = () => {
                   Comprehensive molecular foundations, carbohydrate/lipid/protein metabolism, clinical enzymology with MI cardiac biomarkers, acid-base balance, and organ function tests.
                 </p>
 
-                {/* Highlights */}
                 <div className="mt-5 space-y-2 text-xs text-slate-700 font-medium">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -157,7 +287,7 @@ const SyllabusHub = () => {
 
               <div className="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
                 <span className="text-xs font-bold text-slate-500">
-                  Includes Step-by-Step Lessons & Quizzes
+                  Includes Interactive Diagnostic Simulators
                 </span>
                 <Link
                   to="/bio-chem-syllabus"
@@ -170,7 +300,7 @@ const SyllabusHub = () => {
             </div>
           )}
 
-          {/* TRACK 2: APPLIED NUTRITION & DIETETICS */}
+          {/* TRACK 4: APPLIED NUTRITION & DIETETICS */}
           {(activeSubject === "all" || activeSubject === "nutrition") && (
             <div className="bg-white rounded-3xl border-2 border-amber-500/30 hover:border-amber-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
               <div className="p-6 sm:p-8">
@@ -190,7 +320,6 @@ const SyllabusHub = () => {
                   Evidence-based nutrition science, lifecycle meal planning, therapeutic diets for clinical disorders (DM, HTN, Renal, Jaundice), PEM, cookery rules, and food hygiene standards.
                 </p>
 
-                {/* Highlights */}
                 <div className="mt-5 space-y-2 text-xs text-slate-700 font-medium">
                   <div className="flex items-center gap-2">
                     <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0" />
@@ -223,8 +352,116 @@ const SyllabusHub = () => {
           )}
         </div>
 
-        {/* DETAILED UNIT BREAKDOWN ACCORDION / PREVIEW */}
-        <div className="space-y-8">
+        {/* DETAILED UNIT BREAKDOWN SECTIONS */}
+        <div className="space-y-12">
+          {/* Anatomy Units Section */}
+          {(activeSubject === "all" || activeSubject === "anatomy") && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                    <span>🦴 Applied Anatomy Curriculum Units (1 to 12)</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Click any chapter to open full textbook readings with labeled diagrams and MCQs.
+                  </p>
+                </div>
+
+                <Link
+                  to="/anatomy-syllabus"
+                  className="text-xs font-bold text-teal-700 hover:text-teal-800 flex items-center gap-1 underline"
+                >
+                  <span>Open Full Anatomy Syllabus</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {ANATOMY_UNITS.map((u) => (
+                  <Link
+                    key={u.id}
+                    to={`/anatomy/lesson/${u.id}`}
+                    className="p-4 rounded-2xl bg-white border border-slate-200/80 hover:border-teal-400 hover:shadow-md transition-all group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="w-8 h-8 rounded-xl bg-teal-50 text-teal-700 flex items-center justify-center font-extrabold text-xs">
+                          U{u.unitNumber}
+                        </span>
+                        <span className="text-lg">{u.icon}</span>
+                      </div>
+                      <h4 className="text-xs font-extrabold text-slate-800 group-hover:text-teal-700 transition-colors line-clamp-1">
+                        {u.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
+                        {u.summary}
+                      </p>
+                    </div>
+
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-slate-400 group-hover:text-teal-600">
+                      <span>{u.totalImages} Plates • {u.totalMcqs} MCQs</span>
+                      <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Physiology Units Section */}
+          {(activeSubject === "all" || activeSubject === "physiology") && (
+            <div>
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
+                    <span>⚡ Applied Physiology Curriculum Units (1 to 12)</span>
+                  </h3>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    Click any chapter to study physiological mechanisms, regulation, and feedback loops.
+                  </p>
+                </div>
+
+                <Link
+                  to="/physiology-syllabus"
+                  className="text-xs font-bold text-sky-700 hover:text-sky-800 flex items-center gap-1 underline"
+                >
+                  <span>Open Full Physiology Syllabus</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                {PHYSIOLOGY_UNITS.map((u) => (
+                  <Link
+                    key={u.id}
+                    to={`/physiology/lesson/${u.id}`}
+                    className="p-4 rounded-2xl bg-white border border-slate-200/80 hover:border-sky-400 hover:shadow-md transition-all group flex flex-col justify-between"
+                  >
+                    <div>
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="w-8 h-8 rounded-xl bg-sky-50 text-sky-700 flex items-center justify-center font-extrabold text-xs">
+                          U{u.unitNumber}
+                        </span>
+                        <span className="text-lg">{u.icon}</span>
+                      </div>
+                      <h4 className="text-xs font-extrabold text-slate-800 group-hover:text-sky-700 transition-colors line-clamp-1">
+                        {u.title}
+                      </h4>
+                      <p className="text-[11px] text-slate-500 mt-1 line-clamp-2">
+                        {u.summary}
+                      </p>
+                    </div>
+
+                    <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-bold text-slate-400 group-hover:text-sky-600">
+                      <span>{u.totalImages} Diagrams • {u.totalMcqs} MCQs</span>
+                      <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Biochemistry Units Section */}
           {(activeSubject === "all" || activeSubject === "biochem") && (
             <div>

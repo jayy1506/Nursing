@@ -1,16 +1,66 @@
-# React + Vite
+# MetaNutriBio Frontend Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Modern clinical education user interface built with React 19, Vite, Tailwind CSS, Framer Motion, and Lucide Icons.
 
-Currently, two official plugins are available:
+## 📁 Directory Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```
+frontend/
+├── public/                  # Static assets & favicon
+│   └── favicon.svg          # MetaNutriBio clinical brand badge
+├── src/
+│   ├── api/                 # API client with token interceptor
+│   │   └── client.js
+│   ├── components/          # Reusable UI & interactive widgets
+│   │   ├── auth/            # Protected routes & password modal
+│   │   ├── biochem/         # Interactive metabolic pathways
+│   │   ├── illustrations/   # SVG medical diagrams & animations
+│   │   ├── AIWidget.jsx     # Floating clinical AI tutor assistant
+│   │   └── Navbar.jsx       # Global responsive navigation bar
+│   ├── config/              # Firebase client SDK initialization
+│   ├── constants/           # University question banks & curriculum
+│   ├── context/             # Global AuthContext provider
+│   ├── pages/               # Application view controllers
+│   │   ├── admin/           # Admin dashboards, user management, audit
+│   │   ├── auth/            # Login & registration views
+│   │   ├── BioChemistryPages/ # Deep-dive biochemistry lessons
+│   │   ├── faculty/         # Faculty grading, question manager
+│   │   ├── NutritionPages/  # Nutrition submodules & clinical case views
+│   │   ├── student/         # Quiz views & assessment scoring
+│   │   ├── BioChemistrySyllabus.jsx
+│   │   ├── Home.jsx
+│   │   ├── NutritionSyllabus.jsx
+│   │   ├── QuestionBankView.jsx
+│   │   └── SyllabusHub.jsx
+│   ├── App.jsx              # Main routing hub with lazy-loaded views
+│   ├── index.css            # Tailwind CSS design system styles
+│   └── main.jsx             # React DOM entrypoint
+├── .env.example             # Frontend environment variables template
+├── .gitignore               # Ignored dependencies & build artifacts
+├── index.html               # HTML5 root with SEO metadata & Google Fonts
+├── package.json             # Frontend package configuration
+├── vercel.json              # SPA rewrite rules for Vercel
+└── vite.config.js           # Vite configuration with production manual chunking
+```
 
-## React Compiler
+## 🚀 Running Locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Configure `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+3. Start development server:
+   ```bash
+   npm run dev
+   ```
+   Open `http://localhost:5173` in your browser.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+4. Production build:
+   ```bash
+   npm run build
+   ```
+   Outputs optimized, code-split bundle to `dist/`.

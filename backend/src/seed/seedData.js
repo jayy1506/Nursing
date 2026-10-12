@@ -35,10 +35,21 @@ export const seedDatabase = async () => {
     console.log('[Seed] Seeding Default Users...');
     // 1. Seed Core Users
     const adminUser = await User.create({
-      firebaseUid: 'admin-firebase-uid-jay',
-      name: 'Jay Thakre (System Administrator)',
-      email: 'jthakre62@gmail.com',
-      password: 'Jay@1523',
+      firebaseUid: 'admin-firebase-uid-primary',
+      name: `${process.env.ADMIN_NAME || 'Aachal Karande'} (System Administrator)`,
+      email: process.env.ADMIN_EMAIL || 'karandeaachal@gmail.com',
+      password: process.env.ADMIN_PASSWORD || 'aachal2026',
+      role: 'admin',
+      status: 'active',
+      isActive: true,
+      createdBy: 'system'
+    });
+
+    const adminUser2 = await User.create({
+      firebaseUid: 'admin-firebase-uid-secondary',
+      name: `${process.env.SECONDARY_ADMIN_NAME || 'Jay Thakre'} (System Administrator)`,
+      email: process.env.SECONDARY_ADMIN_EMAIL || 'jthakre62@gmail.com',
+      password: process.env.SECONDARY_ADMIN_PASSWORD || 'Jay@1523',
       role: 'admin',
       status: 'active',
       isActive: true,
