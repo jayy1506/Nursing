@@ -6,7 +6,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 1,
     "title": "Introduction to Anatomical Terms & Organization",
     "category": "General Anatomy & Cellular Organization",
-    "icon": "\ud83e\uddec",
+    "icon": "🧬",
     "color": "from-teal-500 to-emerald-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of Introduction to Anatomical Terms & Organization.",
@@ -24,250 +24,338 @@ export const ANATOMY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-1-1",
-        "title": "Overview & Key Concepts",
+        "title": "Anatomical Position & Directional Terminology",
         "content": [
-          "Chapter 1",
-          "An Introduction to the Human Body",
-          "RNA",
-          "DNA",
-          "polypeptides",
-          "chondroitin sulfuric acid",
-          "The power houses of the cell are its",
-          "mitochondria",
-          "lysosomes",
-          "golgi complex",
-          "endoplasmic reticulum",
-          "Attached to the outer surface of the limiting membrane of the granular endoplasmic reticulum",
-          "mitochondria",
-          "lysosomes",
-          "ribosomes",
-          "vacuoles",
-          "The fluid portion of cytoplasm is",
-          "cell",
-          "chromosome",
-          "nucleus",
-          "cytosol",
-          "Which of the following phases is characterized by preparation for DNA synthesis?",
-          "G0",
-          "G1",
-          "G2",
-          "S",
-          "Which of the following is not a type of tissue?",
-          "muscle",
-          "nervous",
-          "embryonic",
-          "epithelial",
-          "Short Answer Questions",
-          "Define the following terms: anatomy, gross anatomy, human physiology, microscopic anatomy, regional anatomy and systemic anatomy.",
-          "Define the following terms: anterior, posterior, superior, inferior, medial and lateral.",
-          "Discuss in brief about body cavities.",
-          "Discuss in brief about the levels of organization.",
-          "Discuss in brief about three parts of cell.",
-          "Discuss in brief about organelles.",
-          "Discuss in brief about cell cycle.",
-          "Enlist the type of tissues.",
-          "Discuss in brief about glands.",
-          "Long Answer Questions",
-          "Describe in detail about structure of the cell.",
-          "Explain in detail about structure of the organelles.",
-          "Explain in detail about somatic cell division.",
-          "Explain in detail about reproductive cell division.",
-          "Explain in detail about types of tissues.",
-          "Write in detail about body cavities and serous membranes."
+          "Anatomy is the foundational biological discipline investigating bodily structures and their spatial relationships, while physiology focuses on the underlying physical and biochemical functions. In clinical nursing practice, establishing an unambiguous, universal anatomical frame of reference is critical for documenting physical assessments, surgical incisions, wound locations, and intravenous access sites.",
+          "All directional descriptions in medicine are referenced relative to the **Standard Anatomical Position**, regardless of whether the patient is lying supine in a hospital bed, seated in a wheelchair, or placed in Fowler's position."
         ],
+        "points": [
+          "**Standard Anatomical Position:** The patient stands upright facing the observer, head erect with eyes looking straight forward, feet resting flat and parallel on the floor, and upper limbs hanging at the sides with palms rotated forward (**supinated**) and thumbs directed laterally away from the body.",
+          "**Superior (Cranial / Cephalic):** Toward the head or upper aspect of a structure (e.g., the heart is superior to the urinary bladder; the thyroid gland is superior to the thymus).",
+          "**Inferior (Caudal):** Away from the head or toward the lower region of the body (e.g., the stomach is inferior to the diaphragm; the kidneys are inferior to the adrenal glands).",
+          "**Anterior (Ventral):** Toward or situated at the front of the body (e.g., the sternum is anterior to the pericardium; the trachea is anterior to the esophagus).",
+          "**Posterior (Dorsal):** Toward or situated at the back of the body (e.g., the vertebral column is posterior to the heart; the kidneys are posterior to the peritoneal cavity).",
+          "**Medial:** Closer to the imaginary vertical midline of the body (e.g., the ulna is medial to the radius in the anatomical forearm; the hallux is medial to the little toe).",
+          "**Lateral:** Farther away from the vertical midline toward the side (e.g., the lungs are lateral to the heart; the ears are lateral to the eyes).",
+          "**Proximal:** Nearer to the trunk of the body or the point of attachment of an extremity (e.g., the shoulder joint is proximal to the elbow; the femur is proximal to the patella).",
+          "**Distal:** Farther away from the trunk or the point of extremity attachment (e.g., the phalanges are distal to the carpals; the foot is distal to the thigh).",
+          "**Superficial (External):** Located near or toward the body surface (e.g., the epidermis is superficial to the subcutaneous adipose tissue; the ribs are superficial to the lungs).",
+          "**Deep (Internal):** Located away from the body surface toward the interior (e.g., the bone marrow is deep to the periosteum; the brain is deep to the skull bones).",
+          "**Ipsilateral vs. Contralateral:** Structures situated on the same side of the body are **ipsilateral** (e.g., the right arm and right kidney); structures on opposite sides are **contralateral** (e.g., the left lung and right kidney)."
+        ],
+        "clinicalPearl": "**Clinical Documentation Rule:** When a nurse documents decubitus ulcers, lacerations, or intravenous catheter insertion sites, documentation must strictly use anatomical position coordinates. A hematoma on the palm is always on the \"anterior aspect of the hand\", even when the patient is resting prone with their palms facing upward.",
         "images": [
           {
             "src": "/images/anatomy/ch1_image1.png",
-            "caption": "Figure 1.1: The human body is shown in anatomical position",
-            "alt": "Figure 1.1: The human body is shown in anatomical position"
+            "caption": "Figure 1.1: The human body in standard anatomical position",
+            "alt": "Standard Anatomical Position"
           },
           {
             "src": "/images/anatomy/ch1_image2.png",
-            "caption": "Figure1.2: Directional terms of the human body.",
-            "alt": "Figure1.2: Directional terms of the human body."
-          },
+            "caption": "Figure 1.2: Directional terms applied to the human body",
+            "alt": "Directional terms of the body"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-2",
+        "title": "Anatomical Planes & Diagnostic Cross-Sections",
+        "content": [
+          "To describe internal structures and properly interpret modern radiological diagnostic modalities (such as Computed Tomography [CT], Magnetic Resonance Imaging [MRI], and ultrasound), medical professionals conceptualize imaginary two-dimensional flat surfaces slicing through the body known as **anatomical planes**.",
+          "Surgical incisions, ultrasound beam orientations, and CT reconstruction algorithms rely directly on these geometrical cuts to orient internal anatomical relationships."
+        ],
+        "points": [
+          "**Sagittal Plane:** A vertical longitudinal plane that travels lengthwise through the body, dividing it into right and left segments.",
+          "**Midsagittal (Median) Plane:** A vertical plane passing precisely through the midline, dividing the body or an organ into equal, symmetrical right and left halves.",
+          "**Parasagittal Plane:** Any vertical sagittal plane oriented parallel to the midline that divides the body into unequal right and left portions.",
+          "**Frontal (Coronal) Plane:** A vertical plane oriented at a 90-degree right angle to the sagittal plane, dividing the body or organ into anterior (front) and posterior (back) portions.",
+          "**Transverse (Horizontal / Axial / Cross-Sectional) Plane:** A horizontal plane passing parallel to the horizon that divides the body or organ into superior (upper) and inferior (lower) segments.",
+          "**Oblique Plane:** Any angular cut passing through the body or organ at an angle other than a strict 90-degree perpendicular."
+        ],
+        "clinicalPearl": "**Radiological Reading Orientation:** When reviewing an axial CT scan of the abdomen at the bedside, the image is viewed from the patient's feet looking upward toward the head. The patient's right anatomical side appears on the viewer's left (e.g., the liver appears on the left side of the display).",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image3.png",
-            "caption": "Figure1.3: Planes of the body.",
-            "alt": "Figure1.3: Planes of the body."
-          },
+            "caption": "Figure 1.3: Planes of the human body (Sagittal, Frontal, Transverse)",
+            "alt": "Planes of the body"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-3",
+        "title": "Levels of Structural Organization in the Human Body",
+        "content": [
+          "The human organism is organized in a hierarchical continuum of structural complexity, ascending from elementary biochemical atoms to the fully integrated multicellular organism. Each higher tier exhibits emergent properties not present at the tier below."
+        ],
+        "points": [
+          "**1. Chemical Level:** The simplest baseline tier encompassing subatomic particles, fundamental bio-elements (**Carbon, Hydrogen, Oxygen, Nitrogen, Phosphorus, Calcium, Potassium**), and macromolecules (**DNA, RNA, proteins, carbohydrates, lipids**).",
+          "**2. Cellular Level:** The fundamental microscopic structural and functional living unit of life. Molecules combine to create specialized cellular organelles and distinct cell types (**erythrocytes, neurons, osteocytes, myocytes, hepatocytes**).",
+          "**3. Tissue Level:** Collectives of specialized cells and their surrounding intercellular matrix cooperating synchronously to execute specific duties. The four primary tissue types are **Epithelial, Connective, Muscular, and Nervous**.",
+          "**4. Organ Level:** Anatomical units composed of two or more distinct primary tissues operating together to fulfill complex physiological roles (e.g., the stomach possesses an epithelial mucosa, smooth muscle muscularis, connective submucosa, and serous adventitia).",
+          "**5. Organ System Level:** Collections of related organs coordinating to perform major physiological bodily functions (e.g., the Cardiovascular System consisting of the heart, blood vessels, and blood).",
+          "**6. Organismal Level:** The highest level of structural organization, representing the unified living human individual with all organ systems functioning in dynamic homeostatic equilibrium."
+        ],
+        "clinicalPearl": "**Multisystem Disease in Nursing:** Pathologies rarely remain confined to a single level. For example, a molecular insulin deficiency at the chemical level damages pancreatic beta cells at the cellular level, leading to diabetic neuropathy, retinopathy, and cardiovascular complications across multiple organ systems.",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image4.png",
-            "caption": "Figure1.4: Levels of structural organization of the human body.",
-            "alt": "Figure1.4: Levels of structural organization of the human body."
-          },
+            "caption": "Figure 1.4: Levels of structural organization from chemical to organismal level",
+            "alt": "Levels of structural organization"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-4",
+        "title": "Cellular Architecture & The Plasma Membrane",
+        "content": [
+          "The cell is the basic structural, physiological, and genetic unit of all living organisms. A generalized human cell comprises three major morphological components: the **plasma membrane**, the **cytoplasm** (cytosol and organelles), and the **nucleus**.",
+          "The plasma membrane forms a dynamic, selectively permeable barrier enclosing the intracellular fluid (ICF) and regulating bidirectional molecular exchange with the extracellular fluid (ECF)."
+        ],
+        "points": [
+          "**Fluid Mosaic Model:** Portrays the plasma membrane as a fluid phospholipid matrix embedded with a mosaic of functional proteins, glycoproteins, glycolipids, and cholesterol molecules.",
+          "**Phospholipid Bilayer:** Formed by amphipathic lipid molecules. The **polar hydrophilic phosphate heads** point outward toward aqueous ICF and ECF, whereas the **nonpolar hydrophobic fatty acid tails** face inward toward each other.",
+          "**Integral (Transmembrane) Proteins:** Proteins spanning the entire lipid bilayer that function as ion channels, selective transporters (carriers), ligand receptors, and anchored enzymes.",
+          "**Peripheral Proteins:** Attached loosely to inner or outer membrane surfaces, serving as cytoskeletal anchors, enzymatic regulators, and intracellular signal transduction relays.",
+          "**Cholesterol:** Intercalated between fatty acid tails to stabilize membrane fluidity across physiological body temperatures.",
+          "**Glycocalyx:** A carbohydrate-rich extracellular coat formed by glycolipids and glycoproteins that acts as a molecular \"cell ID\" for immune self-recognition, cell adhesion, and microbial protection."
+        ],
+        "clinicalPearl": "**Intravenous Solution Osmolarity:** Understanding cell membrane permeability is fundamental to intravenous fluid administration. Infusing hypotonic fluids causes water influx and cellular lysis (hemolysis), while hypertonic fluids cause water efflux and cell shrinkage (crenation).",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image5.png",
-            "caption": "Figure 1.5: Structure of cell.",
-            "alt": "Figure 1.5: Structure of cell."
+            "caption": "Figure 1.5: Generalized ultrastructure of a human cell",
+            "alt": "Structure of the cell"
           },
           {
             "src": "/images/anatomy/ch1_image6.png",
-            "caption": "Figure 1.6: Phospolipid bi-layer.",
-            "alt": "Figure 1.6: Phospolipid bi-layer."
+            "caption": "Figure 1.6: Phospholipid bilayer molecular arrangement",
+            "alt": "Phospholipid bilayer"
           },
           {
             "src": "/images/anatomy/ch1_image7.png",
-            "caption": "Figure 1.7: Cell membrane.",
-            "alt": "Figure 1.7: Cell membrane."
-          },
+            "caption": "Figure 1.7: Plasma membrane Fluid Mosaic Model architecture",
+            "alt": "Cell membrane structure"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-5",
+        "title": "Cytoskeleton & Cytoplasmic Organelles",
+        "content": [
+          "The cytoplasm comprises all contents situated between the plasma membrane and nuclear envelope. It consists of the **cytosol** (the aqueous intracellular fluid containing dissolved electrolytes, glucose, amino acids, and enzymes) and discrete **organelles** performing specialized cellular tasks."
+        ],
+        "points": [
+          "**Cytoskeleton:** An internal protein scaffolding made of three filament classes: **Microfilaments** (actin, generating mechanical support and motility), **Intermediate Filaments** (keratin/desmin, maintaining cell shape and anchoring organelles), and **Microtubules** (tubulin, directing organelle transport and forming the mitotic spindle).",
+          "**Centrosome & Centrioles:** Microtubule-organizing center near the nucleus containing a pair of orthogonal centrioles (nine triplets of microtubules) crucial for mitotic spindle assembly during cell division.",
+          "**Rough Endoplasmic Reticulum (RER):** Extensive network of folded cisternae studded with membrane-bound ribosomes; synthesizes and processes secretory, lysosomal, and membrane proteins.",
+          "**Smooth Endoplasmic Reticulum (SER):** Devoid of ribosomes; synthesizes fatty acids, phospholipids, and steroid hormones; detoxifies drugs and alcohol in hepatocytes; and sequesters ionic calcium (Ca2+) in muscle cells as sarcoplasmic reticulum.",
+          "**Golgi Apparatus:** Stack of 3-20 flattened cisternae with a convex *cis* entry face and concave *trans* exit face; modifies, glycosylates, sorts, and packages RER-derived proteins into secretory vesicles or lysosomes.",
+          "**Lysosomes:** Acidic vesicles containing over 60 hydrolytic enzymes (acid hydrolases, active at pH ~5.0) that digest endocytosed pathogens (**phagocytosis**) and break down damaged organelles (**autophagy**).",
+          "**Peroxisomes:** Metabolic microbodies containing oxidases and catalase; neutralize hazardous hydrogen peroxide (H2O2) and oxidize long-chain fatty acids.",
+          "**Mitochondria (\"Cellular Powerhouses\"):** Double-membrane organelles with folded inner cristae and central matrix containing mitochondrial DNA (mtDNA); generate cellular ATP via aerobic cellular respiration and oxidative phosphorylation."
+        ],
+        "clinicalPearl": "**Mitochondrial Cytopathy in Clinical Care:** Mitochondria possess their own maternal DNA. Mutations in mitochondrial genes cause systemic neuromuscular diseases, lactic acidosis, and fatigue, as organs with high metabolic demands (brain, heart, skeletal muscles) fail to produce sufficient ATP.",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image8.png",
-            "caption": "Figure 1.8: The three components of the cytoskeleton.",
-            "alt": "Figure 1.8: The three components of the cytoskeleton."
+            "caption": "Figure 1.8: Cytoskeleton components (Microfilaments, Intermediate Filaments, Microtubules)",
+            "alt": "Cytoskeleton components"
           },
           {
             "src": "/images/anatomy/ch1_image9.png",
-            "caption": "Figure1.9: Endoplasmic Reticulum (ER)",
-            "alt": "Figure1.9: Endoplasmic Reticulum (ER)"
+            "caption": "Figure 1.9: Endoplasmic Reticulum (Rough ER studded with ribosomes and Smooth ER)",
+            "alt": "Endoplasmic Reticulum"
           },
           {
             "src": "/images/anatomy/ch1_image10.png",
-            "caption": "Figure 1.10: Golgi apparatus",
-            "alt": "Figure 1.10: Golgi apparatus"
+            "caption": "Figure 1.10: Golgi apparatus with cis and trans cisternae",
+            "alt": "Golgi apparatus"
           },
           {
             "src": "/images/anatomy/ch1_image11.png",
-            "caption": "Figure 1.11: Peroxisome.",
-            "alt": "Figure 1.11: Peroxisome."
+            "caption": "Figure 1.11: Peroxisome structure and enzymatic function",
+            "alt": "Peroxisome"
           },
           {
             "src": "/images/anatomy/ch1_image12.png",
-            "caption": "Figure 1.12: Mitochondrion.",
-            "alt": "Figure 1.12: Mitochondrion."
-          },
+            "caption": "Figure 1.12: Mitochondrion with double membrane, cristae, and matrix",
+            "alt": "Mitochondrion structure"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-6",
+        "title": "The Nucleus, DNA Organization & Somatic Mitosis",
+        "content": [
+          "The nucleus is the master control center of the eukaryotic cell, housing the hereditary genetic blueprints encoded within deoxyribonucleic acid (DNA). Cell division enables tissue growth, normal cell turnover, and wound healing.",
+          "Somatic cell division involves interphase followed by **mitosis** (nuclear division) and **cytokinesis** (cytoplasmic division), yielding two genetically identical diploid daughter cells."
+        ],
+        "points": [
+          "**Nuclear Envelope & Pores:** A double lipid bilayer separated by a perinuclear space and perforated by large protein nuclear pore complexes that control bidirectional traffic of RNA, nucleotides, and proteins.",
+          "**Nucleolus:** A dense, spherical non-membrane-bound structure that transcribes ribosomal RNA (rRNA) and assembles ribosomal subunits.",
+          "**Chromatin & Histones:** DNA wrapped around octamers of basic histone proteins to form bead-like nucleosomes, condensing into 46 visible chromosomes during active cell division.",
+          "**Cell Cycle Phases:** **Interphase** consists of **G1 Phase** (active metabolic growth and organelle duplication), **S Phase** (semi-conservative DNA replication where 46 chromosomes become 92 chromatids), and **G2 Phase** (enzyme synthesis and centriole duplication). Non-dividing cells exit to **G0 Phase**.",
+          "**Mitosis - Prophase:** Chromatin fibers condense into visible chromosomes joined at centromeres, nucleoli disappear, and the nuclear envelope disintegrates as mitotic spindle poles migrate.",
+          "**Mitosis - Metaphase:** Spindle fibers attach to chromosome kinetochores, aligning all 46 chromosome pairs precisely along the equatorial **metaphase plate**.",
+          "**Mitosis - Anaphase:** Centromeres split simultaneously; sister chromatids are pulled apart toward opposite spindle poles as daughter chromosomes.",
+          "**Mitosis - Telophase & Cytokinesis:** Chromosomes uncoil back into diffuse chromatin, nuclear envelopes reassemble, and an actin contractile ring pinches the cell cleavage furrow to divide the cytoplasm."
+        ],
+        "clinicalPearl": "**Oncology Chemotherapy Action:** Antineoplastic chemotherapy medications frequently target specific mitotic phases. For example, Vincristine binds tubulin to arrest cells in Metaphase, while 5-Fluorouracil blocks S-phase DNA synthesis, selectively destroying rapidly proliferating malignant cells.",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image13.png",
-            "caption": "Figure 1.13: The nucleus.",
-            "alt": "Figure 1.13: The nucleus."
+            "caption": "Figure 1.13: The cell nucleus with nuclear envelope, pores, and nucleolus",
+            "alt": "Cell nucleus"
           },
           {
             "src": "/images/anatomy/ch1_image14.png",
-            "caption": "Figure 1.14: DNA: Strands of DNA are wrapped around supporting histones.",
-            "alt": "Figure 1.14: DNA: Strands of DNA are wrapped around supporting histones."
+            "caption": "Figure 1.14: DNA double helix wrapped around histone octamers to form chromatin",
+            "alt": "DNA histone architecture"
           },
           {
             "src": "/images/anatomy/ch1_image15.png",
-            "caption": "Figure 1.15: Cell cycle in somatic cell division.",
-            "alt": "Figure 1.15: Cell cycle in somatic cell division."
+            "caption": "Figure 1.15: Somatic cell cycle progression (G1, S, G2, and M Phase)",
+            "alt": "Cell cycle diagram"
           },
           {
             "src": "/images/anatomy/ch1_image16.png",
-            "caption": "Figure1.16: DNA replication.",
-            "alt": "Figure1.16: DNA replication."
+            "caption": "Figure 1.16: S-phase semi-conservative DNA replication mechanism",
+            "alt": "DNA replication"
           },
           {
             "src": "/images/anatomy/ch1_image17.png",
-            "caption": "Figure 1.17: Cell division: Mitosis followed by cytokinesis.",
-            "alt": "Figure 1.17: Cell division: Mitosis followed by cytokinesis."
-          },
+            "caption": "Figure 1.17: Mitotic stages (Prophase, Metaphase, Anaphase, Telophase) and Cytokinesis",
+            "alt": "Mitosis stages"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-7",
+        "title": "Reproductive Cell Division (Meiosis) & Gametogenesis",
+        "content": [
+          "Unlike somatic cell division which yields identical diploid daughter cells (2n = 46), reproductive cell division (**meiosis**) occurs exclusively in male testes and female ovaries to produce haploid gametes (n = 23).",
+          "Meiosis encompasses two successive nuclear divisions: **Meiosis I** (reduction division) and **Meiosis II** (equational division), producing four genetically distinct gametes."
+        ],
+        "points": [
+          "**Meiosis I (Reduction Division):** Separates homologous chromosome pairs, halving the chromosome number from diploid (46) to haploid (23).",
+          "**Synapsis & Crossing Over (Prophase I):** Homologous maternal and paternal chromosomes pair intimately to form four-chromatid **tetrads**. Non-sister chromatids exchange genetic segments at chiasmata, generating vital genetic diversity.",
+          "**Metaphase I & Anaphase I:** Homologous chromosome pairs align randomly at the equatorial plate and separate toward opposite poles without centromere splitting.",
+          "**Meiosis II (Equational Division):** Resembles mitosis in haploid cells; sister chromatids separate at their centromeres to produce four genetically unique haploid gametes (spermatozoa or ova).",
+          "**Spermatogenesis vs. Oogenesis:** Spermatogenesis produces four viable spermatozoa from puberty onward. Oogenesis produces only one viable ovum and three non-functional polar bodies, arresting in Prophase I until ovulation and completing Meiosis II only upon fertilization.",
+          "**Non-Disjunction Complications:** Failure of homologous chromosomes or sister chromatids to separate properly during meiosis produces aneuploidies, such as Trisomy 21 (Down Syndrome), Turner Syndrome (45,X), and Klinefelter Syndrome (47,XXY)."
+        ],
+        "clinicalPearl": "**Clinical Genetics in Nursing:** Advanced maternal age significantly increases the risk of meiotic non-disjunction because oocytes remain arrested in Prophase I from fetal development until ovulation (often 35-45 years), predisposing to spindle fragility and chromosomal trisomies.",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image18.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
-          },
-          {
-            "src": "/images/anatomy/ch1_image19.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
-          },
-          {
-            "src": "/images/anatomy/ch1_image20.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
-          },
-          {
-            "src": "/images/anatomy/ch1_image21.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
-          },
-          {
-            "src": "/images/anatomy/ch1_image22.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
-          },
-          {
-            "src": "/images/anatomy/ch1_image23.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
-          },
-          {
-            "src": "/images/anatomy/ch1_image24.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
-          },
-          {
-            "src": "/images/anatomy/ch1_image25.png",
-            "caption": "Figure 1.18: Reproductive cell division.",
-            "alt": "Figure 1.18: Reproductive cell division."
+            "caption": "Figure 1.18: Reproductive cell division (Meiosis I and Meiosis II overview)",
+            "alt": "Meiosis overview"
           },
           {
             "src": "/images/anatomy/ch1_image26.png",
-            "caption": "Figure 1.19: Stages of mitosis and meiosis.",
-            "alt": "Figure 1.19: Stages of mitosis and meiosis."
-          },
+            "caption": "Figure 1.19: Comparative stages of Mitosis versus Meiosis",
+            "alt": "Mitosis vs Meiosis"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-8",
+        "title": "Primary Tissues of the Body & Glandular Epithelium",
+        "content": [
+          "A **tissue** is an organized collective of morphologically similar cells and their surrounding extracellular matrix specialized to execute common physiological functions. The human body is constructed from four primary tissue types derived from the three embryonic germ layers (ectoderm, mesoderm, and endoderm)."
+        ],
+        "points": [
+          "**1. Epithelial Tissue:** Avascular sheets of closely packed cells with an apical (free) surface, lateral junctions, and basal surface attached to an extracellular basement membrane. Categorized by layer arrangement (**Simple, Stratified, Pseudostratified**) and cell morphology (**Squamous, Cuboidal, Columnar, Transitional**).",
+          "**2. Connective Tissue:** The most abundant and diverse tissue, characterized by sparsely scattered cells embedded within an abundant extracellular matrix (ground substance + collagen, elastic, or reticular fibers). Includes loose connective tissue (areolar, adipose, reticular), dense connective tissue, cartilage, bone (osseous tissue), and blood.",
+          "**3. Muscular Tissue:** Highly cellular, vascular, excitable tissue specialized for active contraction and force generation. Comprises **Skeletal Muscle** (striated, voluntary, multinucleated), **Cardiac Muscle** (striated, involuntary, branching with intercalated discs), and **Smooth Muscle** (non-striated, involuntary, spindle-shaped in visceral walls).",
+          "**4. Nervous Tissue:** Composed of electrically excitable **Neurons** (dendrites, soma, axon for nerve impulse transmission) and supportive non-conducting **Neuroglia** (astrocytes, oligodendrocytes, microglia, ependymal cells, Schwann cells).",
+          "**Glandular Epithelium - Exocrine Glands:** Discharge secretions into ducts emptying onto epithelial surfaces (e.g., salivary, sweat, and sebaceous glands). Categorized into **Merocrine** (exocytosis without cellular loss), **Apocrine** (apical cytoplasm pinching off), and **Holocrine** (entire cell rupture, e.g., sebaceous glands).",
+          "**Glandular Epithelium - Endocrine Glands:** Ductless glands releasing chemical hormones directly into interstitial fluid and the bloodstream (e.g., pituitary, thyroid, adrenal glands)."
+        ],
+        "clinicalPearl": "**Wound Healing & Tissue Regeneration:** Epithelial tissue possesses remarkable mitotic regenerative capacity, while cardiac muscle and central nervous tissue have minimal regenerative capacity, replacing necrotic tissue with fibrous collagen scars (cicatrix/fibrosis) rather than functional parenchyma.",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image27.png",
-            "caption": "Figure 1.20: Types of tissues.",
-            "alt": "Figure 1.20: Types of tissues."
+            "caption": "Figure 1.20: The four primary tissue types of the human body",
+            "alt": "Four primary tissues"
           },
           {
             "src": "/images/anatomy/ch1_image28.png",
-            "caption": "Figure 1.21: Embryonic origins of tissues and major organs.",
-            "alt": "Figure 1.21: Embryonic origins of tissues and major organs."
+            "caption": "Figure 1.21: Embryonic germ layer origins of tissues (Ectoderm, Mesoderm, Endoderm)",
+            "alt": "Embryonic germ layers"
           },
           {
             "src": "/images/anatomy/ch1_image29.png",
-            "caption": "Figure 1.22: Cells of epithelial tissue.",
-            "alt": "Figure 1.22: Cells of epithelial tissue."
+            "caption": "Figure 1.22: Classification and cellular morphology of epithelial tissues",
+            "alt": "Epithelial tissue morphology"
           },
           {
             "src": "/images/anatomy/ch1_image30.png",
-            "caption": "Figure 1.23: Goblet Cell.",
-            "alt": "Figure 1.23: Goblet Cell."
+            "caption": "Figure 1.23: Specialized unicellular mucous gland: Goblet Cell histology",
+            "alt": "Goblet cell"
           },
           {
             "src": "/images/anatomy/ch1_image31.png",
-            "caption": "Figure 1.24: Summaries of epithelial tissue cells.",
-            "alt": "Figure 1.24: Summaries of epithelial tissue cells."
+            "caption": "Figure 1.24: Structural summary of simple and stratified epithelial types",
+            "alt": "Epithelial summary"
           },
           {
             "src": "/images/anatomy/ch1_image32.png",
-            "caption": "Figure 1.25: Muscular tissue.",
-            "alt": "Figure 1.25: Muscular tissue."
+            "caption": "Figure 1.25: Microscopic comparison of Skeletal, Cardiac, and Smooth muscle tissues",
+            "alt": "Muscular tissues"
           },
           {
             "src": "/images/anatomy/ch1_image33.png",
-            "caption": "Figure 1.26: Types of exocrine glands.",
-            "alt": "Figure 1.26: Types of exocrine glands."
-          },
+            "caption": "Figure 1.26: Exocrine gland classification (Merocrine, Apocrine, Holocrine)",
+            "alt": "Exocrine glands"
+          }
+        ]
+      },
+      {
+        "id": "sec-1-9",
+        "title": "Body Cavities, Abdominopelvic Regions & Serous Membranes",
+        "content": [
+          "Body cavities are enclosed spaces within the body that house, protect, cushion, and support internal viscera while accommodating changes in organ volume (e.g., lung expansion, cardiac beating, bladder filling).",
+          "The body is anatomically divided into two major cavities: the **dorsal (posterior) cavity** and the **ventral (anterior) cavity**."
+        ],
+        "points": [
+          "**Dorsal Body Cavity:** Subdivided into the **Cranial Cavity** (formed by cranial bones, enclosing the brain) and the **Vertebral (Spinal) Canal** (formed by vertebral foramina, housing the spinal cord); continuous and lined by protective meninges.",
+          "**Ventral Body Cavity:** Subdivided by the muscular diaphragm into the superior **Thoracic Cavity** and inferior **Abdominopelvic Cavity**.",
+          "**Thoracic Cavity:** Encloses two lateral **Pleural Cavities** (each enveloping one lung), the central **Mediastinum** (containing heart, thymus, esophagus, trachea, and great vessels), and the **Pericardial Cavity** within the mediastinum.",
+          "**Abdominopelvic Cavity:** Extends from the diaphragm to the pelvic floor; divided into the superior **Abdominal Cavity** (stomach, liver, gallbladder, spleen, small intestine, most of large intestine) and inferior **Pelvic Cavity** (urinary bladder, internal reproductive organs, rectum).",
+          "**Serous Membranes (Serosa):** Slippery double-layered membranes lining the ventral cavity. The **Parietal Layer** lines the internal body wall, while the **Visceral Layer** adheres directly to internal organs. The intervening serous cavity contains lubricating **serous fluid** preventing frictional damage.",
+          "**Three Serous Cavities:** **Pleura** (lining lungs), **Pericardium** (lining heart), and **Peritoneum** (lining abdominal viscera).",
+          "**Nine Abdominopelvic Regions:** Subdivided by two vertical (midclavicular) and two horizontal (subcostal and transtubercular) planes: **Right & Left Hypochondriac, Epigastric, Right & Left Lumbar (Flank), Umbilical, Right & Left Iliac (Inguinal), and Hypogastric (Pubic)**.",
+          "**Four Abdominopelvic Quadrants:** Subdivided by vertical and horizontal axes intersecting at the umbilicus: **Right Upper Quadrant (RUQ)** (liver, gallbladder), **Left Upper Quadrant (LUQ)** (stomach, spleen), **Right Lower Quadrant (RLQ)** (appendix, cecum), and **Left Lower Quadrant (LLQ)** (sigmoid colon)."
+        ],
+        "clinicalPearl": "**Abdominal Pain Assessment in Nursing:** Accurate quadrant identification is crucial in clinical triage. Acute RLQ pain with tenderness at McBurney's point indicates acute appendicitis. RUQ pain radiating to the right scapula indicates cholecystitis, while sharp left lower quadrant pain suggests diverticulitis.",
+        "images": [
           {
             "src": "/images/anatomy/ch1_image34.png",
-            "caption": "Figure 1.27: Dorsal and ventral body cavities.",
-            "alt": "Figure 1.27: Dorsal and ventral body cavities."
+            "caption": "Figure 1.27: Dorsal (Cranial, Vertebral) and Ventral (Thoracic, Abdominopelvic) body cavities",
+            "alt": "Body cavities"
           },
           {
             "src": "/images/anatomy/ch1_image35.png",
-            "caption": "Figure 1.28: Regions and quadrants of the peritoneal cavity there are (a) nine abdominal regions and (b) four abdominal quadrants in the peritoneal cavity.",
-            "alt": "Figure 1.28: Regions and quadrants of the peritoneal cavity there are (a) nine abdominal regions and (b) four abdominal quadrants in the peritoneal cavity."
+            "caption": "Figure 1.28: The Nine Abdominal Regions and Four Abdominal Quadrants",
+            "alt": "Abdominal regions and quadrants"
           },
           {
             "src": "/images/anatomy/ch1_image36.png",
-            "caption": "Figure 1.29: Serous membrane: Serous membrane lines the pericardial cavity and reflects back to cover the heart much the same way that an underinflated balloon would form two layers surrounding a fist.",
-            "alt": "Figure 1.29: Serous membrane: Serous membrane lines the pericardial cavity and reflects back to cover the heart much the same way that an underinflated balloon would form two layers surrounding a fist."
+            "caption": "Figure 1.29: Double-layered serous membrane structure (Parietal and Visceral layers)",
+            "alt": "Serous membranes"
           },
           {
             "src": "/images/anatomy/ch1_image37.png",
-            "caption": "Figure 1.30: (a) Organ systems of the human body.",
-            "alt": "Figure 1.30: (a) Organ systems of the human body."
+            "caption": "Figure 1.30 (a): Overview of the 11 organ systems of the human body (Part 1)",
+            "alt": "Organ systems part 1"
           },
           {
             "src": "/images/anatomy/ch1_image38.png",
-            "caption": "Figure 1.30: (b) Organ systems of the human body.",
-            "alt": "Figure 1.30: (b) Organ systems of the human body."
+            "caption": "Figure 1.30 (b): Overview of the 11 organ systems of the human body (Part 2)",
+            "alt": "Organ systems part 2"
           }
-        ],
-        "tables": []
+        ]
       }
     ],
     "mcqs": [
@@ -677,7 +765,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 2,
     "title": "The Skeletal System & Joints",
     "category": "Osteology & Arthrology",
-    "icon": "\ud83e\uddb4",
+    "icon": "🦴",
     "color": "from-amber-500 to-orange-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Skeletal System & Joints.",
@@ -689,228 +777,290 @@ export const ANATOMY_CHAPTERS = {
       "Describe structure of Axial and Appendicular skeleton.",
       "Explain classification and structure of Joints and related Movements.",
       "List down various abnormal conditions of the bones and joint.",
-      "The human skeleton is the internal framework of the body. It is composed of 270 bones at birth and than the total decreases to 206 bones (Table 2.1) by adulthood after some bones has fused together. The bone mass in the skeleton reaches maximum density around age 30.The skeletal system consists of bones, as well as their associated connective tissues, which include cartilage, tendons, and ligaments. The term skeleton is derived from a Greek word denotes \u2018dried', but the skeleton is far from being dry and non living. The skeletal system consists of dynamic living tissues that are able to grow, detect pain stimuli, adapt to stress, and undergo repair after injury."
+      "The human skeleton is the internal framework of the body. It is composed of 270 bones at birth and than the total decreases to 206 bones (Table 2.1) by adulthood after some bones has fused together. The bone mass in the skeleton reaches maximum density around age 30.The skeletal system consists of bones, as well as their associated connective tissues, which include cartilage, tendons, and ligaments. The term skeleton is derived from a Greek word denotes ‘dried', but the skeleton is far from being dry and non living. The skeletal system consists of dynamic living tissues that are able to grow, detect pain stimuli, adapt to stress, and undergo repair after injury."
     ],
     "totalImages": 33,
     "sections": [
       {
         "id": "sec-2-1",
-        "title": "Overview & Key Concepts",
+        "title": "Macroscopic Architecture & Histology of Osseous Tissue",
         "content": [
-          "Chapter 2",
-          "The Skeletal System"
+          "The skeletal system forms the rigid framework of the human body, comprising 206 articulated bones in the adult, associated cartilages, and ligaments. Bones are active, dynamic metabolic organs that perform structural support, organ protection, mechanical leverage for movement, mineral homeostasis (storing 99% of bodily calcium and phosphorus), and hematopoiesis (blood cell production in red bone marrow).",
+          "Structurally, a typical long bone (such as the femur or humerus) exhibits distinct macroscopic anatomical zones tailored to resist compressive, bending, and torsional stresses."
         ],
+        "points": [
+          "**Diaphysis:** The elongated tubular shaft of a long bone, constructed primarily of dense, rigid compact bone enclosing a central medullary cavity filled with lipid-rich yellow marrow in adults.",
+          "**Epiphyses:** The proximal and distal rounded extremities of a long bone, composed of an extensive lattice of spongy (cancellous / trabecular) bone surrounded by a thin shell of compact bone, containing hematopoietically active red marrow.",
+          "**Metaphyses:** The flared transitional zones between the diaphysis and epiphyses. In growing children, each metaphysis contains the cartilaginous **epiphyseal growth plate** (physis), which ossifies into the adult **epiphyseal line** after skeletal maturity.",
+          "**Articular Cartilage:** A resilient, frictionless layer of hyaline cartilage capping articulating epiphyses; lacks perichondrium and blood vessels, absorbing shock and lubricating synovial joints.",
+          "**Periosteum:** A vascular, innervated, two-layered fibrous sheath enclosing bone exterior (except articular surfaces). The outer fibrous layer provides tendon/ligament anchorages; the inner osteogenic layer contains bone stem cells essential for appositional diameter growth and fracture repair.",
+          "**Endosteum:** A delicate cellular membrane lining the internal medullary cavity and trabecular surfaces, actively participating in bone deposition and resorption.",
+          "**Osteon (Haversian System):** The fundamental structural unit of compact bone. Consists of concentric rings of calcified extracellular matrix (**lamellae**) arranged around a central **Haversian canal** carrying neurovascular vessels.",
+          "**Osteocytes & Canaliculi:** Mature osteocytes reside within tiny cavities called **lacunae**. Microscopic radiating micro-canals (**canaliculi**) connect lacunae, allowing gap-junction nutrient and waste diffusion from central vessels."
+        ],
+        "clinicalPearl": "**Fracture Healing & Periosteal Stripping:** The periosteum carries sensory pain fibers and osteoprogenitor cells. Severe trauma with periosteal stripping drastically delays callus formation and secondary bone healing, significantly increasing non-union rates in compound fractures.",
         "images": [
           {
             "src": "/images/anatomy/ch2_image1.png",
-            "caption": "Figure 2.1: Structure of long bone.",
-            "alt": "Figure 2.1: Structure of long bone."
+            "caption": "Figure 2.1: Gross anatomical architecture and landmarks of a long bone",
+            "alt": "Long bone architecture"
           },
           {
             "src": "/images/anatomy/ch2_image2.png",
-            "caption": "Figure 2.2: Microscopic structure of a long bone.",
-            "alt": "Figure 2.2: Microscopic structure of a long bone."
+            "caption": "Figure 2.2 (a): Microscopic histology of compact bone and the Osteon (Haversian System)",
+            "alt": "Osteon histology"
           },
           {
             "src": "/images/anatomy/ch2_image3.png",
-            "caption": "Figure 2.2: Microscopic structure of a long bone.",
-            "alt": "Figure 2.2: Microscopic structure of a long bone."
-          },
+            "caption": "Figure 2.2 (b): Magnified view of osteocytes in lacunae with connecting canaliculi",
+            "alt": "Osteocytes in lacunae"
+          }
+        ]
+      },
+      {
+        "id": "sec-2-2",
+        "title": "Osteogenesis, Longitudinal Growth & Bone Remodeling Dynamics",
+        "content": [
+          "**Osteogenesis (Ossification)** is the developmental process of bone formation, beginning around the sixth embryonic week and proceeding via two major pathways: **intramembranous ossification** and **endochondral ossification**.",
+          "Throughout life, mature bone tissue undergoes continuous cyclical turnover through **bone remodeling**, coupling bone resorption by multinucleated osteoclasts with bone deposition by active osteoblasts."
+        ],
+        "points": [
+          "**Intramembranous Ossification:** Direct condensation of mesenchymal connective tissue membranes into bone; forms flat bones of the cranial vault, mandible, and most of the clavicle.",
+          "**Endochondral Ossification:** Replacement of an initial hyaline cartilage model by bone; forms long bones, vertebrae, pelvis, and ribs. Involves primary ossification center formation in the diaphysis and secondary centers in the epiphyses.",
+          "**Epiphyseal Plate Zones:** Longitudinal growth occurs in four distinct functional zones: **Zone of resting cartilage**, **Zone of proliferating cartilage** (rapid chondrocyte mitosis), **Zone of hypertrophic cartilage** (enlarged maturing chondrocytes), and **Zone of calcified cartilage** (calcification and osteoblast invasion).",
+          "**Appositional Growth:** Increase in bone shaft thickness/diameter driven by subperiosteal osteoblasts laying down new outer circumferential lamellae while endosteal osteoclasts resorb bone to expand the medullary canal.",
+          "**Bone Remodeling Cycle:** Regulated by mechanical strain (Wolff's Law) and endocrine hormones. **Parathyroid Hormone (PTH)** stimulates osteoclast activity to release calcium into blood; **Calcitonin** inhibits osteoclasts and promotes bone deposition.",
+          "**Osteoporosis Pathophysiology:** Imbalance where osteoclastic bone resorption outpaces osteoblastic bone formation, causing trabecular thinning, microarchitectural deterioration, and fragility fractures of the hip, wrist (Colles' fracture), and vertebrae."
+        ],
+        "clinicalPearl": "**Immobility & Disuse Osteopenia in Nursing:** Wolff's Law states that bone remodels in direct response to mechanical stress. Prolonged bed rest or immobilization removes mechanical strain, precipitating rapid calcium leaching, hypercalciuria, and disuse osteoporosis within weeks.",
+        "images": [
           {
             "src": "/images/anatomy/ch2_image4.png",
-            "caption": "Figure 2.3: Bone formation.",
-            "alt": "Figure 2.3: Bone formation."
+            "caption": "Figure 2.3: Stages of endochondral ossification and primary ossification center",
+            "alt": "Endochondral ossification"
           },
           {
             "src": "/images/anatomy/ch2_image5.png",
-            "caption": "Figure 2.4: Bone growth.",
-            "alt": "Figure 2.4: Bone growth."
+            "caption": "Figure 2.4: Epiphyseal growth plate histology and longitudinal bone elongation",
+            "alt": "Epiphyseal plate growth"
           },
           {
             "src": "/images/anatomy/ch2_image6.png",
-            "caption": "Figure 2.5: Bone remodeling.",
-            "alt": "Figure 2.5: Bone remodeling."
-          },
+            "caption": "Figure 2.5: Coupled bone remodeling cycle (Osteoclastic resorption and osteoblastic deposition)",
+            "alt": "Bone remodeling"
+          }
+        ]
+      },
+      {
+        "id": "sec-2-3",
+        "title": "The Axial Skeleton: Cranium, Facial Bones & Sutures",
+        "content": [
+          "The adult human skeleton is divided into the **axial skeleton** (80 bones forming the central longitudinal axis) and the **appendicular skeleton** (126 bones of the limbs and girdles).",
+          "The skull comprises 22 bones resting upon the superior aspect of the vertebral column: 8 **cranial bones** forming the protective cranial cavity and 14 **facial bones** providing anterior facial scaffolding."
+        ],
+        "points": [
+          "**Cranial Bones (8 total):** **Frontal bone** (forehead and superior orbit), **Parietal bones (2)** (superior-lateral cranium), **Temporal bones (2)** (lateral skull, ear canals, mastoid and styloid processes), **Occipital bone** (posterior-inferior base with foramen magnum and occipital condyles), **Sphenoid bone** (\"keystone\" articulating with all cranial bones; contains sella turcica housing the pituitary gland), and **Ethmoid bone** (cribriform plate with olfactory foramina and crista galli).",
+          "**Facial Bones (14 total):** **Nasal bones (2)**, **Maxillae (2)** (upper jaw and hard palate), **Zygomatic bones (2)** (cheekbones), **Lacrimal bones (2)**, **Palatine bones (2)**, **Inferior nasal conchae (2)**, **Vomer** (inferior nasal septum), and the solitary movable **Mandible** (lower jaw with alveolar process and temporomandibular joint).",
+          "**Cranial Sutures:** Immovable fibrous synarthroses: **Coronal suture** (unites frontal and parietal bones), **Sagittal suture** (unites right and left parietal bones), **Lambdoid suture** (unites parietal and occipital bones), and **Squamous sutures** (unite parietal and temporal bones).",
+          "**Infant Fontanelles:** Unossified membranous \"soft spots\" in neonatal skulls allowing childbirth cranial moulding and rapid infant brain expansion: **Anterior fontanelle** (closes at 18-24 months) and **Posterior fontanelle** (closes at 2-3 months).",
+          "**Hyoid Bone:** A solitary U-shaped bone in the anterior neck between mandible and larynx; unique in that it does not articulate directly with any other bone, serving as a suspension anchor for tongue and swallowing muscles."
+        ],
+        "clinicalPearl": "**Fontanelle Triage in Pediatric Nursing:** In infants, a sunken anterior fontanelle is a hallmark indicator of severe dehydration. Conversely, a tense, bulging fontanelle at rest indicates increased intracranial pressure (ICP) secondary to meningitis or hydrocephalus.",
+        "images": [
           {
             "src": "/images/anatomy/ch2_image7.png",
-            "caption": "Figure 2.6: Axial skeleton.",
-            "alt": "Figure 2.6: Axial skeleton."
+            "caption": "Figure 2.6: Overview of the Axial Skeleton (Skull, Vertebral Column, Thoracic Cage)",
+            "alt": "Axial skeleton overview"
           },
           {
             "src": "/images/anatomy/ch2_image8.png",
-            "caption": "Figure 2.7: Lateral view of human skull.",
-            "alt": "Figure 2.7: Lateral view of human skull."
+            "caption": "Figure 2.7: Lateral aspect of the adult human skull showing cranial and facial bones",
+            "alt": "Lateral skull"
           },
           {
             "src": "/images/anatomy/ch2_image9.png",
-            "caption": "Figure 2.8: Interior of the cranial cavity (superior view).",
-            "alt": "Figure 2.8: Interior of the cranial cavity (superior view)."
+            "caption": "Figure 2.8: Interior of the cranial cavity (anterior, middle, and posterior cranial fossae)",
+            "alt": "Cranial cavity interior"
           },
           {
             "src": "/images/anatomy/ch2_image10.png",
-            "caption": "Figure 2.9: Sphenoid bone.",
-            "alt": "Figure 2.9: Sphenoid bone."
+            "caption": "Figure 2.9: The Sphenoid bone with central sella turcica and greater/lesser wings",
+            "alt": "Sphenoid bone"
           },
           {
             "src": "/images/anatomy/ch2_image11.png",
-            "caption": "Figure 2.10: Ethmoid bone.",
-            "alt": "Figure 2.10: Ethmoid bone."
+            "caption": "Figure 2.10: The Ethmoid bone with cribriform plate and perpendicular plate",
+            "alt": "Ethmoid bone"
           },
           {
             "src": "/images/anatomy/ch2_image12.png",
-            "caption": "Figure 2.11: Newborn skull showing sutures of the skull.",
-            "alt": "Figure 2.11: Newborn skull showing sutures of the skull."
+            "caption": "Figure 2.11: Neonatal skull showing fontanelles and unossified cranial sutures",
+            "alt": "Newborn skull fontanelles"
           },
           {
             "src": "/images/anatomy/ch2_image13.png",
-            "caption": "Figure 2.12: The facial bones.",
-            "alt": "Figure 2.12: The facial bones."
+            "caption": "Figure 2.12: Anterior view of the facial skeleton and orbital cavities",
+            "alt": "Facial skeleton"
           },
           {
             "src": "/images/anatomy/ch2_image14.png",
-            "caption": "Figure 2.13: Base of skull viewed from below (inferior view).",
-            "alt": "Figure 2.13: Base of skull viewed from below (inferior view)."
+            "caption": "Figure 2.13: Inferior view of the skull base showing foramen magnum and carotid canal",
+            "alt": "Skull base inferior"
           },
           {
             "src": "/images/anatomy/ch2_image15.png",
-            "caption": "Figure 2.14: Mandible bone.",
-            "alt": "Figure 2.14: Mandible bone."
+            "caption": "Figure 2.14: The Mandible showing body, ramus, condylar process, and coronoid process",
+            "alt": "Mandible anatomy"
           },
           {
             "src": "/images/anatomy/ch2_image16.png",
-            "caption": "Figure 2.15: Hyoid bone.",
-            "alt": "Figure 2.15: Hyoid bone."
-          },
+            "caption": "Figure 2.15: The solitary Hyoid bone with greater and lesser horns",
+            "alt": "Hyoid bone"
+          }
+        ]
+      },
+      {
+        "id": "sec-2-4",
+        "title": "The Vertebral Column & Thoracic Cage",
+        "content": [
+          "The **vertebral column (spine)** extends from the skull base to the pelvis, encasing and shielding the delicate spinal cord, supporting the head, and anchoring the thoracic cage and postural back muscles.",
+          "An adult vertebral column contains 26 movable vertebrae arranged in five distinct anatomical regions with characteristic biomechanical curvatures, complemented by 12 pairs of ribs and the central sternum."
+        ],
+        "points": [
+          "**Vertebral Column Regions:** **7 Cervical (C1-C7)** (neck), **12 Thoracic (T1-T12)** (articulating with ribs), **5 Lumbar (L1-L5)** (massive bodies supporting upper body weight), **1 Sacrum** (5 fused sacral vertebrae), and **1 Coccyx** (3-5 fused coccygeal vertebrae).",
+          "**Spinal Curvatures:** Four physiological curves provide spring-like shock absorption: **Primary (kyphotic) curvatures** (thoracic and sacral, concave anteriorly, present at birth) and **Secondary (lordotic) curvatures** (cervical lordosis develops when infant holds head up at ~3 months; lumbar lordosis develops upon standing/walking at ~1 year).",
+          "**Atlas (C1) & Axis (C2):** C1 (**Atlas**) lacks a body and spinous process, with superior articular facets supporting occipital condyles for nodding (\"yes\" movement). C2 (**Axis**) possesses an upright peg-like **dens (odontoid process)** acting as a pivot for C1 rotation (\"no\" movement).",
+          "**Intervertebral Discs:** Fibrocartilaginous shock-absorbing cushions between adjacent vertebral bodies consisting of an outer tough fibrous ring (**anulus fibrosus**) and an inner gelatinous core (**nucleus pulposus**).",
+          "**Thoracic Cage:** Encloses thoracic viscera; composed of the **Sternum** (Manubrium, Body, Xiphoid process) and **12 pairs of ribs**: **True ribs (1-7)** (attach directly to sternum via costal cartilages), **False ribs (8-10)** (attach indirectly via cartilage of rib 7), and **Floating ribs (11-12)** (lack anterior sternal attachment).",
+          "**Sternal Angle (Angle of Louis):** A palpable transverse ridge at the manubriosternal junction located precisely at the level of the 2nd costal cartilage, T4/T5 intervertebral disc, bifurcation of the trachea (carina), and start of the aortic arch."
+        ],
+        "clinicalPearl": "**Sternal Angle & CPR Landmarks:** In emergency nursing and resuscitation, the Sternal Angle is the primary surface landmark for counting intercostal spaces (e.g., placing ECG leads V1/V2 in the 4th intercostal space). Compressions must never be performed over the fragile xiphoid process to prevent hepatic laceration.",
+        "images": [
           {
             "src": "/images/anatomy/ch2_image17.png",
-            "caption": "Figure 2.16: Vertebral column.",
-            "alt": "Figure 2.16: Vertebral column."
+            "caption": "Figure 2.16: Lateral and posterior overview of the adult Vertebral Column and curvatures",
+            "alt": "Vertebral column"
           },
           {
             "src": "/images/anatomy/ch2_image18.png",
-            "caption": "Figure 2.17: First cervical vertebra: Atlas.",
-            "alt": "Figure 2.17: First cervical vertebra: Atlas."
+            "caption": "Figure 2.17: First cervical vertebra: Atlas (C1) superior articular facets",
+            "alt": "Atlas C1 vertebra"
           },
           {
             "src": "/images/anatomy/ch2_image19.png",
-            "caption": "Figure 2.18: Second cervical vertebra: Axis.",
-            "alt": "Figure 2.18: Second cervical vertebra: Axis."
+            "caption": "Figure 2.18: Second cervical vertebra: Axis (C2) with dens (odontoid process)",
+            "alt": "Axis C2 vertebra"
           },
           {
             "src": "/images/anatomy/ch2_image20.png",
-            "caption": "Figure 2.19: Thoracic and lumbar vertebrae.",
-            "alt": "Figure 2.19: Thoracic and lumbar vertebrae."
+            "caption": "Figure 2.19: Comparative architecture of Thoracic and Lumbar vertebrae",
+            "alt": "Thoracic and lumbar vertebrae"
           },
           {
             "src": "/images/anatomy/ch2_image21.png",
-            "caption": "Figure 2.20: Sacrum and coccyx (lateral, anterior and posterior view).",
-            "alt": "Figure 2.20: Sacrum and coccyx (lateral, anterior and posterior view)."
+            "caption": "Figure 2.20: Sacrum and Coccyx (anterior, posterior, and lateral views)",
+            "alt": "Sacrum and coccyx"
           },
           {
             "src": "/images/anatomy/ch2_image22.png",
-            "caption": "Figure 2.21: Rib cage (thoracic cage).",
-            "alt": "Figure 2.21: Rib cage (thoracic cage)."
-          },
+            "caption": "Figure 2.21: The Thoracic Cage: Sternum (Manubrium, Body, Xiphoid) and 12 pairs of ribs",
+            "alt": "Thoracic cage"
+          }
+        ]
+      },
+      {
+        "id": "sec-2-5",
+        "title": "The Appendicular Skeleton: Pectoral Girdle, Pelvis & Limbs",
+        "content": [
+          "The **appendicular skeleton** comprises 126 bones that enable locomotion, balance, manipulation of objects, and physical interaction with the environment. It consists of the pectoral and pelvic girdles together with upper and lower limb extremities."
+        ],
+        "points": [
+          "**Pectoral (Shoulder) Girdle:** Composed of the anterior S-shaped **Clavicle** (collarbone) and posterior triangular **Scapula** (shoulder blade with spine, acromion, coracoid process, and shallow glenoid cavity); attached loosely to axial skeleton via sternoclavicular joint for maximum mobility.",
+          "**Upper Limb Bones (30 per limb):** **Humerus** (arm bone articulating with glenoid cavity and distal elbow), **Radius** (lateral forearm bone rotating for pronation/supination), **Ulna** (medial forearm bone with olecranon forming elbow point), **8 Carpals** in wrist (Scaphoid, Lunate, Triquetrum, Pisiform, Trapezium, Trapezoid, Capitate, Hamate), **5 Metacarpals** in palm, and **14 Phalanges** in fingers.",
+          "**Pelvic (Hip) Girdle:** Heavy, rigid ring composed of two **coxal (hip) bones** fused to the sacrum, designed for weight bearing. Each coxal bone forms by embryonic fusion of three bones: **Ilium** (superior flare with iliac crest), **Ischium** (inferior-posterior with ischial tuberosities supporting sitting weight), and **Pubis** (anterior with pubic symphysis).",
+          "**Acetabulum:** A deep, cup-like lateral socket formed by the ilium, ischium, and pubis that accommodates the spherical head of the femur to form the stable hip joint.",
+          "**Lower Limb Bones (30 per limb):** **Femur** (thigh bone, longest and strongest bone in body with head, neck, and trochanters), **Patella** (sesamoid kneecap within quadriceps tendon), **Tibia** (massive medial weight-bearing shinbone with medial malleolus), **Fibula** (slender lateral non-weight-bearing bone with lateral malleolus), **7 Tarsals** (Talus, Calcaneus heel bone, Navicular, Cuboid, 3 Cuneiforms), **5 Metatarsals**, and **14 Phalanges** in toes."
+        ],
+        "clinicalPearl": "**Femoral Neck Fractures in Elderly Nursing:** The femoral neck has a tenuous retrograde arterial supply from medial and lateral circumflex femoral arteries. Displaced femoral neck fractures in geriatric falls carry a high risk of avascular necrosis (AVN) of the femoral head, necessitating hemiarthroplasty rather than simple pinning.",
+        "images": [
           {
             "src": "/images/anatomy/ch2_image23.png",
-            "caption": "Figure 2.22: Axial and appendicular skeleton.",
-            "alt": "Figure 2.22: Axial and appendicular skeleton."
+            "caption": "Figure 2.22: Comparative overview of Axial versus Appendicular skeleton",
+            "alt": "Axial and appendicular skeleton"
           },
           {
             "src": "/images/anatomy/ch2_image24.png",
-            "caption": "Figure 2.23: Bones of the pectoral girdle and upper limb.",
-            "alt": "Figure 2.23: Bones of the pectoral girdle and upper limb."
+            "caption": "Figure 2.23: Bones of the Pectoral Girdle and Upper Limb overview",
+            "alt": "Pectoral girdle and upper limb"
           },
           {
             "src": "/images/anatomy/ch2_image25.png",
-            "caption": "Figure 2.24: Scapula (shoulder blade).",
-            "alt": "Figure 2.24: Scapula (shoulder blade)."
+            "caption": "Figure 2.24: Scapula anatomy: Spine, Acromion, Coracoid process, and Glenoid cavity",
+            "alt": "Scapula landmarks"
           },
           {
             "src": "/images/anatomy/ch2_image26.png",
-            "caption": "Figure 2.25: Right humerus (anterior and posterior view).",
-            "alt": "Figure 2.25: Right humerus (anterior and posterior view)."
+            "caption": "Figure 2.25: The Humerus: Head, anatomical/surgical necks, and distal epicondyles",
+            "alt": "Humerus anatomy"
           },
           {
             "src": "/images/anatomy/ch2_image27.png",
-            "caption": "Figure 2.26: Right ulna and radius, bones of right wrist and hand.",
-            "alt": "Figure 2.26: Right ulna and radius, bones of right wrist and hand."
+            "caption": "Figure 2.26: Radius, Ulna, Carpal bones of wrist, Metacarpals, and Phalanges",
+            "alt": "Forearm wrist hand"
           },
           {
             "src": "/images/anatomy/ch2_image28.png",
-            "caption": "Figure 2.27: Pelvic girdle.",
-            "alt": "Figure 2.27: Pelvic girdle."
+            "caption": "Figure 2.27: The Pelvic Girdle: Ilium, Ischium, Pubis, and Acetabulum",
+            "alt": "Pelvic girdle"
+          },
+          {
+            "src": "/images/anatomy/ch2_image29.png",
+            "caption": "Figure 2.29: Tibia (weight-bearing) and Fibula with proximal and distal malleoli",
+            "alt": "Tibia and fibula"
           },
           {
             "src": "/images/anatomy/ch2_image30.png",
-            "caption": "Figure 2.29: Tibia and fibula.",
-            "alt": "Figure 2.29: Tibia and fibula."
+            "caption": "Figure 2.30: Overview of the Lower Limb: Femur, Patella, Tibia, Fibula, and Foot",
+            "alt": "Lower limb overview"
           },
           {
             "src": "/images/anatomy/ch2_image31.png",
-            "caption": "Figure 2.30: Lower limb.",
-            "alt": "Figure 2.30: Lower limb."
-          },
+            "caption": "Figure 2.31: Tarsal bones, Calcaneus (heel bone), Metatarsals, and Phalanges",
+            "alt": "Bones of foot"
+          }
+        ]
+      },
+      {
+        "id": "sec-2-6",
+        "title": "Arthrology: Joint Classification & Synovial Biomechanics",
+        "content": [
+          "**Arthrology** is the scientific study of joints (articulations)—junctions where two or more bones or cartilages meet. Joints are classified functionally by degree of movement permitted (**synarthrosis, amphiarthrosis, diarthrosis**) and structurally by binding tissue material (**fibrous, cartilaginous, synovial**).",
+          "Synovial joints are the most prevalent and mechanically complex articulations, granting wide ranges of fluid bodily motion."
+        ],
+        "points": [
+          "**Synarthrosis (Immovable Joints):** Articulations permitting zero movement; includes cranial sutures and gomphoses (teeth in alveolar sockets).",
+          "**Amphiarthrosis (Slightly Movable Joints):** Articulations permitting slight movement; includes pubic symphysis and intervertebral discs.",
+          "**Diarthrosis (Freely Movable Joints):** All synovial joints, permitting extensive multidirectional mobility.",
+          "**Structural Anatomy of Synovial Joints:** Comprises an **Articular Capsule** (outer fibrous capsule + inner synovial membrane), **Synovial Cavity** containing viscous lubricating **Synovial Fluid** (rich in hyaluronic acid and lubricin), **Articular Cartilage**, and reinforcing **extracapsular and intracapsular ligaments**.",
+          "**1. Ball-and-Socket Joint (Spheroidal):** Multiaxial joint granting flexion, extension, abduction, adduction, circumduction, and rotation (e.g., Shoulder and Hip joints).",
+          "**2. Hinge Joint (Ginglymus):** Uniaxial joint granting angular flexion and extension in a single plane (e.g., Elbow joint, Knee joint, Interphalangeal joints).",
+          "**3. Pivot Joint (Trochoid):** Uniaxial joint permitting rotational movement around a central longitudinal axis (e.g., Atlantoaxial joint [C1-C2], Proximal radioulnar joint).",
+          "**4. Condyloid Joint (Ellipsoid):** Biaxial joint allowing flexion, extension, abduction, adduction, and circumduction (e.g., Radiocarpal wrist joint, Metacarpophalangeal joints).",
+          "**5. Saddle Joint (Sellar):** Biaxial joint with opposing concave and convex saddle surfaces (e.g., Carpometacarpal joint of the thumb, permitting thumb opposition).",
+          "**6. Gliding (Plane) Joint:** Non-axial joint permitting flat articulating surfaces to glide over one another (e.g., Intercarpal and Intertarsal joints)."
+        ],
+        "clinicalPearl": "**Arthrocentesis & Joint Effusion Nursing:** Inflammation or infection (septic arthritis, gout) increases synovial fluid production, producing a joint effusion. Arthrocentesis (aspiration of synovial fluid) must be performed under strict aseptic technique to prevent iatrogenic joint infection.",
+        "images": [
           {
             "src": "/images/anatomy/ch2_image32.png",
-            "caption": "Figure 2.31: Metatarsal bones and phalanges (anterior and lateral view).",
-            "alt": "Figure 2.31: Metatarsal bones and phalanges (anterior and lateral view)."
+            "caption": "Figure 2.32: Ultrastructure of a typical Synovial Joint (Capsule, Synovial Membrane, Cavity, Cartilage)",
+            "alt": "Synovial joint structure"
           },
           {
             "src": "/images/anatomy/ch2_image33.png",
-            "caption": "Figure 2.32: Structure of a synovial joint.",
-            "alt": "Figure 2.32: Structure of a synovial joint."
-          },
-          {
-            "src": "/images/anatomy/ch2_image34.png",
-            "caption": "Figure 2.33: Types of synovial joints.",
-            "alt": "Figure 2.33: Types of synovial joints."
+            "caption": "Figure 2.33: The six structural types of Synovial Joints and biomechanical axes",
+            "alt": "Types of synovial joints"
           }
-        ],
-        "tables": [
-          [
-            [
-              "AXIAL SKELETON Skull Braincase Paired Parietal 2 Temporal 2 Unpaired Front 1 Occipital 1 Sphenoid 1 Ethmoid 1 Face Paired Maxilla 2 Zygomatic 2 Palatine 2 Nasal 2 Lacrimal 2 Inferior Nasal Concha 2 Unpaired Mandible 1 Vomer 1 TOTAL SKULL BONES 22 Auditory Ossicles Malleus 2 Incus 2 Stapes 2 TOTAL 6 Hyoid 1 Vertebral Column Cervical Vertebrae 7 Thoracic Vertebrae 12 Lumbar Vertebrae 5 Sacrum 1 Coccyx 1 TOTAL VERTEBRAL COLUMN 26",
-              "Thoracic Cage Ribs 24 Sternum (3 Parts, Sometimes Considered 3 Bones) 1 Total Thoracic Cage 25 Total Axial Skeleton 80 APPENDICULAR SKELETON Pectoral Girdle Scapula 2 Clavicle 2 Upper Limb Humerus 2 Ulna 2 Radius 2 Carpal Bones 16 Metacarpal Bones 10 Phalanges 28 TOTAL GIRDLE AND UPPER LIMB 64 Pelvic Girdle Coxal Bone 2 Lower Limb Femur 2 Tibia 2 Fibula 2 Patella 2 Tarsal Bones 14 Metatarsal Bones 10 Phalanges 28 TOTAL GIRDLE AND LOWER LIMB 62 TOTAL APPENDICULAR SKELETON 126 TOTAL BONES 206"
-            ]
-          ],
-          [
-            [
-              "Class and Example of Joint",
-              "Structures Joined",
-              "Movement"
-            ],
-            [
-              "Plane Acromioclavicular Carpometacarpal Costovertebral Intercarpal Intermetatarsal Intertarsal Intervertebral Sacroiliac Tarsometatarsal",
-              "Acromion process of scapula and clavicle Carpals and metacarpals 2\u20135 Ribs and vertebrae Between carpal bones Between metatarsal bones between tarsal bones Between articular processes of adjacent vertebrae Between sacrum and coxal bone (complex joint with several planes and synchondroses) Tarsal bones and metatarsal bones",
-              "Slight Multiple axes as a group Slight Slight Slight Slight Slight Slight Slight"
-            ],
-            [
-              "Saddle Carpometacarpal Pollicis Intercarpal Sternoclavicular",
-              "Carpal and metacarpal of thumb Between carpal bones Manubrium of sternum and clavicle",
-              "Two axes Slight Slight"
-            ],
-            [
-              "Hinge Cubital (elbow) Knee Interphalangeal Talocrural (ankle)",
-              "Humerus, ulna, and radius Femur and tibia Between phalanges Talus, tibia, and fibula",
-              "One axis One axis One axis Multiple axes; one predomin ates"
-            ],
-            [
-              "Pivot Medial atlantoaxial Proximal radioulnar Distal radioulnar",
-              "Atlas and axis Radius and ulna Radius and ulna",
-              "Rotation Rotation Rotation"
-            ],
-            [
-              "Ball - and - Socket Coxal (hip) Humeral (shoulder)",
-              "Coxal bone and femur Scapula and humerus",
-              "Multiple axes Multiple axes"
-            ],
-            [
-              "Ellipsoid Atlanto occipital Metacarpopha langeal (knuckles) Metatarsopha langeal (ball of foot) Radiocarpal (wrist) Temporomandibular",
-              "Atlas and occipital bone Metacarpal bones and phalanges Metatarsal bones and phalanges Radius and carpal bones Mandible and temporal bone",
-              "Two axes Two axes Two axes Multiple axes Multiple axes; one predominates"
-            ]
-          ]
         ]
       }
     ],
@@ -1321,7 +1471,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 3,
     "title": "The Muscular System",
     "category": "Myology & Muscular Mechanics",
-    "icon": "\ud83d\udcaa",
+    "icon": "💪",
     "color": "from-red-500 to-rose-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Muscular System.",
@@ -1333,7 +1483,7 @@ export const ANATOMY_CHAPTERS = {
       "Explain about Skeletal Muscle Groups.",
       "Describe the Movements of Muscles.",
       "Discuss abnormal conditions of the Muscular System.",
-      "Muscle tissue is a contractile tissue made up of muscle cells or fibers. Muscles convert chemical energy into mechanical energy. Muscles make up the bulk of the body and account for about one-third of its weight. Their ability to contract not only enables the body to move, but also provides the force that pushes substances, such as blood and food, through the body and producing heat to maintain normal body temperature. Without the muscular system, none of the other organ systems would be able to function. Muscles are organs, and as such they contain other types of tissues, such as nervous tissue, blood vessels, and connective tissue. Connective tissue is essential to the organization of the \ufb01bers within a muscle (Figure 3.16). The study of muscles is known as \u2018myology'."
+      "Muscle tissue is a contractile tissue made up of muscle cells or fibers. Muscles convert chemical energy into mechanical energy. Muscles make up the bulk of the body and account for about one-third of its weight. Their ability to contract not only enables the body to move, but also provides the force that pushes substances, such as blood and food, through the body and producing heat to maintain normal body temperature. Without the muscular system, none of the other organ systems would be able to function. Muscles are organs, and as such they contain other types of tissues, such as nervous tissue, blood vessels, and connective tissue. Connective tissue is essential to the organization of the ﬁbers within a muscle (Figure 3.16). The study of muscles is known as ‘myology'."
     ],
     "totalImages": 16,
     "sections": [
@@ -1434,11 +1584,11 @@ export const ANATOMY_CHAPTERS = {
             ],
             [
               "Sarcolemma",
-              "Plasma membrane of a muscle \ufb01bers that forms T- tubule ."
+              "Plasma membrane of a muscle ﬁbers that forms T- tubule ."
             ],
             [
               "Sarcoplasm",
-              "Cytoplasm of a muscle \ufb01bers that contains organelles, including myo\ufb01brils ."
+              "Cytoplasm of a muscle ﬁbers that contains organelles, including myoﬁbrils ."
             ],
             [
               "Glycogen",
@@ -1450,19 +1600,19 @@ export const ANATOMY_CHAPTERS = {
             ],
             [
               "T - tubule",
-              "Extension of the sarcolemma that extends into the muscle \ufb01bers and conveys impulses that cause Ca 2+ to be released into the Sarcoplasmic Reticulum ."
+              "Extension of the sarcolemma that extends into the muscle ﬁbers and conveys impulses that cause Ca 2+ to be released into the Sarcoplasmic Reticulum ."
             ],
             [
               "Sarcoplasmic Reticulum",
-              "The smooth e ndoplasmic r eticulum of a muscle \ufb01bers that stores Ca2 + ."
+              "The smooth e ndoplasmic r eticulum of a muscle ﬁbers that stores Ca2 + ."
             ],
             [
-              "Myo\ufb01bril",
-              "A bundle of myo\ufb01lament that contract ."
+              "Myoﬁbril",
+              "A bundle of myoﬁlament that contract ."
             ],
             [
-              "Myo\ufb01lament",
-              "Actin \ufb01laments and myosin \ufb01laments whose structure and functions account for muscle striations and contractions ."
+              "Myoﬁlament",
+              "Actin ﬁlaments and myosin ﬁlaments whose structure and functions account for muscle striations and contractions ."
             ]
           ],
           [
@@ -1491,7 +1641,7 @@ export const ANATOMY_CHAPTERS = {
             [
               "Muscles of the Trunk (Figure 3. 5 ) External intercostals Internal intercostals External oblique Internal oblique Transversus abdominis Rectus abdominis",
               "Elevate rib cage for inspiration . Depress rib cage for expiration . Tenses abdominal wall; lateral rotation of trunk . Tenses abdominal . wall; lateral rotation of trunk . Tenses abdominal wall . Flexes and rotates the vertebral column .",
-              "Superior rib/inferior rib . Inferior rib/superior rib . Lower eight ribs/iliac crest . Iliac crest/lower three ribs . Lower six ribs/pubis P ubis, pubic. Symphysis /xiphoid process of sternum, \ufb01fth to seventh costal cartilages ."
+              "Superior rib/inferior rib . Inferior rib/superior rib . Lower eight ribs/iliac crest . Iliac crest/lower three ribs . Lower six ribs/pubis P ubis, pubic. Symphysis /xiphoid process of sternum, ﬁfth to seventh costal cartilages ."
             ]
           ],
           [
@@ -1515,8 +1665,8 @@ export const ANATOMY_CHAPTERS = {
             ],
             [
               "Gastrocnemius Tibialis anterior Peroneus group Flexor and extensor digitorum longus",
-              "Plantar \ufb02exion and eversion of foot Dorsi \ufb02exion and inversion of foot Plantar \ufb02exion and eversion of foot Moves toes",
-              "Condyles of femur/calcaneus by way of Achilles tendon Condyles of tibia/tarsal and metatarsal bones Fibula/tarsal and metatarsal bones Tibia, \ufb01bula/phalanges"
+              "Plantar ﬂexion and eversion of foot Dorsi ﬂexion and inversion of foot Plantar ﬂexion and eversion of foot Moves toes",
+              "Condyles of femur/calcaneus by way of Achilles tendon Condyles of tibia/tarsal and metatarsal bones Fibula/tarsal and metatarsal bones Tibia, ﬁbula/phalanges"
             ]
           ]
         ]
@@ -1929,7 +2079,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 4,
     "title": "The Respiratory System",
     "category": "Pulmonology & Airways",
-    "icon": "\ud83e\udec1",
+    "icon": "🫁",
     "color": "from-sky-500 to-blue-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Respiratory System.",
@@ -2163,7 +2313,7 @@ export const ANATOMY_CHAPTERS = {
       {
         "id": "anat-mcq-4-139",
         "question": "The shape of the stomach is",
-        "correctAnswer": "J \u2013 shaped",
+        "correctAnswer": "J – shaped",
         "subtopic": "nan"
       },
       {
@@ -2404,7 +2554,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 5,
     "title": "The Digestive System",
     "category": "Gastroenterology & Alimentary Canal",
-    "icon": "\ud83c\udf7d\ufe0f",
+    "icon": "🍽️",
     "color": "from-emerald-500 to-teal-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Digestive System.",
@@ -2997,7 +3147,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 6,
     "title": "The Cardiovascular System",
     "category": "Angiology & Heart Anatomy",
-    "icon": "\ud83e\udec0",
+    "icon": "🫀",
     "color": "from-rose-500 to-red-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Cardiovascular System.",
@@ -3136,13 +3286,13 @@ export const ANATOMY_CHAPTERS = {
       {
         "id": "anat-mcq-6-198",
         "question": "Identify the normal value of white blood cells",
-        "correctAnswer": "4000-11,000/ \u03bcL",
+        "correctAnswer": "4000-11,000/ μL",
         "subtopic": "nan"
       },
       {
         "id": "anat-mcq-6-199",
         "question": "Identify the normal value of platelets",
-        "correctAnswer": "150,000\u2013400,000/ \u03bcL",
+        "correctAnswer": "150,000–400,000/ μL",
         "subtopic": "nan"
       },
       {
@@ -3467,7 +3617,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 7,
     "title": "The Urinary (Excretory) System",
     "category": "Nephrology & Renal Tract",
-    "icon": "\ud83d\udca7",
+    "icon": "💧",
     "color": "from-cyan-500 to-blue-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Urinary (Excretory) System.",
@@ -3584,7 +3734,7 @@ export const ANATOMY_CHAPTERS = {
             ],
             [
               "Has a single function: To transport urine from the urinary bladder to the vestibule, an external space immediately internal to the labia m inora . It is 3 to 5 cm. long, and opens to the outside of the body at the external urethral orifice located in the female perineum.",
-              "Urinary and reproductive functions: passageway for both urine and semen Approximately 18 to 20 centimeters long. The male urethra contains a number of bends, makes catheterization more difficult. Partitioned into three segments: Prostatic urethra is approximately 3 to 4 c m long and is the most dilatable portion of t he urethra extends through the prostate gland, immediately inferior to the male bladder, where multiple small prostatic ducts enter. Membranous urethra is the shortest and least dilatable portion extends from the inferior surface of the prostate gland t hrough the urogenital diaphragm. Spongy urethra is the longest part (15 centimeters) encased within a cylinder of erectile tissue in the penis called the \u2018 corpus spongiosum ' ."
+              "Urinary and reproductive functions: passageway for both urine and semen Approximately 18 to 20 centimeters long. The male urethra contains a number of bends, makes catheterization more difficult. Partitioned into three segments: Prostatic urethra is approximately 3 to 4 c m long and is the most dilatable portion of t he urethra extends through the prostate gland, immediately inferior to the male bladder, where multiple small prostatic ducts enter. Membranous urethra is the shortest and least dilatable portion extends from the inferior surface of the prostate gland t hrough the urogenital diaphragm. Spongy urethra is the longest part (15 centimeters) encased within a cylinder of erectile tissue in the penis called the ‘ corpus spongiosum ' ."
             ]
           ]
         ]
@@ -3997,7 +4147,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 8,
     "title": "The Reproductive System",
     "category": "Reproductive Anatomy & Embryology",
-    "icon": "\ud83d\udc76",
+    "icon": "👶",
     "color": "from-purple-500 to-pink-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Reproductive System.",
@@ -4544,7 +4694,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 9,
     "title": "The Endocrine System",
     "category": "Endocrinology & Glandular Anatomy",
-    "icon": "\u26a1",
+    "icon": "⚡",
     "color": "from-amber-500 to-yellow-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Endocrine System.",
@@ -5019,7 +5169,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 10,
     "title": "The Nervous System (CNS & PNS)",
     "category": "Neuroanatomy & Brain Structures",
-    "icon": "\ud83e\udde0",
+    "icon": "🧠",
     "color": "from-indigo-500 to-purple-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Nervous System (CNS & PNS).",
@@ -5612,7 +5762,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 11,
     "title": "The Sensory Organs (Eye, Ear, Skin)",
     "category": "Special Senses & Integumentary",
-    "icon": "\ud83d\udc41\ufe0f",
+    "icon": "👁️",
     "color": "from-teal-500 to-cyan-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Sensory Organs (Eye, Ear, Skin).",
@@ -6112,7 +6262,7 @@ export const ANATOMY_CHAPTERS = {
     "unitNumber": 12,
     "title": "The Lymphatic & Immune System",
     "category": "Immunology & Lymphatic Drainage",
-    "icon": "\ud83d\udee1\ufe0f",
+    "icon": "🛡️",
     "color": "from-emerald-600 to-teal-700",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Lymphatic & Immune System.",

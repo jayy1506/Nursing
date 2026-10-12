@@ -3,8 +3,9 @@ import {
   signInWithEmailAndPassword, 
   createUserWithEmailAndPassword, 
   signInWithPopup, 
-  signOut,
-  onAuthStateChanged 
+  signOut, 
+  onAuthStateChanged,
+  updateProfile 
 } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db, googleProvider } from '../config/firebase';
@@ -35,20 +36,37 @@ export const AuthProvider = ({ children }) => {
     return localStorage.getItem('nursing_token') || null;
   });
 
-  const [loading, setLoading] = useState(true);
+  // If user is already cached in localStorage, start with loading = false (instant render)
+  const [loading, setLoading] = useState(() => {
+    try {
+      return !localStorage.getItem('nursing_user');
+    } catch {
+      return false;
+    }
+  });
+
   const [authError, setAuthError] = useState(null);
 
-  // Sync with MongoDB backend helper (non-blocking with timeout)
+  // Sync with MongoDB backend helper (non-blocking with strict timeout & host check)
   const syncWithBackend = async (userData, authToken) => {
     try {
+      const isLocal = typeof window !== 'undefined' && 
+        (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+      const hasBaseUrl = Boolean((import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '').trim());
+      
+      // On static hosting (Vercel) without explicit backend URL, skip to prevent proxy 404/delays
+      if (!isLocal && !hasBaseUrl) {
+        return;
+      }
+
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 2500);
+      const timeoutId = setTimeout(() => controller.abort(), 1500);
 
       await fetch(getApiUrl('/api/auth/signup'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${authToken}`
+          'Authorization': `Bearer ${authToken || ''}`
         },
         body: JSON.stringify({
           name: userData.name || userData.displayName || 'Nursing User',
@@ -59,7 +77,7 @@ export const AuthProvider = ({ children }) => {
         signal: controller.signal
       });
       clearTimeout(timeoutId);
-    } catch (err) {
+    } catch {
       // Quietly ignore backend network / proxy timeouts so UI remains completely responsive
     }
   };
@@ -108,192 +126,250 @@ export const AuthProvider = ({ children }) => {
 
   // Helper to check user directory in persistent memory
   const getDirectoryInfo = (email) => {
+    if (!email) return null;
+    const emailNorm = email.toLowerCase().trim();
     try {
       const saved = localStorage.getItem('nursing_admin_users');
       if (saved) {
         const list = JSON.parse(saved);
-        const match = list.find((u) => u.email?.toLowerCase() === email?.toLowerCase());
+        const match = list.find((u) => u.email?.toLowerCase().trim() === emailNorm);
         if (match) return match;
       }
     } catch {}
 
     const defaultMatch = DEFAULT_DIRECTORY.find(
-      (u) => u.email?.toLowerCase() === email?.toLowerCase()
+      (u) => u.email?.toLowerCase().trim() === emailNorm
     );
     return defaultMatch || null;
   };
 
-  // 1. Email/Password Login with Direct Directory Fallback
+  // 1. Ultra-fast Email/Password Login
   const login = async (email, password) => {
     setAuthError(null);
     const emailNorm = email.toLowerCase().trim();
 
+    // Check directory and master admin credentials
+    const directoryInfo = getDirectoryInfo(emailNorm);
+    const isMasterAdmin =
+      (emailNorm === PRIMARY_ADMIN_EMAIL && (password === PRIMARY_ADMIN_PASSWORD || !password)) ||
+      (emailNorm === SECONDARY_ADMIN_EMAIL && (password === SECONDARY_ADMIN_PASSWORD || !password));
+    const isDirectoryMatch = directoryInfo && 
+      (!directoryInfo.password || directoryInfo.password === password || password === 'Srm123');
+
+    // Instant local resolver helper (0ms response time)
+    const loginViaDirectory = () => {
+      const role = isMasterAdmin ? 'admin' : (directoryInfo?.role || 'student');
+      const adminNames = {
+        [PRIMARY_ADMIN_EMAIL]: PRIMARY_ADMIN_NAME,
+        [SECONDARY_ADMIN_EMAIL]: SECONDARY_ADMIN_NAME
+      };
+      const defaultAdminName = adminNames[emailNorm] || 'Administrator';
+      const name = isMasterAdmin 
+        ? (directoryInfo?.name || defaultAdminName) 
+        : (directoryInfo?.name || emailNorm.split('@')[0]);
+      const isDefaultPassword = isMasterAdmin 
+        ? false 
+        : (directoryInfo?.isDefaultPassword ?? (password === 'Srm123'));
+
+      const fallbackUser = {
+        uid: directoryInfo?.firebaseUid || `usr-direct-${Date.now()}`,
+        email: emailNorm,
+        displayName: name,
+        name: name,
+        role: role,
+        isDefaultPassword,
+        collegeId: directoryInfo?.collegeId || 'COLLEGE_001',
+        photoURL: null
+      };
+
+      const syntheticToken = `direct-token-${Date.now()}`;
+      localStorage.setItem('nursing_token', syntheticToken);
+      localStorage.setItem('nursing_user', JSON.stringify(fallbackUser));
+
+      setToken(syntheticToken);
+      setCurrentUser(fallbackUser);
+      setLoading(false);
+
+      // Background silent tasks (non-blocking)
+      syncWithBackend(fallbackUser, syntheticToken);
+      signInWithEmailAndPassword(auth, emailNorm, password).catch(() => {});
+
+      return fallbackUser;
+    };
+
+    // If master admin or registered directory credentials match, log in INSTANTLY (0ms)
+    if (isMasterAdmin || isDirectoryMatch) {
+      return loginViaDirectory();
+    }
+
     try {
-      // Primary: Attempt Firebase Auth
+      // Primary: Firebase Auth Sign-in
       const userCredential = await signInWithEmailAndPassword(auth, emailNorm, password);
       const user = userCredential.user;
-      
-      let idToken = '';
-      try {
-        idToken = await user.getIdToken();
-      } catch (e) {
-        console.warn('[GetIdToken Warning]:', e);
-      }
-
-      // Check persistent user records in memory
-      const directoryInfo = getDirectoryInfo(user.email);
-
-      // Fetch user role & profile from Firestore (safe fallback)
-      let userDocData = {};
-      try {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          userDocData = userDoc.data();
-        } else {
-          userDocData = {
-            uid: user.uid,
-            name: user.displayName || emailNorm.split('@')[0],
-            email: user.email,
-            role: directoryInfo?.role || 'student',
-            collegeId: 'COLLEGE_001',
-            isDefaultPassword: directoryInfo ? directoryInfo.isDefaultPassword : false,
-            createdAt: new Date().toISOString()
-          };
-          setDoc(doc(db, 'users', user.uid), userDocData).catch(() => {});
-        }
-      } catch (firestoreErr) {
-        console.warn('[Firestore Fetch Warning]:', firestoreErr);
-      }
 
       const isAdminEmail = isAdminEmailCheck(user.email);
-      const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || userDocData.role || 'student');
-      const isDefaultPassword = isAdminEmail ? false : (directoryInfo ? directoryInfo.isDefaultPassword : (password === 'Srm123'));
+      const initialRole = isAdminEmail ? 'admin' : (directoryInfo?.role || 'student');
+      const initialName = user.displayName || directoryInfo?.name || emailNorm.split('@')[0];
+      const isDefault = isAdminEmail ? false : (directoryInfo ? directoryInfo.isDefaultPassword : (password === 'Srm123'));
 
       const mergedUser = {
         uid: user.uid,
         email: user.email,
-        displayName: user.displayName || userDocData.name || directoryInfo?.name || emailNorm.split('@')[0],
-        name: userDocData.name || directoryInfo?.name || user.displayName || emailNorm.split('@')[0],
-        role: userRole,
-        isDefaultPassword,
-        collegeId: userDocData.collegeId || 'COLLEGE_001',
+        displayName: initialName,
+        name: initialName,
+        role: initialRole,
+        isDefaultPassword: isDefault,
+        collegeId: directoryInfo?.collegeId || 'COLLEGE_001',
         photoURL: user.photoURL || null
       };
 
-      // Cache locally
-      localStorage.setItem('nursing_token', idToken);
+      const quickToken = user.accessToken || `fb-token-${Date.now()}`;
+      localStorage.setItem('nursing_token', quickToken);
       localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
 
-      setToken(idToken);
+      setToken(quickToken);
       setCurrentUser(mergedUser);
       setLoading(false);
 
-      // Async backend sync
-      syncWithBackend(mergedUser, idToken);
+      // Non-blocking background token fetch
+      user.getIdToken(false).then((freshToken) => {
+        if (freshToken) {
+          setToken(freshToken);
+          localStorage.setItem('nursing_token', freshToken);
+        }
+      }).catch(() => {});
+
+      // Non-blocking background Firestore sync with 1.2s timeout
+      (async () => {
+        try {
+          const docPromise = getDoc(doc(db, 'users', user.uid));
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1200));
+          const userDoc = await Promise.race([docPromise, timeoutPromise]);
+
+          if (userDoc?.exists && userDoc.exists()) {
+            const data = userDoc.data();
+            setCurrentUser((prev) => {
+              if (!prev) return prev;
+              const updated = {
+                ...prev,
+                name: data.name || prev.name,
+                displayName: data.name || prev.displayName,
+                role: isAdminEmail ? 'admin' : (data.role || prev.role),
+                collegeId: data.collegeId || prev.collegeId,
+                isDefaultPassword: data.isDefaultPassword ?? prev.isDefaultPassword
+              };
+              localStorage.setItem('nursing_user', JSON.stringify(updated));
+              return updated;
+            });
+          } else {
+            // Write profile non-blockingly
+            setDoc(doc(db, 'users', user.uid), {
+              uid: user.uid,
+              name: mergedUser.name,
+              email: user.email,
+              role: mergedUser.role,
+              collegeId: mergedUser.collegeId,
+              isDefaultPassword: mergedUser.isDefaultPassword,
+              createdAt: new Date().toISOString()
+            }).catch(() => {});
+          }
+        } catch {}
+      })();
+
+      // Background sync to backend
+      syncWithBackend(mergedUser, quickToken);
 
       return mergedUser;
     } catch (firebaseErr) {
-      console.warn('[Firebase Auth fallback]: Checking admin & user directory...', firebaseErr.message);
+      console.warn('[Firebase Auth fallback]: Checking directory...', firebaseErr.message);
 
-      // Check if user exists in local/admin directory or is default master admin
-      const directoryInfo = getDirectoryInfo(emailNorm);
-      const isMasterAdmin =
-        (emailNorm === PRIMARY_ADMIN_EMAIL && (password === PRIMARY_ADMIN_PASSWORD || !password)) ||
-        (emailNorm === SECONDARY_ADMIN_EMAIL && (password === SECONDARY_ADMIN_PASSWORD || !password));
-      const isDirectoryMatch = directoryInfo && (!directoryInfo.password || directoryInfo.password === password || password === 'Srm123');
-
-      if (isMasterAdmin || isDirectoryMatch) {
-        const role = isMasterAdmin ? 'admin' : (directoryInfo?.role || 'student');
-        const adminNames = {
-          [PRIMARY_ADMIN_EMAIL]: PRIMARY_ADMIN_NAME,
-          [SECONDARY_ADMIN_EMAIL]: SECONDARY_ADMIN_NAME
-        };
-        const defaultAdminName = adminNames[emailNorm] || 'Administrator';
-        const name = isMasterAdmin ? (directoryInfo?.name || defaultAdminName) : (directoryInfo?.name || emailNorm.split('@')[0]);
-        const isDefaultPassword = isMasterAdmin ? false : (directoryInfo?.isDefaultPassword ?? (password === 'Srm123'));
-
-        const fallbackUser = {
-          uid: `usr-direct-${Date.now()}`,
-          email: emailNorm,
-          displayName: name,
-          name: name,
-          role: role,
-          isDefaultPassword,
-          collegeId: 'COLLEGE_001',
-          photoURL: null
-        };
-
-        const syntheticToken = `direct-token-${Date.now()}`;
-        localStorage.setItem('nursing_token', syntheticToken);
-        localStorage.setItem('nursing_user', JSON.stringify(fallbackUser));
-
-        setToken(syntheticToken);
-        setCurrentUser(fallbackUser);
-        setLoading(false);
-
-        // Background sync to backend
-        syncWithBackend(fallbackUser, syntheticToken);
-
-        return fallbackUser;
+      // Check directory once more in catch
+      if (directoryInfo && (!directoryInfo.password || directoryInfo.password === password || password === 'Srm123')) {
+        return loginViaDirectory();
       }
 
-      // If neither Firebase nor directory matched, propagate error
       setAuthError(firebaseErr.message);
       throw firebaseErr;
     }
   };
 
-  // 2. Email/Password Signup
+  // 2. High-Speed Email/Password Signup
   const signup = async (email, password, name, role = 'student') => {
     setAuthError(null);
+    const emailNorm = email.toLowerCase().trim();
+    const cleanName = name.trim();
+    const isAdminEmail = isAdminEmailCheck(emailNorm);
+    const assignedRole = isAdminEmail ? 'admin' : (role || 'student');
+
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, emailNorm, password);
       const user = userCredential.user;
-      
-      let idToken = '';
-      try {
-        idToken = await user.getIdToken();
-      } catch (e) {
-        console.warn('[GetIdToken Warning]:', e);
-      }
 
-      const isAdminEmail = isAdminEmailCheck(email);
-      const assignedRole = isAdminEmail ? 'admin' : (role || 'student');
+      // Update Firebase Auth profile displayName non-blockingly
+      updateProfile(user, { displayName: cleanName }).catch(() => {});
 
-      const profileData = {
+      const mergedUser = {
         uid: user.uid,
-        name: name.trim(),
+        email: user.email,
+        displayName: cleanName,
+        name: cleanName,
+        role: assignedRole,
+        isDefaultPassword: false,
+        collegeId: 'COLLEGE_001',
+        photoURL: null
+      };
+
+      const quickToken = user.accessToken || `fb-token-${Date.now()}`;
+      localStorage.setItem('nursing_token', quickToken);
+      localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
+
+      // Save into local directory cache so subsequent logins are instant
+      try {
+        const saved = localStorage.getItem('nursing_admin_users');
+        let list = saved ? JSON.parse(saved) : [];
+        if (!list.some((u) => u.email?.toLowerCase().trim() === emailNorm)) {
+          list.push({
+            _id: `usr-${Date.now()}`,
+            name: cleanName,
+            email: emailNorm,
+            password: password,
+            role: assignedRole,
+            firebaseUid: user.uid,
+            status: 'active',
+            isDefaultPassword: false,
+            createdAt: new Date().toISOString()
+          });
+          localStorage.setItem('nursing_admin_users', JSON.stringify(list));
+        }
+      } catch {}
+
+      setToken(quickToken);
+      setCurrentUser(mergedUser);
+      setLoading(false);
+
+      // Background fresh token retrieval
+      user.getIdToken(false).then((freshToken) => {
+        if (freshToken) {
+          setToken(freshToken);
+          localStorage.setItem('nursing_token', freshToken);
+        }
+      }).catch(() => {});
+
+      // Non-blocking Firestore document creation in background
+      setDoc(doc(db, 'users', user.uid), {
+        uid: user.uid,
+        name: cleanName,
         email: user.email,
         role: assignedRole,
         collegeId: 'COLLEGE_001',
         isDefaultPassword: false,
         createdAt: new Date().toISOString()
-      };
-
-      try {
-        setDoc(doc(db, 'users', user.uid), profileData).catch(() => {});
-      } catch (firestoreErr) {
+      }).catch((firestoreErr) => {
         console.warn('[Firestore Set Warning]:', firestoreErr);
-      }
+      });
 
-      const mergedUser = {
-        uid: user.uid,
-        email: user.email,
-        displayName: name.trim(),
-        name: name.trim(),
-        role: assignedRole,
-        isDefaultPassword: false,
-        collegeId: profileData.collegeId
-      };
-
-      localStorage.setItem('nursing_token', idToken);
-      localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
-
-      setToken(idToken);
-      setCurrentUser(mergedUser);
-      setLoading(false);
-
-      syncWithBackend(mergedUser, idToken);
+      // Background sync to backend
+      syncWithBackend(mergedUser, quickToken);
 
       return mergedUser;
     } catch (error) {
@@ -302,64 +378,81 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // 3. Google OAuth Sign-In
+  // 3. Fast Google OAuth Sign-In
   const loginWithGoogle = async (role = 'student') => {
     setAuthError(null);
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      
-      let idToken = '';
-      try {
-        idToken = await user.getIdToken();
-      } catch (e) {
-        console.warn('[GetIdToken Warning]:', e);
-      }
 
-      const directoryInfo = getDirectoryInfo(user.email);
-      let userDocData = {};
-      try {
-        const userDoc = await getDoc(doc(db, 'users', user.uid));
-        if (userDoc.exists()) {
-          userDocData = userDoc.data();
-        } else {
-          userDocData = {
-            uid: user.uid,
-            name: user.displayName || user.email?.split('@')[0] || 'User',
-            email: user.email,
-            role: directoryInfo?.role || role || 'student',
-            collegeId: 'COLLEGE_001',
-            isDefaultPassword: false,
-            createdAt: new Date().toISOString()
-          };
-          setDoc(doc(db, 'users', user.uid), userDocData).catch(() => {});
-        }
-      } catch (firestoreErr) {
-        console.warn('[Firestore Google Sync Warning]:', firestoreErr);
-      }
-
-      const isAdminEmail = isAdminEmailCheck(user.email);
-      const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || userDocData.role || 'student');
+      const emailNorm = (user.email || '').toLowerCase().trim();
+      const directoryInfo = getDirectoryInfo(emailNorm);
+      const isAdminEmail = isAdminEmailCheck(emailNorm);
+      const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || role || 'student');
+      const userName = user.displayName || directoryInfo?.name || emailNorm.split('@')[0] || 'User';
 
       const mergedUser = {
         uid: user.uid,
         email: user.email,
-        displayName: user.displayName || userDocData.name || user.email?.split('@')[0] || 'User',
-        name: userDocData.name || user.displayName || user.email?.split('@')[0] || 'User',
+        displayName: userName,
+        name: userName,
         role: userRole,
         isDefaultPassword: false,
-        collegeId: userDocData.collegeId || 'COLLEGE_001',
+        collegeId: directoryInfo?.collegeId || 'COLLEGE_001',
         photoURL: user.photoURL || null
       };
 
-      localStorage.setItem('nursing_token', idToken);
+      const quickToken = user.accessToken || `g-token-${Date.now()}`;
+      localStorage.setItem('nursing_token', quickToken);
       localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
 
-      setToken(idToken);
+      setToken(quickToken);
       setCurrentUser(mergedUser);
       setLoading(false);
 
-      syncWithBackend(mergedUser, idToken);
+      // Background token and Firestore sync
+      user.getIdToken(false).then((freshToken) => {
+        if (freshToken) {
+          setToken(freshToken);
+          localStorage.setItem('nursing_token', freshToken);
+        }
+      }).catch(() => {});
+
+      // Background profile sync with timeout
+      (async () => {
+        try {
+          const docPromise = getDoc(doc(db, 'users', user.uid));
+          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1200));
+          const userDoc = await Promise.race([docPromise, timeoutPromise]);
+
+          if (userDoc?.exists && userDoc.exists()) {
+            const data = userDoc.data();
+            setCurrentUser((prev) => {
+              if (!prev) return prev;
+              const updated = {
+                ...prev,
+                name: data.name || prev.name,
+                displayName: data.name || prev.displayName,
+                role: isAdminEmail ? 'admin' : (data.role || prev.role)
+              };
+              localStorage.setItem('nursing_user', JSON.stringify(updated));
+              return updated;
+            });
+          } else {
+            setDoc(doc(db, 'users', user.uid), {
+              uid: user.uid,
+              name: userName,
+              email: user.email,
+              role: userRole,
+              collegeId: 'COLLEGE_001',
+              isDefaultPassword: false,
+              createdAt: new Date().toISOString()
+            }).catch(() => {});
+          }
+        } catch {}
+      })();
+
+      syncWithBackend(mergedUser, quickToken);
 
       return mergedUser;
     } catch (error) {
@@ -378,7 +471,7 @@ export const AuthProvider = ({ children }) => {
       if (saved) {
         let list = JSON.parse(saved);
         list = list.map((u) => {
-          if (u.email?.toLowerCase() === currentUser.email?.toLowerCase()) {
+          if (u.email?.toLowerCase().trim() === currentUser.email?.toLowerCase().trim()) {
             return {
               ...u,
               password: newPassword,
@@ -433,58 +526,94 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // Listen to Firebase Auth state changes
+  // Listen to Firebase Auth state changes (Non-blocking & Zero-stall)
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
+        const emailNorm = (user.email || '').toLowerCase().trim();
+        const directoryInfo = getDirectoryInfo(emailNorm);
+        const isAdminEmail = isAdminEmailCheck(emailNorm);
+
+        let cachedUser = null;
         try {
-          let idToken = null;
-          try {
-            idToken = await user.getIdToken();
-            setToken(idToken);
-            localStorage.setItem('nursing_token', idToken);
-          } catch (e) {
-            console.warn('[Token Fetch Error]:', e);
-          }
+          const raw = localStorage.getItem('nursing_user');
+          if (raw) cachedUser = JSON.parse(raw);
+        } catch {}
 
-          const directoryInfo = getDirectoryInfo(user.email);
-          let userData = {};
+        const userRole = isAdminEmail ? 'admin' : (cachedUser?.role || directoryInfo?.role || 'student');
+        const userName = cachedUser?.name || user.displayName || directoryInfo?.name || emailNorm.split('@')[0] || 'User';
+
+        const mergedUser = {
+          uid: user.uid,
+          email: user.email,
+          displayName: userName,
+          name: userName,
+          role: userRole,
+          isDefaultPassword: cachedUser?.isDefaultPassword ?? (directoryInfo ? directoryInfo.isDefaultPassword : false),
+          collegeId: cachedUser?.collegeId || directoryInfo?.collegeId || 'COLLEGE_001',
+          photoURL: user.photoURL || null
+        };
+
+        // Immediately update session and clear loading (0ms wait!)
+        setCurrentUser(mergedUser);
+        localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
+        setLoading(false);
+
+        // Non-blocking fresh token fetch
+        user.getIdToken(false).then((freshToken) => {
+          if (freshToken) {
+            setToken(freshToken);
+            localStorage.setItem('nursing_token', freshToken);
+          }
+        }).catch(() => {});
+
+        // Background non-blocking Firestore document check
+        const fetchProfile = async () => {
           try {
-            const userDoc = await getDoc(doc(db, 'users', user.uid));
-            if (userDoc.exists()) {
-              userData = userDoc.data();
+            const docPromise = getDoc(doc(db, 'users', user.uid));
+            const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1200));
+            const userDoc = await Promise.race([docPromise, timeoutPromise]);
+
+            if (userDoc?.exists && userDoc.exists()) {
+              const uData = userDoc.data();
+              setCurrentUser((prev) => {
+                if (!prev || prev.uid !== user.uid) return prev;
+                const updated = {
+                  ...prev,
+                  name: uData.name || prev.name,
+                  displayName: uData.name || prev.displayName,
+                  role: isAdminEmail ? 'admin' : (uData.role || prev.role),
+                  collegeId: uData.collegeId || prev.collegeId,
+                  isDefaultPassword: uData.isDefaultPassword ?? prev.isDefaultPassword
+                };
+                localStorage.setItem('nursing_user', JSON.stringify(updated));
+                return updated;
+              });
             }
-          } catch (err) {
-            console.warn('[Auth State Change Firestore Warning]:', err);
-          }
+          } catch {}
+        };
+        fetchProfile();
 
-          const isAdminEmail = isAdminEmailCheck(user.email);
-          const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || userData.role || 'student');
-          const isDefaultPassword = isAdminEmail ? false : (directoryInfo ? directoryInfo.isDefaultPassword : false);
-
-          const mergedUser = {
-            uid: user.uid,
-            email: user.email,
-            displayName: user.displayName || userData.name || directoryInfo?.name || user.email?.split('@')[0] || 'User',
-            name: userData.name || directoryInfo?.name || user.displayName || user.email?.split('@')[0] || 'User',
-            role: userRole,
-            isDefaultPassword,
-            collegeId: userData.collegeId || 'COLLEGE_001',
-            photoURL: user.photoURL || null
-          };
-
-          setCurrentUser(mergedUser);
-          localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
-        } catch (err) {
-          console.warn('[Auth State Change Warning]:', err);
-        }
       } else {
+        // If Firebase Auth has no active user, check if we have a direct/admin session
+        try {
+          const cached = localStorage.getItem('nursing_user');
+          if (cached) {
+            const parsed = JSON.parse(cached);
+            if (parsed?.uid?.startsWith('usr-direct-')) {
+              // Direct session is valid, keep active
+              setLoading(false);
+              return;
+            }
+          }
+        } catch {}
+
         localStorage.removeItem('nursing_user');
         localStorage.removeItem('nursing_token');
         setCurrentUser(null);
         setToken(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => unsubscribe();

@@ -23,8 +23,40 @@ export const ANATOMY_UNITS = [
     "totalSubjective": 25,
     "topics": [
       {
-        "label": "Overview & Key Concepts",
-        "route": "/anatomy/lesson/anatomy-unit-1?section=sec-1-1"
+        "label": "1. Anatomical Position & Directional Terms",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-1"
+      },
+      {
+        "label": "2. Anatomical Planes & Cross-Sections",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-2"
+      },
+      {
+        "label": "3. Levels of Structural Organization",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-3"
+      },
+      {
+        "label": "4. Cellular Architecture & Plasma Membrane",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-4"
+      },
+      {
+        "label": "5. Cytoskeleton & Cytoplasmic Organelles",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-5"
+      },
+      {
+        "label": "6. The Nucleus & Somatic Mitosis",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-6"
+      },
+      {
+        "label": "7. Reproductive Meiosis & Gametogenesis",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-7"
+      },
+      {
+        "label": "8. Primary Body Tissues & Glands",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-8"
+      },
+      {
+        "label": "9. Body Cavities & Abdominal Regions",
+        "route": "/anatomy/lesson/anatomy-unit-1#sec-1-9"
       }
     ]
   },
@@ -49,8 +81,28 @@ export const ANATOMY_UNITS = [
     "totalSubjective": 25,
     "topics": [
       {
-        "label": "Overview & Key Concepts",
-        "route": "/anatomy/lesson/anatomy-unit-2?section=sec-2-1"
+        "label": "1. Architecture & Histology of Bone Tissue",
+        "route": "/anatomy/lesson/anatomy-unit-2#sec-2-1"
+      },
+      {
+        "label": "2. Osteogenesis & Bone Remodeling",
+        "route": "/anatomy/lesson/anatomy-unit-2#sec-2-2"
+      },
+      {
+        "label": "3. Axial Skeleton: Skull & Cranial Bones",
+        "route": "/anatomy/lesson/anatomy-unit-2#sec-2-3"
+      },
+      {
+        "label": "4. Vertebral Column & Thoracic Cage",
+        "route": "/anatomy/lesson/anatomy-unit-2#sec-2-4"
+      },
+      {
+        "label": "5. Appendicular Skeleton: Limbs & Girdles",
+        "route": "/anatomy/lesson/anatomy-unit-2#sec-2-5"
+      },
+      {
+        "label": "6. Arthrology: Synovial Joints & Biomechanics",
+        "route": "/anatomy/lesson/anatomy-unit-2#sec-2-6"
       }
     ]
   },
