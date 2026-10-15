@@ -7,7 +7,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 1,
     "title": "General Physiology & Cell Function",
     "category": "Cellular Physiology & Transport",
-    "icon": "\ud83e\uddec",
+    "icon": "🧬",
     "color": "from-emerald-500 to-teal-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of General Physiology & Cell Function.",
@@ -23,8 +23,20 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 24,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Cell Membrane Physiology, Composition & Transport Dynamics",
         "route": "/physiology/lesson/phys-unit-1?section=sec-phys-1-1"
+      },
+      {
+        "label": "2. Cytoplasm & Metabolic Functions of Cellular Organelles",
+        "route": "/physiology/lesson/phys-unit-1?section=sec-phys-1-2"
+      },
+      {
+        "label": "3. Tissue Formation, Repair, Membranes & Glandular Secretion",
+        "route": "/physiology/lesson/phys-unit-1?section=sec-phys-1-3"
+      },
+      {
+        "label": "4. Cellular Adaptations & Alterations in Disease",
+        "route": "/physiology/lesson/phys-unit-1?section=sec-phys-1-4"
       }
     ]
   },
@@ -33,7 +45,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 2,
     "title": "Blood & Body Fluids",
     "category": "Hematology & Hemostasis",
-    "icon": "\ud83e\ude78",
+    "icon": "🩸",
     "color": "from-red-500 to-rose-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Blood & Body Fluids.",
@@ -49,12 +61,24 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 25,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Blood Composition, Physicochemical Properties & Hemopoiesis",
         "route": "/physiology/lesson/phys-unit-2?section=sec-phys-2-1"
       },
       {
-        "label": "BLOOD",
+        "label": "2. Plasma Proteins, Colloid Osmotic Pressure & ESR",
         "route": "/physiology/lesson/phys-unit-2?section=sec-phys-2-2"
+      },
+      {
+        "label": "3. Formed Elements, Hemoglobin Dynamics & Catabolism",
+        "route": "/physiology/lesson/phys-unit-2?section=sec-phys-2-3"
+      },
+      {
+        "label": "4. Blood Groups, Rh Incompatibility & Transfusion Principles",
+        "route": "/physiology/lesson/phys-unit-2?section=sec-phys-2-4"
+      },
+      {
+        "label": "5. Hemostasis, The Coagulation Cascade & Hematological Alterations",
+        "route": "/physiology/lesson/phys-unit-2?section=sec-phys-2-5"
       }
     ]
   },
@@ -63,7 +87,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 3,
     "title": "Lymphatic System & Immunity",
     "category": "Immunophysiology & Defense",
-    "icon": "\ud83d\udee1\ufe0f",
+    "icon": "🛡️",
     "color": "from-teal-500 to-emerald-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Lymphatic System & Immunity.",
@@ -79,8 +103,20 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 4,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Lymph Formation, Composition & Drainage Circulation",
         "route": "/physiology/lesson/phys-unit-3?section=sec-phys-3-1"
+      },
+      {
+        "label": "2. Lymphoid Organs: Lymph Nodes, Spleen & Thymus",
+        "route": "/physiology/lesson/phys-unit-3?section=sec-phys-3-2"
+      },
+      {
+        "label": "3. Innate vs. Adaptive Immunity & Antigen-Antibody Dynamics",
+        "route": "/physiology/lesson/phys-unit-3?section=sec-phys-3-3"
+      },
+      {
+        "label": "4. The Inflammatory Response & Immunological Alterations in Disease",
+        "route": "/physiology/lesson/phys-unit-3?section=sec-phys-3-4"
       }
     ]
   },
@@ -89,7 +125,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 4,
     "title": "Musculoskeletal Physiology",
     "category": "Neuromuscular Transmission & Bone",
-    "icon": "\ud83d\udcaa",
+    "icon": "💪",
     "color": "from-amber-500 to-orange-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Musculoskeletal Physiology.",
@@ -105,12 +141,16 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 21,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Properties of Muscular Tissue & The Sliding Filament Contractile Mechanism",
         "route": "/physiology/lesson/phys-unit-4?section=sec-phys-4-1"
       },
       {
-        "label": "As regard neuro-muscular transmission all are",
+        "label": "2. Neuromuscular Transmission & Excitation-Contraction Coupling",
         "route": "/physiology/lesson/phys-unit-4?section=sec-phys-4-2"
+      },
+      {
+        "label": "3. Muscle Tone, Metabolic Energy Systems & Musculoskeletal Alterations",
+        "route": "/physiology/lesson/phys-unit-4?section=sec-phys-4-3"
       }
     ]
   },
@@ -119,7 +159,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 5,
     "title": "Respiratory Physiology",
     "category": "Ventilation & Gas Exchange",
-    "icon": "\ud83e\udec1",
+    "icon": "🫁",
     "color": "from-sky-500 to-blue-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Respiratory Physiology.",
@@ -135,8 +175,24 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 21,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Mechanics of Pulmonary Ventilation & Respiratory Pressures",
         "route": "/physiology/lesson/phys-unit-5?section=sec-phys-5-1"
+      },
+      {
+        "label": "2. Spirometric Lung Volumes, Capacities & Pulmonary Compliance",
+        "route": "/physiology/lesson/phys-unit-5?section=sec-phys-5-2"
+      },
+      {
+        "label": "3. Alveolar Gas Exchange, Diffusion & The Respiratory Membrane",
+        "route": "/physiology/lesson/phys-unit-5?section=sec-phys-5-3"
+      },
+      {
+        "label": "4. Gas Transport in Blood: Oxyhemoglobin & Carbon Dioxide Mechanisms",
+        "route": "/physiology/lesson/phys-unit-5?section=sec-phys-5-4"
+      },
+      {
+        "label": "5. Neural & Chemical Regulation of Respiration & Clinical Pathologies",
+        "route": "/physiology/lesson/phys-unit-5?section=sec-phys-5-5"
       }
     ]
   },
@@ -145,7 +201,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 6,
     "title": "Digestive System Physiology",
     "category": "GI Secretion, Digestion & Motility",
-    "icon": "\ud83c\udf7d\ufe0f",
+    "icon": "🍽️",
     "color": "from-emerald-500 to-teal-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Digestive System Physiology.",
@@ -161,8 +217,24 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 25,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Oral Digestion, Salivary Secretion & The Deglutition Reflex",
         "route": "/physiology/lesson/phys-unit-6?section=sec-phys-6-1"
+      },
+      {
+        "label": "2. Gastric Secretion, Enzymatic Digestion & Gastric Motility",
+        "route": "/physiology/lesson/phys-unit-6?section=sec-phys-6-2"
+      },
+      {
+        "label": "3. Biliary Physiology, Hepatic Functions & Pancreatic Exocrine Secretion",
+        "route": "/physiology/lesson/phys-unit-6?section=sec-phys-6-3"
+      },
+      {
+        "label": "4. Small Intestinal Motility, Secretion & Nutrient Absorption Pathways",
+        "route": "/physiology/lesson/phys-unit-6?section=sec-phys-6-4"
+      },
+      {
+        "label": "5. Colonic Function, Intestinal Microbiome & GI Alterations in Disease",
+        "route": "/physiology/lesson/phys-unit-6?section=sec-phys-6-5"
       }
     ]
   },
@@ -171,7 +243,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 7,
     "title": "Circulatory & Cardiac Physiology",
     "category": "Hemodynamics & Cardiac Cycle",
-    "icon": "\ud83e\udec0",
+    "icon": "🫀",
     "color": "from-rose-500 to-red-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Circulatory & Cardiac Physiology.",
@@ -187,8 +259,20 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 25,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Cardiac Electrophysiology, Pacemaker Mechanics & Conduction Pathways",
         "route": "/physiology/lesson/phys-unit-7?section=sec-phys-7-1"
+      },
+      {
+        "label": "2. The Electrocardiogram (ECG), Waveforms & Arrhythmic Alterations",
+        "route": "/physiology/lesson/phys-unit-7?section=sec-phys-7-2"
+      },
+      {
+        "label": "3. The Cardiac Cycle, Ventricular Volumes & Heart Sounds",
+        "route": "/physiology/lesson/phys-unit-7?section=sec-phys-7-3"
+      },
+      {
+        "label": "4. Cardiac Output, Arterial Blood Pressure & Hemodynamic Regulation",
+        "route": "/physiology/lesson/phys-unit-7?section=sec-phys-7-4"
       }
     ]
   },
@@ -197,7 +281,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 8,
     "title": "Excretory & Renal Physiology",
     "category": "Urine Formation & Osmoregulation",
-    "icon": "\ud83d\udca7",
+    "icon": "💧",
     "color": "from-cyan-500 to-blue-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Excretory & Renal Physiology.",
@@ -213,8 +297,20 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 9,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Renal Functional Principles & Glomerular Filtration Dynamics",
         "route": "/physiology/lesson/phys-unit-8?section=sec-phys-8-1"
+      },
+      {
+        "label": "2. Tubular Reabsorption, Secretion & Countercurrent Urine Concentration",
+        "route": "/physiology/lesson/phys-unit-8?section=sec-phys-8-2"
+      },
+      {
+        "label": "3. The Micturition Reflex & Urinary Bladder Innervation",
+        "route": "/physiology/lesson/phys-unit-8?section=sec-phys-8-3"
+      },
+      {
+        "label": "4. Cutaneous Excretion, Fluid-Electrolyte Balance & Thermoregulation",
+        "route": "/physiology/lesson/phys-unit-8?section=sec-phys-8-4"
       }
     ]
   },
@@ -223,7 +319,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 9,
     "title": "Reproductive Physiology",
     "category": "Gametogenesis & Endocrine Regulation",
-    "icon": "\ud83d\udc76",
+    "icon": "👶",
     "color": "from-purple-500 to-pink-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Reproductive Physiology.",
@@ -239,12 +335,24 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 13,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Male Reproductive Physiology, Spermatogenesis & Androgens",
         "route": "/physiology/lesson/phys-unit-9?section=sec-phys-9-1"
       },
       {
-        "label": "2 0 C",
+        "label": "2. Female Reproductive Physiology, Oogenesis & Folliculogenesis",
         "route": "/physiology/lesson/phys-unit-9?section=sec-phys-9-2"
+      },
+      {
+        "label": "3. The Menstrual Cycle & Neuroendocrine Regulation",
+        "route": "/physiology/lesson/phys-unit-9?section=sec-phys-9-3"
+      },
+      {
+        "label": "4. Fertilization, Implantation, Pregnancy & Fetal Circulation",
+        "route": "/physiology/lesson/phys-unit-9?section=sec-phys-9-4"
+      },
+      {
+        "label": "5. Parturition, Lactation & Reproductive Alterations",
+        "route": "/physiology/lesson/phys-unit-9?section=sec-phys-9-5"
       }
     ]
   },
@@ -253,7 +361,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 10,
     "title": "Endocrine Physiology",
     "category": "Hormonal Feedback & Regulation",
-    "icon": "\u26a1",
+    "icon": "⚡",
     "color": "from-amber-500 to-yellow-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Endocrine Physiology.",
@@ -269,8 +377,20 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 25,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Mechanisms of Hormone Action, Feedback Loops & The Hypothalamic-Pituitary Axis",
         "route": "/physiology/lesson/phys-unit-10?section=sec-phys-10-1"
+      },
+      {
+        "label": "2. Growth Hormone & The Pineal / Thymus Glands",
+        "route": "/physiology/lesson/phys-unit-10?section=sec-phys-10-2"
+      },
+      {
+        "label": "3. Thyroid & Parathyroid Glands: Metabolic & Calcium Homeostasis",
+        "route": "/physiology/lesson/phys-unit-10?section=sec-phys-10-3"
+      },
+      {
+        "label": "4. Adrenal Glands & Pancreatic Endocrine Islets",
+        "route": "/physiology/lesson/phys-unit-10?section=sec-phys-10-4"
       }
     ]
   },
@@ -279,7 +399,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 11,
     "title": "Nervous System Physiology",
     "category": "Neurophysiology, Reflexes & Synapses",
-    "icon": "\ud83e\udde0",
+    "icon": "🧠",
     "color": "from-indigo-500 to-purple-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Nervous System Physiology.",
@@ -295,8 +415,20 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 19,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Neuronal Physiology, Action Potentials & Synaptic Transmission",
         "route": "/physiology/lesson/phys-unit-11?section=sec-phys-11-1"
+      },
+      {
+        "label": "2. Spinal Cord Physiology, Somatosensory Pathways & Motor Tracts",
+        "route": "/physiology/lesson/phys-unit-11?section=sec-phys-11-2"
+      },
+      {
+        "label": "3. Brainstem, Cerebellum, Basal Ganglia & Cerebral Cortex",
+        "route": "/physiology/lesson/phys-unit-11?section=sec-phys-11-3"
+      },
+      {
+        "label": "4. The Autonomic Nervous System & Reflex Arc",
+        "route": "/physiology/lesson/phys-unit-11?section=sec-phys-11-4"
       }
     ]
   },
@@ -305,7 +437,7 @@ export const PHYSIOLOGY_UNITS = [
     "unitNumber": 12,
     "title": "Sensory Organ Physiology",
     "category": "Sensory Pathways & Receptors",
-    "icon": "\ud83d\udc41\ufe0f",
+    "icon": "👁️",
     "color": "from-teal-500 to-cyan-600",
     "badgeColor": "bg-sky-50 text-sky-700 border-sky-200",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Sensory Organ Physiology.",
@@ -321,8 +453,20 @@ export const PHYSIOLOGY_UNITS = [
     "totalSubjective": 24,
     "topics": [
       {
-        "label": "Functional Overview & Fundamentals",
+        "label": "1. Integumentary Physiology, Cutaneous Receptors & Thermoregulation",
         "route": "/physiology/lesson/phys-unit-12?section=sec-phys-12-1"
+      },
+      {
+        "label": "2. Visual Physiology, Optics of the Eye & Phototransduction",
+        "route": "/physiology/lesson/phys-unit-12?section=sec-phys-12-2"
+      },
+      {
+        "label": "3. Auditory & Vestibular Physiology",
+        "route": "/physiology/lesson/phys-unit-12?section=sec-phys-12-3"
+      },
+      {
+        "label": "4. Gustatory (Taste) & Olfactory (Smell) Physiology",
+        "route": "/physiology/lesson/phys-unit-12?section=sec-phys-12-4"
       }
     ]
   }

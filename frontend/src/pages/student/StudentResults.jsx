@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
+import { getStudentGatingStatus } from '../../services/assessmentEngine';
 import {
   Award,
   CheckCircle2,
@@ -10,312 +11,271 @@ import {
   RotateCcw,
   Sparkles,
   AlertTriangle,
-  Lightbulb,
-  Compass,
-  ArrowUpRight
+  Clock,
+  Layers,
+  Lock,
+  Unlock,
+  ChevronRight,
+  ShieldCheck,
+  TrendingUp
 } from 'lucide-react';
 
 export const StudentResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Mock / Received state from QuizView
   const {
-    score = 50,
-    totalQuestions = 4,
-    correctCount = 2,
-    moduleName = 'Biochemistry & Clinical Metabolism Assessment',
-    reviewData = [
-      {
-        id: 1,
-        topic: 'Digestion & Absorption of Carbohydrates',
-        text: 'Which transport mechanism is utilized by SGLT-1 to move glucose and galactose across the apical membrane of enterocytes?',
-        options: [
-          'Primary active transport using direct ATP hydrolysis',
-          'Secondary active transport driven by the Na+/K+ electrochemical gradient',
-          'Facilitated diffusion through a voltage-gated channel',
-          'Simple passive diffusion through lipid bilayer'
-        ],
-        correctAnswer: 1,
-        studentAnswer: 0,
-        isCorrect: false,
-        rationale: 'SGLT-1 uses the sodium gradient established by the basolateral Na+/K+ ATPase pump to co-transport glucose and galactose into the intestinal cell against their concentration gradient.',
-        reviewTopic: 'Absorption of Carbohydrates',
-        reviewLink: '/absorption-of-carb'
-      },
-      {
-        id: 2,
-        topic: 'Blood Glucose Regulation',
-        text: 'A patient is diagnosed with fasting plasma glucose of 145 mg/dL on two occasions. Which hormone deficiency or cellular resistance is the primary driver of this hyperglycemia?',
-        options: [
-          'Excess glucagon secretion from pancreatic alpha cells',
-          'Insulin deficiency or peripheral insulin resistance in skeletal muscle and adipose tissue',
-          'Suppression of hepatic gluconeogenesis',
-          'Increased renal glucose excretion threshold'
-        ],
-        correctAnswer: 1,
-        studentAnswer: 1,
-        isCorrect: true,
-        rationale: 'Elevated fasting blood glucose occurs primarily due to insufficient insulin action or cellular resistance, which impairs peripheral glucose uptake and allows uninhibited hepatic glucose output.',
-        reviewTopic: 'Regulation of Blood Glucose',
-        reviewLink: '/RegulationOfBloodGlucose'
-      },
-      {
-        id: 3,
-        topic: 'Carbohydrate Metabolism & Glycolysis',
-        text: 'Under aerobic conditions, what is the end product of glycolysis that enters the mitochondria for conversion into Acetyl-CoA?',
-        options: ['Lactate', 'Pyruvate', 'Oxaloacetate', 'Citrate'],
-        correctAnswer: 1,
-        studentAnswer: 0,
-        isCorrect: false,
-        rationale: 'In aerobic glycolysis, glucose is oxidized to two molecules of pyruvate, which are then transported into mitochondria and converted to Acetyl-CoA by pyruvate dehydrogenase.',
-        reviewTopic: 'Metabolic Pathways of Carbohydrates',
-        reviewLink: '/MetabolicPathwaysOfCarb'
-      },
-      {
-        id: 4,
-        topic: 'Essential Fatty Acids',
-        text: 'Why are Linoleic acid (omega-6) and Alpha-linolenic acid (omega-3) termed essential fatty acids in human physiology?',
-        options: [
-          'They cannot be oxidized for ATP generation',
-          'Humans lack the delta-12 and delta-15 desaturase enzymes required to introduce double bonds beyond carbon 9',
-          'They are exclusively synthesized by gut microflora',
-          'They are only required during fetal development'
-        ],
-        correctAnswer: 1,
-        studentAnswer: 1,
-        isCorrect: true,
-        rationale: 'Human desaturases cannot insert double bonds beyond carbon 9 from the carboxyl end; hence omega-6 and omega-3 fatty acids must be obtained through dietary sources.',
-        reviewTopic: 'Essential Fatty Acids',
-        reviewLink: '/EssentialFattyAcids'
-      }
-    ]
+    score = 0,
+    rawScore = 0,
+    totalQuestions = 15,
+    correctCount = 0,
+    incorrectCount = 0,
+    percentage = 0,
+    passed = false,
+    moduleName = 'Clinical Assessment',
+    assessmentKey = 'phys-unit-1',
+    subject = 'physiology',
+    timeSpentFormatted = '5 min 20 sec',
+    reviewData = []
   } = location.state || {};
 
-  const isPassing = score >= 70;
-  const incorrectQuestions = reviewData.filter((q) => !q.isCorrect);
+  const gating = getStudentGatingStatus(subject);
+  const isGrandFinal = assessmentKey?.includes('grand-final');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-emerald-50 text-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-sky-50/30 text-slate-900 pb-20 font-sans">
       <Navbar />
 
-      <div className="max-w-4xl mx-auto px-4 py-8 sm:py-12">
-        {/* Score Summary Card */}
-        <div className="bg-white/95 border border-slate-200/80 rounded-3xl p-6 sm:p-8 shadow-xl backdrop-blur-xl mb-8 text-center relative overflow-hidden">
-          {/* Background highlight */}
-          <div
-            className={`absolute -top-24 -right-24 w-60 h-60 rounded-full blur-3xl ${
-              isPassing ? 'bg-emerald-200/60' : 'bg-amber-200/60'
-            }`}
-          />
-
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-            {moduleName}
-          </span>
-
-          <div className="mt-4 flex flex-col items-center">
-            <div
-              className={`w-24 h-24 rounded-full flex items-center justify-center text-3xl font-extrabold shadow-lg mb-3 ${
-                isPassing
-                  ? 'bg-emerald-500 text-white shadow-emerald-400/30'
-                  : 'bg-amber-500 text-white shadow-amber-400/30'
-              }`}
-            >
-              {score}%
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        {/* Top Header Card */}
+        <div className={`rounded-3xl border p-6 sm:p-8 shadow-sm mb-6 ${
+          passed
+            ? 'bg-gradient-to-br from-emerald-500/10 via-teal-50 to-white border-emerald-200'
+            : 'bg-gradient-to-br from-amber-500/10 via-rose-50 to-white border-amber-200'
+        }`}>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-2.5 shadow-xs ${
+                passed ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-900'
+              }">
+                {passed ? <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> : <AlertTriangle className="w-3.5 h-3.5 text-amber-600" />}
+                <span>{passed ? 'Assessment Passed (Competency Mastered)' : 'Needs Improvement (Score Below 75%)'}</span>
+              </div>
+              <h1 className="text-xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                {moduleName}
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-600 mt-1">
+                {passed
+                  ? 'Excellent work! Your marks have been recorded in the college database.'
+                  : 'Review the high-yield clinical explanations below and retake the test to master this unit.'}
+              </p>
             </div>
 
-            <span
-              className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wide mb-3 ${
-                isPassing
-                  ? 'bg-emerald-100 text-emerald-800'
-                  : 'bg-amber-100 text-amber-800'
-              }`}
-            >
-              {isPassing ? (
-                <>
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600" />
-                  <span>Mastery Achieved (Passed)</span>
-                </>
-              ) : (
-                <>
-                  <AlertTriangle className="w-4 h-4 text-amber-600" />
-                  <span>Low Score — Remediation Guide Generated</span>
-                </>
-              )}
-            </span>
+            {/* Overall Score Badge */}
+            <div className="text-center sm:text-right shrink-0">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Final Score</span>
+              <div className={`text-4xl sm:text-5xl font-black ${passed ? 'text-emerald-600' : 'text-amber-600'}`}>
+                {percentage}%
+              </div>
+              <span className="text-xs font-bold text-slate-500">{correctCount} of {totalQuestions} correct</span>
+            </div>
+          </div>
 
-            <p className="text-xs text-slate-500 font-medium">
-              You scored <span className="font-bold text-slate-800">{correctCount}</span> out of{' '}
-              <span className="font-bold text-slate-800">{totalQuestions}</span> questions correctly.
-            </p>
+          {/* Quick Metrics Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6 pt-6 border-t border-slate-200/60">
+            <div className="bg-white/80 rounded-2xl p-3 border border-slate-200/80 shadow-xs">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Time Spent</span>
+              <p className="text-sm font-black text-slate-800 flex items-center gap-1.5 mt-0.5">
+                <Clock className="w-3.5 h-3.5 text-sky-600" />
+                <span>{timeSpentFormatted}</span>
+              </p>
+            </div>
 
-            <div className="mt-6 flex flex-wrap gap-3 justify-center">
-              <Link
-                to="/student/quiz/retake"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-slate-900 hover:bg-slate-800 text-white shadow-md transition-all cursor-pointer"
-              >
-                <RotateCcw className="w-4 h-4" />
-                <span>Retake Assessment</span>
-              </Link>
-              <Link
-                to="/bio-chem-syllabus"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 shadow-sm transition-all cursor-pointer"
-              >
-                <BookOpen className="w-4 h-4 text-emerald-600" />
-                <span>Return to Syllabus</span>
-              </Link>
+            <div className="bg-white/80 rounded-2xl p-3 border border-slate-200/80 shadow-xs">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Correct Answers</span>
+              <p className="text-sm font-black text-emerald-600 flex items-center gap-1.5 mt-0.5">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>{correctCount} Correct</span>
+              </p>
+            </div>
+
+            <div className="bg-white/80 rounded-2xl p-3 border border-slate-200/80 shadow-xs">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Incorrect Answers</span>
+              <p className="text-sm font-black text-rose-600 flex items-center gap-1.5 mt-0.5">
+                <XCircle className="w-3.5 h-3.5" />
+                <span>{incorrectCount} Incorrect</span>
+              </p>
+            </div>
+
+            <div className="bg-white/80 rounded-2xl p-3 border border-slate-200/80 shadow-xs">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">INC Status</span>
+              <p className="text-sm font-black text-slate-800 flex items-center gap-1.5 mt-0.5">
+                <Award className="w-3.5 h-3.5 text-indigo-600" />
+                <span>{passed ? 'Certified' : 'Retake'}</span>
+              </p>
             </div>
           </div>
         </div>
 
-        {/* Dynamic Low-Score Remediation & Study Guide */}
-        {!isPassing && (
-          <div className="bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-emerald-500/10 border-2 border-amber-400/40 rounded-3xl p-6 sm:p-8 shadow-xl mb-8 backdrop-blur-xl animate-in fade-in duration-300">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center shadow-md shadow-amber-400/30">
-                <Compass className="w-6 h-6" />
+        {/* Course Completion & Grand Final Unlocking Card */}
+        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm mb-8 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-sky-600" />
+              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                {subject === 'physiology' ? 'Physiology' : 'Anatomy'} Curriculum Mastery
+              </h3>
+            </div>
+            <span className="text-xs font-black text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">
+              {gating.completedCount} / {gating.totalUnits} Units Completed ({gating.completionPercent}%)
+            </span>
+          </div>
+
+          <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+            <div
+              className="bg-gradient-to-r from-sky-500 to-indigo-600 h-3 rounded-full transition-all duration-500"
+              style={{ width: `${gating.completionPercent}%` }}
+            />
+          </div>
+
+          {/* Grand Final Lock Status Callout */}
+          <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${
+            gating.isFinalUnlocked
+              ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950'
+              : 'bg-slate-50 border-slate-200 text-slate-700'
+          }`}>
+            <div className="flex items-center gap-3">
+              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                gating.isFinalUnlocked ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'
+              }`}>
+                {gating.isFinalUnlocked ? <Unlock className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
               </div>
               <div>
-                <h2 className="text-lg font-extrabold text-slate-900 tracking-tight">
-                  Personalized Remediation & Clinical Study Guide
-                </h2>
-                <p className="text-xs text-slate-600">
-                  Follow this targeted action plan to strengthen your weak areas before re-attempting the test.
+                <h4 className="text-xs sm:text-sm font-extrabold text-slate-900">
+                  {gating.isFinalUnlocked
+                    ? '🎉 100% Course Completed! Grand Final Examination Unlocked'
+                    : 'Grand Final Comprehensive Assessment Locked'}
+                </h4>
+                <p className="text-[11px] text-slate-500">
+                  {gating.isFinalUnlocked
+                    ? 'You have completed all 12 modules. You are eligible to take the cumulative mixed exam.'
+                    : `Must achieve 100% completion across all 12 modules. Remaining: ${gating.remainingCount} modules.`}
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4 mt-5">
-              <div className="bg-white/90 border border-amber-200 rounded-2xl p-5 shadow-sm">
-                <h3 className="text-xs font-extrabold text-amber-900 uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <Lightbulb className="w-4 h-4 text-amber-600" />
-                  <span>1. Key Concepts That Need Review ({incorrectQuestions.length})</span>
-                </h3>
-                <div className="space-y-2 mt-3">
-                  {incorrectQuestions.map((q, idx) => (
-                    <div
-                      key={idx}
-                      className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 p-3 bg-amber-50/50 rounded-xl border border-amber-100"
-                    >
-                      <div>
-                        <p className="text-xs font-bold text-slate-900">{q.topic}</p>
-                        <p className="text-[11px] text-slate-600 mt-0.5">{q.rationale}</p>
-                      </div>
-                      {q.reviewLink && (
-                        <Link
-                          to={q.reviewLink}
-                          className="inline-flex items-center gap-1 text-xs font-bold text-emerald-600 hover:text-emerald-700 shrink-0 bg-white px-3 py-1.5 rounded-lg border border-emerald-200 shadow-xs"
-                        >
-                          <span>Review Module</span>
-                          <ArrowUpRight className="w-3.5 h-3.5" />
-                        </Link>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-white/90 border border-slate-200 rounded-2xl p-5 shadow-sm">
-                <h3 className="text-xs font-extrabold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-emerald-600" />
-                  <span>2. Recommended Action Steps for Exam Success</span>
-                </h3>
-                <ul className="text-xs text-slate-700 space-y-2 list-disc list-inside font-medium leading-relaxed">
-                  <li>
-                    <strong>Focus on Transporter Mechanics:</strong> Review how secondary active transport functions in SGLT-1 versus facilitated diffusion in GLUT-2/GLUT-4.
-                  </li>
-                  <li>
-                    <strong>Aerobic vs Anaerobic Fates:</strong> Make a flashcard distinguishing Pyruvate (aerobic) vs Lactate (anaerobic).
-                  </li>
-                  <li>
-                    <strong>Ask AI Tutor:</strong> Click the floating AI icon in the bottom right corner anytime to ask for simplified clinical analogies!
-                  </li>
-                </ul>
-              </div>
-            </div>
+            {gating.isFinalUnlocked ? (
+              <Link
+                to={`/quiz/${subject}-grand-final`}
+                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 shadow-sm transition-all"
+              >
+                Take Grand Final →
+              </Link>
+            ) : (
+              <span className="text-[11px] font-bold text-slate-400 bg-slate-200/80 px-3 py-1.5 rounded-lg shrink-0">
+                Locked (100% Needed)
+              </span>
+            )}
           </div>
-        )}
+        </div>
 
-        {/* Detailed Question Review */}
-        <div>
-          <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-emerald-600" />
-            <span>Question-by-Question Clinical Breakdown</span>
-          </h2>
+        {/* Question by Question Review Header */}
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-slate-600" />
+            <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+              Detailed Clinical Question Review ({reviewData.length})
+            </h3>
+          </div>
+          <span className="text-xs text-slate-500 font-semibold">
+            Color-coded with Verified INC Answers
+          </span>
+        </div>
 
-          <div className="space-y-5">
-            {reviewData.map((q, idx) => (
+        {/* Questions Breakdown List */}
+        <div className="space-y-4">
+          {reviewData.map((q, idx) => {
+            const isCorrect = q.isCorrect;
+            const studentChoice = q.options ? q.options[q.studentAnswer] : 'Not answered';
+            const correctChoice = q.options ? q.options[q.correctAnswer] : 'N/A';
+
+            return (
               <div
                 key={idx}
-                className={`bg-white/95 border rounded-2xl p-6 shadow-sm transition-all ${
-                  q.isCorrect ? 'border-emerald-200' : 'border-rose-200 bg-rose-50/20'
+                className={`bg-white rounded-2xl border p-5 sm:p-6 shadow-xs space-y-3.5 transition-all ${
+                  isCorrect ? 'border-emerald-200' : 'border-rose-200'
                 }`}
               >
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className="text-xs font-bold text-slate-400">Question {idx + 1}</span>
-                  <span
-                    className={`inline-flex items-center gap-1 px-3 py-0.5 rounded-full text-[10px] font-extrabold ${
-                      q.isCorrect
-                        ? 'bg-emerald-100 text-emerald-800'
-                        : 'bg-rose-100 text-rose-800'
-                    }`}
-                  >
-                    {q.isCorrect ? <CheckCircle2 className="w-3.5 h-3.5" /> : <XCircle className="w-3.5 h-3.5" />}
-                    {q.isCorrect ? 'Correct (+1)' : 'Incorrect (0)'}
+                <div className="flex items-start justify-between gap-3">
+                  <div className="flex items-center gap-2">
+                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
+                      isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                    }`}>
+                      {idx + 1}
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                      {q.subtopic || 'INC Core Competency'}
+                    </span>
+                  </div>
+
+                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${
+                    isCorrect ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200'
+                  }`}>
+                    {isCorrect ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+                    <span>{isCorrect ? 'Correct' : 'Incorrect'}</span>
                   </span>
                 </div>
 
-                <p className="text-sm font-bold text-slate-900 mb-4">{q.text}</p>
+                <h4 className="text-sm font-bold text-slate-900 leading-relaxed">
+                  {q.text}
+                </h4>
 
-                {/* Choices Comparison */}
-                <div className="space-y-2 mb-4">
-                  {q.options.map((opt, optIdx) => {
-                    const isStudentChoice = q.studentAnswer === optIdx;
-                    const isCorrectAnswer = q.correctAnswer === optIdx;
+                {/* Options Comparison */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                  <div className={`p-3 rounded-xl border ${
+                    isCorrect ? 'bg-emerald-50/60 border-emerald-200 text-emerald-950 font-semibold' : 'bg-rose-50/60 border-rose-200 text-rose-950'
+                  }`}>
+                    <span className="text-[10px] font-bold text-slate-400 block mb-0.5">Your Selected Answer:</span>
+                    <p className="font-bold">{studentChoice || 'None selected'}</p>
+                  </div>
 
-                    let badgeStyle = 'bg-slate-50 border-slate-200 text-slate-600';
-                    if (isCorrectAnswer) {
-                      badgeStyle = 'bg-emerald-50 border-emerald-300 text-emerald-900 font-bold';
-                    } else if (isStudentChoice && !q.isCorrect) {
-                      badgeStyle = 'bg-rose-50 border-rose-300 text-rose-900 font-bold';
-                    }
-
-                    return (
-                      <div
-                        key={optIdx}
-                        className={`p-3 rounded-xl border text-xs flex items-center justify-between ${badgeStyle}`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          <span className="w-5 h-5 rounded-full bg-white text-slate-700 font-bold flex items-center justify-center text-[10px] border border-slate-200">
-                            {String.fromCharCode(65 + optIdx)}
-                          </span>
-                          <span>{opt}</span>
-                        </div>
-                        <div>
-                          {isCorrectAnswer && (
-                            <span className="text-[10px] font-extrabold text-emerald-700 uppercase">
-                              ✓ Correct Answer
-                            </span>
-                          )}
-                          {isStudentChoice && !isCorrectAnswer && (
-                            <span className="text-[10px] font-extrabold text-rose-700 uppercase">
-                              ✗ Your Answer
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
+                  {!isCorrect && (
+                    <div className="p-3 rounded-xl border bg-emerald-50/60 border-emerald-200 text-emerald-950">
+                      <span className="text-[10px] font-bold text-emerald-700 block mb-0.5">Correct Answer:</span>
+                      <p className="font-bold">{correctChoice}</p>
+                    </div>
+                  )}
                 </div>
 
-                {/* Rationale */}
-                <div className="bg-sky-50/80 border border-sky-200/80 rounded-xl p-3.5 text-xs text-sky-950 font-medium">
-                  <span className="font-bold text-sky-900">Clinical Reasoning: </span>
-                  <span>{q.rationale}</span>
-                </div>
+                {/* Clinical Rationale */}
+                {q.rationale && (
+                  <div className="bg-slate-50 border border-slate-200/80 rounded-xl p-3 text-xs text-slate-700 leading-relaxed">
+                    <span className="font-extrabold text-slate-900">Clinical Explanation: </span>
+                    {q.rationale}
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
+
+        {/* Footer Navigation Actions */}
+        <div className="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-slate-200">
+          <button
+            onClick={() => navigate(`/quiz/${assessmentKey}`)}
+            className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-bold text-xs inline-flex items-center gap-2 cursor-pointer transition-colors"
+          >
+            <RotateCcw className="w-4 h-4" />
+            <span>Retake Assessment</span>
+          </button>
+
+          <Link
+            to={subject === 'physiology' ? '/physiology-syllabus' : '/anatomy-syllabus'}
+            className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-md inline-flex items-center gap-2 transition-all cursor-pointer"
+          >
+            <span>Return to Syllabus</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </div>
     </div>

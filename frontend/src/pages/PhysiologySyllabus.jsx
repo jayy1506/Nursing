@@ -2,6 +2,7 @@ import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { PHYSIOLOGY_UNITS } from "../constants/physiologyData";
+import { getStudentGatingStatus } from "../services/assessmentEngine";
 import {
   BookOpen,
   ClipboardList,
@@ -16,7 +17,11 @@ import {
   Image as ImageIcon,
   HelpCircle,
   FileText,
-  Activity
+  Activity,
+  Lock,
+  Unlock,
+  ShieldAlert,
+  TrendingUp
 } from "lucide-react";
 
 export const PhysiologySyllabus = () => {
@@ -193,6 +198,75 @@ export const PhysiologySyllabus = () => {
 
       {/* Main Units List */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+        {/* Grand Final Mixed Assessment Gating Card */}
+        {(() => {
+          const gating = getStudentGatingStatus('physiology');
+          return (
+            <div className={`p-6 sm:p-7 rounded-3xl border mb-8 transition-all ${
+              gating.isFinalUnlocked
+                ? 'bg-gradient-to-r from-emerald-500/10 via-teal-50 to-white border-emerald-300 shadow-sm'
+                : 'bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white border-slate-700 shadow-lg'
+            }`}>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                      gating.isFinalUnlocked
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                        : 'bg-slate-700/80 text-amber-300 border border-slate-600'
+                    }`}>
+                      {gating.isFinalUnlocked ? <Unlock className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5 text-amber-400" />}
+                      <span>{gating.isFinalUnlocked ? 'Grand Final Unlocked (100% Completed)' : 'Cumulative Final Exam Gated'}</span>
+                    </span>
+                    <span className={`text-xs font-bold ${gating.isFinalUnlocked ? 'text-slate-500' : 'text-slate-300'}`}>
+                      {gating.completedCount} of 12 Modules Mastered ({gating.completionPercent}%)
+                    </span>
+                  </div>
+
+                  <h3 className={`text-xl sm:text-2xl font-black tracking-tight ${gating.isFinalUnlocked ? 'text-slate-900' : 'text-white'}`}>
+                    Applied Physiology Comprehensive Grand Final Examination
+                  </h3>
+
+                  <p className={`text-xs sm:text-sm max-w-2xl leading-relaxed ${gating.isFinalUnlocked ? 'text-slate-600' : 'text-slate-300'}`}>
+                    {gating.isFinalUnlocked
+                      ? 'Congratulations! You have passed all 12 units. Take the 48-question cumulative mixed examination covering the entire INC Semester I syllabus.'
+                      : `Gated under INC competency standards. Pass each of the 12 individual unit assessment quizzes with ≥ 75% score to unlock this final examination. Remaining: ${gating.remainingCount} modules.`}
+                  </p>
+
+                  <div className="w-full max-w-md bg-white/20 rounded-full h-2.5 overflow-hidden pt-0.5">
+                    <div
+                      className={`h-2.5 rounded-full transition-all duration-500 ${
+                        gating.isFinalUnlocked ? 'bg-emerald-500' : 'bg-gradient-to-r from-amber-400 to-emerald-400'
+                      }`}
+                      style={{ width: `${gating.completionPercent}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div className="shrink-0">
+                  {gating.isFinalUnlocked ? (
+                    <Link
+                      to="/quiz/physiology-grand-final"
+                      className="px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                      <span>Start Grand Final Exam →</span>
+                    </Link>
+                  ) : (
+                    <Link
+                      to="/quiz/physiology-grand-final"
+                      className="px-5 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 font-bold text-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                      <Lock className="w-4 h-4 text-amber-400" />
+                      <span>View Final Status (Locked)</span>
+                    </Link>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
         <div className="space-y-6">
           {filteredUnits.map((unit) => {
             const activeTab = getUnitTab(unit.id);
@@ -226,6 +300,14 @@ export const PhysiologySyllabus = () => {
                   </div>
 
                   <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                    <Link
+                      to={`/quiz/${unit.id}`}
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs border border-emerald-200 shadow-xs transition-all cursor-pointer"
+                      title="Take Chapter Assessment Quiz"
+                    >
+                      <ClipboardList className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>Take Quiz</span>
+                    </Link>
                     <Link
                       to={`/physiology/lesson/${unit.id}`}
                       className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-sm shadow-sky-500/20 transition-all cursor-pointer"

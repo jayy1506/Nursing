@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
-import { MODULE_ASSESSMENTS } from '../../constants/assessmentQuestions';
+import {
+  getAssessmentByTopic,
+  recordAssessmentAttempt,
+  getStudentGatingStatus,
+  formatDuration
+} from '../../services/assessmentEngine';
 import {
   ClipboardList,
   CheckCircle2,
@@ -12,26 +17,39 @@ import {
   Clock,
   Award,
   HelpCircle,
-  BookOpen
+  BookOpen,
+  Lock,
+  ShieldAlert,
+  ChevronRight
 } from 'lucide-react';
 
 export const QuizView = () => {
   const navigate = useNavigate();
   const { topicId } = useParams();
 
-  // Determine which quiz data to load
-  const assessmentKey = topicId && MODULE_ASSESSMENTS[topicId] ? topicId : 'comprehensive-final';
-  const assessmentData = MODULE_ASSESSMENTS[assessmentKey] || MODULE_ASSESSMENTS['comprehensive-final'];
-  const questions = assessmentData.questions;
+  // Load assessment data dynamically
+  const assessmentData = getAssessmentByTopic(topicId);
+  const questions = assessmentData?.questions || [];
+  const subject = assessmentData?.subject || (topicId?.includes('phys') ? 'physiology' : 'anatomy');
+
+  // Gating status
+  const gating = getStudentGatingStatus(subject);
+  const isGrandFinal = assessmentData?.isGrandFinal || topicId?.includes('grand-final');
+  const isLocked = isGrandFinal && !gating.isFinalUnlocked;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState({});
-  const [timeLeft, setTimeLeft] = useState(questions.length * 90); // 90 seconds per question
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const [timeLeft, setTimeLeft] = useState((questions.length || 15) * 90); // 90s per question
+  const [submitting, setSubmitting] = useState(false);
 
-  // Timer countdown
+  // Stopwatch timer (time spent) & countdown
   useEffect(() => {
+    if (isLocked || questions.length === 0) return;
+
     const timer = setInterval(() => {
-      setTimeLeft((prev) => {
+      setElapsedSeconds(prev => prev + 1);
+      setTimeLeft(prev => {
         if (prev <= 1) {
           clearInterval(timer);
           handleSubmitQuiz();
@@ -42,7 +60,7 @@ export const QuizView = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [currentIndex]);
+  }, [isLocked, questions.length]);
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -52,7 +70,7 @@ export const QuizView = () => {
 
   const currentQ = questions[currentIndex];
   const answeredCount = Object.keys(selectedAnswers).length;
-  const progressPercent = Math.round((answeredCount / questions.length) * 100);
+  const progressPercent = questions.length > 0 ? Math.round((answeredCount / questions.length) * 100) : 0;
 
   const handleSelectOption = (optIndex) => {
     setSelectedAnswers({
@@ -61,11 +79,14 @@ export const QuizView = () => {
     });
   };
 
-  const handleSubmitQuiz = () => {
-    let score = 0;
+  const handleSubmitQuiz = async () => {
+    if (submitting) return;
+    setSubmitting(true);
+
+    let correctCount = 0;
     const reviewData = questions.map((q, idx) => {
       const isCorrect = selectedAnswers[idx] === q.correctAnswer;
-      if (isCorrect) score += 1;
+      if (isCorrect) correctCount += 1;
       return {
         ...q,
         studentAnswer: selectedAnswers[idx],
@@ -73,34 +94,119 @@ export const QuizView = () => {
       };
     });
 
-    const percentage = Math.round((score / questions.length) * 100);
+    const totalQuestions = questions.length || 1;
+    const percentage = Math.round((correctCount / totalQuestions) * 100);
+    const passed = percentage >= 75;
 
+    // Get current user details from localStorage
+    const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
+    const studentName = savedUser.name || 'Nursing Student';
+    const studentEmail = savedUser.email || 'student@nursing-lms.edu';
+    const studentId = savedUser.uid || savedUser.firebaseUid || 'student-local';
+
+    // Record attempt locally and sync to MongoDB Atlas
+    await recordAssessmentAttempt({
+      studentId,
+      studentName,
+      studentEmail,
+      topicId: topicId || 'assessment-quiz',
+      topicTitle: assessmentData.title,
+      subject,
+      score: correctCount,
+      totalQuestions,
+      percentage,
+      passed,
+      timeSpentSeconds: elapsedSeconds,
+      reviewData
+    });
+
+    // Navigate to results
     navigate('/student/results', {
       state: {
-        score,
-        totalQuestions: questions.length,
+        score: percentage,
+        rawScore: correctCount,
+        totalQuestions,
+        correctCount,
+        incorrectCount: totalQuestions - correctCount,
         percentage,
-        topicName: assessmentData.title,
-        assessmentKey,
+        passed,
+        moduleName: assessmentData.title,
+        assessmentKey: topicId,
+        subject,
+        timeSpentSeconds: elapsedSeconds,
+        timeSpentFormatted: formatDuration(elapsedSeconds),
         reviewData,
         completedAt: new Date().toISOString()
       }
     });
   };
 
+  // If locked, render lock barrier
+  if (isLocked) {
+    return (
+      <div className="min-h-screen bg-slate-50 text-slate-900 pb-16 font-sans">
+        <Navbar />
+        <div className="max-w-2xl mx-auto px-4 py-16 text-center">
+          <div className="w-20 h-20 bg-rose-100 text-rose-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner ring-8 ring-rose-50">
+            <Lock className="w-10 h-10" />
+          </div>
+
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-rose-50 border border-rose-200 text-rose-700 text-xs font-black uppercase tracking-wider mb-3">
+            <ShieldAlert className="w-3.5 h-3.5" />
+            <span>Grand Final Assessment Locked</span>
+          </span>
+
+          <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mb-3">
+            100% Course Completion Required
+          </h1>
+
+          <p className="text-slate-600 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed mb-6">
+            Under official Indian Nursing Council (INC) CBME standards, the Comprehensive Grand Final is locked until you have completed and passed all 12 units with minimum 75% score.
+          </p>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm mb-8 text-left space-y-4">
+            <div className="flex items-center justify-between text-xs font-bold">
+              <span className="text-slate-500">Your Current Progress</span>
+              <span className="text-rose-600 font-extrabold">{gating.completedCount} / {gating.totalUnits} Units Mastered ({gating.completionPercent}%)</span>
+            </div>
+            <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+              <div
+                className="bg-gradient-to-r from-rose-500 to-amber-500 h-3 rounded-full transition-all duration-500"
+                style={{ width: `${gating.completionPercent}%` }}
+              />
+            </div>
+            <p className="text-[11px] text-slate-500">
+              Complete remaining <strong>{gating.remainingCount} modules</strong> to unlock the final examination.
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link
+              to={subject === 'physiology' ? '/physiology-syllabus' : '/anatomy-syllabus'}
+              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-md transition-all inline-flex items-center justify-center gap-2"
+            >
+              <span>Return to {subject === 'physiology' ? 'Physiology' : 'Anatomy'} Syllabus</span>
+              <ChevronRight className="w-4 h-4" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-emerald-50 text-slate-900 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50/50 via-white to-slate-50 text-slate-900 pb-16 font-sans">
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Assessment Header Card */}
-        <div className="bg-white/90 border border-slate-200 backdrop-blur-md rounded-3xl p-6 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-bold mb-2">
-              <ClipboardList className="w-3.5 h-3.5 text-emerald-600" />
-              <span>{questions.length}-Question Clinical Assessment</span>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-800 text-xs font-extrabold border border-sky-200 mb-2">
+              <ClipboardList className="w-3.5 h-3.5 text-sky-600" />
+              <span>{questions.length}-Question Assessment Exam</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
               {assessmentData.title}
             </h1>
             <p className="text-xs sm:text-sm text-slate-600 mt-1">
@@ -108,27 +214,29 @@ export const QuizView = () => {
             </p>
           </div>
 
-          <div className="flex items-center gap-3 self-start md:self-auto">
-            <div className="flex items-center gap-1.5 px-3.5 py-2 rounded-2xl bg-amber-50 border border-amber-200 text-amber-900 font-mono font-bold text-xs">
-              <Clock className="w-4 h-4 text-amber-600" />
-              <span>{formatTime(timeLeft)}</span>
+          <div className="flex items-center gap-3 self-start md:self-auto shrink-0">
+            {/* Live Stopwatch / Time Spent */}
+            <div className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-slate-700 font-mono font-bold text-xs" title="Elapsed Time Spent">
+              <Clock className="w-3.5 h-3.5 text-sky-600" />
+              <span>{formatDuration(elapsedSeconds)}</span>
             </div>
-            <div className="px-3.5 py-2 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold text-xs">
-              <span>{answeredCount}/{questions.length} Answered</span>
+
+            <div className="px-3.5 py-2 rounded-xl bg-sky-50 border border-sky-200 text-sky-900 font-bold text-xs">
+              <span>{answeredCount} / {questions.length} Answered</span>
             </div>
           </div>
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full bg-slate-200 rounded-full h-2 mb-6 overflow-hidden">
+        <div className="w-full bg-slate-200/80 rounded-full h-2.5 mb-6 overflow-hidden">
           <div
-            className="bg-gradient-to-r from-emerald-500 to-teal-500 h-2 rounded-full transition-all duration-300"
+            className="bg-gradient-to-r from-sky-500 to-indigo-600 h-2.5 rounded-full transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
 
         {/* Question Selector Quick Grid */}
-        <div className="flex flex-wrap gap-1.5 mb-6 p-3 bg-white/70 border border-slate-200/80 rounded-2xl">
+        <div className="flex flex-wrap gap-1.5 mb-6 p-3 bg-white border border-slate-200/90 rounded-2xl shadow-xs">
           {questions.map((_, i) => {
             const isAnswered = selectedAnswers[i] !== undefined;
             const isCurrent = i === currentIndex;
@@ -138,9 +246,9 @@ export const QuizView = () => {
                 onClick={() => setCurrentIndex(i)}
                 className={`w-7 h-7 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   isCurrent
-                    ? 'bg-emerald-600 text-white shadow-sm ring-2 ring-emerald-300'
+                    ? 'bg-sky-600 text-white shadow-sm ring-2 ring-sky-300'
                     : isAnswered
-                    ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                    ? 'bg-sky-100 text-sky-800 border border-sky-300'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -152,22 +260,22 @@ export const QuizView = () => {
 
         {/* Active Question Box */}
         {currentQ && (
-          <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+          <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-6">
+            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+              <span className="text-xs font-black text-sky-700 bg-sky-50 px-3 py-1 rounded-full border border-sky-200">
                 Question {currentIndex + 1} of {questions.length}
               </span>
-              <span className="text-[11px] font-semibold text-slate-400">
-                Passing standard: 70%
+              <span className="text-[11px] font-bold text-slate-500">
+                Standard: 75% to pass
               </span>
             </div>
 
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed mb-6">
+            <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-relaxed">
               {currentQ.text}
             </h2>
 
             {/* Options List */}
-            <div className="space-y-3 mb-8">
+            <div className="space-y-3">
               {currentQ.options.map((opt, optIdx) => {
                 const isSelected = selectedAnswers[currentIndex] === optIdx;
                 const letter = String.fromCharCode(65 + optIdx); // A, B, C, D
@@ -177,20 +285,20 @@ export const QuizView = () => {
                     onClick={() => handleSelectOption(optIdx)}
                     className={`w-full text-left p-4 rounded-2xl border text-xs sm:text-sm font-medium transition-all flex items-start gap-3 cursor-pointer ${
                       isSelected
-                        ? 'bg-emerald-50/90 border-emerald-500 text-emerald-950 font-bold shadow-sm'
+                        ? 'bg-sky-50/90 border-sky-500 text-sky-950 font-bold shadow-sm'
                         : 'bg-slate-50/70 hover:bg-slate-100/80 border-slate-200 text-slate-700'
                     }`}
                   >
                     <span
-                      className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-extrabold shrink-0 ${
+                      className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
                         isSelected
-                          ? 'bg-emerald-500 text-white shadow-sm'
+                          ? 'bg-sky-600 text-white shadow-sm'
                           : 'bg-slate-200 text-slate-600'
                       }`}
                     >
                       {letter}
                     </span>
-                    <span className="flex-1 mt-0.5">{opt}</span>
+                    <span className="flex-1 mt-0.5 leading-snug">{opt}</span>
                   </button>
                 );
               })}
@@ -210,7 +318,7 @@ export const QuizView = () => {
               {currentIndex < questions.length - 1 ? (
                 <button
                   onClick={() => setCurrentIndex((prev) => prev + 1)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-sky-600 hover:bg-sky-700 text-white shadow-md shadow-sky-500/20 transition-all cursor-pointer"
                 >
                   <span>Next Question</span>
                   <ArrowRight className="w-4 h-4" />
@@ -218,9 +326,10 @@ export const QuizView = () => {
               ) : (
                 <button
                   onClick={handleSubmitQuiz}
+                  disabled={submitting}
                   className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-lg shadow-emerald-500/30 hover:scale-105 transition-all cursor-pointer"
                 >
-                  <span>Submit & View Results</span>
+                  <span>{submitting ? 'Submitting...' : 'Submit & View Results'}</span>
                   <CheckCircle2 className="w-4 h-4" />
                 </button>
               )}

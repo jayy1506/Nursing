@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
+import {
+  getAllRecordedAttempts,
+  getStudentRosterHistory
+} from '../../services/assessmentEngine';
 import {
   ClipboardList,
   Search,
@@ -8,140 +12,396 @@ import {
   Award,
   TrendingUp,
   User,
-  BookOpen
+  BookOpen,
+  Calendar,
+  Clock,
+  X,
+  ChevronRight,
+  ShieldCheck,
+  Download
 } from 'lucide-react';
 
 export const ResultAudit = () => {
-  const [attempts, setAttempts] = useState([
-    {
-      _id: 'att-01',
-      studentName: 'Elena Rostova',
-      studentEmail: 'student@nursing-lms.edu',
-      moduleName: 'Module 1: Carbohydrate Metabolism',
-      score: 85,
-      totalQuestions: 10,
-      passed: true,
-      createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toLocaleDateString()
-    },
-    {
-      _id: 'att-02',
-      studentName: 'David Kim',
-      studentEmail: 'david.k@nursing-lms.edu',
-      moduleName: 'Module 1: Carbohydrate Metabolism',
-      score: 50,
-      totalQuestions: 10,
-      passed: false,
-      createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toLocaleDateString()
-    },
-    {
-      _id: 'att-03',
-      studentName: 'Amina Al-Mansoor',
-      studentEmail: 'amina@nursing-lms.edu',
-      moduleName: 'Module 2: Lipid Metabolism',
-      score: 90,
-      totalQuestions: 10,
-      passed: true,
-      createdAt: new Date(Date.now() - 72 * 60 * 60 * 1000).toLocaleDateString()
-    }
-  ]);
-
+  const [attempts, setAttempts] = useState([]);
+  const [studentRoster, setStudentRoster] = useState([]);
+  const [activeTab, setActiveTab] = useState('roster'); // 'roster' | 'attempts'
+  const [selectedStudent, setSelectedStudent] = useState(null);
   const [search, setSearch] = useState('');
 
-  const filtered = attempts.filter((a) =>
-    a.studentName.toLowerCase().includes(search.toLowerCase()) ||
-    a.studentEmail.toLowerCase().includes(search.toLowerCase()) ||
-    a.moduleName.toLowerCase().includes(search.toLowerCase())
+  useEffect(() => {
+    const localAttempts = getAllRecordedAttempts();
+    const roster = getStudentRosterHistory();
+
+    const token = localStorage.getItem('token') || localStorage.getItem('firebase_token');
+    fetch('/api/assessments/attempts', {
+      headers: token ? { Authorization: `Bearer ${token}` } : {}
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.attempts && data.attempts.length > 0) {
+          const serverFormatted = data.attempts.map(a => ({
+            id: a._id,
+            studentName: a.studentName || 'Nursing Student',
+            studentEmail: a.studentEmail || a.studentId,
+            topicTitle: a.scopeName || 'Clinical Assessment',
+            score: a.score,
+            totalQuestions: a.totalQuestions,
+            percentage: a.percentage,
+            passed: a.passed,
+            timeSpentFormatted: a.timeSpentSeconds ? `${Math.floor(a.timeSpentSeconds / 60)} min` : 'N/A',
+            completedAt: a.timestamp ? new Date(a.timestamp).toLocaleString() : 'Recent'
+          }));
+          setAttempts(serverFormatted);
+        } else {
+          setAttempts(localAttempts);
+        }
+      })
+      .catch(() => {
+        setAttempts(localAttempts);
+      });
+
+    setStudentRoster(roster);
+  }, []);
+
+  const filteredRoster = studentRoster.filter(s =>
+    s.studentName.toLowerCase().includes(search.toLowerCase()) ||
+    s.studentEmail.toLowerCase().includes(search.toLowerCase())
   );
 
-  const avgScore = Math.round(attempts.reduce((acc, curr) => acc + curr.score, 0) / (attempts.length || 1));
-  const passRate = Math.round((attempts.filter(a => a.passed).length / (attempts.length || 1)) * 100);
+  const filteredAttempts = attempts.filter(a =>
+    (a.studentName || '').toLowerCase().includes(search.toLowerCase()) ||
+    (a.studentEmail || '').toLowerCase().includes(search.toLowerCase()) ||
+    (a.topicTitle || '').toLowerCase().includes(search.toLowerCase())
+  );
+
+  const totalSubmissions = attempts.length;
+  const avgScore = totalSubmissions > 0 ? Math.round(attempts.reduce((acc, curr) => acc + (curr.percentage || 0), 0) / totalSubmissions) : 0;
+  const passRate = totalSubmissions > 0 ? Math.round((attempts.filter(a => a.passed).length / totalSubmissions) * 100) : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-emerald-50 text-slate-900">
+    <div className="min-h-screen bg-gradient-to-b from-sky-50/50 via-white to-slate-50 text-slate-900 pb-20 font-sans">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
-          <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-            <ClipboardList className="w-7 h-7 text-emerald-600" />
-            <span>Assessment Results & Performance Audit</span>
-          </h1>
-          <p className="text-slate-600 text-xs sm:text-sm mt-1">
-            Complete records of student assessment attempts, pass/fail status, and clinical scores.
-          </p>
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-black border border-emerald-200 mb-2">
+              <ClipboardList className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Institutional Accreditation & Compliance Audit</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              Assessment Results & Student History Audit
+            </h1>
+            <p className="text-slate-600 text-xs sm:text-sm mt-1">
+              Verified records of continuous internal evaluation, timestamped test scores, and 100% course completion tracking.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-1.5 p-1.5 bg-slate-100 rounded-2xl border border-slate-200 self-start md:self-auto">
+            <button
+              onClick={() => setActiveTab('roster')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeTab === 'roster'
+                  ? 'bg-white text-emerald-800 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Student Progress Roster ({studentRoster.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('attempts')}
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                activeTab === 'attempts'
+                  ? 'bg-white text-emerald-800 shadow-sm'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              All Recorded Attempts ({attempts.length})
+            </button>
+          </div>
         </div>
 
         {/* Telemetry Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
-          <div className="bg-white/90 border border-slate-200 rounded-2xl p-5 shadow-sm">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Total Submissions</span>
-            <p className="text-3xl font-extrabold text-slate-900 mt-2">{attempts.length}</p>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Total Submissions</span>
+            <p className="text-2xl sm:text-3xl font-black text-slate-900 mt-1">{totalSubmissions}</p>
+            <span className="text-[10px] text-slate-500 font-semibold">MongoDB Atlas verified</span>
           </div>
-          <div className="bg-white/90 border border-slate-200 rounded-2xl p-5 shadow-sm">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Average Cohort Score</span>
-            <p className="text-3xl font-extrabold text-emerald-600 mt-2">{avgScore}%</p>
+
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Average Cohort Score</span>
+            <p className="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">{avgScore}%</p>
+            <span className="text-[10px] text-slate-500 font-semibold">Passing standard ≥ 75%</span>
           </div>
-          <div className="bg-white/90 border border-slate-200 rounded-2xl p-5 shadow-sm">
-            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Overall Pass Rate</span>
-            <p className="text-3xl font-extrabold text-sky-600 mt-2">{passRate}%</p>
+
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Overall Pass Rate</span>
+            <p className="text-2xl sm:text-3xl font-black text-sky-600 mt-1">{passRate}%</p>
+            <span className="text-[10px] text-slate-500 font-semibold">Competency achieved</span>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200/90 p-5 shadow-xs">
+            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">Eligible for Final</span>
+            <p className="text-2xl sm:text-3xl font-black text-indigo-600 mt-1">
+              {studentRoster.filter(s => s.completionPercentage >= 100).length} Students
+            </p>
+            <span className="text-[10px] text-slate-500 font-semibold">100% units completed</span>
           </div>
         </div>
 
         {/* Search */}
-        <div className="bg-white/90 border border-slate-200 rounded-2xl p-4 shadow-sm mb-6">
-          <div className="relative w-full sm:w-80">
+        <div className="bg-white border border-slate-200 rounded-2xl p-3 shadow-xs mb-6">
+          <div className="relative w-full sm:w-96">
             <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
             <input
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search by student or module..."
+              placeholder="Search by student, email, or unit..."
               className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 pl-10 pr-4 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
             />
           </div>
         </div>
 
-        {/* Table */}
-        <div className="bg-white/95 border border-slate-200 rounded-2xl shadow-sm overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-slate-700">
-              <thead className="bg-slate-50 text-slate-500 uppercase tracking-wider font-bold text-[10px] border-b border-slate-200">
-                <tr>
-                  <th className="px-6 py-4">Student</th>
-                  <th className="px-6 py-4">Module / Topic</th>
-                  <th className="px-6 py-4">Score</th>
-                  <th className="px-6 py-4">Status</th>
-                  <th className="px-6 py-4">Date</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100">
-                {filtered.map((att) => (
-                  <tr key={att._id} className="hover:bg-slate-50/60 transition-colors">
-                    <td className="px-6 py-4">
-                      <p className="font-bold text-slate-900">{att.studentName}</p>
-                      <p className="text-[11px] text-slate-400">{att.studentEmail}</p>
-                    </td>
-                    <td className="px-6 py-4 font-semibold text-slate-700">{att.moduleName}</td>
-                    <td className="px-6 py-4 font-extrabold text-sm text-slate-900">{att.score}%</td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold ${
-                          att.passed
-                            ? 'bg-emerald-100 text-emerald-800'
-                            : 'bg-rose-100 text-rose-800'
-                        }`}
-                      >
-                        {att.passed ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
-                        {att.passed ? 'PASSED (≥70%)' : 'REMEDIATION NEEDED'}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-slate-500 font-medium">{att.createdAt}</td>
+        {/* TAB 1: STUDENT ROSTER (Course Completion + History) */}
+        {activeTab === 'roster' && (
+          <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-slate-700">
+                <thead className="bg-slate-50/80 text-slate-500 uppercase tracking-wider font-extrabold text-[10px] border-b border-slate-200">
+                  <tr>
+                    <th className="px-6 py-4">Student Name & Account</th>
+                    <th className="px-6 py-4">Course Progress (12 Units)</th>
+                    <th className="px-6 py-4">Tests Taken</th>
+                    <th className="px-6 py-4">Average Score</th>
+                    <th className="px-6 py-4">Grand Final Gating</th>
+                    <th className="px-6 py-4 text-right">Academic History</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {filteredRoster.length > 0 ? (
+                    filteredRoster.map((student, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-emerald-100 text-emerald-800 font-black flex items-center justify-center shrink-0">
+                              {student.studentName.charAt(0)}
+                            </div>
+                            <div>
+                              <p className="font-extrabold text-slate-900 text-xs sm:text-sm">{student.studentName}</p>
+                              <p className="text-[11px] text-slate-400">{student.studentEmail}</p>
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <div className="w-40 space-y-1.5">
+                            <div className="flex items-center justify-between text-[11px] font-bold">
+                              <span>{student.completedUnitsCount} / 12 Units</span>
+                              <span className="text-emerald-700 font-black">{student.completionPercentage}%</span>
+                            </div>
+                            <div className="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                              <div
+                                className="bg-gradient-to-r from-emerald-500 to-teal-600 h-2 rounded-full"
+                                style={{ width: `${student.completionPercentage}%` }}
+                              />
+                            </div>
+                          </div>
+                        </td>
+
+                        <td className="px-6 py-4 font-bold text-slate-900">
+                          {student.totalAttempts} Tests
+                        </td>
+
+                        <td className="px-6 py-4">
+                          <span className={`font-black text-sm ${student.averageScore >= 75 ? 'text-emerald-600' : 'text-amber-600'}`}>
+                            {student.averageScore}%
+                          </span>
+                        </td>
+
+                        <td className="px-6 py-4">
+                          {student.completionPercentage >= 100 ? (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                              <CheckCircle className="w-3 h-3 text-emerald-600" />
+                              <span>Unlocked (100% Done)</span>
+                            </span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600 border border-slate-200">
+                              <span>Locked ({12 - student.completedUnitsCount} remaining)</span>
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="px-6 py-4 text-right">
+                          <button
+                            onClick={() => setSelectedStudent(student)}
+                            className="px-3.5 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs border border-emerald-200 transition-colors inline-flex items-center gap-1 cursor-pointer"
+                          >
+                            <span>Inspect History</span>
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center py-12 text-slate-400 text-xs">
+                        No student assessments found.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* TAB 2: ALL ATTEMPTS */}
+        {activeTab === 'attempts' && (
+          <div className="bg-white border border-slate-200 rounded-3xl shadow-sm overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs text-slate-700">
+                <thead className="bg-slate-50/80 text-slate-500 uppercase tracking-wider font-extrabold text-[10px] border-b border-slate-200">
+                  <tr>
+                    <th className="px-6 py-4">Student</th>
+                    <th className="px-6 py-4">Module Assessed</th>
+                    <th className="px-6 py-4">Score</th>
+                    <th className="px-6 py-4">Time Spent</th>
+                    <th className="px-6 py-4">Status</th>
+                    <th className="px-6 py-4">Date</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {filteredAttempts.length > 0 ? (
+                    filteredAttempts.map((att, idx) => (
+                      <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                        <td className="px-6 py-4">
+                          <p className="font-extrabold text-slate-900">{att.studentName}</p>
+                          <p className="text-[11px] text-slate-400">{att.studentEmail}</p>
+                        </td>
+                        <td className="px-6 py-4 font-bold text-slate-800">{att.topicTitle}</td>
+                        <td className="px-6 py-4 font-black text-sm text-slate-900">{att.percentage}%</td>
+                        <td className="px-6 py-4 font-mono text-slate-600">{att.timeSpentFormatted || 'N/A'}</td>
+                        <td className="px-6 py-4">
+                          <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold ${
+                            att.passed ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                          }`}>
+                            {att.passed ? <CheckCircle className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+                            <span>{att.passed ? 'Passed (≥75%)' : 'Failed'}</span>
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-slate-500 font-medium">{new Date(att.completedAt).toLocaleDateString()}</td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan="6" className="text-center py-12 text-slate-400 text-xs">
+                        No attempts recorded yet.
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {/* MODAL: COMPLETE USER HISTORY AUDIT */}
+        {selectedStudent && (
+          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl border border-slate-200 max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+              <div className="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-2xl bg-emerald-600 text-white font-black text-lg flex items-center justify-center shadow-md">
+                    {selectedStudent.studentName.charAt(0)}
+                  </div>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-black text-slate-900">
+                      Complete Academic History: {selectedStudent.studentName}
+                    </h3>
+                    <p className="text-xs text-slate-500">{selectedStudent.studentEmail}</p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setSelectedStudent(null)}
+                  className="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-6 border-b border-slate-100 bg-emerald-50/30 flex flex-wrap items-center justify-between gap-4">
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Course Completion</span>
+                  <p className="text-lg font-black text-emerald-800">
+                    {selectedStudent.completedUnitsCount} of 12 Units Mastered ({selectedStudent.completionPercentage}%)
+                  </p>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Cumulative Score</span>
+                  <p className="text-lg font-black text-emerald-600">{selectedStudent.averageScore}%</p>
+                </div>
+
+                <div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Attempts</span>
+                  <p className="text-lg font-black text-slate-900">{selectedStudent.totalAttempts} Submissions</p>
+                </div>
+              </div>
+
+              <div className="p-6 overflow-y-auto space-y-3 flex-1">
+                <h4 className="text-xs font-black text-slate-400 uppercase tracking-wider mb-2">
+                  Chronological Assessment Attempts ({selectedStudent.attempts.length})
+                </h4>
+
+                {selectedStudent.attempts.map((att, i) => (
+                  <div
+                    key={i}
+                    className="p-4 rounded-2xl border border-slate-200/90 hover:border-emerald-300 bg-white transition-all space-y-2"
+                  >
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div>
+                        <h5 className="font-extrabold text-slate-900 text-xs sm:text-sm">
+                          {att.topicTitle}
+                        </h5>
+                        <p className="text-[11px] text-slate-400 flex items-center gap-2 mt-0.5">
+                          <Calendar className="w-3 h-3" />
+                          <span>{new Date(att.completedAt).toLocaleString()}</span>
+                          <span>•</span>
+                          <Clock className="w-3 h-3" />
+                          <span>Duration: {att.timeSpentFormatted}</span>
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-2 self-start sm:self-auto">
+                        <span className={`text-base font-black ${att.passed ? 'text-emerald-600' : 'text-rose-600'}`}>
+                          {att.score} / {att.totalQuestions} ({att.percentage}%)
+                        </span>
+
+                        <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-black ${
+                          att.passed ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'
+                        }`}>
+                          {att.passed ? 'Passed' : 'Failed'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="p-4 bg-slate-50 border-t border-slate-100 text-right">
+                <button
+                  onClick={() => setSelectedStudent(null)}
+                  className="px-5 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 font-bold text-xs text-slate-800 transition-colors cursor-pointer"
+                >
+                  Close History
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

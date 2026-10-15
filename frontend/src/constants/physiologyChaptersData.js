@@ -6,7 +6,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 1,
     "title": "General Physiology & Cell Function",
     "category": "Cellular Physiology & Transport",
-    "icon": "\ud83e\uddec",
+    "icon": "🧬",
     "color": "from-emerald-500 to-teal-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of General Physiology & Cell Function.",
@@ -24,28 +24,49 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-1-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Cell Membrane Physiology, Composition & Transport Dynamics",
         "content": [
-          "Chapter 1",
-          "Cell Physiology"
+          "All living human organisms are formed of cells and cellular products. The cell is the fundamental living structural, physiological, and genetic unit of multicellular life. The cell is encapsulated by the **cell membrane (plasma membrane / plasmalemma)**, a dynamic, selectively permeable lipid-protein sheath separating the intracellular fluid (ICF) from the extracellular fluid (ECF).",
+          "Biochemically, the plasma membrane consists of three primary macromolecular constituents: **Proteins (55%)**, **Lipids (40%)** (phospholipids and cholesterol), and **Carbohydrates (5%)** arranged as a protective, recognizing glycocalyx.",
+          "The cell membrane fulfills six indispensable homeostatic functions: (1) **Protective function** (shielding cytoplasmic organelles), (2) **Selective permeability** (acting as a semipermeable filter allowing nutrient influx and metabolite efflux), (3) **Absorptive function** (endocytosis and pinocytosis), (4) **Excretory function** (exocytosis of cellular wastes), (5) **Gas exchange** (O2 influx and CO2 efflux down partial pressure gradients), and (6) **Maintenance of cellular shape and volume**."
         ],
+        "points": [
+          "**Selective Permeability:** Lipophilic nonpolar molecules (O2, CO2, steroid hormones) diffuse freely through the lipid bilayer; hydrophilic ions and polar solutes require specialized transmembrane protein channels or carrier pumps.",
+          "**Membrane Proteins:** Integral proteins act as ion channels, selective transporters, and cell-surface receptors; peripheral proteins serve as enzymatic regulators and cytoskeletal anchors.",
+          "**ICF vs. ECF Composition:** Intracellular fluid is rich in potassium (K+), magnesium (Mg2+), phosphates, and proteins; Extracellular fluid is rich in sodium (Na+), chloride (Cl-), and bicarbonate (HCO3-).",
+          "**Active vs. Passive Transport:** Passive transport (simple diffusion, facilitated diffusion, osmosis) requires no metabolic energy, moving down electrochemical gradients; Primary active transport (Na+/K+-ATPase pump) hydrolyzes ATP directly to transport ions against steep gradients.",
+          "**Sodium-Potassium Pump (Na+/K+-ATPase):** Extrudes 3 Na+ ions out of the cell while importing 2 K+ ions for every ATP hydrolyzed; maintains cell volume and establishes the negative resting membrane potential."
+        ],
+        "clinicalPearl": "**Cell Membrane Disruption in Ischemia & Osmotic Swelling:** Oxygen deprivation (hypoxia/ischemia) terminates oxidative ATP synthesis, halting the Na+/K+-ATPase pump. Intracellular sodium and chloride accumulate, drawing water into the cell by osmosis and producing acute **hydropic cellular swelling**. If ATP is not restored rapidly, irreversible plasma membrane rupture causes necrotic cell death.",
         "images": [
           {
-            "src": "/images/physiology/1._Introduction_physiology_image1.png",
-            "caption": "Figure 1.1: Structure of the membranes.",
-            "alt": "Figure 1.1: Structure of the membranes."
-          },
-          {
-            "src": "/images/physiology/1._Introduction_physiology_image2.png",
-            "caption": "Figure 1.2: Modes of glandular secretion.",
-            "alt": "Figure 1.2: Modes of glandular secretion."
-          },
-          {
-            "src": "/images/physiology/1._Introduction_physiology_image3.png",
-            "caption": "Figure 1.3: Sebaceousglands.",
-            "alt": "Figure 1.3: Sebaceousglands."
+            "src": "/images/physiology/1_image1.png",
+            "caption": "Figure 1.1: Structure of the cell membrane and lipid bilayer.",
+            "alt": "Structure of the cell membrane"
           }
         ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-1-2",
+        "title": "Cytoplasm & Metabolic Functions of Cellular Organelles",
+        "content": [
+          "The cytoplasm is a gel-like aqueous matrix containing 80% water, dissolved electrolytes, glucose, amino acids, and lipids known as the **cytosol**, in which discrete metabolic machines called **organelles** execute specialized biochemical work.",
+          "The nucleus is the master genetic control center, transcribing messenger RNA (mRNA) and directing cellular protein synthesis, ribosomal assembly, and mitotic division.",
+          "The endoplasmic reticulum and Golgi complex form an integrated biosynthetic pipeline: the **Rough Endoplasmic Reticulum (RER)** synthesizes secretory proteins and degrades worn-out organelles, while the **Smooth Endoplasmic Reticulum (SER)** synthesizes phospholipids, steroids, metabolizes carbohydrates, detoxifies toxic compounds, and sequesters calcium.",
+          "The **Golgi apparatus** receives newly synthesized polypeptides, modifying, glycosylating, sorting, and packaging them into secretory granules or lysosomes. **Mitochondria** perform cellular respiration, generating 95% of cellular ATP via oxidative phosphorylation and initiating intrinsic apoptosis.",
+          "**Lysosomes** are acidic hydrolytic vesicles (containing acid hydrolases) that digest endocytosed pathogens and worn-out organelles (autophagy)."
+        ],
+        "points": [
+          "**Rough Endoplasmic Reticulum:** Studded with ribosomes; synthesizes membrane, lysosomal, and export proteins; quality checks protein folding.",
+          "**Smooth Endoplasmic Reticulum:** Synthesizes lipids and steroid hormones; in hepatocytes, detoxifies alcohol and drugs via cytochrome P450; in myocytes, acts as sarcoplasmic reticulum storing Ca2+.",
+          "**Golgi Complex:** Cisternae with cis (entry) and trans (exit) faces; sorts and directs vesicles to lysosomes, plasma membrane, or secretory exocytosis.",
+          "**Mitochondria (\"Powerhouses of the Cell\"):** Double-membrane organelles containing mtDNA; execute the Krebs citric acid cycle and electron transport chain, generating ATP.",
+          "**Peroxisomes:** Contain oxidases that neutralize harmful hydrogen peroxide (H2O2) and catalase that degrades it into water and oxygen; oxidize long-chain fatty acids.",
+          "**Centrosome & Centrioles:** Organize the mitotic spindle apparatus to pull sister chromatids during cell division."
+        ],
+        "clinicalPearl": "**Lysosomal Storage Diseases & Mitochondrial Cytopathies:** Inherited deficiency of a single lysosomal enzyme results in progressive accumulation of undigested macromolecules (e.g., gangliosides in Tay-Sachs disease, glucocerebrosides in Gaucher disease), causing severe organomegaly and neurodegeneration. Mitochondrial DNA mutations impair high-energy organs (brain, myocardium, skeletal muscle), causing lactic acidosis and exercise intolerance.",
+        "images": [],
         "tables": [
           [
             [
@@ -54,11 +75,11 @@ export const PHYSIOLOGY_CHAPTERS = {
             ],
             [
               "Rough endoplasmic reticulum",
-              "Synthesis of proteins Degradation of wornout organelles"
+              "Synthesis of proteins; Degradation of worn-out organelles"
             ],
             [
               "Smooth endoplasmic reticulum",
-              "Synthesis of lipids and steroids Role in cellular metabolism Storage and metabolism of calcium Catabolism and detoxification of toxic substances"
+              "Synthesis of lipids and steroids; Role in cellular metabolism; Storage and metabolism of calcium; Detoxification of toxic substances"
             ],
             [
               "Golgi apparatus",
@@ -66,11 +87,11 @@ export const PHYSIOLOGY_CHAPTERS = {
             ],
             [
               "Lysosomes",
-              "Degradation of macromolecules Degradation of wornout organelles Removal of excess of secretory products Secretion of Perforin Granzymes, Melanin a nd Serotonin"
+              "Degradation of macromolecules; Degradation of worn-out organelles; Removal of excess secretory products; Release of perforin, granzymes, melanin, and serotonin"
             ],
             [
               "Peroxisomes",
-              "Breakdown of excess fatty acids Detoxification of hydrogen peroxide and other metabolic products Oxygen utilization Acceleration of gluconeogenesis Degradation of purine to uric acid Role in the formation of myelin Role in the formation of bile acids"
+              "Breakdown of excess fatty acids; Detoxification of hydrogen peroxide and metabolic products; Role in bile acid and myelin formation"
             ],
             [
               "Centrosome",
@@ -78,7 +99,7 @@ export const PHYSIOLOGY_CHAPTERS = {
             ],
             [
               "Mitochondria",
-              "Production of energy Synthesis of ATP (Adenosine trip hosphate ) Initiation of apoptosis"
+              "Production of energy; Synthesis of ATP (Adenosine triphosphate); Initiation of apoptosis"
             ],
             [
               "Ribosomes",
@@ -86,14 +107,64 @@ export const PHYSIOLOGY_CHAPTERS = {
             ],
             [
               "Cytoskeleton",
-              "Determination of shape of the cell Stability of cell shape Cellular movements"
+              "Determination of shape of the cell; Stability of cell architecture; Cellular movements"
             ],
             [
               "Nucleus",
-              "Control of all activities of the cell Synthesis of RNA (Ribose Nucleic Acid) Sending genetic instruction to cytoplasm for protein synthesis Formation of subunits of ribosomes Control of cell division Storage of hered itary information in genes (DNA : Deoxyribonucleic Acid )"
+              "Control of all cell activities; Synthesis of RNA; Genetic instructions for protein synthesis; Control of cell division; Storage of hereditary DNA"
             ]
           ]
         ]
+      },
+      {
+        "id": "sec-phys-1-3",
+        "title": "Tissue Formation, Repair, Membranes & Glandular Secretion",
+        "content": [
+          "A **tissue** is an organized cooperative group of morphologically similar cells specialized for common physiological tasks. The four primary tissue types are **Epithelial** (covering, protection, absorption, secretion), **Connective** (binding, support, immune transport), **Muscular** (force generation and contraction), and **Nervous** (electrical impulse propagation and coordination).",
+          "**Tissue repair** is the biological replacement of worn-out, injured, or necrotic cells. Parenchymal regeneration restores identical tissue architecture, while stromal replacement deposits fibrous collagen scar tissue (fibrosis).",
+          "**Membranes** are pliable flat sheets of tissue covering or lining body compartments: **Mucous membranes** (line cavities opening to exterior, trapping microbes), **Serous membranes** (line closed ventral cavities, secreting lubricating serous fluid), **Cutaneous membrane** (skin), and **Synovial membranes** (line movable joint cavities).",
+          "**Glands** are specialized secretory structures: **Exocrine glands** discharge secretions into ducts (salivary, sweat, sebaceous), functioning via **merocrine** (exocytosis without cellular loss), **apocrine** (apical cytoplasm pinching off, e.g., mammary glands), or **holocrine** (entire cell disintegration, e.g., sebaceous glands) modes."
+        ],
+        "points": [
+          "**Epithelial Tissue Functions:** Physical barrier against mechanical trauma; selective chemical absorption in intestine; filtration in renal glomeruli; secretion of mucus and enzymes.",
+          "**Connective Tissue Functions:** Connects bones and muscles (tendons, ligaments); provides structural framework (bone, cartilage); transports nutrients and oxygen (blood).",
+          "**Muscular Tissue Properties:** Excitability, contractility, extensibility, and elasticity; comprises skeletal (voluntary, striated), cardiac (involuntary, branching), and smooth (involuntary, visceral).",
+          "**Nervous Tissue Physiology:** Comprises excitable neurons (dendrites, soma, axon) transmitting electrical action potentials and neuroglia supporting and insulating axons.",
+          "**Modes of Glandular Secretion:** Merocrine / Eccrine (vesicle exocytosis; salivary and eccrine sweat glands); Apocrine (apical cytoplasm pinching; mammary glands); Holocrine (cell rupture discharging sebum; sebaceous glands)."
+        ],
+        "clinicalPearl": "**Wound Healing Phases & Scars in Nursing:** Tissue repair occurs in three overlapping phases: (1) Inflammatory phase (hemostasis and leukocyte influx), (2) Proliferative phase (granulation tissue, angiogenesis, and collagen deposition by fibroblasts), and (3) Maturation/Remodeling phase (collagen cross-linking). Epithelial tissues regenerate completely, whereas cardiac myocytes and central neurons cannot divide, healing permanently by non-contractile collagen fibrosis.",
+        "images": [
+          {
+            "src": "/images/physiology/1_image2.png",
+            "caption": "Figure 1.2: Modes of glandular secretion (Merocrine, Apocrine, Holocrine).",
+            "alt": "Modes of glandular secretion"
+          },
+          {
+            "src": "/images/physiology/1_image3.png",
+            "caption": "Figure 1.3: Sebaceous gland structure.",
+            "alt": "Sebaceous gland structure"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-1-4",
+        "title": "Cellular Adaptations & Alterations in Disease",
+        "content": [
+          "Cells constantly adjust their structure and physiological activity in response to changing physiological demands and pathological stresses, exhibiting **cellular adaptations**.",
+          "When environmental stresses exceed adaptive limits or persist unabated, **cellular injury** ensues. Reversible injury manifests as cellular swelling and fatty change; irreversible injury culminates in cell death via **necrosis** (uncontrolled pathological cell lysis with inflammation) or **apoptosis** (programmed, energy-dependent cell suicide without inflammation).",
+          "Pathological cellular adaptations include: **Hypertrophy** (increase in cell size without cell division), **Atrophy** (shrinkage in cell size and functional capacity), **Hyperplasia** (increase in cell number through active mitosis), **Metaplasia** (reversible phenotypic transformation of one adult cell type into another), and **Dysplasia** (disordered, atypical cellular proliferation predisposing to malignancy)."
+        ],
+        "points": [
+          "**Hypertrophy:** Common in non-dividing tissues; physiological (skeletal muscle in weightlifters, gravid uterus) or pathological (left ventricular concentric hypertrophy in systemic hypertension).",
+          "**Atrophy:** Results from disuse, denervation, ischemia, malnutrition, or endocrine withdrawal (e.g., skeletal muscle wasting in bedridden patients, senile brain atrophy).",
+          "**Hyperplasia:** Occurs in mitotically active tissues; physiological (breast ductal proliferation during lactation, partial hepatectomy liver regeneration) or pathological (benign prostatic hyperplasia / BPH, endometrial hyperplasia).",
+          "**Metaplasia:** Adaptive substitution; chronic cigarette smoke causes bronchial ciliated pseudostratified columnar epithelium to transform into durable stratified squamous epithelium, losing ciliary clearance.",
+          "**Apoptosis vs. Necrosis:** Apoptosis is programmed, ATP-dependent, characterized by chromatin condensation and apoptotic bodies phagocytosed cleanly; Necrosis is pathological, ATP-depleted, characterized by cellular swelling, membrane rupture, and intense surrounding inflammation."
+        ],
+        "clinicalPearl": "**Cervical Dysplasia & Metaplasia Surveillance:** In patients with gastroesophageal reflux disease (GERD), chronic gastric acid exposure induces columnar metaplasia of the lower esophageal squamous epithelium (**Barrett's esophagus**), markedly increasing the risk of esophageal adenocarcinoma. Pap smear screening samples the cervical transformation zone to detect early dysplastic changes caused by HPV before invasive cervical carcinoma develops.",
+        "images": [],
+        "tables": []
       }
     ],
     "mcqs": [
@@ -784,7 +855,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 2,
     "title": "Blood & Body Fluids",
     "category": "Hematology & Hemostasis",
-    "icon": "\ud83e\ude78",
+    "icon": "🩸",
     "color": "from-red-500 to-rose-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Blood & Body Fluids.",
@@ -802,52 +873,138 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-2-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Blood Composition, Physicochemical Properties & Hemopoiesis",
         "content": [
-          "Chapter 2"
+          "Blood is a specialized circulating fluid connective tissue comprising **formed cellular elements** (erythrocytes, leukocytes, thrombocytes) suspended within a liquid extracellular matrix called **blood plasma**.",
+          "In an average adult (70 kg), total blood volume is 5.0 to 5.6 liters (approximately 8% of body weight, or 70-80 mL/kg body weight). Blood has a slightly alkaline pH of 7.35 to 7.45, a specific gravity of 1.052 to 1.061, a viscosity 4.5 to 5.0 times that of water, and an osmolality of 280 to 295 mOsm/kg H2O.",
+          "Centrifugation of anti-coagulated blood separates it into three layers: packed red blood cells (**Hematocrit / Packed Cell Volume [PCV]**: 40-50% in males, 36-46% in females), an intermediate whitish **buffy coat** (< 1%, comprising leukocytes and platelets), and straw-colored supernatant **plasma (55%)**.",
+          "**Hemopoiesis (Hematopoiesis):** The continuous physiological formation of blood cells. In the adult, hemopoiesis occurs exclusively in red bone marrow (pelvis, sternum, vertebrae, cranium, ribs, proximal epiphyses of femur/humerus). All formed elements originate from common **Pluripotent Hematopoietic Stem Cells (HSCs)**, which differentiate into **Myeloid Stem Cells** (erythrocytes, granulocytes, monocytes, megakaryocytes) and **Lymphoid Stem Cells** (T and B lymphocytes, NK cells) under the control of colony-stimulating factors (CSFs) and erythropoietin."
         ],
-        "images": [],
+        "points": [
+          "**Serum vs. Plasma:** Plasma is the fluid portion of unclotted blood containing fibrinogen and all clotting factors; Serum is the clear fluid remaining after blood has clotted (Serum = Plasma minus Fibrinogen and clotting factors II, V, VIII).",
+          "**Erythropoiesis Regulation:** Hypoxia is the primary physiological stimulus for erythropoiesis; renal peritubular interstitial cells sense low tissue pO2 and secrete **Erythropoietin (EPO)**, which acts on bone marrow CFU-E precursors.",
+          "**Maturation Factors:** Vitamin B12 and Folic Acid are essential for thymidine triphosphate synthesis and nuclear DNA replication; Iron (Fe2+) is indispensable for heme synthesis."
+        ],
+        "clinicalPearl": "**Chronic Kidney Disease Anemia & EPO Replacement:** In chronic kidney disease (CKD stage 4-5), progressive destruction of renal parenchyma eliminates renal erythropoietin production. Patients develop severe, refractory normocytic normochromic anemia (Hb frequently < 7-8 g/dL), requiring recombinant human erythropoietin (Epoetin alfa) or darbepoetin and IV iron supplementation to restore hematocrit.",
+        "images": [
+          {
+            "src": "/images/physiology/2_image1.png",
+            "caption": "Figure 2.1: Cellular composition of blood and formed elements.",
+            "alt": "Composition of blood"
+          }
+        ],
         "tables": []
       },
       {
         "id": "sec-phys-2-2",
-        "title": "BLOOD",
-        "content": [],
+        "title": "Plasma Proteins, Colloid Osmotic Pressure & ESR",
+        "content": [
+          "Blood plasma consists of 91-92% water, 7-8% **plasma proteins** (normal concentration: 6.4 to 8.3 g/dL), and 1-2% other solutes (electrolytes, glucose, amino acids, urea, creatinine, bilirubin).",
+          "The plasma proteins are divided into three major fractions:",
+          "1. **Albumin (3.5 to 5.0 g/dL):** Synthesized exclusively by the liver (~12 g/day). Represents 55-65% of total protein. Because of its small molecular weight (69 kDa) and high abundance, albumin generates **75% to 80% of the Colloid Osmotic (Oncotic) Pressure of plasma (25-28 mmHg)**, opposing capillary hydrostatic pressure and holding fluid within the intravascular space. Albumin also acts as a versatile carrier for bilirubin, free fatty acids, calcium, and hydrophobic medications.",
+          "2. **Globulins (2.0 to 3.5 g/dL):** Comprise Alpha-1 (alpha-1 antitrypsin), Alpha-2 (haptoglobin, ceruloplasmin), Beta (transferrin, hemopexin, beta-lipoproteins), and **Gamma Globulins (Immunoglobulins: IgG, IgM, IgA, IgE, IgD)** synthesized by plasma B-cells providing humoral adaptive immunity.",
+          "3. **Fibrinogen (0.2 to 0.4 g/dL / 200-400 mg/dL):** High molecular weight (340 kDa) fibrous protein synthesized by the liver; crucial for the coagulation cascade, converted into an insoluble fibrin clot by thrombin.",
+          "**The Albumin/Globulin (A/G) Ratio:** Normally 1.2:1 to 2.0:1. A reversed A/G ratio (< 1.0) is a hallmark of severe chronic hepatic disease (impaired albumin synthesis) or multiple myeloma (monoclonal gammopathy).",
+          "**Erythrocyte Sedimentation Rate (ESR):** The rate at which anticoagulated red blood cells settle under gravity over one hour (Westergren method; normal: 0-15 mm/hr in males, 0-20 mm/hr in females). Erythrocytes normally repel each other due to negative surface sialic acid charges (zeta potential). In acute and chronic inflammation, elevated asymmetrical plasma proteins (especially **Fibrinogen** and globulins) neutralize the zeta potential, promoting erythrocyte stacking (**Rouleaux formation**), accelerating sedimentation."
+        ],
+        "points": [
+          "**Starling Forces in Microcirculation:** Capillary hydrostatic pressure (favors filtration) vs. Plasma colloid osmotic pressure (favors reabsorption). Hypoalbuminemia shifts balance toward filtration, causing interstitial fluid accumulation and **edema**.",
+          "**Plasma Buffering Capacity:** Histidine residues on plasma proteins buffer hydrogen ions (H+), contributing 15% of the total buffering power of blood.",
+          "**Clinical ESR Elevations:** Marked ESR elevation (> 100 mm/hr) serves as a sensitive, non-specific biomarker of acute and chronic systemic inflammation, active autoimmune disease (rheumatoid arthritis, SLE), temporal arteritis, multiple myeloma, and occult malignancy."
+        ],
+        "clinicalPearl": "**Hypoalbuminemia, Edema & Nephrotic Syndrome:** Severe liver cirrhosis (failure of albumin synthesis) or nephrotic syndrome (massive urinary albumin loss > 3.5 g/day) collapses plasma oncotic pressure below 15 mmHg. Fluid shifts from intravascular compartments into interstitial spaces, producing generalized pitting edema, ascites, and pleural effusions.",
         "images": [
           {
-            "src": "/images/physiology/2._Blood_physiology_chendake_image1.png",
-            "caption": "Figure 2.1: Development of blood cells.",
-            "alt": "Figure 2.1: Development of blood cells."
+            "src": "/images/physiology/2_image2.png",
+            "caption": "Figure 2.2: Erythropoiesis and stages of RBC development.",
+            "alt": "Erythropoiesis"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-2-3",
+        "title": "Formed Elements, Hemoglobin Dynamics & Catabolism",
+        "content": [
+          "The formed cellular elements of blood execute distinct, life-sustaining physiological functions:",
+          "**Erythrocytes (RBCs):** Normal count 4.5 to 6.0 million/μL in males, 4.0 to 5.0 million/μL in females. Packed with **Hemoglobin (Hb)** (14-18 g/dL in males, 12-16 g/dL in females), a tetrameric hemoprotein specialized for reversible oxygen delivery and carbon dioxide clearance.",
+          "**Leukocytes (WBCs):** Normal count 4,000 to 11,000/μL. Categorized into **Granulocytes** (Neutrophils [phagocytosis of bacteria], Eosinophils [parasites and allergies], Basophils [histamine and heparin release]) and **Agranulocytes** (Lymphocytes [adaptive immunity] and Monocytes [tissue macrophages]).",
+          "**Thrombocytes (Platelets):** Normal count 150,000 to 400,000/μL; anucleated cytoplasmic fragments derived from megakaryocytes, exhibiting three essential physiological properties: **Adhesion** (to subendothelial collagen via Von Willebrand factor), **Aggregation** (via ADP and thromboxane A2), and **Activation**.",
+          "Aged erythrocytes (lifespan ~120 days) are engulfed by reticuloendothelial macrophages in the spleen and liver. Globin chains are recycled into amino acids; iron is salvaged by transferrin; and the protoporphyrin ring of heme is cleaved into biliverdin and converted into lipid-soluble **unconjugated (indirect) bilirubin**, which is transported by albumin to hepatocytes for glucuronide conjugation."
+        ],
+        "points": [
+          "**Hemoglobin Oxygen Capacity:** Each gram of pure hemoglobin binds 1.34 mL of oxygen when fully saturated (100% saturation yields ~20 mL O2 per 100 mL blood).",
+          "**Neutrophil Phagocytosis & Left Shift:** Neutrophils are the earliest immune responders, migrating via chemotaxis and destroying bacteria via oxidative respiratory burst (superoxide, hydrogen peroxide, hypochlorous acid). An increase in immature non-segmented band forms indicates acute severe bacterial infection.",
+          "**Platelet Granule Release:** Dense granules release ADP and serotonin; alpha granules release platelet-derived growth factor (PDGF), fibrinogen, and clotting factor V.",
+          "**Bilirubin Clearance & Jaundice:** Conjugated (direct) bilirubin is excreted into bile, converted in the colon into urobilinogen by bacterial flora; failure of biliary excretion or massive hemolysis accumulates bilirubin (> 2.0-2.5 mg/dL), staining sclera and skin yellow (**jaundice**)."
+        ],
+        "clinicalPearl": "**Carbon Monoxide Poisoning & Sickle Cell Hemoglobinopathy:** Carbon monoxide (CO) binds to hemoglobin with an affinity 210 to 240 times higher than oxygen, forming carboxyhemoglobin (HbCO) that shifts the oxygen dissociation curve to the left and blocks oxygen delivery, causing cherry-red skin, cellular asphyxiation, and death. In Sickle Cell Disease (HbS mutation in beta-globin chain), deoxygenation polymerizes hemoglobin, deforming RBCs into rigid sickles that occlude microcapillaries, producing excruciating vaso-occlusive pain crises and splenic infarctions.",
+        "images": [
+          {
+            "src": "/images/physiology/2_image7.png",
+            "caption": "Figure 2.7: Structure and catabolism of hemoglobin.",
+            "alt": "Hemoglobin catabolism"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-2-4",
+        "title": "Blood Groups, Rh Incompatibility & Transfusion Principles",
+        "content": [
+          "The human erythrocyte membrane displays a complex mosaic of genetically determined surface glycoproteins and glycolipids called **agglutinogens (antigens)**. Over 30 blood group systems are recognized, with the **ABO System** and the **Rh System** holding paramount clinical significance.",
+          "The **ABO system** is governed by **Landsteiner's Law**: (1) If an agglutinogen is present on an individual's RBCs, the corresponding agglutinin (antibody) must be absent from the plasma, and (2) If an agglutinogen is absent from the RBCs, the corresponding agglutinin must be present in the plasma.",
+          "Individuals with **Blood Group A** possess A antigens and anti-B antibodies; **Group B** possess B antigens and anti-A antibodies; **Group AB** possess both A and B antigens and NO antibodies (**Universal Recipient** for RBCs); and **Group O** possess neither antigen and both anti-A and anti-B antibodies (**Universal Donor** for RBCs).",
+          "The **Rh system** is determined by the presence or absence of the highly immunogenic **D antigen**. Rh-positive individuals possess D antigen (85% of population); Rh-negative individuals lack D antigen and do NOT possess pre-existing anti-D antibodies, but produce them upon sensitization by Rh-positive blood."
+        ],
+        "points": [
+          "**Landsteiner's Law:** Predicts natural IgM isohemagglutinins formed spontaneously during infancy in response to ubiquitous bacterial carbohydrates.",
+          "**Major vs. Minor Cross-Matching:** Major cross-match mixes donor RBCs with recipient serum (critical test detecting preformed recipient antibodies that could destroy donor cells); Minor cross-match mixes donor plasma with recipient RBCs.",
+          "**Rh Incompatibility (Erythroblastosis Fetalis):** When an Rh-negative mother carries an Rh-positive fetus, feto-maternal hemorrhage during delivery sensitizes the mother to produce anti-D IgG antibodies. In subsequent Rh-positive pregnancies, maternal anti-D IgG crosses the placenta, destroying fetal RBCs and causing profound hemolytic disease of the newborn, kernicterus, and hydrops fetalis.",
+          "**Prophylactic Anti-D Immunoglobulin (RhoGAM):** Administering RhoGAM to Rh-negative mothers at 28 weeks gestation and within 72 hours post-delivery binds and neutralizes fetal Rh-positive RBCs before maternal immune recognition occurs, preventing sensitization."
+        ],
+        "clinicalPearl": "**Acute Hemolytic Transfusion Reaction Emergency:** Transfusing ABO-incompatible blood (e.g., Group A blood into a Group O patient) triggers immediate, massive intravascular hemolysis mediated by preformed IgM antibodies and complement fixation. Symptoms include fever, chills, severe flank pain, dyspnea, and acute hypotension, leading to DIC and acute tubular necrosis. The nurse must **IMMEDIATELY STOP THE INFUSION**, maintain IV access with normal saline, notify the physician and blood bank, and send blood/urine samples for hemolysis testing.",
+        "images": [
+          {
+            "src": "/images/physiology/2_image3.png",
+            "caption": "Figure 2.3: ABO and Rh blood grouping agglutination.",
+            "alt": "ABO blood grouping"
           },
           {
-            "src": "/images/physiology/2._Blood_physiology_chendake_image2.png",
-            "caption": "Figure 2.2: Compositions of blood.",
-            "alt": "Figure 2.2: Compositions of blood."
+            "src": "/images/physiology/2_image4.png",
+            "caption": "Figure 2.4: Blood typing principles and cross-matching.",
+            "alt": "Blood typing principles"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-2-5",
+        "title": "Hemostasis, The Coagulation Cascade & Hematological Alterations",
+        "content": [
+          "**Hemostasis** is the physiological arrest of bleeding following vascular injury, executing a swift, localized, and tightly regulated three-phase sequence: (1) **Vascular Spasm** (immediate myogenic vasoconstriction reducing blood flow), (2) **Platelet Plug Formation** (primary hemostasis), and (3) **Blood Coagulation** (secondary hemostasis forming a stable fibrin clot).",
+          "The **coagulation cascade** represents a complex biological amplification cascade of 13 plasma clotting factors synthesized predominantly in the liver (Factors II, VII, IX, and X require **Vitamin K** for post-translational gamma-carboxylation).",
+          "Coagulation proceeds through two converging pathways: the **Intrinsic Pathway** (triggered by blood exposure to negatively charged subendothelial collagen, beginning with Factor XII) and the rapid **Extrinsic Pathway** (triggered by tissue injury releasing **Tissue Factor / Thromboplastin / Factor III**). Both pathways converge at the **Common Pathway**: activation of **Factor X (Stuart-Prower factor)**, which assembles into the prothrombinase complex with Factor V, converting **Prothrombin (Factor II)** into active **Thrombin**. Thrombin then cleaves soluble **Fibrinogen (Factor I)** into insoluble **Fibrin monomers**, which are cross-linked by Factor XIII into a tough fibrin mesh.",
+          "Following tissue repair, the fibrinolytic enzyme **Plasmin** dissolves the clot (**fibrinolysis**), releasing fibrin degradation products (**D-dimer**)."
+        ],
+        "points": [
+          "**Intrinsic vs. Extrinsic Pathway Monitoring:** The **Activated Partial Thromboplastin Time (aPTT)** monitors the intrinsic pathway and heparin therapy (normal: 25-35 seconds); The **Prothrombin Time (PT / INR)** monitors the extrinsic pathway and warfarin therapy (normal INR: 0.8-1.1, therapeutic: 2.0-3.0).",
+          "**Natural Endogenous Anticoagulants:** Antithrombin III (inactivates thrombin and Factor Xa, accelerated 1,000-fold by heparin), Protein C and Protein S (inactivate Factors Va and VIIIa), and Prostacyclin (PGI2, inhibits platelet aggregation).",
+          "**Hemophilia A & B:** X-linked recessive bleeding disorders caused by congenital deficiency of **Factor VIII (Hemophilia A)** or **Factor IX (Hemophilia B / Christmas disease)**; manifests with severe recurrent hemarthroses (joint bleeding) and deep intramuscular hematomas.",
+          "**Vitamin K Antagonism:** Warfarin inhibits vitamin K epoxide reductase, depleting functional Factors II, VII, IX, and X; acute bleeding is reversed with Vitamin K and prothrombin complex concentrate (PCC).",
+          "**Disseminated Intravascular Coagulation (DIC):** Systemic uncontrolled activation of coagulation (in sepsis, obstetric emergencies, severe trauma) causing widespread microvascular thrombosis, consuming all clotting factors and platelets, and resulting in catastrophic paradoxical hemorrhage."
+        ],
+        "clinicalPearl": "**Anticoagulation Reversal & D-Dimer Biomarker:** When caring for patients on unfractionated heparin, acute overdose and hemorrhage are rapidly neutralized with **Protamine Sulfate** (1 mg per 100 units of heparin). Elevated plasma D-dimer (> 500 ng/mL) confirms active fibrin generation and lysis, serving as a primary screening biomarker for deep vein thrombosis (DVT) and pulmonary embolism (PE).",
+        "images": [
+          {
+            "src": "/images/physiology/2_image5.png",
+            "caption": "Figure 2.5: The coagulation cascade (Intrinsic, Extrinsic, and Common pathways).",
+            "alt": "Coagulation cascade"
           },
           {
-            "src": "/images/physiology/2._Blood_physiology_chendake_image3.png",
-            "caption": "Figure 2.3: Composition of plasma.",
-            "alt": "Figure 2.3: Composition of plasma."
-          },
-          {
-            "src": "/images/physiology/2._Blood_physiology_chendake_image4.png",
-            "caption": "Figure 2.4: Physiological mechanism illustration for BLOOD",
-            "alt": "Figure 2.4: Physiological mechanism illustration for BLOOD"
-          },
-          {
-            "src": "/images/physiology/2._Blood_physiology_chendake_image5.png",
-            "caption": "Figure 2.4: Determination of blood group.",
-            "alt": "Figure 2.4: Determination of blood group."
-          },
-          {
-            "src": "/images/physiology/2._Blood_physiology_chendake_image6.png",
-            "caption": "Figure 2.5: Stages of blood coagulation.",
-            "alt": "Figure 2.5: Stages of blood coagulation."
-          },
-          {
-            "src": "/images/physiology/2._Blood_physiology_chendake_image7.png",
-            "caption": "Figure 2.6: Haemoglobin.",
-            "alt": "Figure 2.6: Haemoglobin."
+            "src": "/images/physiology/2_image6.png",
+            "caption": "Figure 2.6: Fibrin clot formation and fibrinolysis.",
+            "alt": "Fibrin clot formation"
           }
         ],
         "tables": []
@@ -1548,7 +1705,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 3,
     "title": "Lymphatic System & Immunity",
     "category": "Immunophysiology & Defense",
-    "icon": "\ud83d\udee1\ufe0f",
+    "icon": "🛡️",
     "color": "from-teal-500 to-emerald-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Lymphatic System & Immunity.",
@@ -1559,58 +1716,130 @@ export const PHYSIOLOGY_CHAPTERS = {
       "List down the functions of lymphoid organs including Lymph Node, Spleen, Thymus Gland and Tonsils.",
       "Explain Immunity and its types.",
       "Enlist the alteration in diseases of lymphatic system.",
-      "The lymphatic system (Figure: 3.1) is part of the circulatory and a vital part of the immune, comprising a network of lymphatic that carry a clear fluid called \u2018lymph'. The immune system works to keep these harmful agents out of the body and attacks those that manage to enter. The lymphatic tissue of these organs filters and cleans the lymph of any debris, abnormal cells, or pathogens. The lymphatic system also transports fatty acids from the intestines to the circulatory system.",
+      "The lymphatic system (Figure: 3.1) is part of the circulatory and a vital part of the immune, comprising a network of lymphatic that carry a clear fluid called ‘lymph'. The immune system works to keep these harmful agents out of the body and attacks those that manage to enter. The lymphatic tissue of these organs filters and cleans the lymph of any debris, abnormal cells, or pathogens. The lymphatic system also transports fatty acids from the intestines to the circulatory system.",
       "The lymphatic system consist of"
     ],
     "totalImages": 8,
     "sections": [
       {
         "id": "sec-phys-3-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Lymph Formation, Composition & Drainage Circulation",
         "content": [
-          "Chapter 3",
-          "Lymphatic System and Immunological System"
+          "The lymphatic system is a vital accessory circulatory and immunological network operating in close collaboration with the cardiovascular grid. It comprises **lymph** (clear, watery interstitial fluid), an extensive arborization of **lymphatic vessels**, and discrete **lymphoid tissues and organs** (lymph nodes, spleen, thymus, tonsils).",
+          "**Lymph Formation:** Hydrostatic filtration pressure at the arterial end of capillaries exceeds oncotic reabsorption pressure at the venous end, leaving approximately 2 to 4 liters of filtered fluid in the interstitial spaces daily. This excess interstitial fluid, accompanied by leaked plasma proteins, enters microscopic, blind-ended **lymphatic capillaries** to become lymph.",
+          "Lymphatic capillary walls are constructed of overlapping endothelial cells anchored to surrounding connective tissue by elastic filaments. Elevated interstitial pressure forces these flaps open like one-way minivalves, allowing fluid, macromolecules, bacteria, and cellular debris to enter; elevated intraluminal pressure snaps the flaps shut to prevent retrograde escape.",
+          "Lymph is propelled through collecting vessels equipped with bicuspid valves by skeletal muscle contractions, respiratory thoracic pressure fluctuations, smooth muscle vasomotion, and arterial pulsations. It drains into two major terminal ducts: the **Right Lymphatic Duct** (draining right upper quadrant) and the **Thoracic Duct** (originating from the cisterna chyli at L2, draining the remaining 75% of the body into the left subclavian-internal jugular venous angle)."
         ],
+        "points": [
+          "**Starling Equilibrium & Edema:** Normal lymphatic drainage balances microvascular fluid filtration. Blockage or resection of lymphatic trunks causes interstitial fluid accumulation and disfiguring **lymphedema**.",
+          "**Lacteals & Chyle:** Specialized lymphatic capillaries in small intestinal villi absorbing dietary long-chain triglycerides and fat-soluble vitamins (A, D, E, K), transporting milky lipid-rich lymph known as **chyle**.",
+          "**Thoracic Duct Trauma:** Traumatic laceration or thoracic surgical injury to the thoracic duct discharges chyle into the pleural cavity, producing **chylothorax**.",
+          "**Cisterna Chyli:** Sac-like dilation anterior to L1-L2 vertebrae receiving fatty lymph from intestinal trunks and lower limb lumbar trunks."
+        ],
+        "clinicalPearl": "**Post-Axillary Node Dissection Lymphedema & Elephantiasis:** Surgical resection of axillary lymph nodes during breast cancer mastectomy interrupts major lymphatic conduits, predisposing the ipsilateral arm to chronic, refractory **lymphedema**. Strict nursing guidelines mandate no blood pressure measurements, phlebotomy, or IV starts on the affected limb. Chronic infection by the filarial nematode *Wuchereria bancrofti* blocks lower limb lymphatics, producing severe, debilitating **elephantiasis**.",
         "images": [
           {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image1.png",
-            "caption": "Figure 3.1: Lymphatic System.",
-            "alt": "Figure 3.1: Lymphatic System."
+            "src": "/images/physiology/3_image1.png",
+            "caption": "Figure 3.1: Overview of the Lymphatic System.",
+            "alt": "Lymphatic System"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-3-2",
+        "title": "Lymphoid Organs: Lymph Nodes, Spleen & Thymus",
+        "content": [
+          "Lymphoid organs are categorized into **Primary Lymphoid Organs** (sites of lymphocyte generation and education: **Red Bone Marrow** and **Thymus**) and **Secondary Lymphoid Organs** (sites where immunocompetent lymphocytes encounter antigens and mount immune defenses: **Lymph Nodes, Spleen, and Tonsils**).",
+          "**Lymph Nodes:** Bean-shaped encapsulated filters (1-25 mm) clustered along lymphatic conduits (cervical, axillary, mesenteric, inguinal). Lymph enters via multiple convex afferent vessels, percolates slowly through subcapsular and medullary sinuses lined by phagocytic macrophages that destroy bacteria and debris, and exits through only 1 or 2 efferent vessels at the hilum. Follicles in the outer cortex contain B-cells and germinal centers; the paracortex houses T-cells; and the medulla contains antibody-secreting plasma cells.",
+          "**The Spleen:** Largest secondary lymphoid organ, located in the left hypochondrium. Comprises **White Pulp** (lymphoid sheaths around central arterioles containing T and B lymphocytes mounting adaptive defenses against blood-borne pathogens) and **Red Pulp** (splenic cords of Billroth and sinusoids for mechanical filtration and destruction of aged/damaged erythrocytes, recycling iron to bone marrow and storing one-third of the body's platelets).",
+          "**The Thymus:** Bilobed superior mediastinal organ essential for T-lymphocyte maturation and self-tolerance education (positive MHC selection and negative self-antigen deletion). Secretes **thymosin** and thymopoietin; reaches peak functional activity in childhood before undergoing progressive post-pubertal fatty involution.",
+          "**Tonsils:** Form **Waldeyer's ring** (pharyngeal/adenoid, palatine, lingual, tubal) guarding mucosal portals of entry against inhaled and ingested microbes."
+        ],
+        "points": [
+          "**Lymph Node Percolation Resistance:** Multiple afferent vessels entering versus few efferent vessels exiting slows lymph velocity, providing prolonged contact time for macrophage phagocytosis and dendritic antigen presentation.",
+          "**Splenic Cords of Billroth:** Slit-like endothelial fenestrations in red pulp act as mechanical sieves; rigid, aged, or spherocytic RBCs cannot deform to squeeze through, becoming trapped and phagocytosed by resident macrophages.",
+          "**Thymic Education & Central Tolerance:** 95% of developing thymocytes fail positive or negative selection and undergo apoptosis within the thymic cortex, preventing release of self-reactive T-cells that would cause fatal autoimmunity.",
+          "**Waldeyer's Ring Defense:** Traps airborne and alimentary pathogens, initiating secretory IgA and IgG synthesis."
+        ],
+        "clinicalPearl": "**Post-Splenectomy Sepsis & Overwhelming Infection:** Following traumatic splenectomy, patients permanently lose splenic macrophage clearance of poorly opsonized encapsulated bacteria (*Streptococcus pneumoniae, Neisseria meningitidis, Haemophilus influenzae*), creating lifelong risk of rapidly fatal **Overwhelming Post-Splenectomy Infection (OPSI)**. Patients must receive prophylactic pneumococcal, meningococcal, and Hib vaccinations and carry emergency antibiotic supplies.",
+        "images": [
+          {
+            "src": "/images/physiology/3_image2.png",
+            "caption": "Figure 3.2: Cross-section of a lymph node.",
+            "alt": "Cross section of lymph node"
           },
           {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image2.png",
-            "caption": "Figure 3.2: Cross section of a lymph node.",
-            "alt": "Figure 3.2: Cross section of a lymph node."
+            "src": "/images/physiology/3_image3.png",
+            "caption": "Figure 3.3: Cross-section and vascular architecture of the spleen.",
+            "alt": "Cross section of spleen"
           },
           {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image3.png",
-            "caption": "Figure 3.3: Cross section of spleen.",
-            "alt": "Figure 3.3: Cross section of spleen."
+            "src": "/images/physiology/3_image4.png",
+            "caption": "Figure 3.4: Anatomy and histology of the thymus gland.",
+            "alt": "Thymus gland"
           },
           {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image4.png",
-            "caption": "Figure 3.4: Thymus gland.",
-            "alt": "Figure 3.4: Thymus gland."
+            "src": "/images/physiology/3_image5.png",
+            "caption": "Figure 3.5: Palatine and pharyngeal tonsils.",
+            "alt": "Tonsils"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-3-3",
+        "title": "Innate vs. Adaptive Immunity & Antigen-Antibody Dynamics",
+        "content": [
+          "The human immune system deploys two coordinated lines of physiological defense: **Innate (Non-Specific) Immunity** and **Adaptive (Specific) Immunity**.",
+          "**Innate Immunity:** Present at birth, acting instantaneously without prior antigen exposure or immunologic memory. Operates through physical and chemical barriers (intact skin, gastric HCl, lysozyme in tears/saliva, ciliated mucous escalators), cellular sentinels (**neutrophils, macrophages, natural killer [NK] cells, dendritic cells**), and plasma protein cascades (the **complement system** [classical, alternative, and lectin pathways] driving opsonization, leukocyte chemotaxis, and assembly of the lytic **Membrane Attack Complex / MAC** [C5b-C9]).",
+          "**Adaptive Immunity:** Characterized by exquisite antigen specificity, clonal selection, and long-lived immunologic memory. Comprises two cooperative branches:",
+          "1. **Cell-Mediated Immunity:** Directed by **T-lymphocytes**; **CD8+ Cytotoxic T-cells (CTLs)** recognize foreign intracellular antigens presented on **MHC Class I** molecules (viral infections, tumors), releasing **perforin** (forming membrane pores) and **granzymes** (triggering apoptosis). **CD4+ Helper T-cells** recognize antigens on **MHC Class II** molecules, secreting interleukins (IL-2, IFN-gamma) to coordinate all immune arms.",
+          "2. **Humoral (Antibody-Mediated) Immunity:** Directed by **B-lymphocytes**; upon antigenic activation and T-helper stimulation, B-cells proliferate into memory B-cells and **plasma cells** synthesizing 2,000 antibody molecules per second.",
+          "**Antigen-Antibody Reactions:** Antibodies neutralize toxins, agglutinate cellular pathogens, precipitate soluble antigens, activate complement, and opsonize microbes for phagocytosis."
+        ],
+        "points": [
+          "**Five Immunoglobulin Classes:** **IgG** (80%, crosses placenta, secondary response), **IgA** (secretory dimer in breast milk, tears, saliva), **IgM** (pentamer, earliest primary antibody, potent agglutinator), **IgE** (allergy, binds mast cells/basophils, antiparasitic), and **IgD** (B-cell receptor).",
+          "**Primary vs. Secondary Immune Response:** Primary response exhibits a 7-14 day latent lag phase with predominant low-affinity IgM; Secondary (anamnestic) response driven by memory B-cells produces a rapid, massive, high-affinity IgG surge within 24-48 hours.",
+          "**Active vs. Passive Immunity:** Active immunity (natural infection or vaccination) induces long-term endogenous memory; Passive immunity (maternal IgG/IgA or therapeutic antivenom/hyperimmune globulin) provides immediate but temporary protection without memory.",
+          "**Natural Killer (NK) Cells:** Lymphocytes that destroy virus-infected and malignant cells lacking normal MHC Class I self-markers without requiring prior sensitization."
+        ],
+        "clinicalPearl": "**Severe Combined Immunodeficiency (SCID) & Passive Tetanus Prophylaxis:** In SCID ('bubble boy disease'), genetic absence of adenosine deaminase (ADA) or IL-2 receptor gamma chain halts both T and B-cell development, causing fatal opportunistic infections in infancy unless treated with bone marrow transplantation. Following a contaminated puncture wound in an unvaccinated patient, administering **Tetanus Toxoid** (active vaccine) alone is insufficient; **Tetanus Immune Globulin (TIG)** (passive preformed antibodies) must be administered simultaneously at an anatomically separate site to provide immediate toxin neutralization.",
+        "images": [
+          {
+            "src": "/images/physiology/3_image6.png",
+            "caption": "Figure 3.6: Lymph fluid circulation and Starling forces.",
+            "alt": "Lymph circulation"
           },
           {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image5.png",
-            "caption": "Figure 3.5: Tonsils.",
-            "alt": "Figure 3.5: Tonsils."
-          },
+            "src": "/images/physiology/3_image7.png",
+            "caption": "Figure 3.7: Antigen-antibody interaction and clonal selection.",
+            "alt": "Antigen-antibody reaction"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-3-4",
+        "title": "The Inflammatory Response & Immunological Alterations in Disease",
+        "content": [
+          "**Inflammation** is the fundamental physiological vascular and cellular protective response elicited by living vascularized tissue in response to mechanical trauma, chemical irritation, thermal burn, or microbial infection. Its primary objectives are to dilute, isolate, and neutralize the injurious agent, clear necrotic debris, and initiate wound healing.",
+          "Acute inflammation is characterized by five classic cardinal signs: **Rubor** (redness), **Calor** (heat), **Tumor** (swelling), **Dolor** (pain), and **Functio Laesa** (loss of function).",
+          "Physiologically, acute inflammation executes a coordinated two-phase sequence: (1) **Vascular Phase** (transient arteriolar vasoconstriction followed by sustained active vasodilation mediated by **histamine, nitric oxide, and bradykinin**, increasing local blood flow [rubor and calor], coupled with increased microvascular permeability permitting protein-rich exudate to leak into interstitium [tumor]), and (2) **Cellular Phase** (neutrophil margination, rolling via selectins, firm adhesion via integrins, **diapedesis / extravasation** through endothelial junctions, and directional **chemotaxis** toward bacterial peptides and complement C5a).",
+          "Pathological alterations of the immune system include **Hypersensitivity Reactions** (Types I through IV, ranging from allergic anaphylaxis to contact dermatitis), **Autoimmune Diseases** (breakdown of self-tolerance, e.g., Systemic Lupus Erythematosus, Rheumatoid Arthritis, Type 1 Diabetes), and **Immunodeficiency Syndromes** (congenital or acquired, notably HIV/AIDS destroying CD4+ T-helper cells)."
+        ],
+        "points": [
+          "**Chemical Inflammatory Mediators:** Histamine and Serotonin (immediate vasodilation and vascular permeability); Prostaglandins (induce vasodilation, pain sensitization, and hypothalamic fever); Leukotrienes (potent bronchoconstrictors and neutrophil chemotactic factors); Bradykinin (powerful pain stimulator).",
+          "**Exudate vs. Transudate:** Inflammatory **exudate** is turbid, high in protein (> 3.0 g/dL), high in cellular debris, and has specific gravity > 1.020 (increased vascular permeability); Non-inflammatory **transudate** is clear, low in protein (< 3.0 g/dL), caused by elevated hydrostatic pressure or low oncotic pressure.",
+          "**Type I Immediate Hypersensitivity (Anaphylaxis):** IgE antibodies bound to Fc receptors on tissue mast cells and basophils cross-link with allergen, triggering explosive degranulation of histamine, leukotrienes, and prostaglandins, causing systemic vasodilation, airway constriction, and shock.",
+          "**HIV/AIDS Pathophysiology:** HIV gp120 binds CD4 receptors and CCR5 co-receptors on T-helper lymphocytes, replicating and destroying CD4+ cells; when CD4+ counts plunge below 200 cells/μL, life-threatening opportunistic infections (*Pneumocystis jirovecii*, toxoplasmosis, Kaposi sarcoma) define clinical AIDS."
+        ],
+        "clinicalPearl": "**Anaphylactic Shock Emergency Protocol:** Acute anaphylaxis from food, drug (penicillin), or insect sting allergy is an immediate airway emergency. Intramuscular injection of **Epinephrine (1:1,000, 0.3-0.5 mg IM into anterolateral vastus lateralis)** is the first-line lifesaving medication, rapidly reversing hypotension through alpha-1 vasoconstriction, relieving bronchospasm through beta-2 bronchodilation, and halting further mast cell mediator release. Antihistamines and corticosteroids are secondary adjuncts and must NEVER delay epinephrine administration.",
+        "images": [
           {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image6.png",
-            "caption": "Figure 3.6: Physiological mechanism illustration for Functional Overview & Fundamentals",
-            "alt": "Figure 3.6: Physiological mechanism illustration for Functional Overview & Fundamentals"
-          },
-          {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image7.png",
-            "caption": "Figure 3.6: Antigen-antibody reaction.",
-            "alt": "Figure 3.6: Antigen-antibody reaction."
-          },
-          {
-            "src": "/images/physiology/3._PHYSIOLOGY_OF_LYMPHATIC_SYSTEM_1__image8.png",
-            "caption": "Figure 3.7: Inflammatory response of the cell.",
-            "alt": "Figure 3.7: Inflammatory response of the cell."
+            "src": "/images/physiology/3_image8.png",
+            "caption": "Figure 3.8: Cellular inflammatory response and leukocyte extravasation.",
+            "alt": "Inflammatory response"
           }
         ],
         "tables": []
@@ -1783,121 +2012,121 @@ export const PHYSIOLOGY_CHAPTERS = {
         "id": "phys-mcq-3-198",
         "question": "The digestive function in a cell is present in",
         "correctAnswer": "Lysosomes",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-199",
         "question": "The powerhouse of a cell is",
         "correctAnswer": "Mitochondria",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-200",
         "question": "The fundamental unit of life is the",
         "correctAnswer": "Cell",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-201",
         "question": "The increase in the number of cells due to increased cell division is",
         "correctAnswer": "Hyperplasia",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-202",
         "question": "The garbage system of the cell is",
         "correctAnswer": "Lysosomes",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-203",
         "question": "Deoxyribonucleic acid carries the",
         "correctAnswer": "Genetic information.",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-204",
         "question": "Breakdown of fatty acids by means of a process called",
         "correctAnswer": "Beta oxidation",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-205",
         "question": "The structure that is formed by two or more primary types of tissues is called",
         "correctAnswer": "Organ.",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-206",
         "question": "What is the cell membrane otherwise called?",
         "correctAnswer": "Plasma membrane",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-207",
         "question": "A substance insoluble in water and repelled by water is called",
         "correctAnswer": "Lipids",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-208",
         "question": "These are called protein factories",
         "correctAnswer": "Ribosomes",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-209",
         "question": "What lines the cavities of the joints?",
         "correctAnswer": "Synovial membrane",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-210",
         "question": "The capacity of the body to resist pathogenic agents is called",
         "correctAnswer": "Immunity",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-211",
         "question": "The substances that induce specific immune reactions in the body are termed",
         "correctAnswer": "Antigens",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-212",
         "question": "The procedure by which the body is prepared to fight against a specific disease is called",
         "correctAnswer": "Immunization",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-213",
         "question": "The clumping together of platelets is called",
         "correctAnswer": "Agglutination",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-214",
         "question": "The clear, straw-colored fluid that is left after blood has clotted is",
         "correctAnswer": "Serum",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-215",
         "question": "A carrier protein that carries only one substance in a single direction is called",
         "correctAnswer": "Uniport.",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-216",
         "question": "A carrier protein that transports two different substances in the same direction is called",
         "correctAnswer": "Symport",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-217",
         "question": "How much water is contained in the young adult male?",
         "correctAnswer": "60-65%",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-218",
@@ -1909,25 +2138,25 @@ export const PHYSIOLOGY_CHAPTERS = {
         "id": "phys-mcq-3-219",
         "question": "The measure of a fluid's capability to create osmotic pressure is called",
         "correctAnswer": "Osmolarlity",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-220",
         "question": "Excessive loss of water from the body is called",
         "correctAnswer": "Dehydration",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-221",
         "question": "Great increase in the water content of the body is called",
         "correctAnswer": "Over hydration",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-222",
         "question": "It is a connective tissue in fluid form",
         "correctAnswer": "Blood",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-3-223",
@@ -2164,7 +2393,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 4,
     "title": "Musculoskeletal Physiology",
     "category": "Neuromuscular Transmission & Bone",
-    "icon": "\ud83d\udcaa",
+    "icon": "💪",
     "color": "from-amber-500 to-orange-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Musculoskeletal Physiology.",
@@ -2182,66 +2411,78 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-4-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Properties of Muscular Tissue & The Sliding Filament Contractile Mechanism",
         "content": [
-          "Chapter 4",
-          "The Muscular System",
-          "Objective",
-          "Describe physiology of the muscles and alteration in diseases of muscular system.",
-          "ATP",
-          "muscle glycogen",
-          "lactic acid",
-          "creatine phosphate",
-          "Myelin sheath",
-          "present in the myelinated and unmyelinated nerve fibers",
-          "formed of lipoprotein complex and acts as electric insulator",
-          "it is formed of successive wrappings of the membrane of schwann cells",
-          "it is the cause of decreased conduction of nerve impulse"
+          "Muscle tissue is an excitable contractile biological tissue that converts chemical energy derived from ATP hydrolysis into directed mechanical force, movement, visceral transport, and body heat (thermogenesis). Muscle comprises 40% to 50% of total adult body mass.",
+          "All muscle tissues exhibit four fundamental physiological properties: (1) **Electrical Excitability** (ability to generate action potentials across the sarcolemma in response to electrical or chemical stimuli), (2) **Contractility** (ability to generate tension and shorten forcibly upon excitation), (3) **Extensibility** (ability to stretch without damage), and (4) **Elasticity** (ability to recoil to original resting length following contraction or stretch).",
+          "The human body contains three distinct muscle tissue varieties: **Skeletal Muscle** (striated, voluntary, multinucleated, rapid contraction), **Cardiac Muscle** (striated, involuntary, branching with intercalated discs and gap junctions, intrinsic autorhythmicity), and **Smooth Muscle** (non-striated, involuntary, spindle-shaped single-nucleus cells operating sustained tonic contractions in visceral walls).",
+          "**The Sliding Filament Mechanism of Contraction:** Skeletal muscle contraction occurs at the level of the repeating **sarcomere** (bounded by Z-discs). Thin filaments (actin, tropomyosin, troponin) slide inward toward the center of the sarcomere (M-line) along thick filaments (myosin). During contraction, the sarcomere shortens, the **I-band narrows**, the **H-zone disappears**, while the **A-band length remains completely unchanged**."
         ],
+        "points": [
+          "**Troponin Complex Subunits:** Troponin-T (binds tropomyosin), Troponin-I (inhibitory, blocks actin active sites at rest), and Troponin-C (binds calcium ions Ca2+). When intracellular Ca2+ rises to 10^-5 M, Ca2+ binds Troponin-C, inducing a conformational shift that rolls tropomyosin away from actin active binding sites.",
+          "**Four Steps of Cross-Bridge Cycling:** (1) **Cross-bridge formation:** Energized myosin head (with ADP + Pi) binds to exposed actin active site; (2) **Power stroke:** Pi and ADP are released; the myosin head pivots 45 degrees, pulling the thin filament toward the sarcomere center; (3) **Cross-bridge detachment:** A new ATP molecule binds the myosin head, triggering immediate release from actin; (4) **ATP hydrolysis / cocking:** Myosin ATPase hydrolyzes ATP into ADP + Pi, re-cocking the head into the high-energy configuration ready for the next cycle.",
+          "**Rigor Mortis:** Following death, ATP synthesis ceases; without ATP, myosin heads cannot detach from actin filaments, causing permanent, rigid cross-bridge lock throughout all skeletal muscles within 3 to 12 hours.",
+          "**All-or-None Law vs. Graded Muscle Contraction:** Individual muscle fibers contract maximally or not at all in response to threshold stimuli; whole muscle organs produce smooth graded forces through **motor unit recruitment** (spatial summation) and **wave summation/tetanus** (temporal frequency summation)."
+        ],
+        "clinicalPearl": "**Cardiac Troponin-I (cTnI) as the Gold Standard Myocardial Infarction Biomarker:** Cardiac troponin subunits possess unique amino acid sequences distinct from skeletal troponin. Following acute myocardial infarction (MI), irreversible sarcolemmal necrosis leaks cardiac troponin-I and troponin-T into the bloodstream within 2 to 4 hours, peaking at 24 hours and remaining elevated for 7 to 10 days, providing the definitive gold-standard diagnostic biomarker for myocardial necrosis.",
         "images": [
           {
-            "src": "/images/physiology/4._physiology_of_musculoskeletal_skelatal_final_image1.png",
-            "caption": "Figure 4.1: Types of muscles.",
-            "alt": "Figure 4.1: Types of muscles."
-          },
-          {
-            "src": "/images/physiology/4._physiology_of_musculoskeletal_skelatal_final_image2.png",
-            "caption": "Figure: 4.2 Structure of neuromuscular junction.",
-            "alt": "Figure: 4.2 Structure of neuromuscular junction."
+            "src": "/images/physiology/4_image1.png",
+            "caption": "Figure 4.1: Structural comparison of Skeletal, Cardiac, and Smooth muscle.",
+            "alt": "Types of muscles"
           }
         ],
         "tables": []
       },
       {
         "id": "sec-phys-4-2",
-        "title": "As regard neuro-muscular transmission all are true EXCEPT",
+        "title": "Neuromuscular Transmission & Excitation-Contraction Coupling",
         "content": [
-          "it shows fatigue due to depletion of acetylcholine vesicles",
-          "occurs from nerve to muscle i.e. one- way conduction",
-          "it is stimulated by succinyl choline",
-          "it is blocked by botulinum toxins",
-          "Differences between striated (skeletal, cardiac) muscle and unstriated (smooth) muscle include",
-          "only unstriated muscle is innervated by the autonomic nervous system",
-          "only striated muscle exhibits pacemaker activity",
-          "striated muscle can contract in the absence of extracellular Ca2+, but unstriated muscle can not",
-          "only unstriated muscle has gap junctions",
-          "In order to contract, smooth muscle cells must have",
-          "first undergo an action potential",
-          "have a membrane potential less negative than - 40 mV",
-          "first open voltage-gated Ca2+ channels in the surface membrane",
-          "have increase cytoplasmic levels of cyclic adenosine monophosphate",
-          "Short Answer Question",
-          "Describe the functions of skeletal muscle.",
-          "Compare skeletal muscle and cardiac muscle.",
-          "Compare skeletal muscle and smooth muscle.",
-          "Explain the properties of muscle tissue.",
-          "Explain neuromuscular transmission",
-          "Long Answer Question",
-          "Describe the functions of muscular system.",
-          "Describe the properties of muscular tissue.",
-          "Describe the muscle tone, physiology of muscle contraction.",
-          "Explain neuromuscular transmission."
+          "Skeletal muscle fibers do not contract spontaneously; they require nervous excitation delivered by somatic alpha-motor neurons whose axons terminate at specialized synapsing junctions called **Neuromuscular Junctions (NMJs) / Motor Endplates**.",
+          "**Sequence of Neuromuscular Transmission:**",
+          "1. An electrical nerve action potential descends to the unmyelinated motor axon terminal, depolarizing the presynaptic membrane.",
+          "2. Depolarization opens presynaptic **voltage-gated Calcium channels**, driving Ca2+ influx from ECF into the axon terminal cytoplasm.",
+          "3. Intracellular Ca2+ triggers synaptotagmin and SNARE complexes, causing exocytosis of synaptic vesicles containing **Acetylcholine (ACh)** into the 20-50 nm synaptic cleft.",
+          "4. ACh diffuses across the synaptic cleft and binds to ligand-gated **Nicotinic Acetylcholine Receptors (nAChRs)** situated on the highly folded postsynaptic **motor endplate**.",
+          "5. Receptor binding opens non-specific cation channels, driving massive sodium (Na+) influx into the muscle fiber and generating a localized, graded depolarization called the **Endplate Potential (EPP)**.",
+          "6. When the EPP reaches threshold, it opens adjacent voltage-gated Na+ channels on the sarcolemma, firing an all-or-none **muscle action potential** that propagates across the entire fiber surface and plunges deep into the cell interior via **Transverse (T) Tubules**.",
+          "7. Action potential depolarization activates voltage-sensing dihydropyridine (DHP) receptors in T-tubules, physically opening **Ryanodine Receptors (RyR1)** in the adjacent terminal cisternae of the sarcoplasmic reticulum (forming muscle triads), flooding the sarcoplasm with Ca2+ to initiate cross-bridge cycling.",
+          "8. Synaptic transmission is terminated in milliseconds by the enzyme **Acetylcholinesterase (AChE)** on the motor endplate, which hydrolyzes ACh into acetate and choline."
         ],
+        "points": [
+          "**Endplate Potential Safety Factor:** A normal motor endplate potential is approximately +50 to +70 mV, far exceeding the threshold required to fire a sarcolemmal action potential, ensuring that every nerve action potential successfully triggers muscle contraction under normal physiological conditions.",
+          "**Sarcoplasmic Reticulum SERCA Pumps:** Active Ca2+-ATPase pumps on sarcoplasmic reticulum membranes constantly pump Ca2+ back from the sarcoplasm into the terminal cisternae against a 10,000-fold concentration gradient, sequestered by the calcium-binding protein **calsequestrin**, terminating contraction and permitting relaxation.",
+          "**Pharmacological Blockade of NMJ:** Curare and rocuronium competitively block nAChRs causing flaccid paralysis (used in surgical anesthesia); Succinylcholine is a depolarizing neuromuscular blocker that persistently depolarizes endplates.",
+          "**Botulinum Toxin:** Inhibits presynaptic SNARE proteins, blocking ACh exocytosis and causing severe flaccid paralysis; Tetanus toxin inhibits inhibitory interneurons (GABA/glycine) in spinal cord, causing uninhibited motor firing and spastic paralysis (**lockjaw / risus sardonicus**)."
+        ],
+        "clinicalPearl": "**Myasthenia Gravis Crisis & Tensilon Testing:** **Myasthenia Gravis** is an autoimmune disorder where pathogenic autoantibodies destroy and down-regulate postsynaptic nicotinic ACh receptors at the neuromuscular junction, reducing EPP amplitude below threshold and causing fluctuating, fatigable skeletal muscle weakness (ptosis, diplopia, dysarthria, and respiratory failure during myasthenic crisis). Administering acetylcholinesterase inhibitors (pyridostigmine) prevents ACh breakdown, prolonging its dwell time in the cleft and temporarily restoring muscular strength.",
+        "images": [
+          {
+            "src": "/images/physiology/4_image2.png",
+            "caption": "Figure 4.2: Neuromuscular junction and excitation-contraction coupling.",
+            "alt": "Neuromuscular junction"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-4-3",
+        "title": "Muscle Tone, Metabolic Energy Systems & Musculoskeletal Alterations",
+        "content": [
+          "Even when a skeletal muscle is completely relaxed, a continuous state of slight, involuntary partial contraction persists, known as **muscle tone (tonus)**. Muscle tone is sustained by involuntary, alternating asynchronous firing of small alpha-motor units directed by spinal cord reflex loops responsive to **muscle spindle** proprioceptive stretch signals, maintaining upright posture and joint stability without producing fatigue.",
+          "Skeletal muscle contraction requires substantial, continuous supplies of ATP to power cross-bridge cycling and sarcoplasmic reticulum SERCA pumps. Muscle fibers regenerate ATP through three metabolic pathways depending on duration and intensity:",
+          "1. **Phosphagen System (Creatine Phosphate):** Creatine kinase transfers a high-energy phosphate group from creatine phosphate to ADP, generating instant ATP for 8 to 10 seconds of maximal burst activity (100-meter sprint).",
+          "2. **Anaerobic Glycolytic System (Lactic Acid Pathway):** Glycogen is broken down into glucose and converted via glycolysis into pyruvate and **lactic acid** in the absence of oxygen, yielding 2 ATP per glucose; sustains intense activity for 1 to 2 minutes.",
+          "3. **Aerobic Cellular Respiration:** In the presence of oxygen, pyruvate, fatty acids, and amino acids enter mitochondrial Krebs cycle and oxidative phosphorylation, yielding 30 to 32 ATP per glucose; sustains prolonged endurance exercise for hours.",
+          "Musculoskeletal disorders encompass: **Muscular Dystrophy** (genetic X-linked dystrophin mutations), **Disuse Atrophy**, **Muscle Fatigue** (metabolic accumulation of ADP, Pi, and H+, depleting glycogen), and **Spasticity vs. Flaccidity**."
+        ],
+        "points": [
+          "**Hypotonia vs. Hypertonia:** **Hypotonia** (flaccidity, diminished muscle tone) results from lower motor neuron (LMN) lesions, cerebellar damage, or anterior horn cell destruction (poliomyelitis); **Hypertonia** (spasticity, rigidity) results from upper motor neuron (UMN) lesions (stroke, cerebral palsy) causing loss of cortical inhibitory control over spinal stretch reflexes.",
+          "**Isotonic vs. Isometric Contraction:** In **isotonic contractions**, muscle tension remains constant while length changes (concentric shortening or eccentric lengthening, e.g., lifting a barbell); in **isometric contractions**, muscle length remains constant while internal tension rises sharply (e.g., holding a heavy load in a stationary position).",
+          "**Slow-Twitch (Type I) vs. Fast-Twitch (Type II) Fibers:** Type I fibers are red, rich in myoglobin and mitochondria, highly resistant to fatigue, and specialized for aerobic endurance (postural soleus muscle); Type II fibers are white, rich in glycogen, rapid, and fatigue easily (extraocular and gastrocnemius muscles).",
+          "**Oxygen Debt (EPOC):** Excess Post-Exercise Oxygen Consumption; the volume of oxygen required after strenuous exercise to replenish tissue ATP, phosphocreatine, convert lactic acid back to glucose in the liver (Cori cycle), and re-saturate myoglobin."
+        ],
+        "clinicalPearl": "**Contractures in Immobile Patients & Rhabdomyolysis Acute Kidney Injury:** In bedridden, comatose, or paralyzed patients, failure to perform scheduled passive range-of-motion (ROM) exercises causes muscle fibers and periarticular connective tissue to shorten and fibrose into permanent, irreversible **joint contractures**. Severe traumatic crush injuries or prolonged immobilization on hard floors produces **rhabdomyolysis**, releasing massive amounts of **myoglobin** into systemic circulation, precipitating acute renal tubular obstruction and pigment nephropathy requiring aggressive IV fluid hydration and urine alkalinization.",
         "images": [],
         "tables": []
       }
@@ -2913,7 +3154,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 5,
     "title": "Respiratory Physiology",
     "category": "Ventilation & Gas Exchange",
-    "icon": "\ud83e\udec1",
+    "icon": "🫁",
     "color": "from-sky-500 to-blue-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Respiratory Physiology.",
@@ -2931,51 +3172,167 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-5-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Mechanics of Pulmonary Ventilation & Respiratory Pressures",
         "content": [
-          "Chapter 5",
-          "The Respiratory System"
+          "**Pulmonary ventilation (breathing)** is the mechanical cyclic process by which atmospheric air is inhaled into alveolar gas exchange units and stale alveolar air is exhaled into the environment. Air flows between atmosphere and alveoli down physical **pressure gradients** governed by **Boyle's Law** (*Pressure of a gas is inversely proportional to its volume at constant temperature: P1V1 = P2V2*).",
+          "**Inspiration (Active Process):** Contraction of the **Diaphragm** (innervated by phrenic nerves C3-C5, flattening downward by 1 to 10 cm, expanding vertical thoracic volume) and **External Intercostal Muscles** (elevating ribs and projecting sternum forward like a bucket-handle, increasing anteroposterior and transverse diameters). As thoracic volume expands, **Intra-alveolar (Intrapulmonic) Pressure** drops from 760 mmHg (atmospheric) to **758 mmHg (-2 mmHg)**, drawing 500 mL of ambient air into the lungs.",
+          "**Expiration (Passive during Quiet Breathing):** Occurs through passive **elastic recoil** of lung parenchyma, chest wall, and abdominal viscera upon relaxation of the diaphragm and external intercostals. Thoracic volume contracts, raising intra-alveolar pressure to **762 mmHg (+2 mmHg)**, expelling 500 mL of air until alveolar pressure re-equilibrates with atmospheric pressure.",
+          "**Forced (Active) Expiration:** Recruits accessory expiratory muscles: **Internal Intercostals** (depressing ribs) and **Abdominal Muscles** (rectus abdominis, obliques, transversus abdominis) which compress abdominal viscera and forcefully elevate the diaphragm.",
+          "**Intrapleural Pressure:** The pressure within the pleural cavity between visceral and parietal pleura; normally **always subatmospheric (-4 mmHg at rest, dropping to -6 to -8 mmHg during inspiration)** due to the opposing mechanical elastic recoil vectors of the lungs (pulling inward) and the thoracic ribcage (springing outward)."
         ],
+        "points": [
+          "**Transpulmonary Pressure (P_alv - P_ip):** The pressure gradient across the lung wall (normally +4 mmHg at rest); acts as the expanding force keeping the delicate lungs inflated against their intrinsic elastic collapse tendency.",
+          "**Pneumothorax Pathomechanics:** If a puncture wound breaches the chest wall (parietal pleura) or a ruptured pulmonary bleb breaches the visceral pleura, atmospheric air rushes into the pleural space down its pressure gradient, equalizing intrapleural pressure with atmospheric pressure (P_ip = 0 mmHg); transpulmonary pressure drops to zero, and the elastic lung immediately collapses (**atelectasis / pneumothorax**).",
+          "**Accessory Inspiratory Muscles in Respiratory Distress:** Sternocleidomastoid (elevates sternum), Scalenes (elevates ribs 1 and 2), and Pectoralis minor; active recruitment is an alarming physical sign of severe airway obstruction or respiratory failure.",
+          "**Airway Resistance (Poiseuille's Law):** Airflow is inversely proportional to airway radius to the fourth power (R ∝ 1/r^4); halving bronchiole radius increases resistance 16-fold, as seen in acute bronchial asthma."
+        ],
+        "clinicalPearl": "**Tension Pneumothorax & Needle Decompression:** In a **tension pneumothorax**, a one-way tissue flap allows air to enter the pleural space during inspiration but traps it during expiration. Massive positive intrapleural pressure collapses the ipsilateral lung, shifts the mediastinum and trachea toward the contralateral side, and compresses the superior and inferior vena cava, abruptly terminating venous return and causing fatal cardiovascular collapse. Emergency treatment requires immediate **needle thoracostomy decompression** inserting a large-bore needle into the 2nd intercostal space at the midclavicular line.",
         "images": [
           {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image1.png",
-            "caption": "Figure5.1:Pressure volume curve.",
-            "alt": "Figure5.1:Pressure volume curve."
+            "src": "/images/physiology/5_image1.png",
+            "caption": "Figure 5.1: Pressure-volume relationship and lung compliance curve.",
+            "alt": "Pressure volume curve"
           },
           {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image2.png",
-            "caption": "Figure 5.2:Changes in respiratory pressures during inspiration and expiration.",
-            "alt": "Figure 5.2:Changes in respiratory pressures during inspiration and expiration."
+            "src": "/images/physiology/5_image2.png",
+            "caption": "Figure 5.2: Intrapleural and alveolar pressure changes during respiratory cycle.",
+            "alt": "Respiratory pressures"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-5-2",
+        "title": "Spirometric Lung Volumes, Capacities & Pulmonary Compliance",
+        "content": [
+          "Pulmonary ventilation dynamics and mechanical lung function are evaluated clinically using **spirometry**, which records the volume of air inhaled and exhaled over time.",
+          "**Standard Lung Volumes:**",
+          "1. **Tidal Volume (TV):** Volume of air inhaled or exhaled with each normal quiet breath (~500 mL in healthy adults).",
+          "2. **Inspiratory Reserve Volume (IRV):** Maximal volume of air that can be forcibly inhaled beyond normal tidal inspiration (~3,000 mL).",
+          "3. **Expiratory Reserve Volume (ERV):** Maximal volume of air that can be forcibly exhaled beyond normal tidal expiration (~1,100 to 1,200 mL).",
+          "4. **Residual Volume (RV):** Volume of air remaining in the lungs even after maximal, forceful expiration (~1,200 mL); cannot be measured directly by spirometry; keeps alveoli patent between breaths.",
+          "**Standard Lung Capacities (Combinations of two or more volumes):**",
+          "1. **Inspiratory Capacity (IC = TV + IRV):** ~3,500 mL.",
+          "2. **Functional Residual Capacity (FRC = ERV + RV):** Volume of air remaining in lungs at the end of normal quiet expiration (~2,300 mL); buffers blood gas swings between breaths.",
+          "3. **Vital Capacity (VC = TV + IRV + ERV):** Maximal volume of air exhaled after maximal inspiration (~4,600 to 4,800 mL).",
+          "4. **Total Lung Capacity (TLC = VC + RV):** Total volume of air in lungs after maximal inspiration (~5,800 to 6,000 mL).",
+          "**Pulmonary Compliance:** Measures the ease with which lungs expand per unit change in transpulmonary pressure (ΔV / ΔP, normal: 200 mL/cm H2O). Determined by elastic fibers in lung parenchyma and **alveolar surface tension** governed by Laplace's Law (*P = 2T / r*)."
+        ],
+        "points": [
+          "**Anatomical Dead Space:** Air conducting corridors (nose, pharynx, trachea, bronchi) that do not participate in gas exchange; volume equals approximately 1 mL per pound of ideal body weight (~150 mL).",
+          "**Alveolar Ventilation:** The actual volume of fresh air reaching gas-exchanging alveoli per minute: *(Tidal Volume - Dead Space) × Respiratory Rate* = (500 - 150) × 12 = **4,200 mL/min**.",
+          "**Pulmonary Surfactant Action:** Synthesized by Type II alveolar cells (dipalmitoylphosphatidylcholine); dramatically reduces surface tension in smaller alveoli, preventing alveolar collapse (atelectasis) during expiration and equalizing pressures across different-sized alveoli.",
+          "**High vs. Low Lung Compliance:** High compliance (loss of elastic recoil, as in **emphysema**) makes inhalation easy but expiration difficult; Low compliance (stiff lungs, as in **pulmonary fibrosis, ARDS, pulmonary edema**) requires exhausting muscular work to expand lungs.",
+          "**Forced Expiratory Volume in 1 Second (FEV1):** Fraction of vital capacity exhaled in the first second (normally > 75-80% of FVC); drops drastically (< 70%) in obstructive lung diseases (asthma, COPD)."
+        ],
+        "clinicalPearl": "**Infant Respiratory Distress Syndrome (IRDS) in Premature Neonates:** Surfactant synthesis by fetal Type II pneumocytes accelerates after 28 to 32 weeks gestation under the influence of cortisol. Premature infants born before 32 weeks lack adequate surfactant; extreme alveolar surface tension collapses alveoli on expiration, causing severe hypoxemia, tachypnea, grunting, intercostal retractions, and death from **IRDS**. Treatment requires immediate endotracheal instillation of exogenous surfactant and maternal prenatal corticosteroid injections (betamethasone) to accelerate fetal lung maturation.",
+        "images": [
+          {
+            "src": "/images/physiology/5_image3.png",
+            "caption": "Figure 5.3: Variations in lung compliance and airway resistance.",
+            "alt": "Variations in lung compliance"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-5-3",
+        "title": "Alveolar Gas Exchange, Diffusion & The Respiratory Membrane",
+        "content": [
+          "**External respiration** is the passive physical diffusion of oxygen from alveolar air into pulmonary capillary blood and simultaneous diffusion of carbon dioxide from blood into alveoli. Diffusion occurs across the ultrathin **respiratory membrane (blood-air barrier)**, measuring only 0.2 to 0.5 micrometers in thickness with a total surface area of approximately 70 square meters.",
+          "Gas exchange is strictly governed by **Dalton's Law of Partial Pressures** (*Total pressure of a gas mixture equals the sum of partial pressures of individual gases: P_total = P_O2 + P_N2 + P_CO2 + P_H2O*) and **Fick's Law of Diffusion** (*Rate of gas diffusion is directly proportional to surface area, diffusion coefficient, and partial pressure gradient, and inversely proportional to membrane thickness*).",
+          "**Partial Pressure Gradients:**",
+          "• **Alveolar Air:** P_O2 = **104 mmHg**; P_CO2 = **40 mmHg**.",
+          "• **Deoxygenated Pulmonary Capillary Blood:** P_O2 = **40 mmHg**; P_CO2 = **45 mmHg**.",
+          "• **Oxygen Diffusion:** The 64 mmHg steep pressure gradient (104 vs 40 mmHg) drives rapid net O2 diffusion from alveoli into blood; equilibration is complete within 0.25 seconds (blood spends ~0.75 seconds traversing capillaries at rest, providing a large safety margin).",
+          "• **Carbon Dioxide Diffusion:** Although the CO2 gradient is small (45 vs 40 mmHg = 5 mmHg), **CO2 is 20 to 24 times more soluble in water and lipid membranes than O2**, ensuring rapid, equal diffusion across the membrane.",
+          "• **Systemic Arterial Blood Leaving Lungs:** P_O2 = **95 to 100 mmHg**; P_CO2 = **40 mmHg**."
+        ],
+        "points": [
+          "**Four Histological Layers of Respiratory Membrane:** (1) Alveolar fluid and surfactant layer, (2) Alveolar Type I squamous epithelial cells, (3) Fused epithelial and endothelial basement membranes, and (4) Pulmonary capillary endothelial cells.",
+          "**Ventilation-Perfusion (V/Q) Matching:** Normal resting ratio of alveolar ventilation (4 L/min) to pulmonary capillary perfusion (5 L/min) is approximately **0.8**. Mismatches cause hypoxemia: V/Q = 0 (shunt: perfused but not ventilated, e.g., mucus plug, atelectasis); V/Q = infinity (dead space: ventilated but not perfused, e.g., pulmonary embolism).",
+          "**Hypoxic Pulmonary Vasoconstriction:** Unlike systemic arterioles which dilate in response to hypoxia, **pulmonary arterioles constrict in response to low alveolar P_O2**, shunting blood away from poorly ventilated alveoli toward well-ventilated regions to optimize gas exchange.",
+          "**Diffusion Impairment in Pathology:** Pulmonary edema (fluid accumulation in alveolar wall) and interstitial pulmonary fibrosis increase membrane thickness, severely retarding oxygen diffusion and causing arterial hypoxemia."
+        ],
+        "clinicalPearl": "**Acute Respiratory Distress Syndrome (ARDS) & Pulmonary Embolism (PE):** In ARDS, widespread inflammatory injury to the alveolar-capillary membrane causes massive exudative leakage of protein-rich fluid into alveoli, inactivating surfactant and drastically thickening the diffusion barrier, producing refractory hypoxemia that fails to respond to supplemental oxygen. In acute **pulmonary embolism**, an embolus lodging in a pulmonary artery branches blocks blood flow to ventilated lung regions (V/Q mismatch, alveolar dead space), causing sudden severe dyspnea, pleuritic chest pain, tachypnea, and acute right ventricular strain.",
+        "images": [
+          {
+            "src": "/images/physiology/5_image5.png",
+            "caption": "Figure 5.5: Ultrastructure of the alveolar-capillary respiratory membrane.",
+            "alt": "Respiratory membrane"
           },
           {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image3.png",
-            "caption": "Figure 5.3:Variations in lung compliance.",
-            "alt": "Figure 5.3:Variations in lung compliance."
-          },
-          {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image4.png",
-            "caption": "Figure 5.4:Regulation and control of respiration.",
-            "alt": "Figure 5.4:Regulation and control of respiration."
-          },
-          {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image5.png",
-            "caption": "Figure 5.5: Structure of respiratory membrane.",
-            "alt": "Figure 5.5: Structure of respiratory membrane."
-          },
-          {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image6.png",
+            "src": "/images/physiology/5_image6.png",
             "caption": "Figure 5.6: Diffusion of oxygen from alveolus to pulmonary capillary.",
-            "alt": "Figure 5.6: Diffusion of oxygen from alveolus to pulmonary capillary."
+            "alt": "Diffusion of oxygen"
           },
           {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image7.png",
+            "src": "/images/physiology/5_image7.png",
             "caption": "Figure 5.7: Diffusion of carbon dioxide from pulmonary capillary to alveolus.",
-            "alt": "Figure 5.7: Diffusion of carbon dioxide from pulmonary capillary to alveolus."
+            "alt": "Diffusion of carbon dioxide"
           },
           {
-            "src": "/images/physiology/5._Physiology_Respiratory_system_image8.png",
-            "caption": "Figure 5.8: Partial pressure and content of oxygen and carbon dioxide in blood, alveoli and tissues.",
-            "alt": "Figure 5.8: Partial pressure and content of oxygen and carbon dioxide in blood, alveoli and tissues."
+            "src": "/images/physiology/5_image8.png",
+            "caption": "Figure 5.8: Partial pressures and content of O2 and CO2 across circulation.",
+            "alt": "Partial pressures of O2 and CO2"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-5-4",
+        "title": "Gas Transport in Blood: Oxyhemoglobin & Carbon Dioxide Mechanisms",
+        "content": [
+          "Because molecular oxygen exhibits very low solubility in aqueous blood plasma (only 0.3 mL O2 dissolves per 100 mL plasma at normal arterial PaO2 of 100 mmHg), the cardiovascular system relies on the respiratory pigment **Hemoglobin (Hb)** to transport 98.5% of total blood oxygen.",
+          "**Oxygen Transport:** Approximately **98.5% is bound chemically to iron within hemoglobin as Oxyhemoglobin (HbO2)**; only **1.5% is physically dissolved in plasma** (it is this 1.5% dissolved fraction that exerts partial pressure PaO2, driving diffusion into tissues).",
+          "**The Oxygen-Hemoglobin Dissociation Curve:** Displays a characteristic **S-shaped (sigmoid) curve** resulting from **cooperative binding** (binding of the first O2 molecule to a heme iron induces a conformational shift that progressively increases affinity for subsequent O2 molecules).",
+          "In systemic capillaries where tissues consume oxygen, PO2 drops to 40 mmHg; hemoglobin saturation drops from 97% to 75%, releasing 25% of its oxygen load (~5 mL O2 per 100 mL blood). During vigorous muscular exercise, tissue PO2 drops to 15-20 mmHg, driving hemoglobin to offload over 75% of its oxygen cargo.",
+          "**Carbon Dioxide Transport in Blood:** Occurs through three distinct mechanisms:",
+          "1. **Physically Dissolved in Plasma (7%):** Dissolved CO2 exerting PaCO2.",
+          "2. **Carbaminohemoglobin (23%):** Bound directly to amino terminal groups of globin polypeptide chains (**HbCO2**; does not compete with O2 for iron).",
+          "3. **Bicarbonate Ions (HCO3-) in Plasma (70%):** Primary transport mechanism. Inside red blood cells, the enzyme **Carbonic Anhydrase (CA)** rapidly hydrates CO2: *CO2 + H2O <-> H2CO3 <-> H+ + HCO3-*. Bicarbonate diffuses out of the RBC into plasma via the AE1 anion exchanger, while chloride (Cl-) ions enter the cell to maintain electrical neutrality (**The Chloride Shift / Hamburger Phenomenon**)."
+        ],
+        "points": [
+          "**Factors Shifting the Oxyhemoglobin Curve to the RIGHT (Bohr Effect - Enhancing O2 Offloading):**",
+          "• Increased hydrogen ion concentration (decreased pH / acidosis)",
+          "• Increased carbon dioxide (hypercapnia / PaCO2)",
+          "• Increased body temperature (fever, exercising muscle)",
+          "• Increased 2,3-Bisphosphoglycerate (2,3-BPG / DPG in chronic hypoxia/altitude)",
+          "**Factors Shifting the Curve to the LEFT (Increasing O2 Affinity / Impairing Tissue Release):**",
+          "• Decreased H+ (increased pH / alkalosis), decreased PaCO2, hypothermia, decreased 2,3-BPG, and **Fetal Hemoglobin (HbF)** (which has higher O2 affinity than adult HbA to extract oxygen across placenta).",
+          "**Haldane Effect:** Deoxygenation of hemoglobin increases its capacity to bind and carry carbon dioxide and H+ ions; conversely, oxygenation of blood in lungs promotes CO2 offloading."
+        ],
+        "clinicalPearl": "**Pulse Oximetry Limitations & Carbon Monoxide Poisoning:** Standard pulse oximetry (SpO2) measures light absorbance at 660 nm and 940 nm to estimate oxyhemoglobin saturation. However, pulse oximeters cannot distinguish carboxyhemoglobin (HbCO) from oxyhemoglobin. In smoke inhalation victims with severe carbon monoxide poisoning, pulse oximetry displays a falsely reassuring normal SpO2 of 98-100%, while arterial blood gas co-oximetry reveals lethal carboxyhemoglobin levels (> 30-50%). Treatment requires immediate administration of 100% high-flow normobaric or hyperbaric oxygen.",
+        "images": [],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-5-5",
+        "title": "Neural & Chemical Regulation of Respiration & Clinical Pathologies",
+        "content": [
+          "Pulmonary ventilation is automatically regulated by interconnected neural centers in the brainstem to maintain arterial blood gas parameters (PaO2 ~95-100 mmHg, PaCO2 ~35-45 mmHg, arterial pH ~7.35-7.45) across vast metabolic fluctuations.",
+          "**Brainstem Respiratory Control Centers:**",
+          "1. **Medullary Rhythmicity Center:** Located in medulla oblongata; comprises the **Dorsal Respiratory Group (DRG)** (generates baseline inspiratory rhythm, firing impulses down phrenic and intercostal nerves for 2 seconds followed by 3 seconds of passive recoil relaxation) and the **Ventral Respiratory Group (VRG)** (contains the **Pre-Bötzinger Complex** generating basic rhythm; fires accessory inspiratory and expiratory muscles during forced breathing).",
+          "2. **Pontine Respiratory Group (PRG / Pneumotaxic Center):** Located in upper pons; transmits continuous inhibitory impulses to the medullary inspiratory center, limiting the duration of inspiration and regulating respiratory rate and depth, preventing overinflation.",
+          "**Chemical Regulation of Respiration (Chemoreceptors):**",
+          "• **Central Chemoreceptors:** Located on ventrolateral surface of medulla oblongata; exquisitely sensitive to changes in **hydrogen ion (H+) concentration in cerebrospinal fluid (CSF)**. Carbon dioxide freely crosses the blood-brain barrier into CSF, where carbonic anhydrase hydrates it into H+ and HCO3-. Rising PaCO2 (**hypercapnia**) and CSF acidosis powerfully stimulate central chemoreceptors, driving vigorous hyperventilation to blow off CO2.",
+          "• **Peripheral Chemoreceptors:** Located in **Carotid Bodies** (innervated by glossopharyngeal nerve CN IX) and **Aortic Bodies** (vagus nerve CN X); primarily sense severe arterial hypoxemia (**PaO2 < 60 mmHg**), arterial acidosis (pH < 7.35), and hypercapnia."
+        ],
+        "points": [
+          "**Hering-Breuer Inflation Reflex:** Pulmonary stretch receptors located in smooth muscle of bronchi and bronchioles fire via the vagus nerve when tidal volume exceeds 1,500 mL, inhibiting the medullary inspiratory center to prevent excessive mechanical lung over-distension.",
+          "**CO2 as the Primary Respiratory Drive:** In healthy individuals, arterial **PaCO2 is the most powerful chemical stimulus governing breathing**; a rise of merely 2 to 5 mmHg in PaCO2 instantly doubles minute ventilation.",
+          "**Hypoxic Drive in Chronic Hypercapnia (COPD):** In patients with end-stage severe COPD, chronic hypercapnia desensitizes central chemoreceptors (CSF HCO3- compensates to normalize pH). Breathing becomes dependent on **hypoxic drive** mediated by peripheral chemoreceptors responsive to low PaO2.",
+          "**Respiratory Pathological Patterns:**",
+          "• **Cheyne-Stokes Respiration:** Waxing and waning tidal volumes with alternating periods of apnea; seen in severe congestive heart failure and brainstem stroke.",
+          "• **Kussmaul Breathing:** Rapid, deep, sighing hyperventilation in **Diabetic Ketoacidosis (DKA)** to blow off CO2 and compensate for metabolic acidosis.",
+          "• **Biot's (Ataxic) Respiration:** Irregular, disorganized breathing with unpredictable apneas; indicates severe brainstem damage or elevated intracranial pressure."
+        ],
+        "clinicalPearl": "**High-Flow Oxygen Hazards in COPD Patients:** In patients with severe chronic hypercapnic COPD relying on peripheral hypoxic drive, administering uncontrolled high concentrations of supplemental oxygen (e.g., non-rebreather mask at 15 L/min) elevates PaO2 above 60-80 mmHg, abruptly shutting off peripheral carotid chemoreceptor firing. Ventilation plummets, causing acute respiratory depression, profound CO2 retention (PaCO2 > 80-100 mmHg), respiratory acidosis, CO2 narcosis, and coma. Oxygen must be titrated carefully via Venturi mask or low-flow nasal cannula to maintain target SpO2 between 88% and 92%.",
+        "images": [
+          {
+            "src": "/images/physiology/5_image4.png",
+            "caption": "Figure 5.4: Neural and chemical regulation of respiration.",
+            "alt": "Regulation of respiration"
           }
         ],
         "tables": []
@@ -3256,31 +3613,31 @@ export const PHYSIOLOGY_CHAPTERS = {
         "id": "phys-mcq-5-386",
         "question": "The adrenal gland is located at",
         "correctAnswer": "Above each kidney",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-5-387",
         "question": "Which hormone is secreted by salivary glands?",
         "correctAnswer": "Salivary amylase or Ptyalin",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-5-388",
         "question": "Which hormone is secreted by sweat glands?",
         "correctAnswer": "Sweat",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-5-389",
         "question": "Which hormone is secreted by mammary glands?",
         "correctAnswer": "Prolactin",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-5-390",
         "question": "Which hormone is secreted by endocrine glands?",
         "correctAnswer": "Insulin",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-5-391",
@@ -3648,7 +4005,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 6,
     "title": "Digestive System Physiology",
     "category": "GI Secretion, Digestion & Motility",
-    "icon": "\ud83c\udf7d\ufe0f",
+    "icon": "🍽️",
     "color": "from-emerald-500 to-teal-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Digestive System Physiology.",
@@ -3666,56 +4023,149 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-6-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Oral Digestion, Salivary Secretion & The Deglutition Reflex",
         "content": [
-          "Chapter 6",
-          "Digestive system"
+          "The digestive system performs ingestion, mechanical processing, chemical digestion, secretion, absorption, and elimination along a 9-meter gastrointestinal tract.",
+          "In the oral cavity, food is mechanically masticated by teeth and mixed with **saliva**, a watery secretion produced at a rate of 1.0 to 1.5 liters per day by three pairs of major salivary glands: **Parotid** (serous saliva rich in alpha-amylase / ptyalin), **Submandibular** (mixed seromucous), and **Sublingual** (mucous-rich).",
+          "Saliva consists of 99.5% water, 0.3% proteins (salivary amylase, lingual lipase, mucin, lysozyme, secretory IgA), and 0.2% inorganic electrolytes (potassium, bicarbonate, sodium, chloride). It lubricates food boluses, initiates starch digestion (hydrolyzing alpha-1,4 glycosidic bonds into maltose and dextrins at optimal pH 6.8), dissolves tastants for taste bud stimulation, and cleanses the oral cavity with antimicrobial enzymes.",
+          "Salivary secretion is regulated entirely by **autonomic neural reflexes** (no hormonal control): **Parasympathetic stimulation** (via cranial nerves VII and IX) evokes copious watery saliva rich in enzymes; **Sympathetic stimulation** (via superior cervical ganglion) evokes small volumes of thick, viscous mucus.",
+          "**Deglutition (Swallowing):** Divided into three phases: (1) **Oral (Buccal) Phase** (voluntary; tongue compresses bolus against hard palate and propels it into oropharynx), (2) **Pharyngeal Phase** (involuntary reflex coordinated by medullary swallowing center; soft palate elevates closing nasopharynx, epiglottis bends downward closing laryngeal inlet, vocal cords adduct, and upper esophageal sphincter relaxes), and (3) **Esophageal Phase** (primary peristaltic wave propels bolus down esophagus in 5-8 seconds)."
         ],
+        "points": [
+          "**Parasympathetic Pathways of Salivation:** Inferior salivatory nucleus -> Glossopharyngeal nerve (CN IX) -> Otic ganglion -> Parotid gland; Superior salivatory nucleus -> Facial nerve (CN VII) -> Chorda tympani -> Submandibular ganglion -> Submandibular and Sublingual glands.",
+          "**Conditioned vs. Unconditioned Salivary Reflexes:** Unconditioned reflex is triggered by physical presence of food in mouth stimulating taste buds; Conditioned (Pavlovian) reflex is triggered by sight, smell, or thought of food stimulating cerebral cortical pathways.",
+          "**Upper & Lower Esophageal Sphincters:** Upper esophageal sphincter (UES / cricopharyngeus) prevents aerophagia; Lower esophageal sphincter (LES / cardiac sphincter) remains tonically constricted at 15-25 mmHg via vagal myogenic tone, preventing retrograde gastric acid reflux."
+        ],
+        "clinicalPearl": "**Achalasia Cardia & GERD Bedside Management:** **Achalasia** is a primary esophageal motility disorder caused by autoimmune destruction of nitric oxide-producing inhibitory ganglion cells in the myenteric (Auerbach) plexus of the lower esophagus. The LES fails to relax during swallowing, and esophageal peristalsis is lost, producing progressive dysphagia for solids and liquids, regurgitation, and a classic 'bird's beak' appearance on barium swallow. In **Gastroesophageal Reflux Disease (GERD)**, transient inappropriate LES relaxation permits acidic gastric juice to erode esophageal mucosa, requiring proton pump inhibitors (PPIs) and elevating the head of the bed 30 degrees after meals.",
         "images": [
           {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image1.png",
-            "caption": "Figure 6.1: Compositionof Saliva.",
-            "alt": "Figure 6.1: Compositionof Saliva."
+            "src": "/images/physiology/6_image1.png",
+            "caption": "Figure 6.1: Composition and enzymatic components of saliva.",
+            "alt": "Composition of saliva"
           },
           {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image2.png",
-            "caption": "Figure 6.2: Parasympathetic nerve supply to sub maxillary and sublingual gland.",
-            "alt": "Figure 6.2: Parasympathetic nerve supply to sub maxillary and sublingual gland."
+            "src": "/images/physiology/6_image2.png",
+            "caption": "Figure 6.2: Autonomic innervation to salivary glands.",
+            "alt": "Autonomic nerve supply to salivary glands"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-6-2",
+        "title": "Gastric Secretion, Enzymatic Digestion & Gastric Motility",
+        "content": [
+          "The stomach operates as a muscular mixing and storage reservoir that converts ingested solid food into an acidic, semi-fluid slurry called **chyme** while secreting 2 to 3 liters of **gastric juice** daily.",
+          "Gastric juice is a potent acidic fluid (pH 1.0 to 2.0) containing: **Hydrochloric Acid (HCl)** (secreted by **Parietal Cells** via apical H+/K+-ATPase proton pumps, denaturing dietary proteins, killing ingested microbes, and activating pepsinogen), **Pepsinogens** (secreted by **Chief Cells**, cleaved by HCl into active endopeptidase **pepsin** which cleaves peptide bonds), **Intrinsic Factor** (indispensable glycoprotein required for ileal absorption of Vitamin B12), **Gastric Lipase** (cleaves short- and medium-chain triglycerides), and **Mucus & Bicarbonate** (secreted by surface mucous cells, creating a 1-mm physical and chemical alkaline barrier shielding the gastric wall from autodigestion).",
+          "**Three Phases of Gastric Secretion:**",
+          "1. **Cephalic Phase (30-35%):** Triggered by sight, smell, or thought of food; mediated by vagus nerve (CN X) releasing acetylcholine (ACh) onto parietal cells and G-cells.",
+          "2. **Gastric Phase (60%):** Triggered by food bolus arrival stretching gastric mechanoreceptors and partially digested peptides stimulating **G-cells** in the pyloric antrum to release the hormone **Gastrin** into the bloodstream.",
+          "3. **Intestinal Phase (10%):** Initiated by chyme entry into duodenum; initial transient stimulation followed by powerful inhibitory enterogastric reflexes (**Secretin, Cholecystokinin / CCK, and Gastric Inhibitory Peptide / GIP**) that suppress gastric acid secretion and slow gastric emptying."
+        ],
+        "points": [
+          "**Parietal Cell Acid Secretion Mechanism:** Basolateral HCO3-/Cl- exchanger pumps bicarbonate into blood (causing the postprandial **alkaline tide**) while importing Cl-; apical **H+/K+-ATPase pump** actively extrudes H+ into gastric lumen against a million-fold gradient in exchange for K+; Cl- diffuses through apical conductance channels, forming luminal HCl.",
+          "**Three Synergistic Stimulators of Acid Secretion:** (1) **Acetylcholine (ACh)** (vagal, M3 muscarinic receptors), (2) **Gastrin** (antral G-cells, CCK-B receptors), and (3) **Histamine** (paracrine release from enterochromaffin-like / ECL cells, binding **H2 receptors**). Blocking any one pathway (e.g., H2 blockers like famotidine, or PPIs like omeprazole) potently suppresses acid secretion.",
+          "**Gastric Receptive Relaxation:** Swallowing triggers vagally-mediated reflex relaxation of the gastric fundus and body, allowing the stomach to accommodate 1.5 liters of food without significant intra-gastric pressure increase.",
+          "**Peristalsis & Pyloric Sieving:** Basic electrical rhythm (BER) pacemaker cells in the greater curvature generate 3 slow peristaltic waves per minute; strong antral contractions crush chyme against a closed pyloric sphincter, permitting only 2 to 3 mL of liquid chyme into the duodenum per wave (**retropulsion**)."
+        ],
+        "clinicalPearl": "**Peptic Ulcers, H. pylori & Pernicious Anemia:** Disruption of the protective gastric mucosal barrier by *Helicobacter pylori* infection (which produces urease, generating toxic ammonia) or chronic NSAID use (inhibiting protective prostaglandin E2 synthesis) permits luminal acid and pepsin to erode submucosal vessels, causing bleeding **peptic ulcers**. Autoimmune destruction of gastric parietal cells in chronic atrophic gastritis eliminates **Intrinsic Factor** production, abolishing ileal Vitamin B12 absorption and precipitating **pernicious anemia** and peripheral neuropathy.",
+        "images": [
+          {
+            "src": "/images/physiology/6_image3.png",
+            "caption": "Figure 6.3: Mechanism of gastric acid secretion by parietal cells.",
+            "alt": "Composition of gastric juice"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-6-3",
+        "title": "Biliary Physiology, Hepatic Functions & Pancreatic Exocrine Secretion",
+        "content": [
+          "The liver, gallbladder, and exocrine pancreas deliver essential alkaline juices and enzymes into the second part of the duodenum at the ampulla of Vater to execute lipid, protein, and carbohydrate digestion.",
+          "**Hepatic Bile Synthesis & Secretion:** Hepatocytes synthesize 500 to 1,000 mL of golden-yellow alkaline bile (pH 7.6-8.6) daily. Bile contains no digestive enzymes; it consists of water, electrolytes, **bile salts** (sodium glycocholate and taurocholate), **bile pigments** (bilirubin glucuronide), **cholesterol**, and **lecithin (phospholipids)**.",
+          "The **gallbladder** stores and concentrates hepatic bile 5- to 10-fold by reabsorbing water and NaCl. Entry of fatty chyme into the duodenum stimulates duodenal I-cells to release **Cholecystokinin (CCK)**, which stimulates powerful gallbladder contraction while simultaneously relaxing the **Sphincter of Oddi**, discharging concentrated bile into the duodenum.",
+          "**Physiological Roles of Bile Salts:** (1) **Emulsification** (breaking large fat globules into minute 1-μm droplets, increasing surface area for pancreatic lipase), (2) **Micelle Formation** (water-soluble spherical aggregates enclosing fatty acids and monoglycerides for enterocyte absorption), and (3) **Enterohepatic Circulation** (95% of bile salts are reabsorbed in the terminal ileum and returned to the liver via portal blood).",
+          "**Exocrine Pancreatic Secretion:** Pancreatic acinar cells synthesize 1.0 to 1.5 liters of enzyme-rich pancreatic juice daily, while ductal epithelial cells secrete watery fluid packed with **Bicarbonate (HCO3-)** under stimulation by duodenal **Secretin**, neutralizing acidic gastric chyme to pH 7.0-8.0."
+        ],
+        "points": [
+          "**Pancreatic Proteolytic Zymogens:** Secreted as inactive precursors to prevent pancreatic autodigestion: **Trypsinogen** (cleaved by brush-border **enteropeptidase / enterokinase** in duodenum into active **Trypsin**); Trypsin then autocatalytically activates chymotrypsinogen, procarboxypeptidase, and proelastase.",
+          "**Pancreatic Amylase & Lipase:** Pancreatic amylase digests remaining starches into disaccharides; Pancreatic lipase (assisted by colipase) hydrolyzes dietary triglycerides into 2-monoglycerides and two free fatty acids.",
+          "**Dual Hormonal Control of Pancreas:** **Secretin** (released in response to duodenal acid pH < 4.5) stimulates copious watery bicarbonate secretion; **Cholecystokinin (CCK)** (released in response to fatty acids and amino acids) stimulates enzyme-rich acinar secretion.",
+          "**Bile Acid Composition:** Primary bile acids (cholic and chenodeoxycholic acids) synthesized from cholesterol; converted by intestinal bacteria into secondary bile acids (deoxycholic and lithocholic acids)."
+        ],
+        "clinicalPearl": "**Acute Pancreatitis & Obstructive Jaundice Pathophysiology:** If a migrating gallstone (choledocholithiasis) lodges distally in the ampulla of Vater, it obstructs both the common bile duct and pancreatic duct. Intra-pancreatic ductal pressure spikes, causing premature, inappropriate activation of **trypsinogen into trypsin inside pancreatic acini**, initiating massive **autodigestion of pancreatic parenchyma, fat necrosis, and severe hemorrhagic pancreatitis**. Retrograde bile retention causes **obstructive (cholestatic) jaundice**, manifested by hyperbilirubinemia, clay-colored (acholic) stools, and dark tea-colored urine.",
+        "images": [
+          {
+            "src": "/images/physiology/6_image4.png",
+            "caption": "Figure 6.4: Biliary tract anatomy and gallbladder bile concentration.",
+            "alt": "Biliary systems"
           },
           {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image3.png",
-            "caption": "Figure 6.3: Composition ofgastric juice.",
-            "alt": "Figure 6.3: Composition ofgastric juice."
+            "src": "/images/physiology/6_image5.png",
+            "caption": "Figure 6.5: Composition and enterohepatic circulation of bile salts.",
+            "alt": "Composition of bile"
           },
           {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image4.png",
-            "caption": "Figure: 6.4Biliary Systems.",
-            "alt": "Figure: 6.4Biliary Systems."
+            "src": "/images/physiology/6_image6.png",
+            "caption": "Figure 6.6: Exocrine pancreatic secretion and enzyme activation.",
+            "alt": "Composition of pancreatic juice"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-6-4",
+        "title": "Small Intestinal Motility, Secretion & Nutrient Absorption Pathways",
+        "content": [
+          "The small intestine (duodenum, jejunum, ileum) is the paramount physiological site where chemical digestion is finalized and over 90% of all dietary nutrients, electrolytes, and water are absorbed into mesenteric blood and lacteals.",
+          "**Intestinal Secretion (Succus Entericus):** Crypts of Lieberkühn secrete 1 to 2 liters of clear, yellowish alkaline fluid (pH 7.5-8.0) daily, rich in water, electrolytes, and mucus from duodenal **Brunner's glands** to lubricate mucosal surfaces. Final enzymatic breakdown occurs directly at the enterocyte **brush border** (microvilli membrane-bound enzymes: **maltase, sucrase, lactase**, aminopeptidases, dipeptidases, nucleosidases, and enterokinase).",
+          "**Nutrient Absorption Mechanics:**",
+          "• **Carbohydrates:** Glucose and Galactose are absorbed across the apical membrane via **SGLT-1** (Sodium-Glucose Secondary Active Cotransporter, coupled to Na+ influx generated by basolateral Na+/K+-ATPase); Fructose is absorbed via **GLUT-5** facilitated diffusion. All monosaccharides exit basolaterally into capillaries via **GLUT-2**.",
+          "• **Proteins:** Amino acids are cotransported with Na+; di- and tripeptides are imported via **PepT1** (H+-coupled cotransport), hydrolyzed inside enterocytes into free amino acids, and extruded into mesenteric capillaries.",
+          "• **Lipids:** Free fatty acids and monoglycerides diffuse out of bile salt micelles across the apical enterocyte membrane. Inside the smooth ER, they are re-esterified into triglycerides, packaged with cholesterol and apolipoproteins into **Chylomicrons**, and discharged by exocytosis into **lacteals** to enter the thoracic duct."
+        ],
+        "points": [
+          "**Small Intestinal Motility Patterns:** (1) **Segmentation:** Localized rhythmic circular muscle contractions that chop and mix chyme with digestive juices and press it against the absorptive brush border; (2) **Peristalsis:** Weak propulsive waves moving chyme 1 cm/min; and (3) **Migrating Motor Complex (MMC):** Sweeping waves of peristalsis every 90 minutes during fasting stimulated by the hormone **Motilin**, clearing residual indigestible debris (\"the intestinal housekeeper\").",
+          "**Enteric Nervous System Regulation:** **Auerbach's (Myenteric) Plexus** (situated between longitudinal and circular muscle layers) coordinates intestinal motor propulsion; **Meissner's (Submucosal) Plexus** coordinates localized mucosal blood flow and glandular secretion.",
+          "**Water Absorption Dynamics:** 8 to 9 liters of fluid enter the GI tract daily (2 L dietary, 7 L digestive juices); small intestine absorbs 7 to 8 liters, driven entirely by osmotic gradients established by active Na+ and nutrient cotransport."
+        ],
+        "clinicalPearl": "**Oral Rehydration Therapy (ORT) Physiological Basis & Celiac Disease:** In severe secretory diarrhea (e.g., cholera toxin continuously activating adenylyl cyclase and CFTR chloride channels), active water and electrolyte secretion causes rapid fatal dehydration. However, the **SGLT-1 Na+-glucose cotransporter remains fully functional**. Feeding an Oral Rehydration Solution (ORS) containing precise equimolar concentrations of glucose and sodium drives rapid SGLT-1 transport, drawing water back into the body by osmosis and saving millions of lives. In **Celiac Disease**, autoimmune reaction to gluten destroys intestinal villi, severely reducing absorptive surface area and causing severe malabsorption, steatorrhea, and weight loss.",
+        "images": [
+          {
+            "src": "/images/physiology/6_image7.png",
+            "caption": "Figure 6.7: Composition and brush border enzymes of succus entericus.",
+            "alt": "Composition of succus entericus"
           },
           {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image5.png",
-            "caption": "Figure 6.5:Composition of bile.",
-            "alt": "Figure 6.5:Composition of bile."
-          },
+            "src": "/images/physiology/6_image9.png",
+            "caption": "Figure 6.9: Segmenting and peristaltic motility patterns of the small intestine.",
+            "alt": "Movements of small intestine"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-6-5",
+        "title": "Colonic Function, Intestinal Microbiome & GI Alterations in Disease",
+        "content": [
+          "The large intestine (cecum, colon, rectum, anal canal) receives approximately 1,000 to 1,500 mL of fluid chyme daily through the ileocecal valve, absorbing 90% of remaining water and electrolytes, consolidating indigestible residue into 100 to 200 grams of semi-solid **feces**.",
+          "The colonic mucosa secretes alkaline mucus (pH 8.0) rich in bicarbonate and potassium, which lubricates fecal transit and neutralizes bacterial organic acids. The colon exhibits unique motility patterns: slow **haustral churning**, non-propulsive haustral shuttling, and 1 to 3 times daily powerful **Mass Movements** (propelling colonic contents into the rectum, often triggered after meals by the **gastrocolic and duodenocolic reflexes**).",
+          "**Colonic Microbiome:** The colon harbors over 100 trillion commensal bacteria (predominantly anaerobes like *Bacteroides, Bifidobacterium*, and *Lactobacillus*). Bacterial fermentation metabolizes residual indigestible carbohydrates (dietary fiber) into **Short-Chain Fatty Acids (SCFAs: butyrate, acetate, propionate)** that nourish colonocytes, synthesize essential **Vitamin K** (indispensable for hepatic clotting factor synthesis) and B-vitamins, and suppress colonization by enteric pathogens.",
+          "**The Defecation Reflex:** Distension of the rectal wall by fecal mass (> 25% capacity) stimulates pelvic parasympathetic nerves, triggering contraction of rectal walls and involuntary relaxation of the **Internal Anal Sphincter**. Defecation is voluntarily deferred by conscious tonic contraction of the **External Anal Sphincter** (innervated by the somatic pudendal nerve)."
+        ],
+        "points": [
+          "**Gastrocolic Reflex:** Ingestion of food and gastric distension triggers vagal and hormonal (gastrin) signals stimulating immediate mass movement in the transverse and descending colon, prompting postprandial urge to defecate.",
+          "**Valsalva Maneuver in Defecation:** Voluntary forced expiration against a closed glottis elevates intra-abdominal pressure, assisting rectal evacuation; however, extreme Valsalva spikes venous pressure and can precipitate cardiac arrhythmias.",
+          "**Diarrhea vs. Constipation:** Diarrhea (increased stool fluidity and frequency > 3/day) results from rapid motility reducing water absorption or active mucosal secretion (enterotoxins), leading to hypokalemia and metabolic acidosis; Constipation (infrequent, hard stools) results from prolonged transit permitting excessive water reabsorption.",
+          "**Jaundice (Icterus) Classifications:** (1) **Pre-hepatic (Hemolytic):** Excess unconjugated bilirubin from massive hemolysis; (2) **Hepatic (Hepatocellular):** Impaired conjugation and excretion (viral hepatitis, cirrhosis); (3) **Post-hepatic (Obstructive):** Biliary duct obstruction (gallstones, pancreatic cancer) producing elevated conjugated bilirubin, dark urine, and pale acholic stools."
+        ],
+        "clinicalPearl": "**Antibiotic-Associated Colitis (*C. diff*) & Liver Cirrhosis Encephalopathy:** Broad-spectrum antibiotic therapy decimates normal colonic bacterial flora, permitting overgrowth of spore-forming *Clostridioides difficile*, which releases toxins A and B, producing severe **pseudomembranous colitis** with foul-smelling watery diarrhea, toxic megacolon, and sepsis. In advanced liver cirrhosis with portosystemic shunting, colonic bacteria convert dietary proteins into **ammonia (NH3)**; the failing liver cannot convert ammonia to urea, allowing neurotoxic ammonia to cross the blood-brain barrier, precipitating **hepatic encephalopathy** (asterixis / flapping tremor and coma), treated with **lactulose** to acidify the colon and trap ammonia as non-absorbable ammonium (NH4+).",
+        "images": [
           {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image6.png",
-            "caption": "Figure 6.6: Composition of pancreatic juice.",
-            "alt": "Figure 6.6: Composition of pancreatic juice."
-          },
-          {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image7.png",
-            "caption": "Figure: 6.7Composition of succus entericus.",
-            "alt": "Figure: 6.7Composition of succus entericus."
-          },
-          {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image8.png",
-            "caption": "Figure 6.8 Composition of large intestinal juice.",
-            "alt": "Figure 6.8 Composition of large intestinal juice."
-          },
-          {
-            "src": "/images/physiology/6._digestiveLiver_and_gall_bladder-_chapter-16_image9.png",
-            "caption": "Figure 6.9: Movements of small intestine.",
-            "alt": "Figure 6.9: Movements of small intestine."
+            "src": "/images/physiology/6_image8.png",
+            "caption": "Figure 6.8: Large intestinal fluid absorption and mucus secretion.",
+            "alt": "Large intestinal juice"
           }
         ],
         "tables": []
@@ -3774,55 +4224,55 @@ export const PHYSIOLOGY_CHAPTERS = {
         "id": "phys-mcq-6-434",
         "question": "The functional unit of life is called",
         "correctAnswer": "Cell",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-435",
         "question": "The cell was discovered by",
         "correctAnswer": "Robert Hooke",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-436",
         "question": "Which of these organelles contain DNA?",
         "correctAnswer": "Golgi apparatus",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-437",
         "question": "Which of these organelles contain chromatin?",
         "correctAnswer": "Nucleus",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-438",
         "question": "Which of the following transport mechanisms requires energy?",
         "correctAnswer": "Secondary active transport",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-439",
         "question": "The functional unit of nervous tissue is",
         "correctAnswer": "Neurons",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-440",
         "question": "At rest, a human being breathes per minute",
         "correctAnswer": "12-15 times per minute",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-441",
         "question": "Ductless glands are described as",
         "correctAnswer": "Endocrine",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-442",
         "question": "Cells not present in connective tissues are",
         "correctAnswer": "Neurons",
-        "subtopic": "24.1-I. General Physiology\u2013Basic concepts"
+        "subtopic": "24.1-I. General Physiology–Basic concepts"
       },
       {
         "id": "phys-mcq-6-443",
@@ -4416,7 +4866,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 7,
     "title": "Circulatory & Cardiac Physiology",
     "category": "Hemodynamics & Cardiac Cycle",
-    "icon": "\ud83e\udec0",
+    "icon": "🫀",
     "color": "from-rose-500 to-red-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Circulatory & Cardiac Physiology.",
@@ -4434,50 +4884,118 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-7-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Cardiac Electrophysiology, Pacemaker Mechanics & Conduction Pathways",
         "content": [
-          "Chapter 7",
-          "Circulatory (Cardiovascular) System",
-          "K+",
-          "Ca2+",
-          "Both Na+ and K+",
-          "The force the heart must overcome to pump blood is known as",
-          "preload",
-          "after load",
-          "cardiac output",
-          "stroke volume",
-          "The first heart sound represents which portion of the cardiac cycle?",
-          "atrial systole",
-          "ventricular systole",
-          "closing of the atrioventricular valves",
-          "closing of the semilunar valves",
-          "Short Answer Questions",
-          "Discuss in brief about functions of the heart.",
-          "Discuss in brief about conduction system of the heart.",
-          "Discuss in brief about blood pressure.",
-          "Long Answer Questions",
-          "Explain the functions of the heart.",
-          "Discuss the conductive system of heart.",
-          "Explain the cardiac cycle.",
-          "Describe blood pressure."
+          "The heart functions as a muscular dual pump that generates hemodynamic pressure gradients driving blood through pulmonary and systemic circulations. The rhythmic, synchronized mechanical beating of the myocardium is initiated and orchestrated by specialized autorhythmic cardiac cells forming the **Cardiac Conduction System**.",
+          "Cardiac muscle fibers are connected end-to-end by **intercalated discs** featuring **desmosomes** (providing mechanical tensile anchoring) and **gap junctions** (low-resistance electrical conduits permitting rapid ionic flux). This architectural syncytium ensures that action potentials propagate instantaneously from cell to cell, allowing atria and ventricles to contract as unified functional syncytia.",
+          "**The Conduction Pathway Sequence:**",
+          "1. **Sinoatrial (SA) Node (\"Natural Pacemaker\"):** Located in the superior wall of the right atrium near the opening of the superior vena cava; spontaneously depolarizes at **60 to 100 action potentials per minute**.",
+          "2. **Internodal Pathways:** Conduct depolarization rapidly across both atria, causing synchronized atrial contraction.",
+          "3. **Atrioventricular (AV) Node:** Located in the posteroinferior interatrial septum; **delays the electrical impulse by 0.10 to 0.12 seconds (100 ms)**; this physiological delay is essential because it allows the atria to finish contracting and empty their blood into the ventricles before ventricular systole commences.",
+          "4. **Atrioventricular Bundle (Bundle of His):** The sole electrical conducting pathway piercing the insulating fibrous cardiac skeleton to connect atria with ventricles.",
+          "5. **Right & Left Bundle Branches:** Descend through the interventricular septum toward the cardiac apex.",
+          "6. **Purkinje Fibers:** Vast subendocardial arborization of large fibers conducting action potentials at high velocity (2-4 m/s) upward through ventricular myocardium, driving apex-to-base ventricular ejection."
         ],
+        "points": [
+          "**SA Nodal Pacemaker Potential:** Nodal cells lack a stable resting membrane potential; slow, continuous sodium (Na+) influx through hyperpolarization-activated **HCN channels (\"Funny Current / I_f\")** slowly depolarizes the membrane from -60 mV to threshold (-40 mV); threshold opens **L-type Voltage-gated Calcium channels**, driving the upward action potential stroke (no fast Na+ channels involved).",
+          "**Ventricular Myocyte Action Potential (5 Phases):**",
+          "• **Phase 0 (Rapid Depolarization):** Opening of fast voltage-gated Na+ channels (membrane shoots to +20 mV).",
+          "• **Phase 1 (Initial Repolarization):** Transient K+ efflux through transient outward K+ channels.",
+          "• **Phase 2 (Plateau Phase):** Unique to cardiac muscle; balanced influx of Ca2+ through slow L-type Ca2+ channels and efflux of K+ through delayed rectifier channels; sustains depolarization for 200-300 ms.",
+          "• **Phase 3 (Rapid Repolarization):** Closure of Ca2+ channels and massive K+ efflux, returning membrane to -90 mV.",
+          "• **Phase 4 (Resting Membrane Potential):** Stable -90 mV maintained by inward rectifier K+ channels and Na+/K+-ATPase pump.",
+          "**Long Absolute Refractory Period:** The prolonged plateau phase ensures a refractory period lasting ~250 ms, making cardiac muscle **completely incapable of undergoing sustained tetanic contractions**, ensuring the heart relaxes between beats to fill with blood.",
+          "**Autonomic Chronotropic Regulation:** Parasympathetic stimulation (vagus nerve / ACh on M2 receptors) increases K+ permeability, hyperpolarizing nodal cells and slowing heart rate (**negative chronotropy**); Sympathetic stimulation (norepinephrine on beta-1 adrenergic receptors) increases funny and Ca2+ currents, accelerating heart rate (**positive chronotropy**)."
+        ],
+        "clinicalPearl": "**Third-Degree AV Block & Ventricular Fibrillation:** In complete (third-degree) heart block, the AV node fails to conduct any atrial impulses to the ventricles; atria beat at normal sinus rate (75 bpm) while ventricles rely on slow, unstable ventricular escape pacemakers (20-40 bpm), causing profound hypoperfusion and Stokes-Adams syncope requiring permanent electronic pacemaker implantation. **Ventricular Fibrillation (V-Fib)** is chaotic, disorganized ventricular electrical activity without mechanical pumping; cardiac output drops to zero, requiring immediate **CPR and electrical defibrillation** within minutes to prevent irreversible biological death.",
         "images": [
           {
-            "src": "/images/physiology/7._Circulatory_Physiology_chendake_image1.png",
-            "caption": "Figure 7.1: The conduction system.",
-            "alt": "Figure 7.1: The conduction system."
-          },
-          {
-            "src": "/images/physiology/7._Circulatory_Physiology_chendake_image2.png",
-            "caption": "Figure: 7.2 ECG.",
-            "alt": "Figure: 7.2 ECG."
-          },
-          {
-            "src": "/images/physiology/7._Circulatory_Physiology_chendake_image3.png",
-            "caption": "Figure: 7.3: Cardiac cycle.",
-            "alt": "Figure: 7.3: Cardiac cycle."
+            "src": "/images/physiology/7_image1.png",
+            "caption": "Figure 7.1: Specialized cardiac electrical conduction system.",
+            "alt": "Cardiac conduction system"
           }
         ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-7-2",
+        "title": "The Electrocardiogram (ECG), Waveforms & Arrhythmic Alterations",
+        "content": [
+          "The **Electrocardiogram (ECG / EKG)** is a non-invasive graphic recording of electrical voltage fluctuations generated across the body surface by the synchronized depolarization and repolarization vectors of myocardial cells during each cardiac cycle.",
+          "A standard diagnostic 12-lead ECG utilizes electrodes placed on the limbs and chest to record electrical activity from 12 distinct spatial perspectives (6 limb leads: I, II, III, aVR, aVL, aVF; and 6 precordial chest leads: V1 through V6).",
+          "**Standard ECG Waveforms & Intervals:**",
+          "1. **P-Wave:** Low, rounded deflection reflecting **Atrial Depolarization** spreading from SA node across both atria (normal duration: 0.08 to 0.10 seconds; height < 2.5 mm).",
+          "2. **PR-Interval:** Measured from beginning of P-wave to beginning of QRS complex; reflects time required for electrical impulse to travel from SA node through atria, AV node, and bundle branches (normal duration: **0.12 to 0.20 seconds / 3 to 5 small squares**).",
+          "3. **QRS Complex:** Sharp, prominent deflection reflecting **Ventricular Depolarization** (normal duration: **0.06 to 0.10 seconds / < 2.5 small squares**). Comprises initial negative Q-wave, tall positive R-wave, and negative S-wave. Atrial repolarization occurs simultaneously but is masked by the massive QRS voltage.",
+          "4. **ST-Segment:** Flat, isoelectric horizontal plateau between end of S-wave (J-point) and beginning of T-wave; corresponds to Phase 2 plateau phase of ventricular action potential.",
+          "5. **T-Wave:** Broad, asymmetrical deflection reflecting **Ventricular Repolarization** (Phase 3 K+ efflux).",
+          "6. **QT-Interval:** Measured from start of QRS to end of T-wave; represents total ventricular electrical systole (normal duration: 0.36 to 0.44 seconds, corrected for heart rate as QTc)."
+        ],
+        "points": [
+          "**ECG Paper Calibration:** Standard paper speed is **25 mm/second**; 1 small square (1 mm) = **0.04 seconds (40 ms)**; 1 large square (5 mm) = **0.20 seconds (200 ms)**. Vertical amplitude: 10 mm = **1.0 mV**.",
+          "**PR-Interval Prolongation (First-Degree AV Block):** PR-interval > 0.20 seconds indicates delayed conduction through the AV node (caused by digoxin toxicity, beta-blocker overdose, or ischemia).",
+          "**ST-Segment Elevation (STEMI):** ST-segment elevation > 1 mm in two anatomically contiguous leads indicates acute transmural myocardial infarction demanding immediate emergent coronary reperfusion.",
+          "**T-Wave Abnormalities:** Tall, peaked \"tented\" T-waves indicate life-threatening **Hyperkalemia** (potassium > 6.0 mEq/L); flattened T-waves and prominent U-waves indicate **Hypokalemia**.",
+          "**Atrial Fibrillation (A-Fib):** Absent distinct P-waves replaced by irregular baseline fibrillatory waves (f-waves) with an \"irregularly irregular\" ventricular rhythm; blood pools in atrial appendages, creating high risk of mural thrombus formation and embolic stroke."
+        ],
+        "clinicalPearl": "**STEMI Recognition & Anticoagulation in Atrial Fibrillation:** On 12-lead ECG, ST-segment elevation in leads II, III, aVF localizes inferior wall STEMI (RCA occlusion); elevation in V1-V4 localizes anterior wall STEMI (LAD occlusion). In atrial fibrillation, loss of coordinated atrial contraction causes blood stasis in the left atrial appendage. All patients with A-fib must be stratified using the CHA2DS2-VASc score and placed on long-term oral anticoagulation (DOACs / warfarin) to prevent ischemic embolic cerebrovascular accidents (stroke).",
+        "images": [
+          {
+            "src": "/images/physiology/7_image2.png",
+            "caption": "Figure 7.2: Normal 12-lead Electrocardiogram (ECG) waveforms and intervals.",
+            "alt": "ECG waveforms"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-7-3",
+        "title": "The Cardiac Cycle, Ventricular Volumes & Heart Sounds",
+        "content": [
+          "The **Cardiac Cycle** encompasses all mechanical, electrical, and hemodynamic events occurring from the beginning of one heartbeat to the beginning of the next. At a normal resting heart rate of 75 beats per minute, the total duration of each cardiac cycle is precisely **0.8 seconds**.",
+          "The cardiac cycle is divided into **Ventricular Systole (0.3 seconds)** and **Ventricular Diastole (0.5 seconds)**, partitioned into five distinct mechanical phases:",
+          "1. **Atrial Systole (0.1 s):** Atria contract, topping off ventricular filling by contributing the final 20-30% of blood (**\"atrial kick\"**); ventricles reach their maximal end-diastolic volume (**EDV ~120 to 130 mL**).",
+          "2. **Isovolumetric Ventricular Contraction (0.05 s):** Ventricles begin contracting; intraventricular pressure exceeds atrial pressure, abruptly slamming the atrioventricular (mitral and tricuspid) valves shut (**First Heart Sound / S1 - \"Lub\"**). Because ventricular pressure is not yet high enough to open aortic and pulmonary semilunar valves, **all four heart valves are closed**; intraventricular pressure spikes steeply without any change in blood volume.",
+          "3. **Ventricular Ejection (0.25 s):** Left ventricular pressure exceeds aortic diastolic pressure (80 mmHg); the aortic valve bursts open; 70 mL of blood is rapidly pumped into systemic circulation (**Stroke Volume / SV ~70 mL**). The residual blood remaining in the ventricle at the end of ejection is the **End-Systolic Volume (ESV ~50 mL)**.",
+          "4. **Isovolumetric Ventricular Relaxation (0.08 s):** Ventricles relax; pressure drops below arterial pressure; backflowing blood catches semilunar valve cusps, snapping them shut (**Second Heart Sound / S2 - \"Dub\"**). All four valves are closed again; volume remains constant at 50 mL while ventricular pressure plummets.",
+          "5. **Ventricular Filling (0.42 s):** Ventricular pressure drops below atrial pressure; AV valves open passively; rapid passive filling accounts for 70-80% of total ventricular filling before the next atrial systole."
+        ],
+        "points": [
+          "**Ejection Fraction (EF = SV / EDV × 100):** The percentage of end-diastolic blood pumped out with each beat (normally **55% to 70%**); an EF < 40% indicates systolic heart failure.",
+          "**First Heart Sound (S1):** Caused by vibrations associated with closure of the mitral and tricuspid valves; louder, longer, lower pitch; marks the onset of ventricular systole.",
+          "**Second Heart Sound (S2):** Caused by vibrations associated with closure of the aortic and pulmonary valves; shorter, sharper, higher pitch; marks the onset of ventricular diastole. Physiological splitting of S2 occurs during inspiration.",
+          "**Third Heart Sound (S3 - Ventricular Gallop):** Low-frequency sound in early diastole during rapid passive filling; physiological in children and athletes; pathological in adults over 40 indicating volume overload and congestive heart failure (**Kentucky gallop**).",
+          "**Fourth Heart Sound (S4 - Atrial Gallop):** Low-frequency sound in late diastole caused by atria contracting against a stiff, non-compliant ventricle (hypertension, aortic stenosis; **Tennessee gallop**)."
+        ],
+        "clinicalPearl": "**Heart Murmurs & Valvular Regurgitation vs. Stenosis:** Murmurs are abnormal audible heart sounds generated by turbulent blood flow. A harsh crescendo-decrescendo **systolic ejection murmur** radiating to the carotids indicates **aortic stenosis**. A high-pitched, blowing **holosystolic murmur** at the apex radiating to the axilla indicates **mitral regurgitation**. Assessing cardiac sounds requires placing the stethoscope diaphragm firmly over the five auscultation landmarks and the bell lightly for low-pitched S3 and S4 gallops.",
+        "images": [
+          {
+            "src": "/images/physiology/7_image3.png",
+            "caption": "Figure 7.3: Wiggers diagram of the complete cardiac cycle.",
+            "alt": "Cardiac cycle"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-7-4",
+        "title": "Cardiac Output, Arterial Blood Pressure & Hemodynamic Regulation",
+        "content": [
+          "**Cardiac Output (CO)** is the volume of blood pumped by each ventricle into systemic or pulmonary circulation per minute: ***Cardiac Output = Heart Rate (HR) × Stroke Volume (SV)***. At resting values (HR = 75 bpm, SV = 70 mL), resting CO is approximately **5.0 to 5.5 liters/min** (equivalent to circulating the entire blood volume every 60 seconds).",
+          "Stroke volume is governed by three physiological determinants: (1) **Preload** (the degree of myocardial stretch prior to contraction, indexed by end-diastolic volume; governed by **Frank-Starling's Law of the Heart**: *within physiological limits, the greater the diastolic stretch, the greater the force of contraction*), (2) **Contractility (Inotropy)** (intrinsic myocardial contractile force independent of preload, increased by intracellular Ca2+, sympathetic stimulation, and digitalis), and (3) **Afterload** (the arterial resistance against which the ventricle must pump, determined by systemic vascular resistance and aortic pressure).",
+          "**Arterial Blood Pressure (BP):** The lateral force exerted by circulating blood against systemic arterial walls: ***Blood Pressure = Cardiac Output × Systemic Vascular Resistance (SVR)***. Normal adult blood pressure is **120/80 mmHg**; **Pulse Pressure (PP = SBP - DBP)** is ~40 mmHg; **Mean Arterial Pressure (MAP = DBP + 1/3 PP)** is ~93 mmHg (a MAP > 65 mmHg is vital to maintain organ perfusion).",
+          "**Regulation of Blood Pressure:**",
+          "• **Short-Term Neural Control (Baroreceptor Reflex):** High-pressure stretch mechanoreceptors in the **Carotid Sinus** (CN IX) and **Aortic Arch** (CN X) sense blood pressure fluctuations; a sudden drop in BP decreases baroreceptor firing to medullary vasomotor centers, triggering immediate sympathetic reflex output (tachycardia and arteriolar vasoconstriction) while inhibiting vagal tone.",
+          "• **Intermediate & Long-Term Endocrine Control:** **Renin-Angiotensin-Aldosterone System (RAAS)** (activated by renal hypoperfusion; Angiotensin II induces potent vasoconstriction, while Aldosterone drives renal Na+ and water retention), **Antidiuretic Hormone (ADH)**, and **Atrial Natriuretic Peptide (ANP)** (secreted by stretched atria, driving renal natriuresis and vasodilation)."
+        ],
+        "points": [
+          "**Frank-Starling Law in Clinical Care:** Increasing venous return (e.g., elevating legs in shock or administering IV fluids) increases EDV, stretches sarcomeres to optimal length (2.2 μm), and increases stroke volume.",
+          "**Afterload Burden in Hypertension:** Chronic systemic hypertension or aortic stenosis elevates afterload, forcing the left ventricle to generate higher pressures, causing concentric left ventricular hypertrophy and eventual heart failure.",
+          "**Baroreceptor Reflex in Orthostatic Changes:** Standing up pools 500-800 mL of blood in lower extremities; venous return and CO drop transiently; baroreceptor reflex instantly fires, increasing heart rate by 10-15 bpm and constricting arterioles within seconds to maintain cerebral perfusion.",
+          "**Circulatory Shock Stages:** Inadequate tissue perfusion; Hypovolemic (hemorrhage/dehydration), Cardiogenic (MI), Septic (bacterial endotoxin vasodilation), and Anaphylactic (histamine leak); compensatory tachycardia and vasoconstriction give way to refractory decompensated cellular shock."
+        ],
+        "clinicalPearl": "**Orthostatic Hypotension Assessment & Mean Arterial Pressure (MAP) Critical Target:** Assessing for orthostatic hypotension requires measuring blood pressure and pulse supine, sitting, and standing after 2 minutes; a drop in systolic BP ≥ 20 mmHg or diastolic BP ≥ 10 mmHg accompanied by symptoms (dizziness, lightheadedness) confirms autonomic insufficiency or intravascular volume depletion. In intensive care nursing, titrating vasopressor infusions (norepinephrine) to maintain a **MAP ≥ 65 mmHg** is essential to prevent acute tubular necrosis, myocardial ischemia, and cerebral infarction.",
+        "images": [],
         "tables": []
       }
     ],
@@ -5176,7 +5694,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 8,
     "title": "Excretory & Renal Physiology",
     "category": "Urine Formation & Osmoregulation",
-    "icon": "\ud83d\udca7",
+    "icon": "💧",
     "color": "from-cyan-500 to-blue-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Excretory & Renal Physiology.",
@@ -5194,56 +5712,125 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-8-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Renal Functional Principles & Glomerular Filtration Dynamics",
         "content": [
-          "Chapter 8",
-          "The Excretory System"
+          "The kidneys maintain chemical and fluid homeostasis by processing 180 liters of blood plasma daily, clearing nitrogenous wastes while conserving essential water, electrolytes, and glucose to form 1.5 liters of urine.",
+          "The kidneys execute three sequential physiological processes: (1) **Glomerular Filtration** (bulk flow of fluid and solutes from glomerular capillaries into Bowman's space), (2) **Tubular Reabsorption** (reclaiming water and essential solutes from filtrate back into peritubular capillary blood), and (3) **Tubular Secretion** (active transport of metabolic wastes, toxins, and surplus ions from blood into tubular lumen).",
+          "**Glomerular Filtration Rate (GFR):** The total volume of filtrate formed by both kidneys per minute (normally **120 to 125 mL/min**, or **180 liters/day**). Driven across the three-layered glomerular filtration membrane by Starling hydrostatic and oncotic forces:",
+          "• **Net Filtration Pressure (NFP) Equation:** ***NFP = P_gc - (P_bs + π_gc)***",
+          "1. **Glomerular Capillary Hydrostatic Pressure (P_gc):** ~**55 mmHg** (outward filtration force; maintained high because the efferent arteriole diameter is narrower than the afferent arteriole).",
+          "2. **Bowman's Space Hydrostatic Pressure (P_bs):** ~**15 mmHg** (opposing inward force).",
+          "3. **Glomerular Capillary Colloid Osmotic Pressure (π_gc):** ~**30 mmHg** (opposing inward force exerted by non-filtered plasma albumin).",
+          "4. **Net Filtration Pressure:** 55 - (15 + 30) = **+10 mmHg**, driving continuous fluid filtration.",
+          "**Renal Autoregulation of GFR:** Kidneys maintain constant GFR across mean arterial pressures of 80 to 180 mmHg through **Myogenic Autoregulation** (stretching afferent arteriole opens mechanosensitive Ca2+ channels, causing vasoconstriction) and **Tubuloglomerular Feedback** (macula densa cells in JGA sense high luminal NaCl, releasing adenosine to constrict afferent arteriole)."
         ],
+        "points": [
+          "**Glomerular Filtration Membrane Selectivity:** Permeability depends on molecular size (< 4 nm filters freely; > 8 nm is completely blocked) and electrical charge (negatively charged polyanionic glycoprotein coat repels negatively charged plasma albumin).",
+          "**Creatinine Clearance as GFR Index:** Creatinine is an endogenous breakdown product of muscle phosphocreatine, filtered freely at the glomerulus without being reabsorbed and only minimally secreted; **Creatinine Clearance (CrCl)** closely approximates true GFR.",
+          "**Extrinsic Regulation of GFR:** During severe hemorrhage or exercise, massive sympathetic stimulation and circulating catecholamines constrict afferent arterioles, diverting blood flow to vital organs while drastically reducing GFR and urine output to conserve intravascular volume."
+        ],
+        "clinicalPearl": "**Acute Kidney Injury (AKI) & Serum Creatinine Monitoring:** Serum creatinine (normal: 0.6-1.2 mg/dL) is inversely related to GFR; a doubling of serum creatinine reflects a 50% loss of functioning nephron filtration capacity. Oliguria (urine output < 400 mL/day or < 0.5 mL/kg/hr for > 6 hours) is an early hallmark of AKI, demanding immediate evaluation of pre-renal perfusion, nephrotoxic medications (NSAIDs, aminoglycosides, IV radiocontrast), and post-renal obstructive catheter blockage.",
         "images": [
           {
             "src": "/images/physiology/8_th_excretory_system_physiology_for_print_image1.png",
-            "caption": "Figure 8.1: Mechanisms of urine formation.",
-            "alt": "Figure 8.1: Mechanisms of urine formation."
+            "caption": "Figure 8.1: Nephron transport mechanisms and urine formation.",
+            "alt": "Mechanisms of urine formation"
           },
           {
             "src": "/images/physiology/8_th_excretory_system_physiology_for_print_image2.png",
-            "caption": "Figure 8.2: Filtration in the glomerular.",
-            "alt": "Figure 8.2: Filtration in the glomerular."
-          },
+            "caption": "Figure 8.2: Glomerular filtration barrier and Starling forces.",
+            "alt": "Glomerular filtration"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-8-2",
+        "title": "Tubular Reabsorption, Secretion & Countercurrent Urine Concentration",
+        "content": [
+          "Of the 180 liters of filtrate generated daily, over **99% is reabsorbed** into peritubular capillaries, leaving 1.0 to 1.5 liters to be excreted as urine.",
+          "**Tubular Processing by Nephron Segment:**",
+          "1. **Proximal Convoluted Tubule (PCT):** Reabsorbs **65% of water, 65% of Na+, and 100% of filtered glucose and amino acids** via apical Na+-glucose (SGLT) and Na+-amino acid symporters coupled to basolateral Na+/K+-ATPase. Bicarbonate (HCO3-) is reabsorbed via apical Na+/H+ antiporters (NHE3) and carbonic anhydrase. Secretes organic acids, bases, drugs (penicillin), and creatinine.",
+          "2. **Loop of Henle (Countercurrent Multiplier):** Generates a steep hypertonic osmotic gradient in the renal medullary interstitium (ascending from 300 mOsm/L at cortex to 1,200 mOsm/L at papilla). The **thin descending limb** is highly permeable to water via aquaporin-1 channels but impermeable to solutes, concentrating tubular fluid. The **thick ascending limb** is completely impermeable to water but actively extrudes Na+, K+, and Cl- into medullary interstitium via **NKCC2 cotransporters** (the pharmacological target of loop diuretics like furosemide).",
+          "3. **Distal Convoluted Tubule (DCT):** Reabsorbs Na+ and Cl- via NCC cotransporters (inhibited by thiazide diuretics). Parathyroid hormone (PTH) stimulates apical calcium channels, driving Ca2+ reabsorption.",
+          "4. **Collecting Duct System:** Contains **Principal Cells** (reabsorbing Na+ through ENaC channels and secreting K+ under regulation by **Aldosterone**; inserting aquaporin-2 water channels under regulation by **Antidiuretic Hormone / ADH / Vasopressin**) and **Intercalated Cells** (regulating acid-base balance; Type A secretes H+ and reabsorbs HCO3-; Type B secretes HCO3-)."
+        ],
+        "points": [
+          "**Renal Threshold for Glucose (180 mg/dL):** SGLT transporters in the PCT possess a maximal transport capacity (Tm = 375 mg/min); when venous blood glucose exceeds 180 to 200 mg/dL, filtered glucose exceeds SGLT capacity, resulting in **glucosuria** and osmotic diuresis (polyuria in diabetes mellitus).",
+          "**Vasa Recta (Countercurrent Exchanger):** Hairpin capillary loops looping deep into the medulla with juxtamedullary nephrons; permeable to water and solutes; blood flow is sluggish, maintaining the hypertonic medullary gradient without washing it out.",
+          "**Urea Recycling:** Urea contributes ~500 mOsm/L to the 1,200 mOsm/L medullary gradient; ADH facilitates urea transporter (UT-A1) insertion in inner medullary collecting ducts, promoting urea diffusion into interstitium.",
+          "**Normal Urine Characteristics:** Specific gravity 1.003 to 1.030; pH 4.5 to 8.0 (average 6.0); contains 95% water and 5% solutes (urea, creatinine, sodium, potassium, uric acid, ammonia, sulfate); normally devoid of glucose, protein, ketones, bilirubin, RBCs, and WBCs."
+        ],
+        "clinicalPearl": "**Diuretic Pharmacology & SIADH vs. Diabetes Insipidus:** Loop diuretics (furosemide) block the thick ascending limb NKCC2 cotransporter, abolishing medullary hypertonicity and preventing water reabsorption, causing massive diuresis accompanied by **hypokalemia**. In Central **Diabetes Insipidus** (lack of pituitary ADH), collecting ducts cannot reabsorb water, causing profuse dilute polyuria (up to 20 L/day, specific gravity < 1.005) and hypernatremia. In **SIADH**, excessive ADH causes water intoxication, severe dilutional hyponatremia (< 120 mEq/L), cerebral edema, and seizures.",
+        "images": [],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-8-3",
+        "title": "The Micturition Reflex & Urinary Bladder Innervation",
+        "content": [
+          "Urine drips continuously from renal papillary ducts into minor and major calyces and is propelled down the retroperitoneal ureters by autonomous smooth muscle **peristaltic waves** (1 to 5 per minute) into the **urinary bladder**.",
+          "The urinary bladder is an expandable muscular reservoir lined by transitional epithelium and multi-layered crisscrossing smooth muscle fibers forming the **Detrusor Muscle**. The bladder neck is encircled by the involuntary **Internal Urethral Sphincter** (IUS), while the deep perineal membrane contains the voluntary skeletal **External Urethral Sphincter** (EUS).",
+          "**The Micturition (Urination) Reflex:**",
+          "1. As the bladder fills with urine, resting intravesical pressure remains low due to stress relaxation. When volume reaches **200 to 400 mL**, bladder wall tension stretches **mechanosensitive stretch receptors**.",
+          "2. Afferent sensory signals travel along pelvic nerves into sacral spinal cord segments **S2, S3, and S4**.",
+          "3. The spinal reflex center fires parasympathetic efferent signals down **pelvic splanchnic nerves**, releasing acetylcholine onto M3 muscarinic receptors on the bladder wall, stimulating vigorous **detrusor muscle contraction** and internal urethral sphincter relaxation.",
+          "4. Simultaneously, sensory signals ascend the spinal cord to the **Pontine Micturition Center (PMC / Barrington's Nucleus)** in the brainstem and higher cerebral cortical centers.",
+          "5. If social conditions are appropriate for urination, the cerebral cortex permits the PMC to inhibit somatic motor neurons in the ventral horn via the **Pudendal Nerve**, relaxing the voluntary **External Urethral Sphincter**; urination proceeds.",
+          "6. If urination is inconvenient, the cerebral cortex fires the pudendal nerve to keep the external sphincter tonically constricted; the micturition reflex temporarily subsides for 15 to 30 minutes before returning with greater intensity."
+        ],
+        "points": [
+          "**Dual Autonomic Innervation of Bladder:**",
+          "• **Parasympathetic (Pelvic Nerves S2-S4):** Promotes voiding; contracts detrusor muscle and relaxes internal sphincter.",
+          "• **Sympathetic (Hypogastric Nerves T11-L2):** Promotes continence; relaxes detrusor muscle via beta-2/beta-3 receptors and constricts internal sphincter via alpha-1 receptors.",
+          "• **Somatic (Pudendal Nerve S2-S4):** Conscious voluntary continence; innervates skeletal muscle external urethral sphincter.",
+          "**Types of Urinary Incontinence:**",
+          "• **Stress Incontinence:** Involuntary leakage upon elevated intra-abdominal pressure (coughing, laughing, lifting); caused by pelvic floor laxity (post-childbirth).",
+          "• **Urge Incontinence (\"Overactive Bladder\"):** Sudden, uncontrollable urge with involuntary detrusor spasticity.",
+          "• **Overflow Incontinence:** Incomplete emptying causing chronic distension and constant dribbling (prostatic obstruction in BPH or diabetic neuropathy).",
+          "• **Functional Incontinence:** Physical or cognitive barriers preventing timely toilet access."
+        ],
+        "clinicalPearl": "**Neurogenic Bladder in Spinal Cord Injuries:** Complete spinal cord transection above S2 (e.g., cervical or thoracic trauma) interrupts cortical inhibitory and voluntary pathways to the pontine micturition center. Initially, **spinal shock** produces an atonic, flaccid bladder with acute urinary retention requiring catheterization. Later, an autonomous, uninhibited **spastic reflex bladder (automatic bladder)** develops: the bladder empties automatically whenever volume reaches 200-300 mL without conscious voluntary control.",
+        "images": [
           {
             "src": "/images/physiology/8_th_excretory_system_physiology_for_print_image3.png",
-            "caption": "Figure 8. 3: Showing bladder at rest and Maturation.",
-            "alt": "Figure 8. 3: Showing bladder at rest and Maturation."
-          },
+            "caption": "Figure 8.3: Innervation of urinary bladder and micturition reflex.",
+            "alt": "Micturition reflex"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-8-4",
+        "title": "Cutaneous Excretion, Fluid-Electrolyte Balance & Thermoregulation",
+        "content": [
+          "The excretory and homeostatic work of the kidneys is integrated with the **integumentary system** and hypothalamic neural networks to maintain systemic fluid volume, electrolyte concentrations, acid-base equilibrium, and core body temperature.",
+          "**Integumentary Excretion:** Sweat glands excrete 500 to 1,000 mL of fluid daily (insensible and sensible perspiration), clearing water, sodium, chloride, potassium, urea, uric acid, and ammonia. In end-stage chronic kidney disease, evaporating sweat leaves white urea crystalline deposits across the skin known as **uremic frost**.",
+          "**Body Fluid Compartments:** Total body water constitutes approximately **60% of body weight in adult males (42 liters in a 70-kg individual)**, partitioned into: **Intracellular Fluid (ICF / two-thirds / 28 L)** and **Extracellular Fluid (ECF / one-third / 14 L)** (subdivided into Interstitial Fluid [80% / 11 L] and Plasma [20% / 3 L]).",
+          "**Thermoregulation:** Core body temperature is maintained within a narrow physiological range (**36.5°C to 37.5°C / 97.7°F to 99.5°F**) coordinated by the **Hypothalamic Thermostat** (preoptic anterior hypothalamus senses core blood temperature and inputs from peripheral skin thermoreceptors).",
+          "• **Heat Dissipation Mechanisms (Response to Hyperthermia):** (1) **Cutaneous Vasodilation:** Sympathetic cholinergic inhibition opens dermal capillary beds, radiating thermal energy to environment; (2) **Evaporative Sweating:** Eccrine sweat glands secrete watery sweat; evaporation of 1 mL of sweat dissipates 0.58 kcal of heat.",
+          "• **Heat Conservation & Generation (Response to Hypothermia):** (1) **Cutaneous Vasoconstriction:** Dermal vessels clamp down, shunting warm blood to core; (2) **Piloerection:** Arrector pili muscles contract; (3) **Involuntary Shivering Thermogenesis:** Somatic motor centers drive rhythmic skeletal muscle tremors, multiplying metabolic heat production 4- to 5-fold; (4) **Chemical Thermogenesis:** Sympathetic surge and thyroid hormone T3/T4 secretion accelerate basal metabolic rate."
+        ],
+        "points": [
+          "**Fluid Homeostasis & Osmoreceptors:** Hypothalamic osmoreceptors in the anterior hypothalamus detect a 1-2% increase in ECF osmolarity, firing impulses to stimulate thirst and drive posterior pituitary **Antidiuretic Hormone (ADH)** release.",
+          "**Acid-Base Balance Triad:** (1) Chemical Buffer Systems (bicarbonate, phosphate, plasma proteins; reacts in seconds); (2) Respiratory Regulation (hypoventilation retains CO2 / hyperventilation eliminates CO2; reacts in minutes); (3) Renal Regulation (tubular secretion of H+ and reabsorption/generation of new HCO3-; powerful correction in hours to days).",
+          "**Heat Exhaustion vs. Heat Stroke:** Heat exhaustion manifests with diaphoresis, hypotension, and normal-to-mildly elevated core temp (< 40°C) due to fluid/electrolyte depletion; **Heat Stroke** is a life-threatening medical emergency characterized by thermoregulatory failure, core temperature > 40.5°C (105°F), hot dry skin (sweating ceases), delirium, seizures, and multiorgan failure.",
+          "**Hypothermia Stages:** Mild (32-35°C, vigorous shivering, confusion); Moderate (28-32°C, shivering ceases, bradycardia, hypoventilation); Severe (< 28°C, coma, ventricular fibrillation, asystole)."
+        ],
+        "clinicalPearl": "**Heat Stroke Cooling Protocol & Severe Burn Fluid Shift:** Heat stroke requires emergency aggressive immediate evaporative cooling (tepid water spray with circulating fans) or ice-water immersion and IV normal saline; antipyretic drugs (acetaminophen) are completely ineffective because heat stroke is caused by thermoregulatory failure rather than a hypothalamic pyrogen set-point change. In extensive full-thickness burns, massive cutaneous fluid evaporation and systemic capillary leak cause catastrophic hypovolemic burn shock, requiring **Parkland Formula** fluid resuscitation (4 mL × kg × % TBSA in the first 24 hours).",
+        "images": [
           {
             "src": "/images/physiology/8_th_excretory_system_physiology_for_print_image4.png",
-            "caption": "Figure 8.4: Structure of Skin.",
-            "alt": "Figure 8.4: Structure of Skin."
+            "caption": "Figure 8.4: Histological structure of the skin and cutaneous glands.",
+            "alt": "Structure of skin"
           },
           {
             "src": "/images/physiology/8_th_excretory_system_physiology_for_print_image5.png",
-            "caption": "Figure 8.5: Regulation of Body Temperature.",
-            "alt": "Figure 8.5: Regulation of Body Temperature."
+            "caption": "Figure 8.5: Hypothalamic thermoregulatory response to cold and heat.",
+            "alt": "Regulation of body temperature"
           }
         ],
-        "tables": [
-          [
-            [
-              "W ater",
-              "Solutes/Solids 4%"
-            ],
-            [
-              "96%",
-              "Organic",
-              "Inorganic"
-            ],
-            [
-              "",
-              "urea- 2% uric acid creatinine , Ammonia",
-              "Sodium, potassium phosphate chlorides sulphate oxalates"
-            ]
-          ]
-        ]
+        "tables": []
       }
     ],
     "mcqs": [
@@ -5829,7 +6416,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 9,
     "title": "Reproductive Physiology",
     "category": "Gametogenesis & Endocrine Regulation",
-    "icon": "\ud83d\udc76",
+    "icon": "👶",
     "color": "from-purple-500 to-pink-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Reproductive Physiology.",
@@ -5847,88 +6434,168 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-9-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Male Reproductive Physiology, Spermatogenesis & Androgens",
         "content": [
-          "Chapter 9",
-          "The Reproductive System"
+          "The male reproductive system is orchestrated to synthesize male gametes (**spermatozoa**) and secrete androgenic steroid hormones, principally **Testosterone**, to sustain secondary sexual characteristics, libido, and somatic anabolic metabolism.",
+          "The **testes** fulfill dual physiological roles: exocrine (spermatogenesis within the seminiferous tubules) and endocrine (testosterone synthesis by interstitial **Leydig cells** situated between tubules, stimulated by pituitary Luteinizing Hormone / LH).",
+          "**Spermatogenesis:** Occurs continuously within the epithelial lining of seminiferous tubules over approximately 64 to 74 days, progressing through three defined stages:",
+          "1. **Mitotic Proliferation:** Primitive diploid **Spermatogonia** (46,XY) located at the basement membrane divide mitotically to produce self-renewing stem cells and **Primary Spermatocytes**.",
+          "2. **Meiotic Division:** Primary spermatocytes enter Meiosis I (crossing over and reduction division) to form haploid **Secondary Spermatocytes** (23,X or 23,Y), which swiftly complete Meiosis II to yield haploid **Spermatids**.",
+          "3. **Spermiogenesis:** Structural metamorphosis where non-motile spherical spermatids transform into streamlined motile **Spermatozoa** by shedding excess cytoplasm, condensing the nucleus, forming an enzymatic **acrosome cap** (derived from Golgi apparatus, containing hyaluronidase and acrosin), concentrating mitochondria in the midpiece for ATP generation, and assembling a 9+2 microtubular flagellar tail.",
+          "**Sertoli (Nurse) Cells:** Giant columnar cells spanning from basement membrane to lumen, joined by tight junctions forming the **Blood-Testis Barrier**. Sertoli cells nurse developing germ cells, phagocytose discarded cytoplasm, secrete **Androgen-Binding Protein (ABP)** under FSH influence (maintaining high intratesticular testosterone), and secrete **Inhibin B** (which selectively suppresses pituitary FSH secretion via negative feedback).",
+          "**Semen Composition & Emission:** Semen volume is 2 to 5 mL per ejaculate with a normal sperm concentration of 20 to 150 million/mL. The fluid is produced by: **Seminal Vesicles (60%)** (thick, alkaline fluid rich in fructose [primary energy source], prostaglandins [stimulating uterine smooth muscle contraction], and coagulating proteins), **Prostate Gland (30%)** (milky, slightly acidic fluid containing citric acid, calcium, acid phosphatase, and **Prostate-Specific Antigen / PSA**, a serine protease that liquefies the semen coagulum within 15-30 minutes), and **Bulbourethral (Cowper's) Glands (5%)** (clear mucus neutralizing residual urethral acidity).",
+          "**Erection & Ejaculation Reflexes:** Erection is a **parasympathetic reflex** mediated by pelvic splanchnic nerves (S2-S4) releasing Nitric Oxide (NO), which stimulates guanylyl cyclase to elevate intracellular cGMP, causing profound vasodilation of the helicine arteries and engorgement of the corpora cavernosa. Ejaculation is a two-phase spinal reflex: **Emission** (sympathetic T11-L2; peristaltic contraction of vas deferens, seminal vesicles, and prostate propelling semen into the prostatic urethra, with closure of the internal urethral sphincter to prevent retrograde ejaculation into the bladder) and **Expulsion** (somatic S2-S4; rhythmic contractions of bulbospongiosus and ischiocavernosus muscles expelling semen through the external urethral meatus at 500 cm/s)."
         ],
+        "points": [
+          "**Hormonal Control of Spermatogenesis:** Hypothalamic GnRH stimulates pituitary LH and FSH. LH binds to Leydig cell GPCRs stimulating cyclic AMP-mediated cholesterol conversion to **Testosterone**. FSH binds to Sertoli cells stimulating synthesis of ABP, aromatase (converting testosterone to estradiol), and growth factors essential for spermatid differentiation.",
+          "**Scrotal Thermoregulation:** Testes reside in the scrotum at 32°C to 34°C (2°C to 3°C below core body temperature), optimal for spermatogenesis. Thermoregulation is maintained by: (1) **Dartos muscle** (contracts skin when cold), (2) **Cremaster muscle** (elevates testes toward body wall), and (3) **Pampiniform venous plexus** (acts as a countercurrent heat exchanger cooling warm testicular arterial blood).",
+          "**Sperm Viability & Capacitation:** Mature spermatozoa stored in the epididymis acquire forward motility over 10 to 14 days. Once deposited in the female tract, sperm undergo **capacitation** (removal of glycoprotein coat and cholesterol from acrosomal membrane by female secretions, lasting 5-7 hours), hyperactivating motility and facilitating the acrosome reaction."
+        ],
+        "clinicalPearl": "**Cryptorchidism, Varicocele & Infertility Nursing Management:** In **Cryptorchidism** (undescended testes), exposure to core body temperature (37°C) arrests spermatogenesis, causing sterility, and increases testicular germ cell malignancy risk 30- to 50-fold if not surgically corrected (orchiopexy) before age 1-2. A **Varicocele** (dilation of the pampiniform venous plexus, most common on the left side due to perpendicular insertion into the left renal vein) impairs venous drainage and countercurrent heat exchange, warming the testis and causing subfertility. Post-prostatectomy or diabetic autonomic neuropathy may damage the internal urethral sphincter, causing **retrograde ejaculation** into the urinary bladder.",
         "images": [
           {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image1.png",
-            "caption": "Figure 9.1: Spermatogenesis.",
-            "alt": "Figure 9.1: Spermatogenesis."
+            "src": "/images/physiology/9_image8.png",
+            "caption": "Figure 9.8: Male reproductive system and accessory glands.",
+            "alt": "Male reproductive system"
           },
           {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image2.png",
-            "caption": "Figure 9.2: Oogenesis.",
-            "alt": "Figure 9.2: Oogenesis."
+            "src": "/images/physiology/9_image9.png",
+            "caption": "Figure 9.9: Structural morphology of mature spermatozoon.",
+            "alt": "Spermatozoa structure"
           },
           {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image3.png",
-            "caption": "Figure 9.3: The Female Internal Reproductive System (Front View).",
-            "alt": "Figure 9.3: The Female Internal Reproductive System (Front View)."
-          },
-          {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image4.png",
-            "caption": "Figure 9.4: The Female Internal Reproductive System (Side View).",
-            "alt": "Figure 9.4: The Female Internal Reproductive System (Side View)."
-          },
-          {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image5.png",
-            "caption": "Figure 9.5: Ovarian and Uterine Cycles.",
-            "alt": "Figure 9.5: Ovarian and Uterine Cycles."
-          },
-          {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image6.png",
-            "caption": "Figure 9.6: Hormonal control of the female reproductive cycle",
-            "alt": "Figure 9.6: Hormonal control of the female reproductive cycle"
-          },
-          {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image7.png",
-            "caption": "Figure 9.7: Fetal development.",
-            "alt": "Figure 9.7: Fetal development."
-          },
-          {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image8.png",
-            "caption": "Figure 9.8: The male reproductive system.",
-            "alt": "Figure 9.8: The male reproductive system."
-          },
-          {
-            "src": "/images/physiology/9._REPRODUCTIVE_PHYSIOLOGY_image9.png",
-            "caption": "Figure 9.9: Spermatozoa.",
-            "alt": "Figure 9.9: Spermatozoa."
+            "src": "/images/physiology/9_image1.png",
+            "caption": "Figure 9.1: Spermatogenesis and hormonal feedback.",
+            "alt": "Spermatogenesis"
           }
         ],
         "tables": []
       },
       {
         "id": "sec-phys-9-2",
-        "title": "2 0 C",
+        "title": "Female Reproductive Physiology, Oogenesis & Folliculogenesis",
         "content": [
-          "5. Oogenesis is the process in which ova develop from the primitive germ cells called",
-          "oogonia",
-          "ovum",
-          "sperm",
-          "zygote",
-          "Short Answer Questions",
-          "Discuss in brief about the spermatogenesis and oogenesis.",
-          "Enlist the functions of the female reproductive organs.",
-          "List the functions of the placenta and ovaries.",
-          "Discuss in brief about the female sexual cycle.",
-          "Discuss in brief about overview of embryology.",
-          "Discuss in brief about the functions of the male reproductive organs.",
-          "Discuss in brief about the male fertility system.",
-          "Discuss in brief about male and female puberty.",
-          "Long Answer Questions",
-          "Describe the spermatogenesis and oogenesis.",
-          "Describe the functions of the female reproductive organs.",
-          "List the functions of the breast, placenta and ovaries.",
-          "Discuss about the female sexual cycle.",
-          "Discuss the overview of embryology.",
-          "Describe the functions of the male reproductive organs.",
-          "Discuss the male fertility system.",
-          "Discuss about male and female puberty."
+          "The female reproductive system is cyclic in nature, designed to produce viable haploid ova, synthesize female sex steroids (**Estrogens and Progesterone**), provide a hospitable environment for fertilization and gestation, and facilitate parturition and neonatal lactation.",
+          "**Oogenesis:** The biological development of the ovum begins during embryonic life, unlike male spermatogenesis which initiates at puberty:",
+          "1. **Prenatal Period:** Primordial germ cells migrate to the fetal genital ridge and multiply by mitosis into 6 to 7 million **Oogonia** (46,XX) by the 5th month of gestation. Oogonia differentiate into **Primary Oocytes** and initiate Meiosis I, but arrest at **Prophase I (Dictyotene stage)** surrounded by a single layer of squamous follicular cells, forming **Primordial Follicles**.",
+          "2. **At Birth to Puberty:** By birth, apoptosis (atresia) reduces follicle numbers to ~1 to 2 million; by puberty, approximately 300,000 to 400,000 remain. Only about 400 to 500 follicles will successfully ovulate during a woman's 35-40 year reproductive lifespan.",
+          "3. **Pubertal Maturation & Ovulation:** Each menstrual cycle, a cohort of follicles is recruited by FSH. The primary oocyte completes Meiosis I just 24-36 hours prior to ovulation under the influence of the **LH surge**, dividing unequally into a large **Secondary Oocyte** (23,X) and a non-functional tiny **First Polar Body**. The secondary oocyte immediately enters Meiosis II and arrests at **Metaphase II**, being ovulated in this arrested state.",
+          "4. **Completion of Meiosis II:** Meiosis II is completed **ONLY IF FERTILIZATION OCCURS** upon sperm penetration, casting off the **Second Polar Body** and forming the mature female pronucleus of the zygote. If fertilization fails, the secondary oocyte degenerates within 24 hours.",
+          "**Folliculogenesis Stages:** Progresses through Primordial follicle -> Primary follicle (cuboidal granulosa cells, **Zona Pellucida** glycoprotein shell) -> Secondary follicle (stratified granulosa cells, theca interna and theca externa) -> Tertiary / Antral follicle (fluid-filled **antrum** containing follicular fluid rich in estrogen) -> Dominant **Graafian Follicle** (20-25 mm mature follicle ready for ovulation, with oocyte surrounded by the **corona radiata** and anchored on the **cumulus oophorus**)."
         ],
+        "points": [
+          "**Two-Cell, Two-Gonadotropin Model of Estrogen Biosynthesis:** (1) **Theca Interna Cells** possess LH receptors; LH stimulates cholesterol uptake and conversion into androgens (**Androstenedione and Testosterone**). (2) Androgens diffuse across the basement membrane into **Granulosa Cells**, which possess FSH receptors; FSH activates the enzyme **Aromatase (CYP19A1)**, which converts theca-derived androgens into **Estradiol (E2)**.",
+          "**Granulosa Cell Secretions:** In addition to estrogen, granulosa cells synthesize **Inhibin A and B** (selectively suppressing pituitary FSH release), Activin, and follicular fluid.",
+          "**Mechanism of Ovulation:** The pre-ovulatory LH surge stimulates granulosa and theca cells to produce progesterone, which induces synthesis of proteolytic enzymes (**Collagenase, Plasminogen Activator**) and prostaglandins (PGE2, PGF2alpha). These enzymes digest the follicular wall and tunica albuginea, creating a bulging stigma that ruptures, expelling the oocyte-cumulus complex into the peritoneal cavity to be captured by fallopian fimbriae."
+        ],
+        "clinicalPearl": "**Ovarian Hyperstimulation Syndrome (OHSS) & Premature Ovarian Failure:** In assisted reproductive technology (IVF), high-dose gonadotropin stimulation can trigger **OHSS**, characterized by massive ovarian enlargement, extreme vascular endothelial growth factor (VEGF) secretion, third-space fluid shifts, hemoconcentration, ascites, and thromboembolism. Premature cessation of ovarian function before age 40 (**Premature Ovarian Failure / Primary Ovarian Insufficiency**) presents with secondary amenorrhea, elevated FSH (> 40 mIU/mL), and hypoestrogenism, requiring hormone replacement therapy to prevent osteoporosis and cardiovascular disease.",
+        "images": [
+          {
+            "src": "/images/physiology/9_image3.png",
+            "caption": "Figure 9.3: Female internal reproductive organs (coronal view).",
+            "alt": "Female internal reproductive system front view"
+          },
+          {
+            "src": "/images/physiology/9_image4.png",
+            "caption": "Figure 9.4: Female pelvic reproductive organs (sagittal view).",
+            "alt": "Female internal reproductive system side view"
+          },
+          {
+            "src": "/images/physiology/9_image2.png",
+            "caption": "Figure 9.2: Oogenesis and meiotic arrest stages.",
+            "alt": "Oogenesis"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-9-3",
+        "title": "The Menstrual Cycle & Neuroendocrine Regulation",
+        "content": [
+          "The menstrual cycle is a rhythmic 28-day (range 21-35 days) physiological process orchestrated by the **Hypothalamic-Pituitary-Ovarian (HPO) Axis**, preparing the reproductive tract for potential pregnancy.",
+          "**The Ovarian Cycle:** Divided into two phases by ovulation on Day 14:",
+          "1. **Follicular (Pre-ovulatory) Phase (Days 1 to 14):** Pulsatile hypothalamic **GnRH** triggers anterior pituitary release of **FSH** and **LH**. FSH recruits a cohort of antral follicles; granulosa cells secrete increasing quantities of **Estradiol**. Rising estradiol levels exert negative feedback on pituitary FSH, causing non-dominant follicles to undergo atresia while the single follicle with the highest density of FSH receptors becomes the dominant **Graafian follicle**.",
+          "2. **The LH Surge & Ovulation (Day 14):** When sustained plasma estradiol levels exceed 200 pg/mL for > 36-48 hours toward the end of the follicular phase, estrogen paradoxically switches from negative to **POWERFUL POSITIVE FEEDBACK** on the hypothalamus and anterior pituitary. This triggers a massive release of LH (**LH Surge**, peaking 10-12 hours prior to ovulation) along with a smaller FSH surge, precipitating follicular rupture and extrusion of the oocyte.",
+          "3. **Luteal (Post-ovulatory) Phase (Days 15 to 28):** The collapsed follicle transforms into the **Corpus Luteum** under LH influence. Granulosa lutein cells synthesize abundant **Progesterone** and moderate estrogen. Progesterone exerts strong negative feedback on GnRH, suppressing new follicular development. If fertilization does not occur, the corpus luteum degenerates after 14 days into the fibrous **Corpus Albicans**, causing a precipitous drop in progesterone and estrogen that triggers endometrial sloughing.",
+          "**The Uterine (Endometrial) Cycle:** Corresponds directly to ovarian hormonal fluctuations:",
+          "1. **Menstrual Phase (Days 1 to 5):** Collapse of progesterone and estrogen levels produces intense, rhythmic vasospasm of endometrial **spiral arterioles**. Ischemia and lysosomal enzyme release cause necrosis and shedding of the superficial **stratum functionalis**, discharging 30 to 80 mL of blood, mucus, and desquamated tissue through the vagina. The deep **stratum basalis** remains intact to regenerate the endometrium.",
+          "2. **Proliferative Phase (Days 6 to 14):** Driven by rising follicular **Estradiol**. Stratum basalis stem cells rapidly divide; endometrial thickness increases from 1 mm to 4-5 mm; uterine glands elongate; spiral arteries proliferate; and cervical mucus becomes thin, watery, alkaline, and profuse with characteristic **ferning** on microscopic drying (facilitating sperm penetration).",
+          "3. **Secretory Phase (Days 15 to 28):** Driven by corpus luteum **Progesterone**. Endometrial thickness reaches 6-8 mm; endometrial glands become highly tortuous, coiled, and distended with glycogen-rich secretions ('uterine milk'); spiral arterioles undergo marked spiraling; stromal cells transform into predecidual cells preparing for blastocyst implantation; and cervical mucus becomes thick, viscous, and hostile to sperm, forming a protective barrier."
+        ],
+        "points": [
+          "**Basal Body Temperature (BBT) Shift:** Progesterone secreted by the corpus luteum acts centrally on the hypothalamic thermoregulatory center to elevate basal body temperature by **0.3°C to 0.5°C (0.5°F to 1.0°F)** immediately following ovulation, remaining elevated throughout the luteal phase (a clinical marker of ovulation).",
+          "**Spinnbarkeit & Ferning:** Under estrogen dominance at mid-cycle, cervical mucus exhibits high elasticity (**Spinnbarkeit**, stretching up to 8-10 cm without breaking) and crystal arborization (**Ferning**) due to high NaCl content. Progesterone abolishes both properties.",
+          "**Dysmenorrhea Mechanisms:** Primary dysmenorrhea results from excessive endometrial synthesis and release of **Prostaglandin F2alpha (PGF2alpha)** during menstrual shedding, producing severe uterine myometrial hypercontractility, uterine ischemia, and intense crampy pelvic pain, effectively relieved by NSAID cyclooxygenase inhibitors."
+        ],
+        "clinicalPearl": "**Oral Contraceptive Pills (OCPs) & Polycystic Ovary Syndrome (PCOS):** Combined oral contraceptive pills contain synthetic estrogen and progestin that maintain steady plasma levels, exerting continuous negative feedback on the hypothalamus and pituitary to abolish the GnRH pulse and prevent the mid-cycle LH surge, thereby completely blocking ovulation. **PCOS** (Stein-Leventhal syndrome) is characterized by hyperandrogenism, chronic anovulation, and polycystic ovaries on ultrasound; nurses must evaluate these patients for underlying insulin resistance, metabolic syndrome, and endometrial hyperplasia secondary to unopposed estrogen stimulation.",
+        "images": [
+          {
+            "src": "/images/physiology/9_image5.png",
+            "caption": "Figure 9.5: Correlation of Ovarian and Uterine (Endometrial) cycles.",
+            "alt": "Ovarian and uterine cycles"
+          },
+          {
+            "src": "/images/physiology/9_image6.png",
+            "caption": "Figure 9.6: Hypothalamic-Pituitary-Ovarian endocrine feedback loop.",
+            "alt": "Hormonal control of female reproductive cycle"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-9-4",
+        "title": "Fertilization, Implantation, Pregnancy & Fetal Circulation",
+        "content": [
+          "**Fertilization:** Normally transpires within the **ampulla of the fallopian (uterine) tube** within 12 to 24 hours post-ovulation. When capacitated spermatozoa encounter the ovulated secondary oocyte:",
+          "1. **Acrosome Reaction:** Binding of sperm surface proteins to **ZP3 receptors** on the zona pellucida triggers exocytosis of acrosomal enzymes (hyaluronidase, acrosin), digesting a path through the corona radiata and zona pellucida.",
+          "2. **Sperm-Egg Fusion & Polyspermy Block:** The sperm plasma membrane fuses with the oocyte oolemma. This initiates an immediate **Fast Block to Polyspermy** (transient electrical depolarization of the oocyte membrane from -70 mV to +20 mV via Na+ influx) followed by the permanent **Slow Block (Cortical Reaction)**: intracellular Ca2+ wave triggers exocytosis of cortical granules, releasing enzymes that cross-link the zona pellucida (**zona reaction**), hardening it and cleaving ZP3 receptors to render it impenetrable to other sperm.",
+          "3. **Activation & Cleavage:** The oocyte completes Meiosis II; male and female pronuclei fuse (syngamy) to re-establish diploidy (46,XX or 46,XY), creating a single-celled **Zygote**. Cleavage divisions convert the zygote into a 16-cell solid ball called a **Morula** (day 3-4), which enters the uterine cavity and develops into a hollow **Blastocyst** (day 5-6) containing an inner cell mass (embryoblast) and an outer **Trophoblast** layer.",
+          "**Implantation:** Occurs on Day 6 to 7 post-fertilization in the upper posterior uterine wall. Trophoblast cells differentiate into an inner **Cytotrophoblast** and an outer invasive multinucleated **Syncytiotrophoblast**, which burrows into the decidualized endometrium by secreting metalloproteinases.",
+          "**Endocrine Functions of the Placenta:**",
+          "1. **Human Chorionic Gonadotropin (hCG):** Secreted by the syncytiotrophoblast within 6-8 days post-conception. Binds LH receptors to **rescue and maintain the corpus luteum**, sustaining high progesterone and estrogen synthesis to prevent menstruation during the first 8-10 weeks of pregnancy until the placenta takes over steroidogenesis (**luteal-placental shift**). hCG is the basis of all clinical pregnancy tests.",
+          "2. **Progesterone:** Maintains uterine quiescence by suppressing myometrial contractility and inhibiting prostaglandin synthesis.",
+          "3. **Estrogens (Estriol / E3):** Synthesized via cooperation between maternal, fetal adrenal, and placental enzymes (**feto-placental unit**), promoting uterine growth, breast ductal proliferation, and pelvic ligamentous laxity.",
+          "4. **Human Placental Lactogen (hPL / hCS):** Promotes maternal lipolysis and induces maternal **insulin resistance**, sparing glucose and amino acids for preferential transplacental shunting to the developing fetus.",
+          "**Specialized Fetal Circulatory Shunts:** The fetal cardiovascular grid bypasses non-functional collapsed fetal lungs and inactive maternal liver via three primary vascular shunts:",
+          "1. **Ductus Venosus:** Shunts ~50% of oxygen-rich blood from the **umbilical vein** (oxygen saturation ~80%) directly into the inferior vena cava (IVC), bypassing hepatic sinusoids.",
+          "2. **Foramen Ovale:** An anatomical flap-valve opening in the interatrial septum that directs oxygenated IVC stream across the right atrium directly into the **left atrium**, preferentially perfusing the fetal brain and coronary vessels via the ascending aorta.",
+          "3. **Ductus Arteriosus:** A muscular conduit connecting the pulmonary artery directly to the proximal descending aorta, shunting ~90% of high-resistance right ventricular output away from the collapsed fetal lungs.",
+          "**Circulatory Adjustments at Birth:** Clamping the umbilical cord eliminates low-resistance placental circuit, causing a sharp rise in systemic vascular resistance (SVR). The infant's first breath expands the alveoli, plummeting pulmonary vascular resistance (PVR). The massive increase in pulmonary venous return elevates left atrial pressure above right atrial pressure, snapping the **foramen ovale** closed (eventually fusing into the *fossa ovalis*). Elevated arterial PaO2 and falling circulating PGE2 stimulate muscular constriction of the **ductus arteriosus** (closing functionally within 10-15 hours, forming the fibrous *ligamentum arteriosum*). The collapsed umbilical vein forms the *ligamentum teres hepatis*, and the ductus venosus becomes the *ligamentum venosum*."
+        ],
+        "points": [
+          "**Blood-Placental Barrier:** Composed of syncytiotrophoblast, cytotrophoblast (in early gestation), villous connective tissue, and fetal capillary endothelium. Gases, water, and lipid-soluble substances cross via simple diffusion; glucose via facilitated diffusion (GLUT1); amino acids via active transport; maternal **IgG antibodies** via pinocytosis and Fc receptor transcytosis (conferring passive immunity to the newborn).",
+          "**Persistent Fetal Shunts:** Failure of normal postnatal closure yields congenital anomalies: **Patent Ductus Arteriosus (PDA)** (produces continuous 'machinery' murmur, treated with NSAID indomethacin to inhibit PGE2, or surgical ligation) and **Patent Foramen Ovale (PFO)**."
+        ],
+        "clinicalPearl": "**Preeclampsia, Ectopic Pregnancy & Rh Sensitization:** **Ectopic pregnancy** occurs when the blastocyst implants outside the endometrial cavity (95% in the fallopian ampulla), risking catastrophic tubal rupture and fatal intraperitoneal exsanguination. **Preeclampsia** is a multisystem gestational disorder caused by defective trophoblastic invasion of uterine spiral arteries, resulting in placental ischemia, systemic endothelial dysfunction, new-onset hypertension (BP >= 140/90 mmHg after 20 weeks), and proteinuria. Magnesium sulfate is administered as neuroprophylaxis against eclamptic seizures.",
+        "images": [
+          {
+            "src": "/images/physiology/9_image7.png",
+            "caption": "Figure 9.7: Stages of human embryonic and fetal development.",
+            "alt": "Fetal development"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-9-5",
+        "title": "Parturition, Lactation & Reproductive Alterations",
+        "content": [
+          "**Parturition (Labor):** The physiological process whereby the pregnant uterus expels the fetus and placenta at term (~40 weeks gestation). Initiated by complex neuroendocrine crosstalk:",
+          "1. **Progesterone Withdrawal & Estrogen Priming:** Rising feto-placental estrogen levels relative to progesterone increase myometrial responsiveness, induce gap junction (connexin 43) formation between smooth muscle cells, and upregulate **Oxytocin receptors** 100- to 200-fold in the uterine myometrium.",
+          "2. **The Ferguson Reflex (Positive Feedback):** Fetal descent pushes the fetal head against the uterine cervix. Mechanoreceptors in the cervix fire neural signals via spinal sensory tracts to the paraventricular and supraoptic nuclei of the hypothalamus, stimulating the posterior pituitary to secrete **Oxytocin** into the bloodstream.",
+          "3. **Uterine Contractions:** Oxytocin binds Gq-protein coupled receptors on myometrial smooth muscle, elevating intracellular Ca2+ and stimulating localized synthesis of **Prostaglandins (PGE2, PGF2alpha)**. This intensifies uterine contractions, driving the fetal head further into the cervix, which triggers even greater oxytocin release in a powerful **positive feedback cycle** that terminates only when delivery is complete.",
+          "**Lactation Physiology:** Divided into mammogenesis, lactogenesis, galactopoiesis, and milk ejection:",
+          "1. **Mammogenesis:** During pregnancy, high circulating estrogen stimulates breast adipose deposition and lactiferous ductal arborization; progesterone stimulates alveolar-lobular development; and human placental lactogen promotes breast maturation. High progesterone and estrogen levels **inhibit milk secretion** during pregnancy by blocking prolactin receptors in alveolar epithelial cells.",
+          "2. **Lactogenesis & Galactopoiesis:** Delivery of the placenta causes an immediate drop in estrogen and progesterone, lifting the blockade. The anterior pituitary hormone **Prolactin** stimulates alveolar epithelial cells to synthesize milk proteins (casein, lactalbumin), lactose, and lipids. Each suckling episode triggers a neuroendocrine reflex that surges prolactin release, maintaining milk production (**galactopoiesis**).",
+          "3. **The Milk Ejection (Let-Down) Reflex:** Tactile stimulation of the maternal nipple by infant suckling transmits sensory impulses via thoracic spinal nerves (T4-T6) to the hypothalamus. The posterior pituitary releases **Oxytocin**, which circulates to the breast and stimulates rhythmic contraction of **myoepithelial cells** surrounding the alveoli, forcing milk from the alveoli into the lactiferous ducts and sinuses to be ejected through the nipple pores.",
+          "**Colostrum vs. Mature Milk:** For the first 2 to 3 days postpartum, the breasts produce **colostrum**, a yellowish, viscous fluid low in fat and carbohydrate but rich in proteins, minerals, and maternal **Secretory IgA antibodies**, which coat the infant's GI mucosa to provide immediate passive immunity against enteric pathogens. Mature milk transitions by day 10-14, containing 87% water, 7% lactose, 4% fat, and 1% protein."
+        ],
+        "points": [
+          "**Lactational Amenorrhea:** High levels of prolactin associated with frequent, exclusive breastfeeding suppress hypothalamic GnRH pulsatility, dampening FSH and LH secretion and producing natural postpartum anovulation and amenorrhea (effective contraceptive for 6 months only if exclusively breastfeeding).",
+          "**Oxytocin Uterine Involution:** Oxytocin released during suckling also stimulates postpartum myometrial contractions, promoting **uterine involution** and compressing severed uterine blood vessels to minimize postpartum bleeding.",
+          "**Psychological Inhibition of Milk Ejection:** Because oxytocin release is regulated by the cerebral cortex and limbic system, maternal stress, extreme pain, fatigue, or anxiety can inhibit oxytocin release, preventing the let-down reflex despite adequate milk production."
+        ],
+        "clinicalPearl": "**Postpartum Hemorrhage (PPH) & Uterotonic Management:** **Postpartum Hemorrhage (PPH)** (blood loss > 500 mL after vaginal delivery or > 1,000 mL after cesarean section) is most frequently caused by **uterine atony** (failure of myometrial muscle fibers to contract and constrict open spiral vessels at the placental detachment site). Immediate nursing actions include vigorous fundal massage, initiating continuous IV infusion of **Oxytocin**, administering secondary uterotonics (Methylergonovine, Carboprost / PGF2alpha, Misoprostol), and monitoring vital signs for hypovolemic shock.",
         "images": [],
         "tables": []
       }
@@ -6544,7 +7211,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 10,
     "title": "Endocrine Physiology",
     "category": "Hormonal Feedback & Regulation",
-    "icon": "\u26a1",
+    "icon": "⚡",
     "color": "from-amber-500 to-yellow-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Endocrine Physiology.",
@@ -6562,109 +7229,148 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-10-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Mechanisms of Hormone Action, Feedback Loops & The Hypothalamic-Pituitary Axis",
         "content": [
-          "Chapter 10",
-          "The Endocrine System",
-          "Objective",
-          "Describe the physiology of endocrine system and alteration in diseases of the endocrine system."
+          "The **endocrine system** is an integrated network of ductless glands that synthesize and secrete chemical messengers called **hormones** directly into extracellular fluid and the vascular grid to coordinate homeostatic balance, somatic growth, metabolism, and reproduction.",
+          "**Chemical Classification of Hormones & Signal Transduction:**",
+          "1. **Peptide / Protein Hormones:** (e.g., Insulin, Glucagon, Pituitary hormones, PTH). Hydrophilic and water-soluble; circulate freely in plasma with short half-lives (minutes). Cannot cross the hydrophobic lipid bilayer, so they bind to **cell-surface membrane receptors** and initiate intracellular cascades via second messengers:",
+          "   - **cAMP Pathway:** Receptor couples to Gs protein, activating Adenylyl Cyclase to convert ATP into cyclic AMP (cAMP), which activates **Protein Kinase A (PKA)** (e.g., ACTH, TSH, Glucagon, ADH V2).",
+          "   - **IP3 / DAG Pathway:** Receptor couples to Gq protein, activating Phospholipase C (PLC) to cleave PIP2 into Inositol Trisphosphate (IP3, releasing Ca2+ from endoplasmic reticulum) and Diacylglycerol (DAG, activating Protein Kinase C) (e.g., Oxytocin, TRH, GnRH, Angiotensin II, ADH V1).",
+          "   - **Receptor Tyrosine Kinase:** Ligand binding triggers autophosphorylation and activation of downstream kinase cascades (e.g., Insulin, IGF-1).",
+          "2. **Steroid Hormones:** (e.g., Cortisol, Aldosterone, Estrogen, Progesterone, Testosterone). Derived from **cholesterol**; lipophilic and water-insoluble. Circulate bound to plasma carrier proteins (albumin, globulins) with prolonged half-lives (hours). Diffuse freely across plasma membranes and bind to **intracellular cytoplasmic or nuclear receptors**, functioning as ligand-activated transcription factors that regulate gene transcription and protein synthesis.",
+          "3. **Amine Hormones:** Derived from the amino acid tyrosine: **Catecholamines** (Epinephrine, Norepinephrine) are hydrophilic and act via cell-surface GPCRs; **Thyroid Hormones** (T3, T4) are lipophilic and act via intracellular nuclear receptors.",
+          "**The Hypothalamic-Pituitary Control Complex:** The hypothalamus functions as the supreme neuroendocrine coordinator, linked to the pituitary gland (**hypophysis**) via the infundibular stalk:",
+          "1. **Anterior Pituitary (Adenohypophysis):** Composed of glandular epithelial tissue derived from oral Rathke's pouch. Regulated by hypothalamic releasing and inhibiting hypophysiotropic hormones (**TRH, CRH, GnRH, GHRH, Somatostatin, Dopamine**) delivered via the **Hypothalamic-Hypophyseal Portal System**. Produces 6 major peptide hormones: **Growth Hormone (GH)**, **Adrenocorticotropic Hormone (ACTH)**, **Thyroid-Stimulating Hormone (TSH)**, **Follicle-Stimulating Hormone (FSH)**, **Luteinizing Hormone (LH)**, and **Prolactin (PRL)**.",
+          "2. **Posterior Pituitary (Neurohypophysis):** Composed of neural tissue. Synthesizes NO hormones itself; consists of unmyelinated axon terminals of neurosecretory magnocellular neurons whose cell bodies reside in the hypothalamic **Supraoptic** and **Paraventricular nuclei**. Transports and releases two peptide octapeptides: **Antidiuretic Hormone (ADH / Vasopressin)** (synthesized predominantly in supraoptic nucleus; acts on renal V2 receptors in collecting ducts to insert **Aquaporin-2** water channels, promoting pure water reabsorption) and **Oxytocin** (synthesized predominantly in paraventricular nucleus; stimulates uterine contractions and milk letdown)."
         ],
+        "points": [
+          "**Negative Feedback Loops:** The predominant regulatory mechanism in endocrinology. Elevated levels of circulating target organ hormones (e.g., free T3/T4 or Cortisol) act back on both the anterior pituitary and hypothalamus to inhibit further secretion of trophic hormones (TSH or ACTH) and releasing hormones (TRH or CRH), maintaining hormone levels within a narrow physiological window.",
+          "**Upregulation & Downregulation:** Chronic elevated hormone concentration leads to target cell receptor internalization and decreased synthesis (**downregulation**, as in insulin resistance); prolonged hormone deficit leads to increased receptor density and enhanced target sensitivity (**upregulation**).",
+          "**Synergism vs. Permissiveness:** **Synergism** occurs when multiple hormones produce a combined effect greater than the sum of their individual effects (e.g., glucagon, epinephrine, and cortisol elevating blood glucose). **Permissiveness** occurs when one hormone must be present for another hormone to exert its full physiological effect (e.g., thyroid hormone is permissive for epinephrine-stimulated lipolysis)."
+        ],
+        "clinicalPearl": "**Diabetes Insipidus (DI) vs. SIADH:** In **Central Diabetes Insipidus**, failure of hypothalamic or posterior pituitary ADH synthesis/secretion produces massive polyuria (5 to 15 L/day of dilute urine with specific gravity < 1.005), hypernatremia, and intense polydipsia, effectively managed with synthetic **Desmopressin (DDAVP)**. In **SIADH (Syndrome of Inappropriate ADH Secretion)**, autonomous ADH release causes excessive water retention, euvolemic hyponatremia, and concentrated urine, requiring strict fluid restriction and hypertonic 3% saline for severe neurological emergencies.",
         "images": [
           {
-            "src": "/images/physiology/10.ENDOCRINE_physiology_image1.png",
-            "caption": "Figure 10.1: Milk ejection reflex.",
-            "alt": "Figure 10.1: Milk ejection reflex."
+            "src": "/images/physiology/10_image1.png",
+            "caption": "Figure 10.1: Neuroendocrine milk ejection and let-down reflex.",
+            "alt": "Milk ejection reflex"
           },
           {
-            "src": "/images/physiology/10.ENDOCRINE_physiology_image2.png",
-            "caption": "Figure 10.2: Structure Showing Pineal Gland.",
-            "alt": "Figure 10.2: Structure Showing Pineal Gland."
-          },
-          {
-            "src": "/images/physiology/10.ENDOCRINE_physiology_image3.png",
-            "caption": "Figure 10.3: Thymus gland.",
-            "alt": "Figure 10.3: Thymus gland."
-          },
-          {
-            "src": "/images/physiology/10.ENDOCRINE_physiology_image4.png",
-            "caption": "Figure 10.4: Synthesis of thyroid hormones.",
-            "alt": "Figure 10.4: Synthesis of thyroid hormones."
-          },
-          {
-            "src": "/images/physiology/10.ENDOCRINE_physiology_image5.png",
-            "caption": "Figure 10.5: Calcium/PTH/vitamin D regulation.",
-            "alt": "Figure 10.5: Calcium/PTH/vitamin D regulation."
-          },
-          {
-            "src": "/images/physiology/10.ENDOCRINE_physiology_image6.png",
-            "caption": "Figure 10.6: Adrenal gland.",
-            "alt": "Figure 10.6: Adrenal gland."
+            "src": "/images/physiology/10_image2.png",
+            "caption": "Figure 10.2: Anatomical location and endocrine role of the pineal gland.",
+            "alt": "Pineal gland"
           }
         ],
-        "tables": [
-          [
-            [
-              "Anterior pituitary",
-              "1. Growth hormone (GH) 2. Thyroid stimulatinghormone (TSH) 3. Adrenocorticotropic hormone (ACTH) 4. Follicle stimulating hormone (FSH) 5. Luteinizing hormone (LH) 6. Prolactin"
-            ],
-            [
-              "Posterior pituitary",
-              "1. Antidiuretic hormone (ADH) 2. Oxytocin"
-            ],
-            [
-              "Thyroid gland",
-              "1. Thyroxin (T4) 2. Triiodothyronine (T3) 3. Calcitonin"
-            ],
-            [
-              "Parathyroid gland",
-              "Parathormone"
-            ],
-            [
-              "Pancreas \u2013 Islets of Langerhans",
-              "1. Insulin 2. Glucagon 3. Somatostatin 4. Pancreatic polypeptide"
-            ],
-            [
-              "Adrenal cortex",
-              "Mineralocorticoids 1. Aldosterone 2. 11deoxycorticosterone Glucocorticoids 1. Cortisol 2. Corticosterone Sex hormones 1. Androgens 2. Estrogen 3. Progesterone"
-            ],
-            [
-              "Adrenal medulla",
-              "1. Catecholamine's 2. Adrenaline (Epinephrine) 3. Noradrenaline (Norepinephrine) 4. Dopamine"
-            ]
-          ],
-          [
-            [
-              "Testis",
-              "1. Testosterone 2. Dihydrotestosterone 3. Androstenedion"
-            ],
-            [
-              "Ovary",
-              "1. Estrogen 2. Progesterone"
-            ]
-          ],
-          [
-            [
-              "Pineal gland",
-              "Melatonin"
-            ],
-            [
-              "Thymus",
-              "1. Thymosin 2. Thymin"
-            ],
-            [
-              "Kidney",
-              "1. Erythropoietin 2. Thrombopoietin 3. Renin 4. 1,25dihydroxycholecalcifero (calcitriol) 5. Prostaglandins"
-            ],
-            [
-              "Heart",
-              "1. Atrial natriuretic peptide 2. Brain natriuretic peptide 3. C-type natriuretic peptide"
-            ],
-            [
-              "Placenta",
-              "1. Human chorionic gonadotropin (HCG) 2. Human chorionic somatomammotropin 3. Estrogen 4. Progesterone"
-            ]
-          ]
-        ]
+        "tables": []
+      },
+      {
+        "id": "sec-phys-10-2",
+        "title": "Growth Hormone & The Pineal / Thymus Glands",
+        "content": [
+          "**Growth Hormone (GH / Somatotropin):** A 191-amino acid single-chain polypeptide synthesized by **somatotrophs** (the most abundant endocrine cells in the anterior pituitary, constituting 50% of glandular mass). Regulated antagonistically by hypothalamic **GHRH** (stimulatory) and **Somatostatin (GHIH)** (inhibitory). Secreted in pulsatile nocturnal bursts synchronized with deep Stage 3/4 slow-wave sleep.",
+          "**Physiological Actions of Growth Hormone:**",
+          "1. **Direct Anti-Insulin (Diabetogenic) Metabolic Actions:** GH stimulates lipolysis in adipocytes (elevating circulating free fatty acids), enhances hepatic gluconeogenesis, and inhibits peripheral glucose uptake in skeletal muscle and adipose tissue, shifting cellular fuel utilization from carbohydrates to fats and conserving glucose for the brain.",
+          "2. **Indirect Growth-Promoting (Anabolic) Actions:** GH acts on hepatocytes and peripheral tissues to stimulate the synthesis of **Insulin-like Growth Factor 1 (IGF-1 / Somatomedin C)**. IGF-1 binds to cell-surface tyrosine kinase receptors to stimulate chondrocyte proliferation, osteoblast differentiation, epiphyseal plate elongation (linear bone growth), amino acid uptake, and cellular protein synthesis across all organ systems.",
+          "**Clinical Disorders of Growth Hormone Secretion:**",
+          "1. **Growth Hormone Deficiency (Pituitary Dwarfism):** Childhood GH deficiency yields proportional, symmetrical short stature with normal body proportions and preserved cognitive intelligence.",
+          "2. **Gigantism:** GH-secreting pituitary adenoma occurring **prior to epiphyseal plate closure** in childhood, producing extreme, proportional overgrowth of long bones (height reaching > 7 to 8 feet).",
+          "3. **Acromegaly:** GH-secreting pituitary adenoma occurring **after epiphyseal fusion** in adulthood. Longitudinal bone growth is impossible; instead, periosteal bone growth and soft tissue hyperplasia produce enlargement of the hands, feet, jaw (prognathism), coarse facial features, macroglossia, visceral organomegaly (cardiomegaly), and secondary diabetes mellitus.",
+          "**The Pineal Gland & Melatonin:** A small pinecone-shaped neuroendocrine organ situated in the posterior epithalamus. Composed of **pinealocytes** that synthesize the indoleamine hormone **Melatonin** from tryptophan via serotonin.",
+          "Melatonin secretion is tightly regulated by the circadian pacemaker in the hypothalamic **Suprachiasmatic Nucleus (SCN)**: ambient light entering retinal ganglion cells stimulates the retinohypothalamic tract, signaling sympathetic preganglionic fibers in the spinal cord to **inhibit** pineal melatonin synthesis during daylight. Darkness lifts this inhibition, triggering a nocturnal surge in melatonin that promotes sleep onset, regulates the sleep-wake cycle, and exerts potent antioxidant effects.",
+          "**The Thymus Gland & Immune Maturation:** A bilobed lymphoid organ situated in the superior anterior mediastinum. Secretes a family of peptide hormones including **Thymosin, Thymopoietin, and Thymulin**. These endocrine mediators promote the differentiation, maturation, and immunological education of bone marrow-derived progenitor T-cells into functional CD4+ helper and CD8+ cytotoxic T-lymphocytes within the thymic cortex and medulla. The thymus reaches maximal relative size at puberty, followed by gradual age-associated fat replacement (**involution**)."
+        ],
+        "points": [
+          "**Stimulators & Inhibitors of GH Secretion:** Stimulated by GHRH, deep sleep, hypoglycemia, exercise, fasting/starvation, high-protein meals (arginine), and acute physical stress. Inhibited by somatostatin, hyperglycemia, elevated free fatty acids, IGF-1 feedback, and obesity.",
+          "**Diagnostic Testing for Acromegaly:** Elevated random GH is unreliable due to pulsatile secretion; definitive diagnosis requires an **Oral Glucose Tolerance Test (OGTT)**. In normal individuals, oral glucose (75g) suppresses plasma GH below 1 ng/mL; in acromegaly, GH paradoxically fails to suppress or rises. Plasma IGF-1 provides the most dependable screening biomarker.",
+          "**Jet Lag & Melatonin Therapeutics:** Rapid travel across multiple time zones desynchronizes the circadian rhythm of the SCN from local ambient daylight, producing insomnia, fatigue, and cognitive disorientation (**jet lag**). Exogenous melatonin administered at local bedtime accelerates circadian phase resetting."
+        ],
+        "clinicalPearl": "**Acromegaly Cardiorespiratory Complications & Nursing Care:** Acromegaly is associated with high mortality from concentric left ventricular hypertrophy, congestive heart failure, severe hypertension, and obstructive sleep apnea (due to pharyngeal soft tissue hyperplasia and macroglossia). Postoperative nursing care following transsphenoidal hypophysectomy requires frequent neurological checks, monitoring for CSF rhinorrhea (halo sign on dressing, testing fluid for glucose), and rigorous intake/output tracking to detect early post-surgical Central Diabetes Insipidus.",
+        "images": [
+          {
+            "src": "/images/physiology/10_image3.png",
+            "caption": "Figure 10.3: Thymus gland and T-lymphocyte differentiation.",
+            "alt": "Thymus gland"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-10-3",
+        "title": "Thyroid & Parathyroid Glands: Metabolic & Calcium Homeostasis",
+        "content": [
+          "The **thyroid gland** is a highly vascular, butterfly-shaped organ straddling the anterior trachea. It comprises spherical **thyroid follicles** lined by follicular epithelial cells enclosing a lumen filled with **colloid**, a proteinaceous gel consisting predominantly of the glycoprotein **Thyroglobulin (Tg)**.",
+          "**Biosynthesis & Secretion of Thyroid Hormones:** Follows a specialized 7-step sequence:",
+          "1. **Iodide Trapping:** Basolateral **Sodium-Iodide Symporter (NIS)** actively transports dietary iodide (I-) from plasma into follicular cells against a 30- to 50-fold electrochemical gradient (driven by Na+/K+-ATPase).",
+          "2. **Oxidation of Iodide:** Iodide is transported across the apical membrane into the follicle lumen via the pendrin transporter and oxidized to reactive iodine (I0) by apical **Thyroid Peroxidase (TPO)** in the presence of H2O2.",
+          "3. **Organification of Thyroglobulin:** Reactive iodine is rapidly incorporated into tyrosine residues on thyroglobulin by TPO, forming **Monoiodotyrosine (MIT)** and **Diiodotyrosine (DIT)**.",
+          "4. **Coupling Reaction:** TPO catalyzes the oxidative coupling of iodotyrosine molecules within the thyroglobulin scaffold: **MIT + DIT -> Triiodothyronine (T3)**; **DIT + DIT -> Thyroxine (Tetraiodothyronine / T4)**.",
+          "5. **Colloid Storage & Endocytosis:** Colloid stores several months' reserve of thyroid hormone. Under TSH stimulation, follicular cells engulf colloid via pinocytosis, forming endocytic vesicles.",
+          "6. **Proteolysis & Release:** Lysosomes fuse with pinocytic vesicles; lysosomal proteases cleave T3 and T4 from thyroglobulin, releasing free hormones into the bloodstream. Uncoupled MIT and DIT are deiodinated by intracellular halodehalogenase, recycling iodide.",
+          "7. **Circulation & Peripheral Activation:** The thyroid gland secretes 90% T4 and 10% T3. More than 99.9% of circulating hormones are bound to plasma proteins, predominantly **Thyroxine-Binding Globulin (TBG)**. In peripheral target tissues (liver, kidneys), the prohormone T4 is deiodinated by **5'-deiodinase** into biologically active **T3** (which has 4- to 5-fold higher affinity for nuclear thyroid receptors).",
+          "**Physiological Actions of Thyroid Hormones:** Increases Basal Metabolic Rate (BMR) and oxygen consumption across all tissues (calorigenic effect); upregulates Na+/K+-ATPase pumps; enhances intestinal carbohydrate absorption and lipolysis; upregulates **cardiac beta-1 adrenergic receptors** (increasing heart rate, contractility, and cardiac output); and is absolutely indispensable for fetal and neonatal neurodevelopment and linear skeletal growth.",
+          "**Parathyroid Glands & Calcium Homeostasis:** Four pea-sized glands nestled on the posterior surface of thyroid lobes. Composed of **Chief Cells** that secrete **Parathyroid Hormone (PTH)** in direct response to falling ionized serum calcium (detected by cell-surface Calcium-Sensing Receptors / CaSR).",
+          "**Physiological Actions of PTH (Restores Serum Calcium):**",
+          "1. **Bone:** Stimulates osteoblasts to express **RANKL**, which binds to RANK on osteoclast precursors, activating mature osteoclasts to resorb bone matrix and mobilize calcium and phosphate into plasma.",
+          "2. **Kidneys:** Increases distal convoluted tubule **reabsorption of Calcium** while inhibiting proximal tubule reabsorption of **Phosphate** (phosphaturic effect, preventing calcium phosphate precipitation).",
+          "3. **Intestine (Indirect):** Upregulates renal **1-alpha-hydroxylase** in proximal tubules, converting 25-hydroxyvitamin D into active **1,25-dihydroxyvitamin D (Calcitriol)**, which potently enhances enterocyte absorption of dietary calcium and phosphate via apical TRPV6 channels and intracellular calbindin.",
+          "**Calcitonin:** Synthesized by **Parafollicular (C-cells)** of the thyroid in response to hypercalcemia; acts as a physiological antagonist to PTH by inhibiting osteoclastic bone resorption (minor homeostatic role in humans)."
+        ],
+        "points": [
+          "**Thyroid Alterations:**",
+          "  - **Hyperthyroidism (Thyrotoxicosis):** Most commonly **Graves' Disease** (autoimmune production of thyroid-stimulating immunoglobulins / TSI that bind and activate TSH receptors). Manifests with heat intolerance, weight loss despite polyphagia, fine tremors, tachycardia, palpitations, diaphoresis, diffuse goiter, pretibial myxedema, and **exophthalmos**.",
+          "  - **Hypothyroidism:** Most commonly **Hashimoto's Thyroiditis** (autoimmune destruction of thyroid follicles with anti-TPO and anti-Tg antibodies). Manifests with cold intolerance, weight gain, fatigue, constipation, dry coarse skin, bradycardia, periorbital puffiness, and **myxedema**. Neonatal deficiency causes irreversible mental retardation and dwarfism (**Cretinism**).",
+          "**Calcium & Neuromuscular Excitability:** Ionized calcium stabilizes neuronal sodium channels. **Hypocalcemia** (< 8.5 mg/dL) increases neuronal membrane permeability to Na+, lowering threshold potential and causing extreme neuromuscular hyperexcitability (**tetany**, carpopedal spasm, laryngospasm). Hypercalcemia (> 10.5 mg/dL) depresses neuromuscular transmission, causing lethargy, muscle weakness, and cardiac arrhythmias."
+        ],
+        "clinicalPearl": "**Trousseau's / Chvostek's Signs & Post-Thyroidectomy Tetany:** Accidental surgical devascularization or excision of parathyroid glands during total thyroidectomy precipitates acute hypocalcemia within 24-48 hours. The nurse must assess for: (1) **Chvostek's Sign** (facial muscle twitching elicited by tapping over the facial nerve anterior to the earlobe) and (2) **Trousseau's Sign** (carpal spasm / 'obstetrician's hand' induced by inflating a blood pressure cuff > 20 mmHg above systolic BP for 3 minutes). Acute symptomatic tetany is an immediate airway emergency treated with slow IV infusion of **10% Calcium Gluconate** under continuous cardiac telemetry.",
+        "images": [
+          {
+            "src": "/images/physiology/10_image4.png",
+            "caption": "Figure 10.4: Biochemical pathway of thyroid hormone synthesis and coupling.",
+            "alt": "Synthesis of thyroid hormones"
+          },
+          {
+            "src": "/images/physiology/10_image5.png",
+            "caption": "Figure 10.5: Calcium homeostasis, PTH, Calcitriol, and Calcitonin regulation.",
+            "alt": "Calcium and PTH regulation"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-10-4",
+        "title": "Adrenal Glands & Pancreatic Endocrine Islets",
+        "content": [
+          "The **adrenal (suprarenal) glands** sit atop each kidney, comprising two functionally distinct endocrine structures enclosed within a single fibrous capsule: the outer **Adrenal Cortex** (mesodermal origin, 80-90% of mass, synthesizing steroid hormones) and the inner **Adrenal Medulla** (ectodermal neural crest origin, functionally an expanded sympathetic ganglion).",
+          "**Functional Zonation of the Adrenal Cortex (GFR - 'Salt, Sugar, Sex'):**",
+          "1. **Zona Glomerulosa (Outer 15%):** Synthesizes **Mineralocorticoids**, principally **Aldosterone**. Regulated by the **Renin-Angiotensin-Aldosterone System (RAAS)** and hyperkalemia. Aldosterone binds to intracellular mineralocorticoid receptors in renal cortical collecting duct principal cells, upregulating basolateral Na+/K+-ATPase pumps and apical ENaC channels to stimulate **Na+ reabsorption** and **K+ / H+ excretion**, expanding extracellular fluid volume and regulating systemic blood pressure.",
+          "2. **Zona Fasciculata (Middle 75%):** Synthesizes **Glucocorticoids**, principally **Cortisol (Hydrocortisone)**. Regulated by hypothalamic **CRH** and pituitary **ACTH** according to a prominent circadian diurnal rhythm (peaking at 06:00-08:00, nadir at midnight). Cortisol is the body's primary stress hormone: it promotes **gluconeogenesis** (mobilizing amino acids from muscle and glycerol from adipose tissue), stimulates lipolysis, inhibits peripheral glucose uptake (diabetogenic), stabilizes lysosomal membranes, and profoundly **suppresses inflammatory and immune responses** (inhibiting NF-kB, interleukins, and phospholipase A2).",
+          "3. **Zona Reticularis (Inner 10%):** Synthesizes **Adrenal Androgens**, principally **Dehydroepiandrosterone (DHEA)** and **Androstenedione**. Converted into testosterone and estrogens in peripheral tissues, sustaining axillary and pubic hair growth, sebaceous gland activity, and female libido.",
+          "**The Adrenal Medulla & Chromaffin Cells:** Innervated directly by preganglionic sympathetic fibers from the splanchnic nerves. In response to acute stress, acetylcholine stimulates **Chromaffin Cells** to secrete catecholamines directly into the circulation: **Epinephrine (Adrenaline, 80%)** and **Norepinephrine (Noradrenaline, 20%)**.",
+          "Catecholamines mediate the classic **Fight-or-Flight Response** via adrenergic receptors: alpha-1 (vasoconstriction), beta-1 (increased cardiac rate and contractility), and beta-2 (bronchodilation, hepatic glycogenolysis, and splanchnic vasodilation).",
+          "**Endocrine Pancreas: The Islets of Langerhans:** Approximately 1 to 2 million microscopic endocrine clusters dispersed throughout the exocrine pancreatic parenchyma, comprising four distinct hormone-secreting cell types:",
+          "1. **Beta Cells (60-70%):** Synthesize and secrete **Insulin**, the body's preeminent anabolic hormone. Synthesized as preproinsulin -> proinsulin -> cleaved in Golgi into active **Insulin (51 amino acids)** and equimolar **C-Peptide**. Secretion is triggered by glucose uptake via GLUT2 transporters: glucose oxidation generates ATP, which closes **ATP-sensitive K+ channels**, depolarizing the beta cell membrane, opening voltage-gated Ca2+ channels, and triggering insulin exocytosis.",
+          "   - **Physiological Actions of Insulin:** Promotes glucose uptake in skeletal muscle and adipose tissue by translocation of **GLUT4 transporters** to the plasma membrane; stimulates glycogen synthesis (glycogenesis); stimulates glycolysis; promotes protein synthesis and amino acid uptake; stimulates fatty acid synthesis and lipogenesis; and potently inhibits glycogenolysis, gluconeogenesis, lipolysis, and ketogenesis.",
+          "2. **Alpha Cells (20-25%):** Synthesize and secrete **Glucagon**. Stimulated by hypoglycemia, fasting, and exercise. Glucagon binds to hepatic GPCRs, activating cAMP to stimulate **glycogenolysis** and **gluconeogenesis**, elevating blood glucose.",
+          "3. **Delta Cells (5-10%):** Secrete **Somatostatin**, which acts locally in a paracrine fashion to suppress both insulin and glucagon secretion.",
+          "4. **F (PP) Cells (1-2%):** Secrete Pancreatic Polypeptide, regulating pancreatic exocrine secretions."
+        ],
+        "points": [
+          "**Cushing's Syndrome vs. Addison's Disease:**",
+          "  - **Cushing's Syndrome:** Chronic glucocorticoid excess (pituitary ACTH adenoma / Cushing's disease, ectopic ACTH, adrenal adenoma, or iatrogenic steroids). Manifests with central obesity, 'moon face', 'buffalo hump', purple abdominal striae, muscle wasting, osteoporosis, hyperglycemia, hypertension, and impaired wound healing.",
+          "  - **Addison's Disease (Primary Adrenal Insufficiency):** Autoimmune destruction of all three adrenocortical zones. Characterized by loss of aldosterone and cortisol: severe hypotension, hyponatremia, hyperkalemia, hypoglycemia, fatigue, weight loss, and diffuse skin **hyperpigmentation** (elevated POMC/ACTH stimulating melanocyte MSH receptors).",
+          "**Diabetes Mellitus Pathophysiology:**",
+          "  - **Type 1 DM:** Autoimmune T-cell mediated destruction of pancreatic beta cells, causing absolute insulin deficiency. Untreated patients rapidly develop life-threatening **Diabetic Ketoacidosis (DKA)** (hyperglycemia, metabolic acidosis with elevated anion gap, Kussmaul respirations, ketonemia, and acetone breath).",
+          "  - **Type 2 DM:** Progressive peripheral insulin resistance coupled with relative secretory defect of beta cells. Associated with obesity, metabolic syndrome, and risk of **Hyperosmolar Hyperglycemic State (HHS)**."
+        ],
+        "clinicalPearl": "**Adrenal Crisis & Hypoglycemia 'Rule of 15':** Acute adrenocortical insufficiency (**Addisonian / Adrenal Crisis**) is a fatal medical emergency triggered by infection, trauma, or abrupt cessation of chronic corticosteroid therapy, causing refractory hypovolemic shock and severe hypoglycemia; immediate management mandates rapid IV normal saline and bolus **Hydrocortisone (100 mg IV)**. For conscious hypoglycemic patients (blood glucose < 70 mg/dL), nurses enforce the **'Rule of 15'**: administer 15 grams of rapid-acting simple carbohydrate (4 oz fruit juice or 3-4 glucose tablets), recheck capillary blood glucose in 15 minutes, and repeat until normoglycemic.",
+        "images": [
+          {
+            "src": "/images/physiology/10_image6.png",
+            "caption": "Figure 10.6: Adrenal gland functional zonation and hormonal synthesis.",
+            "alt": "Adrenal gland structure"
+          }
+        ],
+        "tables": []
       }
     ],
     "mcqs": [
@@ -7362,7 +8068,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 11,
     "title": "Nervous System Physiology",
     "category": "Neurophysiology, Reflexes & Synapses",
-    "icon": "\ud83e\udde0",
+    "icon": "🧠",
     "color": "from-indigo-500 to-purple-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Nervous System Physiology.",
@@ -7380,159 +8086,167 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-11-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Neuronal Physiology, Action Potentials & Synaptic Transmission",
         "content": [
-          "Chapter 11",
-          "The Nervous System"
+          "The **nervous system** is the body's premier rapid-communication and control network, executing sensory input integration, cognitive processing, and precise motor coordination across trillions of interconnected cellular units.",
+          "**Structure of the Neuron:** Composed of a **Soma (cell body)** containing the nucleus and Nissl bodies (rough ER); branched **Dendrites** specialized for receiving incoming synaptic inputs; and a single cylindrical **Axon** originating at the **Axon Hillock (Initial Segment / Trigger Zone)**, specialized for action potential initiation and impulse propagation toward distal terminal boutons.",
+          "Axons are insulated by a lipid-rich **Myelin Sheath** formed by **Schwann cells** in the peripheral nervous system (PNS) and **Oligodendrocytes** in the central nervous system (CNS). Gaps between adjacent myelin segments, called **Nodes of Ranvier**, concentrate voltage-gated Na+ channels and enable **Saltatory Conduction**, where the action potential leaps electrotonically from node to node at speeds up to 120 m/s (compared to 0.5-2 m/s in unmyelinated fibers).",
+          "**Electrophysiology of the Resting Membrane Potential (RMP):** In resting excitable neurons, the intracellular potential is **-70 mV** relative to extracellular fluid. The RMP is generated by:",
+          "1. **Asymmetric Ion Distribution:** High intracellular K+ (140-150 mEq/L) vs. low extracellular K+ (3.5-5.0 mEq/L); low intracellular Na+ (10-14 mEq/L) vs. high extracellular Na+ (135-145 mEq/L).",
+          "2. **Differential Membrane Permeability:** The resting membrane possesses abundant non-gated **K+ Leak Channels**, rendering it 50 to 100 times more permeable to K+ than to Na+. K+ diffuses down its steep chemical gradient out of the cell, leaving behind trapped impermeant intracellular organic anions (proteins, phosphates), driving the membrane potential toward the K+ equilibrium potential (-90 mV calculated by the Nernst Equation).",
+          "3. **Electrogenic Na+/K+-ATPase Pump:** Continuously extrudes 3 Na+ ions in exchange for 2 K+ ions imported per ATP hydrolyzed, maintaining the transmembrane ionic gradients and directly contributing -3 to -5 mV of negativity.",
+          "**Phases of the Action Potential (All-or-None Law):** When depolarizing graded potentials reach the threshold potential (~ -55 mV) at the axon hillock:",
+          "1. **Depolarization:** Voltage-gated Na+ channels rapidly open (m-gates open); explosive influx of Na+ down both electrical and concentration gradients drives the membrane potential toward +30 to +35 mV (**overshoot**).",
+          "2. **Repolarization:** Voltage-gated Na+ channel inactivation gates (h-gates) close, halting further Na+ entry. Simultaneously, delayed rectifier **voltage-gated K+ channels** open; rapid efflux of K+ down its electrochemical gradient drives the membrane potential back toward resting levels.",
+          "3. **Hyperpolarization (Afterhyperpolarization):** Delayed closure of voltage-gated K+ channels allows continued K+ efflux, driving the membrane transiently more negative than -70 mV (toward -85 mV) before resting conductance is restored.",
+          "**Refractory Periods:** The **Absolute Refractory Period** occurs during depolarization and initial repolarization when voltage-gated Na+ channels are either completely open or locked in an inactivated state; no stimulus, regardless of strength, can fire a second action potential (enforcing unidirectional impulse propagation). The **Relative Refractory Period** occurs during late repolarization/hyperpolarization when Na+ channels have transitioned back to their resting closed state but K+ channels remain open; an action potential can be triggered, but requires a suprathreshold stimulus.",
+          "**Synaptic Transmission:** At chemical synapses, an action potential arriving at the presynaptic terminal triggers influx of extracellular Ca2+ through **voltage-gated Ca2+ channels**. Ca2+ binds to synaptotagmin, stimulating SNARE proteins to fuse synaptic vesicles with the presynaptic membrane, releasing neurotransmitter into the 20-nm synaptic cleft. Neurotransmitter diffuses across and binds to postsynaptic receptors:",
+          "  - **Excitatory Postsynaptic Potential (EPSP):** Opens ligand-gated cation channels (Na+, Ca2+), producing local depolarization (e.g., Acetylcholine on nicotinic receptors, Glutamate on AMPA/NMDA receptors).",
+          "  - **Inhibitory Postsynaptic Potential (IPSP):** Opens ligand-gated anion channels (Cl-) or K+ channels, producing hyperpolarization (e.g., **GABA** on GABA-A receptors, Glycine).",
+          "  - Postsynaptic potentials undergo **Spatial Summation** (multiple simultaneous inputs from different synapses) and **Temporal Summation** (rapid successive inputs from a single synapse) at the axon hillock to determine whether threshold is attained."
         ],
+        "points": [
+          "**Neurotransmitters of the Central Nervous System:**",
+          "  - **Acetylcholine (ACh):** Primary neuromuscular transmitter; central roles in arousal, memory, and cognition in basal forebrain cholinergic nuclei (degenerated in Alzheimer's disease).",
+          "  - **Glutamate:** The principal **excitatory neurotransmitter** in the brain; excessive extracellular accumulation causes excitotoxicity via NMDA receptor hyperactivation and intracellular Ca2+ overload during stroke.",
+          "  - **GABA (Gamma-Aminobutyric Acid):** The principal **inhibitory neurotransmitter** in the brain; synthesized from glutamate by glutamic acid decarboxylase (GAD); benzodiazepines and barbiturates enhance GABA-A receptor Cl- conductance to produce sedation and anticonvulsant effects.",
+          "  - **Dopamine:** Synthesized from L-DOPA; operates in nigrostriatal (motor control), mesolimbic (reward and addiction), and tuberoinfundibular (prolactin inhibition) pathways.",
+          "  - **Serotonin (5-HT):** Synthesized from tryptophan in brainstem raphe nuclei; modulates mood, sleep, appetite, and pain sensitivity; targets for SSRI antidepressants."
+        ],
+        "clinicalPearl": "**Multiple Sclerosis, Local Anesthetics & Hypokalemia:** **Multiple Sclerosis (MS)** is an autoimmune demyelinating disease of the CNS where cytotoxic T-cells destroy myelin sheaths and oligodendrocytes. Loss of saltatory conduction causes action potential propagation failure, presenting with relapsing-remitting visual deficits (optic neuritis), spastic weakness, ataxia, and paresthesias. **Local Anesthetics** (Lidocaine, Bupivacaine) act by selectively binding and blocking voltage-gated Na+ channels from within the neuronal membrane, preventing action potential generation and transmission of pain signals. Serum **hypokalemia** (< 3.5 mEq/L) hyperpolarizes resting membrane potential away from threshold, producing profound skeletal muscle weakness, hyporeflexia, and cardiac arrhythmias.",
         "images": [
           {
-            "src": "/images/physiology/11._CNS-PHYSIOLOGY-PRABHUSWAMI._1__image1.png",
-            "caption": "Figure 11.1: Neuron.",
-            "alt": "Figure 11.1: Neuron."
+            "src": "/images/physiology/11_image1.png",
+            "caption": "Figure 11.1: Structural anatomy of a multipolar neuron and myelin sheath.",
+            "alt": "Neuron structure"
           },
           {
-            "src": "/images/physiology/11._CNS-PHYSIOLOGY-PRABHUSWAMI._1__image2.png",
-            "caption": "Figure: 11.2 Synapses.",
-            "alt": "Figure: 11.2 Synapses."
-          },
-          {
-            "src": "/images/physiology/11._CNS-PHYSIOLOGY-PRABHUSWAMI._1__image3.png",
-            "caption": "Figure 11.3: Structure of spinal cord.",
-            "alt": "Figure 11.3: Structure of spinal cord."
-          },
-          {
-            "src": "/images/physiology/11._CNS-PHYSIOLOGY-PRABHUSWAMI._1__image4.png",
-            "caption": "Figure 11.4: Connections of sympathetic division of the autonomic nervous system.",
-            "alt": "Figure 11.4: Connections of sympathetic division of the autonomic nervous system."
-          },
-          {
-            "src": "/images/physiology/11._CNS-PHYSIOLOGY-PRABHUSWAMI._1__image5.png",
-            "caption": "Figure 11.5: Connections of parasympathetic division of the autonomic nervous system.",
-            "alt": "Figure 11.5: Connections of parasympathetic division of the autonomic nervous system."
-          },
-          {
-            "src": "/images/physiology/11._CNS-PHYSIOLOGY-PRABHUSWAMI._1__image6.png",
-            "caption": "Figure 11.6: Components of reflex arc.",
-            "alt": "Figure 11.6: Components of reflex arc."
+            "src": "/images/physiology/11_image2.png",
+            "caption": "Figure 11.2: Chemical synapse architecture and neurotransmitter exocytosis.",
+            "alt": "Synapse structure"
           }
         ],
-        "tables": [
-          [
-            [
-              "Target Organ",
-              "Ganglia Location",
-              "Effect"
-            ],
-            [
-              "Blood vessels of skeletal and cardiac muscle",
-              "Paravertebral",
-              "Dilation"
-            ],
-            [
-              "Blood vessels of skin, gut and kidneys",
-              "Para vertebral",
-              "Constriction"
-            ],
-            [
-              "Arrectorpili muscle",
-              "Paravertebral",
-              "Contraction"
-            ],
-            [
-              "Sweat Glands",
-              "Paravertebral",
-              "Sweat production"
-            ],
-            [
-              "Eyes",
-              "Paravertebral",
-              "Dilates pup ils and relaxes ciliary muscles for far vision"
-            ],
-            [
-              "Lungs",
-              "Paravertebral",
-              "Dilates bronchi"
-            ],
-            [
-              "Heart",
-              "Paravertebral",
-              "Increased rate and force of contraction"
-            ],
-            [
-              "Liver",
-              "Prevertebral",
-              "Breakdown of glycogen to glucose and triglycerides to fatty acids"
-            ],
-            [
-              "Small and Large Intestines",
-              "Paravertebral",
-              "Slows digestion, stops secretions and contracts sphincters"
-            ],
-            [
-              "Urinary Bladder",
-              "Paravertebral",
-              "Contracts sphincter"
-            ],
-            [
-              "Adrenal Medulla",
-              "",
-              "Stimulates release of nor epinephrine and epinephrine"
-            ]
-          ],
-          [
-            [
-              "Target Organ",
-              "Origin",
-              "Effect"
-            ],
-            [
-              "Eyes",
-              "Cranial Nerve III",
-              "Constricts pupils and ciliary muscles for near vision and stimulates tears"
-            ],
-            [
-              "Salivary Glands",
-              "Cranial Nerve VII&IX",
-              "Stimulate salivation"
-            ],
-            [
-              "Lungs",
-              "Cranial Nerve X",
-              "Constricts bronchi and stimulates secretion"
-            ],
-            [
-              "Heart",
-              "Cranial Nerve X",
-              "Decreased rate and force of contraction"
-            ],
-            [
-              "Gall Bladder",
-              "Cranial Nerve X",
-              "Constriction"
-            ],
-            [
-              "Pancreas",
-              "Cranial Nerve X",
-              "Stimulation of exocrine secretions and release of insulin"
-            ],
-            [
-              "Small and Large Intestines",
-              "Cranial Nerve X and Sacral Nerves",
-              "Increases motility and secretions and relaxes sphincters for increase defecation"
-            ],
-            [
-              "Urinary Bladder",
-              "Sacral Nerves",
-              "Contracts bladder (micturition) and relaxes sphincter"
-            ],
-            [
-              "Genitals",
-              "Sacral Nerves",
-              "Erection"
-            ]
-          ]
-        ]
+        "tables": []
+      },
+      {
+        "id": "sec-phys-11-2",
+        "title": "Spinal Cord Physiology, Somatosensory Pathways & Motor Tracts",
+        "content": [
+          "The **spinal cord** serves as the principal bi-directional conduit for neural information linking the brain and peripheral body, while hosting intrinsic circuitry for autonomic and somatic spinal reflexes.",
+          "**Internal Architecture of the Spinal Cord:** In transverse cross-section, the spinal cord exhibits an inner **H-shaped gray matter** core enveloped by outer **white matter funiculi** (columns):",
+          "1. **Dorsal (Posterior) Horn:** Receives incoming sensory axons via dorsal nerve roots (afferent input).",
+          "2. **Ventral (Anterior) Horn:** Houses large somatic **alpha and gamma motor neurons** whose axons exit via ventral nerve roots to innervate skeletal muscle fibers (efferent output).",
+          "3. **Lateral Horn (T1-L2 and S2-S4):** Contains preganglionic autonomic cell bodies (sympathetic in thoracolumbar segments; parasympathetic in sacral segments).",
+          "**Somatosensory Ascending Tracts (Transmit Sensory Input to Cerebral Cortex):**",
+          "1. **Dorsal Column-Medial Lemniscal (DCML) Pathway:** Transmits **fine discriminative touch, conscious proprioception (joint position sense), two-point discrimination, and vibratory sense**.",
+          "   - **First-Order Neuron:** Cell body in dorsal root ganglion; axon enters spinal cord and ascends ipsilaterally in the dorsal funiculus as the **Fasciculus Gracilis** (carrying fibers from lower limbs and trunk below T6) and **Fasciculus Cuneatus** (carrying fibers from upper limbs and thorax above T6).",
+          "   - **Second-Order Neuron:** Synapses in the Nucleus Gracilis and Nucleus Cuneatus of the lower medulla oblongata. Axons **decussate completely in the medulla** as internal arcuate fibers and ascend through the brainstem as the **Medial Lemniscus**.",
+          "   - **Third-Order Neuron:** Synapses in the **Ventral Posterolateral (VPL) Nucleus** of the thalamus; axons project via the posterior limb of the internal capsule to terminate somatotopically in the **Primary Somatosensory Cortex** (postcentral gyrus, Brodmann areas 3, 1, 2).",
+          "2. **Anterolateral (Spinothalamic) System:** Transmits **pain, temperature, and crude touch**.",
+          "   - **First-Order Neuron:** Pseudounipolar neuron in dorsal root ganglion; synapses in dorsal horn substantia gelatinosa.",
+          "   - **Second-Order Neuron:** Cell bodies in dorsal horn. Axons **decussate obliquely within 1-2 spinal cord segments** through the anterior white commissure and ascend in the contralateral white matter: **Lateral Spinothalamic Tract** (pain and temperature) and **Anterior Spinothalamic Tract** (crude touch and pressure).",
+          "   - **Third-Order Neuron:** Synapses in the VPL nucleus of the thalamus, projecting to the primary somatosensory cortex.",
+          "**Descending Motor Tracts (Control Voluntary Movement):**",
+          "1. **The Pyramidal (Corticospinal) System:** The premier pathway for skilled, voluntary, fine fractional movements (especially distal extremities and digits):",
+          "   - Originates from pyramidal cells (including giant Betz cells) in the **Primary Motor Cortex** (precentral gyrus, Brodmann area 4, 30%), premotor cortex (30%), and somatosensory cortex (40%).",
+          "   - Axons descend through the corona radiata, posterior limb of the internal capsule, cerebral peduncles of the midbrain, and basis pontis into the **medullary pyramids**.",
+          "   - **Decussation:** At the lower medulla, approximately **85% to 90% of fibers decussate** at the pyramidal decussation to form the **Lateral Corticospinal Tract**, which descends in the lateral funiculus and synapses onto alpha motor neurons in the ventral horn. The remaining 10% to 15% descend uncrossed as the **Anterior Corticospinal Tract**, decussating at the level of termination.",
+          "2. **Upper Motor Neuron (UMN) vs. Lower Motor Neuron (LMN) Lesions:** Understanding the physiological distinction between UMNs (originating in motor cortex and terminating in spinal ventral horn) and LMNs (originating in ventral horn and terminating at skeletal muscle) is foundational to clinical neurological nursing assessment."
+        ],
+        "points": [
+          "**Clinical Comparison: UMN vs. LMN Lesions:**",
+          "  - **Upper Motor Neuron Lesion:** Muscle tone is **spastic** (hypertonia, 'clasp-knife' rigidity); deep tendon reflexes are **hyperactive** (hyperreflexia, clonus); pathologic reflexes are present (**Positive Babinski sign**: extensor plantar response with dorsiflexion of great toe and fanning of lesser toes); no significant muscle atrophy (except disuse); no fasciculations.",
+          "  - **Lower Motor Neuron Lesion:** Muscle tone is **flaccid** (hypotonia); deep tendon reflexes are **diminished or absent** (hyporeflexia/areflexia); plantars are normal flexor or absent; profound and rapid **muscle atrophy / wasting**; visible muscle **fasciculations and fibrillations** due to denervation hypersensitivity.",
+          "**Brown-Séquard Syndrome (Spinal Cord Hemisection):** Caused by lateral spinal cord trauma or tumor. Results in: (1) **Ipsilateral** UMN paralysis below the lesion level (corticospinal tract), (2) **Ipsilateral** loss of fine touch, vibration, and proprioception below the lesion level (dorsal column tract), and (3) **Contralateral** loss of pain and temperature sensation starting 1 to 2 segments below the lesion level (spinothalamic tract, which decussates at the spinal level)."
+        ],
+        "clinicalPearl": "**Autonomic Dysreflexia in Spinal Cord Injury (SCI):** Patients with spinal cord injuries at or above the **T6 level** are at permanent risk for **Autonomic Dysreflexia**, a life-threatening hypertensive emergency. A noxious stimulus below the injury level (most commonly a **distended urinary bladder** or impacted rectum) triggers uninhibited sympathetic hyperactivation, producing severe peripheral vasoconstriction, malignant hypertension (systolic BP > 200-300 mmHg), pounding headache, and pallor below the lesion. Above the lesion level, compensatory vagal stimulation produces bradycardia, cutaneous flushing, and profuse diaphoresis. Immediate nursing action: **sit the patient upright (lowering BP orthostatically)**, loosen tight clothing, and immediately relieve the bladder distension (catheterize).",
+        "images": [
+          {
+            "src": "/images/physiology/11_image3.png",
+            "caption": "Figure 11.3: Transverse cross-section of spinal cord gray and white matter.",
+            "alt": "Spinal cord structure"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-11-3",
+        "title": "Brainstem, Cerebellum, Basal Ganglia & Cerebral Cortex",
+        "content": [
+          "The human brain represents an astonishing hierarchical assembly of specialized neural subsystems executing subconscious vegetative regulation, precise sensorimotor integration, and high-order consciousness.",
+          "**The Brainstem (Medulla, Pons, Midbrain):** The anatomical bridge linking the spinal cord with higher cerebral centers, housing the cranial nerve nuclei (CN III to XII) and the vital autonomic centers:",
+          "1. **Medulla Oblongata:** Houses essential vegetative homeostatic centers: the **Cardiovascular Center** (cardioaccelerator, cardioinhibitory via vagus nerve, and vasomotor centers regulating blood pressure), the **Medullary Respiratory Center** (dorsal respiratory group / DRG and ventral respiratory group / VRG establishing basal breathing rhythm), and autonomic reflex centers for swallowing, coughing, sneezing, and vomiting.",
+          "2. **Pons:** Contains respiratory rhythm modulators: the **Pneumotaxic Center** (switches off inspiration, regulating tidal volume and respiratory rate) and the **Apneustic Center** (promotes sustained inspiration). Houses nuclei for cranial nerves V, VI, VII, and VIII.",
+          "3. **Midbrain (Mesencephalon):** Houses the **Superior Colliculi** (visual reflexes and saccadic eye movements), **Inferior Colliculi** (auditory relay and auditory startle reflex), the red nucleus, and the **Substantia Nigra** (dopaminergic motor hub).",
+          "**The Cerebellum ('Little Brain'):** Occupies the posterior cranial fossa, comprising two cerebellar hemispheres joined by the central vermis. Operates as an unconscious **motor error-comparator and coordination engine**; receives real-time sensory feedback on body position from spinocerebellar tracts and vestibulocochlear apparatus, compares intended movement (from motor cortex) with actual ongoing performance, and fires corrective outputs to the motor cortex and red nucleus to ensure smooth, fluid, precise movements, balance, and motor learning. Lesions DO NOT cause paralysis, but produce **ataxia, intention tremor, past-pointing (dysmetria), and dysdiadochokinesia**.",
+          "**The Basal Ganglia (Subcortical Motor Nuclei):** Composed of the **Caudate Nucleus**, **Putamen** (together forming the Striatum), **Globus Pallidus** (internal and external segments), **Subthalamic Nucleus**, and **Substantia Nigra** (pars compacta and pars reticulata).",
+          "The basal ganglia regulate the initiation, scaling, and smooth termination of voluntary motor programs via two opposing pathways:",
+          "  - **Direct Pathway:** Facilitates movement; striatal GABAergic neurons inhibit the globus pallidus internus, disinhibiting the thalamus and exciting the motor cortex (D1 dopamine receptors are stimulatory).",
+          "  - **Indirect Pathway:** Suppresses unwanted movements; excites globus pallidus internus via subthalamic nucleus, increasing thalamic inhibition (D2 dopamine receptors are inhibitory).",
+          "  - **Parkinson's Disease:** Selective progressive degeneration of dopaminergic neurons in the **Substantia Nigra Pars Compacta** depletes striatal dopamine, tipping the balance in favor of the indirect pathway. Characterized by the classic motor tetrad: **Resting Tremor ('pill-rolling')**, **Cogwheel Rigidity**, **Bradykinesia / Akinesia**, and **Postural Instability**, accompanied by a characteristic shuffling, festinating gait.",
+          "**Cerebral Cortex & Functional Localization:** The convoluted cerebral neocortex (composed of 6 horizontal cellular layers) is partitioned into functional anatomical regions:",
+          "  - **Frontal Lobe:** Primary Motor Cortex (precentral gyrus, Brodmann area 4); Premotor / Supplementary Motor Area; Prefrontal Cortex (executive functioning, working memory, personality, social judgment); and **Broca's Motor Speech Area** (inferior frontal gyrus, Brodmann areas 44/45; coordinates muscular vocalization). Damage to Broca's area causes **Expressive (Motor / Non-fluent) Aphasia** (patient understands language but struggles painfully to articulate speech).",
+          "  - **Parietal Lobe:** Primary Somatosensory Cortex (postcentral gyrus, Brodmann areas 3, 1, 2; homunculus representation) and somatosensory association areas (spatial orientation, stereognosis).",
+          "  - **Temporal Lobe:** Primary Auditory Cortex (superior temporal gyrus, Brodmann area 41/42); Olfactory cortex; and **Wernicke's Receptive Language Area** (posterior superior temporal gyrus, Brodmann area 22; language comprehension). Damage to Wernicke's area causes **Receptive (Sensory / Fluent) Aphasia** (patient articulates fluent, effortless speech devoid of grammatical coherence / 'word salad', unable to comprehend spoken or written words).",
+          "  - **Occipital Lobe:** Primary Visual Cortex (calcarine sulcus, Brodmann area 17)."
+        ],
+        "points": [
+          "**The Reticular Activating System (RAS):** A diffuse network of interconnected polysynaptic neurons spanning the brainstem core that projects diffusely to the cerebral cortex. The RAS filters sensory input and maintains state of **cortical arousal, alertness, and conscious wakefulness**; acute damage produces deep, unarousable coma.",
+          "**The Limbic System ('Emotional Brain'):** Comprises the Hippocampus (consolidation of short-term memory into long-term memory), Amygdala (processing fear, rage, and emotional memory), Cingulate Gyrus, and Hypothalamus; coordinates emotional behavior, instinctual drives, and visceral autonomic reactions.",
+          "**Motor & Sensory Homunculi:** Topographical somatotopic mapping along the precentral and postcentral gyri reveals disproportionate cortical representation: body parts requiring ultra-fine motor control or maximal tactile sensitivity (the **hands, fingers, tongue, and lips**) occupy disproportionately massive cortical areas compared to the trunk or limbs."
+        ],
+        "clinicalPearl": "**Stroke Differentiation & Glasgow Coma Scale (GCS) Assessment:** Stroke (cerebrovascular accident) in the left **Middle Cerebral Artery (MCA)** territory typically damages both the motor cortex and language centers, resulting in right-sided hemiplegia (face and arm > leg) coupled with aphasia. The nurse assesses altered consciousness using the standardized **Glasgow Coma Scale (GCS)** across Eye Opening (1-4), Verbal Response (1-5), and Motor Response (1-6). A score <= 8 signifies severe brain injury requiring definitive airway management ('GCS eight, intubate').",
+        "images": [],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-11-4",
+        "title": "The Autonomic Nervous System & Reflex Arc",
+        "content": [
+          "The **Autonomic Nervous System (ANS)** operates subconsciously to regulate visceral involuntary functions including arterial blood pressure, heart rate, gastrointestinal motility, glandular secretion, pupillary diameter, and thermoregulation. The ANS is structured as a two-neuron efferent chain: a **preganglionic neuron** in the CNS synapsing within an autonomic ganglion onto a **postganglionic neuron**, which innervates visceral effectors.",
+          "**The Sympathetic Division (Thoracolumbar Outflow - T1 to L2):**",
+          "1. **Anatomical Organization:** Preganglionic cell bodies reside in the lateral gray horns of spinal cord segments T1 through L2. Axons exit via ventral roots and enter sympathetic paravertebral chain ganglia via **white rami communicantes**. They either synapse immediately, ascend/descend the chain, or pass through to synapse in prevertebral collateral ganglia (Celiac, Superior Mesenteric, Inferior Mesenteric). Postganglionic fibers exit via gray rami to target organs. (Preganglionic fibers are short and myelinated; postganglionic fibers are long and unmyelinated).",
+          "2. **Neurotransmitters & Receptors:** Preganglionic sympathetic terminals release **Acetylcholine (ACh)** onto **Nicotinic (N2)** receptors. Postganglionic sympathetic terminals release **Norepinephrine (Noradrenaline)** onto target **Adrenergic Receptors** (except sweat glands, which receive sympathetic cholinergic innervation via muscarinic receptors).",
+          "   - **Alpha-1 Receptors:** Vascular smooth muscle vasoconstriction, pupillary dilator contraction (**mydriasis**), intestinal sphincter constriction.",
+          "   - **Beta-1 Receptors:** Predominantly cardiac: increased SA node firing rate (**positive chronotropy**), increased AV node conduction velocity (**positive dromotropy**), and increased myocardial contractility (**positive inotropy**); stimulates renal juxtaglomerular renin release.",
+          "   - **Beta-2 Receptors:** Bronchial smooth muscle relaxation (**bronchodilation**), skeletal muscle vascular vasodilation, uterine relaxation, hepatic glycogenolysis.",
+          "3. **Physiological Mission:** Mediates the catabolic **Fight-or-Flight Response** during acute emergencies: tachycardia, hypertension, bronchodilation, pupillary dilation, hepatic glucose mobilization, diversion of blood from viscera to skeletal muscle, and inhibition of GI peristalsis and bladder emptying.",
+          "**The Parasympathetic Division (Craniosacral Outflow - CN III, VII, IX, X and S2-S4):**",
+          "1. **Anatomical Organization:** Preganglionic cell bodies reside in brainstem cranial nerve nuclei (CN III Edinger-Westphal; CN VII Superior Salivatory; CN IX Inferior Salivatory; **CN X Vagus nerve** providing 75-80% of all parasympathetic innervation to heart, lungs, and GI tract to splenic flexure) and sacral spinal segments S2 to S4 (pelvic splanchnic nerves). Preganglionic fibers are long and myelinated; they synapse in **terminal or intramural ganglia** situated directly within or adjacent to target visceral organs. Postganglionic fibers are short and unmyelinated.",
+          "2. **Neurotransmitters & Receptors:** Both preganglionic and postganglionic parasympathetic neurons release **Acetylcholine (ACh)**. Preganglionic acts on Nicotinic receptors; postganglionic acts on **Muscarinic Receptors** (M1 in gastric parietal cells; M2 in heart [bradycardia]; M3 in bronchial smooth muscle, GI smooth muscle, secretory glands, and pupillary sphincter [miosis]).",
+          "3. **Physiological Mission:** Mediates the anabolic **Rest-and-Digest** and energy-conservation response: bradycardia, bronchoconstriction and secretion, pupillary constriction (**miosis**), increased GI motility and glandular secretions, gallbladder contraction, and stimulation of urination and defecation (**SLUDD: Salivation, Lacrimation, Urination, Digestion, Defecation**).",
+          "**Physiology of the Reflex Arc:** A reflex is an involuntary, rapid, stereotyped motor response to a specific sensory stimulus. Every reflex arc incorporates five fundamental anatomical components:",
+          "1. **Sensory Receptor:** Detects internal or environmental stimulus.",
+          "2. **Afferent (Sensory) Neuron:** Propagates action potentials toward the CNS.",
+          "3. **Integrating Center:** Synaptic region within the gray matter of the spinal cord or brainstem.",
+          "4. **Efferent (Motor) Neuron:** Propagates motor commands out to peripheral tissues.",
+          "5. **Effector Organ:** Muscle fiber or gland that executes the physiological response.",
+          "  - **Monosynaptic Stretch Reflex (e.g., Patellar / Knee-Jerk Reflex):** Muscle spindle stretch -> sensory Ia afferent fiber -> single direct synapse in ventral horn onto alpha motor neuron -> rapid contraction of stretched muscle with reciprocal inhibition of antagonist muscle.",
+          "  - **Polysynaptic Withdrawal (Flexor) Reflex:** Painful nociceptive stimulus -> A-delta/C fibers -> excitatory interneurons across multiple spinal segments -> contraction of ipsilateral flexor muscles (withdrawing limb from danger) accompanied by the **Crossed Extensor Reflex** (exciting contralateral extensor muscles to maintain standing balance)."
+        ],
+        "points": [
+          "**Autonomic Tone & Dual Innervation:** Most visceral organs receive reciprocal dual innervation from both sympathetic and parasympathetic divisions. At rest, the **parasympathetic tone** dominates the heart (maintaining resting heart rate at ~70 bpm vs. intrinsic SA pacemaker rate of 100 bpm) and the GI tract; the **sympathetic tone** exclusively governs vascular smooth muscle tone (maintaining resting arteriolar vasoconstriction / total peripheral resistance).",
+          "**Adrenal Medulla as a Modified Sympathetic Ganglion:** Chromaffin cells are embryologically modified postganglionic sympathetic neurons lacking axons; upon preganglionic cholinergic stimulation, they discharge catecholamines (epinephrine and norepinephrine) directly into the bloodstream as circulating neurohormones, amplifying systemic sympathetic effects."
+        ],
+        "clinicalPearl": "**Atropine Pharmacology & Organophosphate Poisoning:** **Atropine** is a competitive muscarinic receptor antagonist that blocks parasympathetic activity, utilized in clinical nursing to treat severe symptomatic bradycardia (restoring heart rate) and dry respiratory secretions. In **Organophosphate Toxicity** (insecticide ingestion or nerve agent exposure), irreversible inhibition of acetylcholinesterase causes massive systemic accumulation of acetylcholine at all muscarinic and nicotinic synapses, precipitating catastrophic cholinergic crisis: profuse rhinorrhea, salivation, bronchorrhea, bronchospasm, severe bradycardia, diarrhea, miosis, and muscle fasciculations. Antidote management requires aggressive escalating doses of **Atropine IV** to reverse muscarinic hyperactivation, combined with **Pralidoxime (2-PAM)** to reactivate phosphorylated cholinesterase.",
+        "images": [
+          {
+            "src": "/images/physiology/11_image4.png",
+            "caption": "Figure 11.4: Sympathetic thoracolumbar autonomic nervous system pathways.",
+            "alt": "Sympathetic nervous system"
+          },
+          {
+            "src": "/images/physiology/11_image5.png",
+            "caption": "Figure 11.5: Parasympathetic craniosacral autonomic nervous system pathways.",
+            "alt": "Parasympathetic nervous system"
+          },
+          {
+            "src": "/images/physiology/11_image6.png",
+            "caption": "Figure 11.6: Five functional components of the neural reflex arc.",
+            "alt": "Reflex arc"
+          }
+        ],
+        "tables": []
       }
     ],
     "mcqs": [
@@ -8188,7 +8902,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "unitNumber": 12,
     "title": "Sensory Organ Physiology",
     "category": "Sensory Pathways & Receptors",
-    "icon": "\ud83d\udc41\ufe0f",
+    "icon": "👁️",
     "color": "from-teal-500 to-cyan-600",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Sensory Organ Physiology.",
@@ -8206,51 +8920,191 @@ export const PHYSIOLOGY_CHAPTERS = {
     "sections": [
       {
         "id": "sec-phys-12-1",
-        "title": "Functional Overview & Fundamentals",
+        "title": "Integumentary Physiology, Cutaneous Receptors & Thermoregulation",
         "content": [
-          "Chapter 12",
-          "The Sensory Organs"
+          "The **integumentary system** (skin, hair, nails, and cutaneous glands) constitutes the human body's largest organ, accounting for 7-8% of total body weight. It serves as an impermeable protective shield against environmental trauma, pathogen invasion, chemical toxins, and ultraviolet radiation, while serving crucial roles in sensory reception, Vitamin D synthesis, and systemic thermoregulation.",
+          "**Functional Architecture of the Skin:** Divided into three integrated morphological layers:",
+          "1. **Epidermis:** A stratified squamous, keratinized, avascular epithelium comprising five distinct horizontal strata (in thick skin of palms/soles):",
+          "   - **Stratum Basale:** Single layer of mitotic cuboidal stem cells resting on the basement membrane. Houses **Melanocytes** (synthesizing melanin granules packaged into melanosomes and transferred to keratinocytes to shield nuclear DNA from UV-induced pyrimidine dimerization) and **Merkel Cells** (tactile mechanoreceptors).",
+          "   - **Stratum Spinosum:** Polyhedral keratinocytes bound by robust desmosomes; houses dendritic **Langerhans Cells** (antigen-presenting immune sentinels initiating cutaneous adaptive immune responses).",
+          "   - **Stratum Granulosum:** Cells accumulate keratohyalin granules and lamellar bodies containing water-repellent glycolipids.",
+          "   - **Stratum Lucidum:** Clear, translucent layer of flattened, anucleated dead cells present only in thick skin.",
+          "   - **Stratum Corneum:** Outermost protective barrier of 20 to 30 layers of dead, flattened, fully keratinized corneocytes continuously shed via desquamation.",
+          "2. **Dermis:** Tough, vascularized connective tissue layer divided into a superficial **papillary layer** (loose areolar tissue with dermal papillae) and a deep **reticular layer** (dense irregular collagen and elastic meshwork providing tensile strength). Houses cutaneous neuroreceptors, hair follicles, sebaceous glands, and sweat glands.",
+          "3. **Hypodermis (Subcutaneous Layer):** Composed of loose adipose and areolar tissue; anchors skin to underlying muscle fascia, serves as energy storage, and provides thermal insulation.",
+          "**Cutaneous Somatosensory Mechanoreceptors:**",
+          "  - **Meissner's Corpuscles:** Encapsulated receptors in dermal papillae; rapidly adapting; detect **light flutter, low-frequency vibration, and dynamic fine touch**.",
+          "  - **Merkel Discs:** Unencapsulated expanded nerve endings in stratum basale; slowly adapting; detect **sustained static touch, pressure, and fine texture**.",
+          "  - **Pacinian Corpuscles:** Concentric onion-like lamellated encapsulated receptors in deep dermis and hypodermis; rapidly adapting; detect **deep transient pressure and high-frequency vibration (200-300 Hz)**.",
+          "  - **Ruffini Endings:** Elongated encapsulated spindle receptors; slowly adapting; detect **skin stretch and sustained joint torque**.",
+          "  - **Free Nerve Endings:** Unencapsulated terminal dendrites distributed throughout epidermis and dermis; function as **Nociceptors** (detecting mechanical, thermal, and chemical tissue damage via A-delta and C fibers) and **Thermoreceptors** (cold receptors signaling via A-delta/C fibers at 10-35°C; warmth receptors signaling via C fibers at 30-45°C).",
+          "**Hypothalamic Thermoregulation:** Normal human core body temperature is tightly defended at **36.5°C to 37.5°C (97.7°F to 99.5°F)** by the central thermoregulatory controller in the **Hypothalamus**:",
+          "  - **Heat Dissipation (Anterior Preoptic Hypothalamus):** Activated by elevated core temperature. Stimulates sympathetic cholinergic nerves to activate **Eccrine Sweat Glands** (evaporative heat loss: evaporation of 1 mL of sweat removes 0.58 kcal of thermal energy) and inhibits sympathetic vasoconstrictor tone, producing **Cutaneous Vasodilation** (diverting warm core blood to skin surface for convective and radiative heat loss).",
+          "  - **Heat Conservation & Generation (Posterior Hypothalamus):** Activated by hypothermia. Stimulates sympathetic adrenergic vasoconstriction (**Cutaneous Vasoconstriction**, minimizing surface radiative loss); activates pilomotor muscles (piloerection); stimulates skeletal muscle rhythm centers triggering involuntary rapid oscillatory contractions (**Shivering Thermogenesis**, increasing metabolic heat production up to 4- to 5-fold); and stimulates thyroid and adrenal medullary hormones (**Non-Shivering Chemical Thermogenesis**)."
         ],
+        "points": [
+          "**Eccrine vs. Apocrine Sweat Glands:**",
+          "  - **Eccrine Sweat Glands:** Distributed across entire body surface (~3-4 million glands); secrete hypotonic watery fluid (water, NaCl, urea, lactic acid) for primary **thermoregulatory cooling**; innervated by sympathetic postganglionic cholinergic fibers.",
+          "  - **Apocrine Sweat Glands:** Confined to axillary, areolar, and anogenital regions; functional only post-puberty; secrete thick, viscous, lipid- and protein-rich fluid into hair follicles; bacterial degradation produces characteristic body odor; stimulated by emotional stress and sexual excitement via adrenergic sympathetic fibers.",
+          "**Fever (Pyrexia) Pathophysiology:** Exogenous pyrogens (bacterial endotoxins / LPS) stimulate macrophages to release endogenous pyrogenic cytokines (**Interleukin-1, Interleukin-6, TNF-alpha**). Cytokines cross the blood-brain barrier at the vascular organum vasculosum of the lamina terminalis (OVLT), stimulating endothelial **Cyclooxygenase-2 (COX-2)** to synthesize **Prostaglandin E2 (PGE2)**. PGE2 elevates the hypothalamic thermoregulatory set-point; the body perceives normal temperature as cold, triggering shivering chills and vasoconstriction until the new set-point is reached. Antipyretic drugs (Acetaminophen, Ibuprofen) work by inhibiting COX-2, halting PGE2 synthesis and resetting the thermostat."
+        ],
+        "clinicalPearl": "**Heat Stroke vs. Heat Exhaustion & Burn Fluid Resuscitation:** In **Heat Exhaustion**, heavy diaphoresis leads to hypovolemia, hypotension, headache, and weakness, but mental status is preserved and core temperature is < 40°C (104°F). In **Heat Stroke**, thermoregulatory homeostatic failure occurs: sweating ceases, skin is hot and dry, core temperature surges > 40.5°C (105°F), producing cerebral edema, seizures, delirium, DIC, and multi-organ failure (an extreme medical emergency requiring immediate evaporative ice-water immersion). In severe thermal burns, loss of epidermal barrier produces massive fluid extravasation, requiring Parkland Formula IV resuscitation (4 mL x kg body weight x % TBSA burned over 24 hours).",
         "images": [
           {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image1.png",
-            "caption": "Figure 12.1: Three layers of skin.",
-            "alt": "Figure 12.1: Three layers of skin."
+            "src": "/images/physiology/12_image1.png",
+            "caption": "Figure 12.1: Microscopic architecture of the three skin layers.",
+            "alt": "Three layers of skin"
           },
           {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image2.png",
-            "caption": "Figure 12.2: Nails.",
-            "alt": "Figure 12.2: Nails."
+            "src": "/images/physiology/12_image2.png",
+            "caption": "Figure 12.2: Structure and growth anatomy of nails.",
+            "alt": "Nail structure"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-12-2",
+        "title": "Visual Physiology, Optics of the Eye & Phototransduction",
+        "content": [
+          "The **eye** is a photoreceptive optical instrument that focuses incoming electromagnetic radiation (visible spectrum: 400 to 700 nm) onto a neural transducer layer, the **retina**, which converts photon energy into electrical signals interpreted by the cerebral visual cortex.",
+          "**Dioptric Apparatus & Optics of the Eye:** Light rays entering the eye undergo refraction at four optical interfaces: anterior and posterior surfaces of the cornea, and anterior and posterior surfaces of the crystalline lens. The human eye has a total refractive power of approximately **59 to 60 Diopters** in the unaccommodated resting state:",
+          "  - **The Cornea:** Provides the overwhelming majority of refractive power (~**43 Diopters**, or > 70% of total) due to the dramatic difference in refractive index between air (1.00) and corneal tissue (1.376). The corneal curvature is static.",
+          "  - **The Crystalline Lens:** Provides variable refractive power (~**15 to 20 Diopters**), suspended behind the iris by radial zonular fibers (ciliary zonules / ligaments) attached to the **ciliary body**.",
+          "**The Accommodation Reflex (Near Triad):** When shifting visual focus from distant objects (> 6 meters) to near objects (< 6 meters), the eye executes three coordinated physiological adaptations orchestrated by parasympathetic fibers of the **Oculomotor Nerve (CN III)** via the ciliary ganglion:",
+          "1. **Ciliary Muscle Contraction:** Parasympathetic activation causes sphincter-like contraction of the circular ciliary muscle. This moves the ciliary body forward and inward, **slacking tension on the suspensory zonules**. Relieved of outward radial tension, the elastic lens capsule rounds up passively, increasing anterior-posterior lens thickness and convexity. This boosts refractive power by up to 10-12 diopters, focusing diverging rays sharply onto the retina.",
+          "2. **Pupillary Constriction (Miosis):** Contraction of the **Sphincter Pupillae** muscle narrows the pupil, eliminating peripheral divergent light rays and spherical aberrations, thereby increasing optical depth of field.",
+          "3. **Convergence of Visual Axes:** Bilateral contraction of the **Medial Recti** muscles rotates both eyeballs medially, aligning both foveas simultaneously onto the near target.",
+          "**Functional Anatomy of the Retina & Photoreceptors:** The retina is organized into 10 distinct layers, housing two specialized classes of photoreceptor cells located adjacent to the posterior **Retinal Pigment Epithelium (RPE)**:",
+          "  - **Rods (~120 million):** Contain the visual photopigment **Rhodopsin** (scotopsin bound to 11-cis-retinal). Extremely sensitive to light (capable of signaling single photons); low visual acuity (hundreds of rods converge onto a single bipolar/ganglion cell); non-functional in daylight (bleached); specialized for **Scotopic (night/dim-light) monochromatic vision**; distributed widely across peripheral retina, absent in the fovea.",
+          "  - **Cones (~6 million):** Contain three varieties of photopsins (**Iodopsin**), each tuned to distinct light wavelengths: **S-Cones (Blue, 420 nm)**, **M-Cones (Green, 530 nm)**, and **L-Cones (Red, 560 nm)**. Require bright light to activate; minimal convergence (1:1 ratio with bipolar and ganglion cells in fovea); specialized for **Photopic (daylight) high-acuity color vision**; concentrated densely in the **Fovea Centralis** (a 1.5-mm avascular pit in the macula lutea with all overlying layers pushed aside).",
+          "**The Phototransduction Cascade (The 'Dark Current'):** In complete darkness, photoreceptor outer segment cyclic nucleotide-gated (CNG) channels are kept open by high intracellular **cGMP**. Influx of Na+ and Ca2+ produces a continuous inward depolarizing current (**Dark Current**), keeping the photoreceptor resting membrane potential depolarized at **-40 mV** and stimulating continuous tonic release of the inhibitory neurotransmitter **Glutamate** onto bipolar cells.",
+          "When light strikes the photoreceptor:",
+          "1. A photon is absorbed by **11-cis-retinal**, photoisomerizing it into **all-trans-retinal**.",
+          "2. Conformational change in opsin yields **Metarhodopsin II (Activated Rhodopsin)**.",
+          "3. Metarhodopsin II activates hundreds of molecules of the heterotrimeric G-protein **Transducin (Gt)**.",
+          "4. The alpha-subunit of transducin activates **cGMP Phosphodiesterase (PDE)**, which rapidly hydrolyzes cGMP into 5'-GMP.",
+          "5. Falling intracellular cGMP causes closure of apical CNG Na+ channels. With Na+ influx halted while basolateral K+ channels continue pumping K+ out, the photoreceptor **HYPERPOLARIZES** from -40 mV toward -70 mV.",
+          "6. Hyperpolarization closes voltage-gated Ca2+ channels at the synaptic terminal, **SHUTTING OFF GLUTAMATE RELEASE**. Disinhibition of ON-bipolar cells depolarizes them, transmitting action potentials along ganglion cell axons forming the optic nerve.",
+          "**The Visual Pathway & Visual Field Topography:** Ganglion cell axons assemble at the optic disc (physiological blind spot) to form the **Optic Nerve (CN II)**. At the **Optic Chiasm**, fibers from the **nasal retinas decussate** into the contralateral optic tract, while fibers from the **temporal retinas continue uncrossed** in the ipsilateral optic tract. The optic tract synapses in the **Lateral Geniculate Nucleus (LGN)** of the thalamus. LGN neurons project via optic radiations (including Meyer's loop in the temporal lobe) to the **Primary Visual Cortex** (striate cortex, Brodmann area 17, calcarine fissure) in the occipital lobe."
+        ],
+        "points": [
+          "**Ametropias (Refractive Errors):**",
+          "  - **Myopia (Nearsightedness):** Eyeball is too long (axial myopia) or refractive power is too strong; parallel rays focus in front of the retina; corrected with a **biconcave (diverging) lens**.",
+          "  - **Hyperopia (Farsightedness):** Eyeball is too short or refractive power is too weak; rays focus behind the retina; corrected with a **biconvex (converging) lens**.",
+          "  - **Astigmatism:** Asymmetrical curvature of cornea or lens produces unequal refraction along different meridians; corrected with **cylindrical lenses**.",
+          "  - **Presbyopia:** Age-related loss of lens capsule elasticity and hardening of the lens nucleus reduces accommodative amplitude; near point of vision recedes; corrected with positive **reading glasses**.",
+          "**Aqueous Humor Dynamics & Intraocular Pressure (IOP):** Secreted continuously by ciliary body processes into the posterior chamber at 2 to 3 μL/min; flows through pupil into anterior chamber; drains through the **trabecular meshwork** into the **Canal of Schlemm** (90%) and uveoscleral pathway (10%). Normal IOP is **10 to 21 mmHg** (measured by Goldmann applanation tonometer). Obstruction of outflow elevates IOP, causing **Glaucoma** and progressive optic nerve excavation and blindness."
+        ],
+        "clinicalPearl": "**Acute Angle-Closure Glaucoma & Pupillary Light Reflex:** **Acute Angle-Closure Glaucoma** is an ocular emergency caused by pupillary block pushing the peripheral iris over the trabecular meshwork, completely shutting off aqueous drainage. IOP spikes abruptly to > 50-70 mmHg, presenting with excruciating ocular pain, unilateral headache, nausea/vomiting, blurry vision with colored halos around lights, a hazy cornea, and a mid-dilated non-reactive pupil. Immediate treatment includes IV mannitol, topical beta-blockers (timolol), alpha-2 agonists, and pilocarpine to constrict pupil. Testing the **Pupillary Light Reflex** assesses CN II (afferent limb) and CN III (efferent parasympathetic limb); consensual pupil response tests crossover at the pretectal nucleus in the midbrain.",
+        "images": [
+          {
+            "src": "/images/physiology/12_image3.png",
+            "caption": "Figure 12.3: Visual photopigments and the rhodopsin cycle.",
+            "alt": "Visual pigments"
           },
           {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image3.png",
-            "caption": "Figure 12.3: Visual Pigments.",
-            "alt": "Figure 12.3: Visual Pigments."
+            "src": "/images/physiology/12_image4.png",
+            "caption": "Figure 12.4: Visual pathway from retina to visual cortex.",
+            "alt": "Visual pathway"
           },
           {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image4.png",
-            "caption": "Figure 12.4: Visual pathway.",
-            "alt": "Figure 12.4: Visual pathway."
+            "src": "/images/physiology/12_image5.png",
+            "caption": "Figure 12.5: Optical refraction of light rays through converging lenses.",
+            "alt": "Refraction through lenses"
           },
           {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image5.png",
-            "caption": "Figure 12.5: Refraction of light through converging lens.",
-            "alt": "Figure 12.5: Refraction of light through converging lens."
-          },
+            "src": "/images/physiology/12_image6.png",
+            "caption": "Figure 12.6: Image formation and visual accommodation by crystalline lens.",
+            "alt": "Vision formation"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-12-3",
+        "title": "Auditory & Vestibular Physiology",
+        "content": [
+          "The **ear** houses two exquisitely sensitive sensory systems: the **auditory apparatus** (cochlea), specialized for hearing sound waves (human range: 20 to 20,000 Hz), and the **vestibular apparatus** (semicircular canals, utricle, saccule), specialized for detecting equilibrium, head orientation, and acceleration.",
+          "**Functional Divisions of the Ear & Sound Conduction:**",
+          "1. **External Ear:** Pinna (auricle) gathers acoustic waves and funnels them through the external auditory meatus to strike the **Tympanic Membrane (eardrum)**.",
+          "2. **Middle Ear (Impedance Matching):** An air-filled cavity in the temporal bone housing the three auditory ossicles: **Malleus (hammer)**, **Incus (anvil)**, and **Stapes (stirrup)**. Sound waves in air must transfer into the dense liquid perilymph of the inner ear, which presents high acoustic impedance. The middle ear executes critical **Impedance Matching** by two mechanical mechanisms:",
+          "   - **Area Ratio:** The functional vibrating area of the tympanic membrane (~55 mm²) is 17 times larger than the stapes footplate area (~3.2 mm²). Force concentrated onto the smaller area amplifies sound pressure 17-fold.",
+          "   - **Ossicular Lever System:** The ossicular chain acts as a mechanical lever with a 1.3:1 mechanical advantage.",
+          "   - Total pressure amplification is **17 x 1.3 = 22-fold**, overcoming fluid impedance and transmitting > 60% of acoustic energy into the cochlea.",
+          "   - The **Tympanic (Acoustic) Reflex:** Loud sounds (> 80 dB) trigger reflex contraction of the **Tensor Tympani** (CN V3) and **Stapedius** (CN VII) muscles within 40-80 ms, stiffening the ossicular chain and dampening sound transmission to protect delicate inner ear hair cells from acoustic trauma.",
+          "   - The **Eustachian (Auditory) Tube** connects middle ear to nasopharynx, opening during swallowing and yawning to equalize middle ear pressure with atmospheric pressure.",
+          "3. **Inner Ear (The Cochlea):** A snail-shell coiled bony labyrinth divided into three fluid-filled compartments:",
+          "   - **Scala Vestibuli:** Upper compartment containing **Perilymph** (resembles ECF: high Na+ 140 mEq/L, low K+ 5 mEq/L); originates at oval window.",
+          "   - **Scala Media (Cochlear Duct):** Middle compartment filled with **Endolymph** (secreted by the *stria vascularis*; unique composition resembling ICF: high K+ 150 mEq/L, low Na+ 2 mEq/L; maintains an **Endocochlear Potential of +80 mV**).",
+          "   - **Scala Tympani:** Lower compartment containing Perilymph; terminates at membrane-covered round window.",
+          "**The Organ of Corti & Mechanoelectrical Transduction:** The functional acoustic transducer sitting atop the **Basilar Membrane**:",
+          "1. Fluid waves pushed by the stapes footplate at the oval window travel through the perilymph, displacing the basilar membrane.",
+          "2. The basilar membrane supports **Outer Hair Cells (OHCs, ~12,000)** (which amplify local basilar vibrations via electromotility mediated by the motor protein **Prestin**) and **Inner Hair Cells (IHCs, ~3,500)** (which provide 90-95% of sensory acoustic input to the auditory nerve).",
+          "3. Stereocilia of hair cells protrude into endolymph and are anchored or sheared against the overlying gelatinous **Tectorial Membrane**.",
+          "4. Shearing toward the tallest stereocilium (kinocilium) tensions microscopic **Tip Links**, mechanically pulling open cation-permeable **MET (mechanoelectrical transduction) channels**.",
+          "5. Driven by the massive combined electrochemical gradient (+80 mV endolymph to -70 mV intracellular = 150 mV gradient), **K+ rushes INTO the hair cell**, depolarizing the membrane. Depolarization opens voltage-gated Ca2+ channels; Ca2+ influx stimulates exocytosis of **Glutamate** onto spiral ganglion afferent terminals of the **Cochlear Nerve (CN VIII)**.",
+          "**The Place Theory of Pitch Discrimination:** The basilar membrane varies systematically in physical dimensions: at the **base** (near oval window), it is narrow (100 μm), stiff, and taut; at the **apex** (helicotrema), it is wide (500 μm) and flexible. High-frequency sounds (e.g., 20,000 Hz) produce maximal resonance and displacement at the **stiff base**; low-frequency sounds (e.g., 200 Hz) travel the full length to displace the **flexible apex**. Loudness is coded by the amplitude of basilar displacement and firing frequency of auditory nerve fibers.",
+          "**Auditory Pathway:** Spiral ganglion -> Cochlear nerve (CN VIII) -> Dorsal and Ventral Cochlear Nuclei in medulla -> Superior Olivary Complex (sound localization) -> Lateral Lemniscus -> Inferior Colliculus (midbrain) -> Medial Geniculate Nucleus (thalamus) -> **Primary Auditory Cortex** (superior temporal gyrus, Brodmann area 41/42).",
+          "**Vestibular Physiology (Balance & Equilibrium):**",
+          "  - **Semicircular Canals (Horizontal, Superior, Posterior):** Positioned orthogonally at 90° angles; each canal has an expanded **ampulla** housing a sensory **crista ampullaris** with hair cells embedded in a gelatinous **cupula**. Flow of endolymph during head rotation deflects the cupula, detecting **Angular (Rotational) Acceleration**.",
+          "  - **Otolith Organs (Utricle & Saccule):** House a sensory **macula** covered by a gelatinous otolithic membrane embedded with dense calcium carbonate crystals (**otoconia / otoliths**). Detect **Linear Acceleration** (utricle detects horizontal movement; saccule detects vertical gravitational movement) and static head tilt."
+        ],
+        "points": [
+          "**Conductive vs. Sensorineural Hearing Loss:**",
+          "  - **Conductive Hearing Loss:** Physical obstruction or mechanical defect in external or middle ear (cerumen impaction, otitis media, tympanic membrane perforation, otosclerosis). **Weber test** lateralizes to the *affected* ear (room noise is blocked, bone conduction heard louder); **Rinne test** shows bone conduction > air conduction (BC > AC, negative Rinne).",
+          "  - **Sensorineural Hearing Loss:** Pathological damage to cochlear inner hair cells, auditory nerve (CN VIII), or central auditory tracts (presbycusis, acoustic trauma, aminoglycoside toxicity, acoustic neuroma). **Weber test** lateralizes to the *normal / unaffected* ear; **Rinne test** shows AC > BC (positive Rinne, but both reduced).",
+          "**Vestibulo-Ocular Reflex (VOR) & Nystagmus:** The VOR coordinates eye movements to compensate for head rotation, maintaining fixed gaze on a visual target during movement. **Nystagmus** is involuntary, rhythmic oscillatory eye movement characterized by a slow tracking phase followed by a rapid corrective saccade, triggered by vestibular imbalance or cerebellar dysfunction."
+        ],
+        "clinicalPearl": "**Ototoxicity & Benign Paroxysmal Positional Vertigo (BPPV):** **Ototoxic drugs** (Aminoglycoside antibiotics like Gentamicin, Loop diuretics like Furosemide, and Cisplatin) accumulate in inner ear endolymph, selectively destroying cochlear outer hair cells and vestibular neuroepithelium, causing irreversible sensorineural hearing loss and chronic ataxia; nurses must monitor peak/trough drug levels and watch for early tinnitus. **BPPV** is the most common peripheral vestibular disorder, caused by dislodged calcium carbonate otoconia from the utricle migrating into a semicircular canal (usually posterior canal), producing transient, violent rotational vertigo and nystagmus triggered by head position changes; successfully diagnosed with the **Dix-Hallpike maneuver** and treated non-pharmacologically via the **Epley canalith repositioning maneuver**.",
+        "images": [
           {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image6.png",
-            "caption": "Figure 12.6: Vision formation.",
-            "alt": "Figure 12.6: Vision formation."
-          },
+            "src": "/images/physiology/12_image7.png",
+            "caption": "Figure 12.7: Cochlear organ of Corti and auditory transduction mechanism.",
+            "alt": "Hearing mechanism"
+          }
+        ],
+        "tables": []
+      },
+      {
+        "id": "sec-phys-12-4",
+        "title": "Gustatory (Taste) & Olfactory (Smell) Physiology",
+        "content": [
+          "The **chemical senses (Chemoreception)** encompass **Gustation (Taste)** and **Olfaction (Smell)**, ancient sensory modalities specialized for sampling environmental chemical molecules to guide nutritional selection, promote digestive secretions, and detect ingested poisons or airborne hazards.",
+          "**Olfactory Physiology (Sense of Smell):**",
+          "1. **Olfactory Neuroepithelium:** A specialized 5-cm² yellow-tinted pseudostratified mucosal patch lining the superior nasal cavity, cribriform plate of ethmoid bone, and superior nasal concha. Contains 10 to 20 million **Olfactory Sensory Neurons (OSNs)** (bipolar neurons whose dendritic knobs project 10-20 non-motile cilia into overlying mucus), supported by sustentacular cells and **Basal Stem Cells** (capable of continuous neurogenesis, replacing damaged olfactory neurons every 30-60 days).",
+          "2. **Olfactory Transduction (cAMP Signaling):** Volatile odorant molecules dissolve in nasal mucus and bind to specific 7-transmembrane **G-protein coupled odorant receptors (GPCRs)** on cilia. Receptor activation engages the olfactory-specific G-protein (**Golf**), which stimulates **Adenylyl Cyclase III** to convert ATP into cyclic AMP (cAMP). Rising cAMP opens cyclic nucleotide-gated (CNG) cation channels, allowing Na+ and Ca2+ influx. Intracellular Ca2+ subsequently opens Ca2+-activated Cl- channels (because olfactory neurons maintain high intracellular Cl-, Cl- flows OUT, augmenting depolarization). The resulting receptor potential fires action potentials along unmyelinated axons.",
+          "3. **Olfactory Pathway (Direct Cortical Access Without Thalamic Relay):** Axons of olfactory neurons bundle into 20 olfactory filia that pass through cribriform plate foramina to enter the **Olfactory Bulb**. They synapse in spherical neuropil units called **Glomeruli** onto apical dendrites of **Mitral and Tufted cells**. Mitral cell axons form the **Olfactory Tract**, projecting directly to the **Primary Olfactory Cortex** (piriform cortex, periamygdaloid cortex, entorhinal cortex) and limbic system (amygdala, hippocampus). **Olfaction is the ONLY sensory modality that reaches the cerebral cortex directly without an obligatory synapsing relay in the thalamus**, explaining its profound evocative link to primal emotions, visceral reactions, and vivid memories.",
+          "**Gustatory Physiology (Sense of Taste):**",
+          "1. **Taste Buds & Papillae:** The oral cavity houses approximately 5,000 to 10,000 **Taste Buds** distributed across the tongue, soft palate, pharynx, and epiglottis. On the tongue, taste buds reside in specialized epithelial projections called **Papillae**:",
+          "   - **Fungiform Papillae:** Mushroom-shaped, scattered over anterior two-thirds of tongue (contain 1-5 taste buds each).",
+          "   - **Foliate Papillae:** Parallel leaf-like folds on posterolateral tongue margins.",
+          "   - **Circumvallate (Vallate) Papillae:** 8 to 12 large dome-shaped papillae arranged in an inverted V-shape at the sulcus terminalis (house hundreds of taste buds; washed by lingual lipase/serous secretions of von Ebner's glands).",
+          "   - *(Filiform Papillae: Most numerous, conical, keratinized; contain NO taste buds; provide mechanical friction for food manipulation).*",
+          "2. **Taste Bud Architecture & Receptor Cells:** Spindle-shaped cluster of 50 to 100 neuroepithelial taste receptor cells communicating with the oral cavity through a microscopic **Taste Pore** via apical microvilli.",
+          "3. **Transduction of the Five Primary Taste Modalities:**",
+          "   - **Salty:** Sodium ions (Na+) in dietary salt enter taste cells directly through apical **Epithelial Sodium Channels (ENaC)**, depolarizing the membrane, opening voltage-gated Ca2+ channels, and releasing neurotransmitter.",
+          "   - **Sour:** Acidic hydrogen ions (H+) block apical K+ conductance channels and penetrate through proton-permeable OTOP1 channels, depolarizing the cell.",
+          "   - **Sweet:** Sugars, artificial sweeteners, and sweet proteins bind to a heterodimeric GPCR complex (**T1R2 + T1R3**).",
+          "   - **Umami ('Savory / Delicious'):** Elicited by L-glutamate and amino acids; binds to a heterodimeric GPCR complex (**T1R1 + T1R3**).",
+          "   - **Bitter:** Elicited by toxic alkaloids, plant poisons, and denatonium; binds to a family of ~30 distinct GPCRs (**T2R family**). Highly sensitive (detects poisons at micromolar concentrations).",
+          "   - *Sweet, Umami, and Bitter GPCRs share a common intracellular transduction cascade: receptor activation engages **Gustducin (G-protein)** -> Phospholipase C beta-2 (PLC-beta-2) -> IP3 production -> Ca2+ release from endoplasmic reticulum -> opens TRPM5 channels -> membrane depolarization -> non-vesicular release of **ATP** via CALHM1/3 voltage-gated channels onto gustatory nerve fibers.*",
+          "4. **The Gustatory Neural Pathway:** Taste signals travel along three cranial nerves:",
+          "   - **Anterior 2/3 of Tongue:** **Facial Nerve (CN VII)** via the Chorda Tympani.",
+          "   - **Posterior 1/3 of Tongue:** **Glossopharyngeal Nerve (CN IX)**.",
+          "   - **Epiglottis & Pharynx:** **Vagus Nerve (CN X)** via superior laryngeal nerve.",
+          "   - Afferent fibers terminate in the **Nucleus of the Solitary Tract (NST / Gustatory Nucleus)** in the medulla. Second-order neurons ascend ipsilaterally in the central tegmental tract to the **Ventral Posteromedial (VPM) Nucleus** of the thalamus. Third-order thalamic neurons project to the **Primary Gustatory Cortex** (anterior insula and frontal operculum, Brodmann area 43) for conscious taste perception."
+        ],
+        "points": [
+          "**Flavor Perception:** Pure taste (gustation) provides only five basic modalities (salty, sweet, sour, bitter, umami). What is colloquially called 'flavor' is a complex multisensory perceptual synthesis combining gustation, **retronasal olfaction** (volatile aromas passing up from pharynx to olfactory mucosa during chewing and swallowing), and trigeminal **somatosensation** (temperature, texture, and chemesthesis like capsaicin heat or menthol cooling). Nasal congestion during upper respiratory infections eliminates retronasal olfaction, making food taste bland.",
+          "**Chemosensory Alterations:** **Anosmia** (complete loss of smell; early sign of viral infections like COVID-19 or Kallmann syndrome); **Hyposmia** (diminished smell, early biomarker in Parkinson's disease); **Ageusia** (loss of taste); **Dysgeusia / Parosmia** (distorted sense of taste or smell)."
+        ],
+        "clinicalPearl": "**Cribriform Plate Fractures & Head Trauma Nursing Care:** Basilar skull fractures involving the **ethmoid cribriform plate** tear the delicate olfactory nerve filia and overlying dura mater, producing immediate permanent **anosmia** and **Cerebrospinal Fluid (CSF) Rhinorrhea** (clear watery nasal discharge). The bedside nurse must test the drainage for glucose (CSF is glucose-positive, unlike normal nasal mucus) and observe for the characteristic **'halo sign'** (clear CSF ring surrounding blood on gauze). Strict nursing management mandates elevating head of bed 30 degrees, placing no nasal packing, avoiding coughing/sneezing/nose blowing, and absolutely **NO nasogastric (NG) tube insertion** (which could inadvertently penetrate into the cranial vault).",
+        "images": [
           {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image7.png",
-            "caption": "Figure 12.7: Hearing mechanism.",
-            "alt": "Figure 12.7: Hearing mechanism."
-          },
-          {
-            "src": "/images/physiology/12._PHYSIOLOGY_OF_SENSORY_ORGAN_image8.png",
-            "caption": "Figure 12.8: Showing taste buds.",
-            "alt": "Figure 12.8: Showing taste buds."
+            "src": "/images/physiology/12_image8.png",
+            "caption": "Figure 12.8: Taste bud histology and gustatory papillae.",
+            "alt": "Taste buds"
           }
         ],
         "tables": []

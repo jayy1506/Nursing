@@ -14,8 +14,26 @@ import {
   Layers,
   FileText,
   HelpCircle,
-  Activity
+  Activity,
+  Stethoscope,
+  Tag
 } from "lucide-react";
+
+// Formatter to render **bold text** cleanly
+const renderFormattedText = (text) => {
+  if (typeof text !== "string") return text;
+  const parts = text.split(/(\*\*.*?\*\*)/g);
+  return parts.map((part, index) => {
+    if (part.startsWith("**") && part.endsWith("**")) {
+      return (
+        <strong key={index} className="font-extrabold text-slate-900 tracking-tight">
+          {part.slice(2, -2)}
+        </strong>
+      );
+    }
+    return part;
+  });
+};
 
 export const PhysiologyLessonView = () => {
   const { chapterId } = useParams();
@@ -32,7 +50,18 @@ export const PhysiologyLessonView = () => {
   useEffect(() => {
     const tab = searchParams.get("tab");
     if (tab) setActiveTab(tab);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    const sectionParam = searchParams.get("section");
+    if (sectionParam) {
+      setTimeout(() => {
+        const el = document.getElementById(sectionParam);
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        }
+      }, 150);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
   }, [chapterId, searchParams]);
 
   const handleTabChange = (tab) => {
@@ -204,7 +233,7 @@ export const PhysiologyLessonView = () => {
                       {chapter.objectives.map((obj, i) => (
                         <li key={i} className="flex items-start gap-2">
                           <CheckCircle2 className="w-3.5 h-3.5 text-sky-600 shrink-0 mt-0.5" />
-                          <span className="leading-relaxed">{obj}</span>
+                          <span className="leading-relaxed font-medium">{renderFormattedText(obj)}</span>
                         </li>
                       ))}
                     </ul>
@@ -219,21 +248,86 @@ export const PhysiologyLessonView = () => {
                     className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24"
                   >
                     <div className="border-b border-slate-100 pb-3">
-                      <span className="text-[11px] font-bold text-sky-600 uppercase tracking-wider block">
-                        Section {sIdx + 1}
-                      </span>
-                      <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-0.5">
+                      <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-700 text-[10px] font-extrabold uppercase tracking-wider mb-1">
+                        Section {sIdx + 1} of {chapter.sections.length}
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-1">
                         {section.title}
                       </h2>
                     </div>
 
-                    <div className="space-y-3.5 text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
-                      {section.content?.map((para, pIdx) => (
-                        <p key={pIdx} className="leading-relaxed">
-                          {para}
+                    {/* Section Explanatory Paragraphs */}
+                    {section.content && section.content.length > 0 && (
+                      <div className="space-y-3.5 text-xs sm:text-sm text-slate-700 leading-relaxed font-normal">
+                        {section.content.map((para, pIdx) => (
+                          <p key={pIdx} className="leading-relaxed">
+                            {renderFormattedText(para)}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Detailed Points with Clean Structured Layout Card */}
+                    {section.points && section.points.length > 0 && (
+                      <div className="bg-gradient-to-br from-slate-50 via-sky-50/20 to-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 space-y-4 shadow-xs">
+                        <div className="flex items-center justify-between border-b border-slate-200/60 pb-3">
+                          <div className="flex items-center gap-2 text-sky-950 font-black text-xs uppercase tracking-wider">
+                            <Sparkles className="w-4 h-4 text-sky-600" />
+                            <span>Key Physiological Concepts, Homeostatic Regulation & Mechanisms</span>
+                          </div>
+                          <span className="text-[11px] font-extrabold text-sky-700 bg-sky-100/80 px-2.5 py-0.5 rounded-full">
+                            {section.points.length} Core Principles
+                          </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-3 pt-1">
+                          {section.points.map((pt, ptIdx) => {
+                            const match = pt.match(/^\*\*(.*?)\*\*:?\s*(.*)$/);
+                            const title = match ? match[1] : null;
+                            const description = match ? match[2] : pt;
+
+                            return (
+                              <div
+                                key={ptIdx}
+                                className="bg-white rounded-xl p-3.5 border border-slate-200/80 shadow-xs hover:border-sky-300 transition-all"
+                              >
+                                {title ? (
+                                  <div>
+                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-50 border border-sky-200 text-sky-900 text-xs font-black mb-1.5">
+                                      <Tag className="w-3 h-3 text-sky-600" />
+                                      <span>{title}</span>
+                                    </div>
+                                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed pl-1">
+                                      {renderFormattedText(description)}
+                                    </p>
+                                  </div>
+                                ) : (
+                                  <div className="flex items-start gap-2.5">
+                                    <div className="w-2 h-2 rounded-full bg-sky-500 mt-2 shrink-0 ring-4 ring-sky-100" />
+                                    <p className="text-xs sm:text-sm text-slate-700 leading-relaxed flex-1">
+                                      {renderFormattedText(pt)}
+                                    </p>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Clinical Nursing Pearl Callout */}
+                    {section.clinicalPearl && (
+                      <div className="bg-gradient-to-r from-sky-50/90 via-indigo-50/40 to-white border-l-4 border-sky-500 rounded-r-2xl p-5 shadow-xs">
+                        <div className="flex items-center gap-2 font-black text-sky-950 text-xs sm:text-sm mb-1.5">
+                          <Stethoscope className="w-4 h-4 text-sky-600" />
+                          <span>Clinical Nursing Pearl & Physiological Correlation</span>
+                        </div>
+                        <p className="text-xs sm:text-sm text-slate-700 leading-relaxed font-medium">
+                          {renderFormattedText(section.clinicalPearl)}
                         </p>
-                      ))}
-                    </div>
+                      </div>
+                    )}
 
                     {/* Images */}
                     {section.images && section.images.length > 0 && (
