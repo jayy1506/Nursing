@@ -10,13 +10,9 @@ export const ForceChangePasswordModal = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
 
-  // Only show if user is logged in, not master admin, and isDefaultPassword is true
-  const protectedAdminEmails = [
-    import.meta.env.VITE_ADMIN_EMAIL || 'karandeaachal@gmail.com',
-    import.meta.env.VITE_SECONDARY_ADMIN_EMAIL || 'jthakre62@gmail.com'
-  ].map((e) => e.toLowerCase().trim());
-  const isProtectedAdmin = protectedAdminEmails.includes(currentUser?.email?.toLowerCase()?.trim());
-  const needsPasswordChange = currentUser && currentUser.isDefaultPassword && !isProtectedAdmin;
+  // Only show if user is logged in, not an admin, and isDefaultPassword is true
+  const isAdmin = currentUser?.role === 'admin';
+  const needsPasswordChange = currentUser && currentUser.isDefaultPassword && !isAdmin;
 
   if (!needsPasswordChange) {
     return null;

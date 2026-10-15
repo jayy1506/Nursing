@@ -21,13 +21,11 @@ import {
   ShieldCheck
 } from 'lucide-react';
 
-const PRIMARY_ADMIN_NAME = import.meta.env.VITE_ADMIN_NAME || 'Aachal Karande';
-const PRIMARY_ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || 'karandeaachal@gmail.com').toLowerCase().trim();
-const PRIMARY_ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'aachal2026';
+const PRIMARY_ADMIN_NAME = 'Aachal Karande';
+const PRIMARY_ADMIN_EMAIL = 'karandeaachal@gmail.com';
 
-const SECONDARY_ADMIN_NAME = import.meta.env.VITE_SECONDARY_ADMIN_NAME || 'Jay Thakre';
-const SECONDARY_ADMIN_EMAIL = (import.meta.env.VITE_SECONDARY_ADMIN_EMAIL || 'jthakre62@gmail.com').toLowerCase().trim();
-const SECONDARY_ADMIN_PASSWORD = import.meta.env.VITE_SECONDARY_ADMIN_PASSWORD || 'Jay@1523';
+const SECONDARY_ADMIN_NAME = 'Jay Thakre';
+const SECONDARY_ADMIN_EMAIL = 'jthakre62@gmail.com';
 
 const PROTECTED_ADMIN_EMAILS = [PRIMARY_ADMIN_EMAIL, SECONDARY_ADMIN_EMAIL].filter(Boolean);
 const isProtectedAdminEmail = (email) => PROTECTED_ADMIN_EMAILS.includes(email?.toLowerCase()?.trim());
@@ -37,7 +35,6 @@ const DEFAULT_USERS = [
     _id: 'usr-admin-01',
     name: PRIMARY_ADMIN_NAME,
     email: PRIMARY_ADMIN_EMAIL,
-    password: PRIMARY_ADMIN_PASSWORD,
     role: 'admin',
     status: 'active',
     isDefaultPassword: false,
@@ -48,7 +45,6 @@ const DEFAULT_USERS = [
     _id: 'usr-admin-02',
     name: SECONDARY_ADMIN_NAME,
     email: SECONDARY_ADMIN_EMAIL,
-    password: SECONDARY_ADMIN_PASSWORD,
     role: 'admin',
     status: 'active',
     isDefaultPassword: false,

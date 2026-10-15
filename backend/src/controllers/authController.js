@@ -3,6 +3,9 @@ import User from '../models/User.js';
 
 // Generate JWT Token
 export const generateToken = (user) => {
+  if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
+    throw new Error('FATAL: JWT_SECRET environment variable is required in production.');
+  }
   return jwt.sign(
     { 
       id: user._id, 
@@ -11,7 +14,7 @@ export const generateToken = (user) => {
       collegeId: user.collegeId,
       firebaseUid: user.firebaseUid 
     },
-    process.env.JWT_SECRET || 'nursing_ai_jwt_secret_key_2026_secure',
+    process.env.JWT_SECRET || 'nursing_ai_jwt_dev_fallback_secret',
     { expiresIn: '7d' }
   );
 };

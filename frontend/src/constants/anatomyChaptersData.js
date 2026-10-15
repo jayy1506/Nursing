@@ -360,10 +360,60 @@ export const ANATOMY_CHAPTERS = {
     ],
     "mcqs": [
       {
+        "id": "anat-mcq-1-ch-1",
+        "question": "The primary genetic material of the cell nucleus is",
+        "options": ["RNA", "DNA", "polypeptides", "chondroitin sulfuric acid"],
+        "answer": "DNA",
+        "correctAnswer": "DNA",
+        "subtopic": "Cell Biology & Genetics"
+      },
+      {
+        "id": "anat-mcq-1-ch-2",
+        "question": "The power houses of the cell are its",
+        "options": ["mitochondria", "lysosomes", "golgi complex", "endoplasmic reticulum"],
+        "answer": "mitochondria",
+        "correctAnswer": "mitochondria",
+        "subtopic": "Cell Organelles"
+      },
+      {
+        "id": "anat-mcq-1-ch-3",
+        "question": "Attached to the outer surface of the limiting membrane of the granular endoplasmic reticulum are",
+        "options": ["mitochondria", "lysosomes", "ribosomes", "vacuoles"],
+        "answer": "ribosomes",
+        "correctAnswer": "ribosomes",
+        "subtopic": "Cell Organelles"
+      },
+      {
+        "id": "anat-mcq-1-ch-4",
+        "question": "The fluid portion of cytoplasm is",
+        "options": ["cell", "chromosome", "nucleus", "cytosol"],
+        "answer": "cytosol",
+        "correctAnswer": "cytosol",
+        "subtopic": "Cell Structure"
+      },
+      {
+        "id": "anat-mcq-1-ch-5",
+        "question": "Which of the following phases is characterized by preparation for DNA synthesis?",
+        "options": ["G0", "G1", "G2", "S"],
+        "answer": "G1",
+        "correctAnswer": "G1",
+        "subtopic": "Cell Cycle"
+      },
+      {
+        "id": "anat-mcq-1-ch-6",
+        "question": "Which of the following is not a type of tissue?",
+        "options": ["muscle", "nervous", "embryonic", "epithelial"],
+        "answer": "embryonic",
+        "correctAnswer": "embryonic",
+        "subtopic": "Tissues"
+      },
+      {
         "id": "anat-mcq-1-1",
         "question": "Which body cavity contains the heart and lungs?",
+        "options": ["Thoracic cavity", "Abdominal cavity", "Cranial cavity", "Pelvic cavity"],
+        "answer": "Thoracic cavity",
         "correctAnswer": "Thoracic cavity",
-        "subtopic": "nan"
+        "subtopic": "Body Cavities"
       },
       {
         "id": "anat-mcq-1-2",
@@ -757,6 +807,85 @@ export const ANATOMY_CHAPTERS = {
         "type": "Very Short",
         "marks": 2,
         "difficulty": 1
+      }
+    ],
+    "shortAnswerQuestions": [
+      {
+        "id": "anat-saq-1-1",
+        "question": "Define the following terms: anatomy, gross anatomy, human physiology, microscopic anatomy, regional anatomy and systemic anatomy.",
+        "modelAnswer": "• Anatomy: The science of body structures and relationships among them.\n• Gross Anatomy: Study of structures that can be examined without a microscope.\n• Human Physiology: The science of body functions and how body parts work.\n• Microscopic Anatomy: Study of structures that require a microscope (Histology and Cytology).\n• Regional Anatomy: Approach focusing on all structures in a specific body region (e.g., head, thorax, abdomen).\n• Systemic Anatomy: Approach studying the structure of specific body systems (e.g., cardiovascular, respiratory)."
+      },
+      {
+        "id": "anat-saq-1-2",
+        "question": "Define the following terms: anterior, posterior, superior, inferior, medial and lateral.",
+        "modelAnswer": "• Anterior (Ventral): Situated at or toward the front of the body.\n• Posterior (Dorsal): Situated at or toward the back of the body.\n• Superior (Cranial): Toward the head or upper part of a structure.\n• Inferior (Caudal): Away from the head or toward the lower part of a structure.\n• Medial: Nearer to the midline of the body.\n• Lateral: Farther from the midline of the body."
+      },
+      {
+        "id": "anat-saq-1-3",
+        "question": "Discuss in brief about body cavities.",
+        "modelAnswer": "Body cavities are spaces within the body that protect, cushion, and support internal organs.\n1. Dorsal Cavity: Subdivided into the Cranial Cavity (housing the brain) and Vertebral Canal (housing the spinal cord), lined by meninges.\n2. Ventral Cavity: Divided by the diaphragm into the superior Thoracic Cavity (pleural, mediastinum, pericardial) and inferior Abdominopelvic Cavity (abdominal and pelvic viscera), lined by serous membranes."
+      },
+      {
+        "id": "anat-saq-1-4",
+        "question": "Discuss in brief about the levels of organization.",
+        "modelAnswer": "The human body is structured in six hierarchical levels:\n1. Chemical Level: Atoms (C, H, O, N) and molecules (DNA, glucose, proteins).\n2. Cellular Level: Smallest living functional units of life.\n3. Tissue Level: Groups of similar cells and extracellular matrix (epithelial, connective, muscular, nervous).\n4. Organ Level: Two or more tissue types operating together for specific functions.\n5. System Level: Related organs with a common function.\n6. Organismal Level: The living human individual."
+      },
+      {
+        "id": "anat-saq-1-5",
+        "question": "Discuss in brief about three parts of cell.",
+        "modelAnswer": "A generalized eukaryotic cell comprises three principal components:\n1. Plasma Membrane: Flexible outer barrier regulating molecular entry and exit via selective permeability.\n2. Cytoplasm: All contents between plasma membrane and nucleus, consisting of aqueous cytosol and metabolic organelles.\n3. Nucleus: Master genetic control center housing hereditary DNA chromosomes and nucleolus for rRNA assembly."
+      },
+      {
+        "id": "anat-saq-1-6",
+        "question": "Discuss in brief about organelles.",
+        "modelAnswer": "Organelles are specialized cellular structures performing distinct metabolic functions:\n• Mitochondria: Synthesize cellular ATP via aerobic respiration.\n• Endoplasmic Reticulum: Rough ER synthesizes proteins; Smooth ER synthesizes lipids and detoxifies toxins.\n• Golgi Complex: Modifies, sorts, and packages ER proteins into secretory vesicles and lysosomes.\n• Lysosomes: Contain acid hydrolases that digest endocytosed pathogens and cellular debris.\n• Peroxisomes: Neutralize toxic hydrogen peroxide and oxidize fatty acids.\n• Centrosome: Organizes the mitotic spindle during cell division."
+      },
+      {
+        "id": "anat-saq-1-7",
+        "question": "Discuss in brief about cell cycle.",
+        "modelAnswer": "The orderly sequence of events by which a somatic cell duplicates and divides:\n1. Interphase (90% of cycle): G1 Phase (cell growth & preparation for DNA synthesis), S Phase (semi-conservative DNA replication), and G2 Phase (centrosome replication and enzyme synthesis). G0 is the resting non-dividing state.\n2. M Phase: Mitosis (nuclear division via Prophase, Metaphase, Anaphase, Telophase) and Cytokinesis (cytoplasmic division)."
+      },
+      {
+        "id": "anat-saq-1-8",
+        "question": "Enlist the type of tissues.",
+        "modelAnswer": "The four primary adult human tissue types are:\n1. Epithelial Tissue: Covers body surfaces, lines hollow cavities, and forms glands (classified by cell layers and shape).\n2. Connective Tissue: Protects, binds, and supports organs (loose, dense, cartilage, bone, blood).\n3. Muscular Tissue: Generates mechanical force for locomotion and movement (skeletal, cardiac, smooth).\n4. Nervous Tissue: Detects stimuli and conducts nerve action potentials (neurons and supporting neuroglia)."
+      },
+      {
+        "id": "anat-saq-1-9",
+        "question": "Discuss in brief about glands.",
+        "modelAnswer": "Glands are specialized epithelial structures that produce secretions:\n1. Exocrine Glands: Secrete products into ducts emptying onto epithelial surfaces (sweat, salivary, sebaceous). Functional modes: Merocrine (exocytosis), Apocrine (apical pinch-off), Holocrine (whole cell lysis).\n2. Endocrine Glands: Ductless glands that secrete hormones directly into interstitial fluid and the bloodstream (thyroid, pituitary, adrenal)."
+      }
+    ],
+    "longAnswerQuestions": [
+      {
+        "id": "anat-laq-1-1",
+        "question": "Describe in detail about structure of the cell.",
+        "modelAnswer": "Comprehensive essay breakdown covering:\n1. Introduction & Overview: Cell as basic structural, physiological, and genetic unit of life.\n2. Plasma Membrane: Fluid mosaic model, phospholipid bilayer, integral/peripheral proteins, glycocalyx, cholesterol, and selective permeability.\n3. Cytoplasm: Cytosol composition (aqueous ions, glucose, enzymes) and Cytoskeleton (microfilaments, intermediate filaments, microtubules).\n4. Membranous & Non-Membranous Organelles: Endoplasmic reticulum (Rough & Smooth), Golgi apparatus, Mitochondria, Lysosomes, Peroxisomes, Centrosomes, and Ribosomes.\n5. The Nucleus: Nuclear envelope, nuclear pores, nucleoplasm, nucleolus (rRNA transcription), and chromatin/DNA organization.\n6. Clinical Bedside Nursing Pearl: Tonicity of IV fluids (hypotonic lysis vs. hypertonic crenation) and receptor-targeted pharmacology."
+      },
+      {
+        "id": "anat-laq-1-2",
+        "question": "Explain in detail about structure of the organelles.",
+        "modelAnswer": "Comprehensive structural and physiological breakdown covering:\n1. Endoplasmic Reticulum: Structure of Rough ER cisternae with ribosomes vs. tubular Smooth ER; role in protein export, steroid synthesis, and Ca2+ storage.\n2. Golgi Apparatus: Cis (entry) face, medial cisternae, trans (exit) face; secretory, lysosomal, and membrane vesicle formation.\n3. Mitochondria: Double membrane, cristae folds, matrix, mtDNA, ATP synthase, and aerobic Krebs/ETC respiration.\n4. Lysosomes & Peroxisomes: Acid hydrolases (pH 5.0) in autophagy/phagocytosis vs. catalase and oxidase in H2O2 neutralization.\n5. Cytoskeletal Network: Microfilaments (actin), intermediate filaments (keratin), microtubules (tubulin), and centrosome/centrioles in cell shape and transport.\n6. Clinical Correlations: Lysosomal storage diseases, mitochondrial cytopathies, and chemotherapy targeting microtubules."
+      },
+      {
+        "id": "anat-laq-1-3",
+        "question": "Explain in detail about somatic cell division.",
+        "modelAnswer": "Comprehensive breakdown of Somatic Mitosis:\n1. Introduction & Interphase: G1, S-phase (semi-conservative DNA replication from 46 to 92 chromatids), and G2 phase.\n2. Prophase: Chromatin condensation into visible sister chromatids, nucleolus and nuclear envelope breakdown, centrosome migration and spindle formation.\n3. Metaphase: Chromosomes align along equatorial metaphase plate via kinetochore microtubules.\n4. Anaphase: Simultaneous splitting of centromeres and migration of daughter chromosomes to opposite spindle poles.\n5. Telophase & Cytokinesis: Chromatin decondensation, nuclear envelope reassembly, and cleavage furrow formation by actin-myosin contractile ring.\n6. Clinical & NCLEX Pearl: Cell cycle checkpoints (G1/S, G2/M, spindle) and phase-specific antineoplastic chemotherapeutic drugs (Vincristine, Paclitaxel, 5-FU)."
+      },
+      {
+        "id": "anat-laq-1-4",
+        "question": "Explain in detail about reproductive cell division.",
+        "modelAnswer": "Comprehensive breakdown of Germline Meiosis:\n1. Purpose & Overview: Halving diploid (2n = 46) chromosome count to haploid (n = 23) in gametes (sperm and ova).\n2. Meiosis I (Reduction Division): Prophase I (synapsis, tetrad formation, chiasmata, crossing over), Metaphase I, Anaphase I (homologous chromosomes separate without centromere splitting), Telophase I.\n3. Meiosis II (Equational Division): Resembles mitosis in haploid cells; sister chromatids separate at centromeres, yielding 4 unique haploid gametes.\n4. Spermatogenesis vs. Oogenesis: Continuous equal division into 4 motile sperm vs. unequal division into 1 viable ovum and 3 polar bodies with prolonged Prophase I arrest.\n5. Clinical Genetics & NCLEX Pearl: Meiotic non-disjunction leading to Trisomy 21 (Down Syndrome), Turner Syndrome (45,X), and correlation with advanced maternal age."
+      },
+      {
+        "id": "anat-laq-1-5",
+        "question": "Explain in detail about types of tissues.",
+        "modelAnswer": "Comprehensive essay breakdown covering:\n1. Epithelial Tissue: General features (avascular, polarity, basement membrane). Detailed classification: Simple (Squamous, Cuboidal, Columnar, Pseudostratified) and Stratified (Squamous keratinized/non-keratinized, Cuboidal, Columnar, Transitional). Glandular epithelium (Exocrine vs. Endocrine).\n2. Connective Tissue: Cellular elements (fibroblasts, macrophages, mast cells, adipocytes) and extracellular matrix (collagen, elastic, reticular fibers + ground substance). Types: Loose, Dense, Cartilage, Bone, Blood.\n3. Muscle Tissue: Skeletal (striated, multinucleated, voluntary), Cardiac (striated, branching, intercalated discs, involuntary), and Smooth (spindle, non-striated, involuntary in visceral walls).\n4. Nervous Tissue: Excitable neurons (soma, dendrites, axon) and supporting neuroglia (astrocytes, oligodendrocytes, microglia, Schwann cells).\n5. Clinical Correlations: Metaplasia in smoking, tissue regeneration capacity (epithelium vs. cardiac/CNS fibrosis), and carcinoma vs. sarcoma oncology classification."
+      },
+      {
+        "id": "anat-laq-1-6",
+        "question": "Write in detail about body cavities and serous membranes.",
+        "modelAnswer": "Comprehensive essay breakdown covering:\n1. Overview of Body Cavities: Protective functions, cushioning, and organ motility accommodation.\n2. Dorsal Body Cavity: Cranial cavity (brain) and Vertebral canal (spinal cord); lined by the three meningeal layers (dura, arachnoid, pia mater).\n3. Ventral Body Cavity: Diaphragm boundary. Thoracic cavity (bilateral pleural cavities, central mediastinum, pericardial cavity) and Abdominopelvic cavity (abdominal and pelvic spaces).\n4. Nine Abdominopelvic Regions & Four Quadrants: Midclavicular, subcostal, and transtubercular lines creating 9 regions; vertical/horizontal transumbilical axes creating 4 quadrants with clinical organ localization.\n5. Serous Membranes (Serosa): Dual-layer architecture: Parietal layer (lining cavity walls) and Visceral layer (adhering to organs) with intervening serous cavity containing lubricating fluid.\n6. Specific Serous Membranes: Pleura (parietal/visceral pleura), Pericardium (parietal/visceral pericardium), Peritoneum (greater/lesser omentum, mesentery).\n7. Clinical Nursing Relevance: Bedside auscultation of pericardial/pleural friction rubs; emergency decompression of tension pneumothorax; paracentesis for peritoneal ascites; acute appendicitis triage in the RLQ."
       }
     ]
   },

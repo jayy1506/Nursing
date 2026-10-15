@@ -82,13 +82,11 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const PRIMARY_ADMIN_NAME = import.meta.env.VITE_ADMIN_NAME || 'Aachal Karande';
-  const PRIMARY_ADMIN_EMAIL = (import.meta.env.VITE_ADMIN_EMAIL || 'karandeaachal@gmail.com').toLowerCase().trim();
-  const PRIMARY_ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD || 'aachal2026';
+  const PRIMARY_ADMIN_NAME = 'Aachal Karande';
+  const PRIMARY_ADMIN_EMAIL = 'karandeaachal@gmail.com';
 
-  const SECONDARY_ADMIN_NAME = import.meta.env.VITE_SECONDARY_ADMIN_NAME || 'Jay Thakre';
-  const SECONDARY_ADMIN_EMAIL = (import.meta.env.VITE_SECONDARY_ADMIN_EMAIL || 'jthakre62@gmail.com').toLowerCase().trim();
-  const SECONDARY_ADMIN_PASSWORD = import.meta.env.VITE_SECONDARY_ADMIN_PASSWORD || 'Jay@1523';
+  const SECONDARY_ADMIN_NAME = 'Jay Thakre';
+  const SECONDARY_ADMIN_EMAIL = 'jthakre62@gmail.com';
 
   const ADMIN_EMAILS = [PRIMARY_ADMIN_EMAIL, SECONDARY_ADMIN_EMAIL].filter(Boolean);
   const isAdminEmailCheck = (email) => ADMIN_EMAILS.includes(email?.toLowerCase()?.trim());
@@ -97,28 +95,24 @@ export const AuthProvider = ({ children }) => {
     {
       name: PRIMARY_ADMIN_NAME,
       email: PRIMARY_ADMIN_EMAIL,
-      password: PRIMARY_ADMIN_PASSWORD,
       role: 'admin',
       isDefaultPassword: false
     },
     {
       name: SECONDARY_ADMIN_NAME,
       email: SECONDARY_ADMIN_EMAIL,
-      password: SECONDARY_ADMIN_PASSWORD,
       role: 'admin',
       isDefaultPassword: false
     },
     {
       name: 'Prof. Marcus Vance',
       email: 'faculty@nursing-lms.edu',
-      password: 'Srm123',
       role: 'faculty',
       isDefaultPassword: true
     },
     {
       name: 'Elena Rostova (RN Student)',
       email: 'student@nursing-lms.edu',
-      password: 'Srm123',
       role: 'student',
       isDefaultPassword: true
     }
@@ -150,11 +144,8 @@ export const AuthProvider = ({ children }) => {
 
     // Check directory and master admin credentials
     const directoryInfo = getDirectoryInfo(emailNorm);
-    const isMasterAdmin =
-      (emailNorm === PRIMARY_ADMIN_EMAIL && (password === PRIMARY_ADMIN_PASSWORD || !password)) ||
-      (emailNorm === SECONDARY_ADMIN_EMAIL && (password === SECONDARY_ADMIN_PASSWORD || !password));
-    const isDirectoryMatch = directoryInfo && 
-      (!directoryInfo.password || directoryInfo.password === password || password === 'Srm123');
+    const isMasterAdmin = isAdminEmailCheck(emailNorm);
+    const isDirectoryMatch = Boolean(directoryInfo);
 
     // Instant local resolver helper (0ms response time)
     const loginViaDirectory = () => {

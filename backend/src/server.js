@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -18,6 +19,8 @@ import courseRoutes from './routes/courseRoutes.js';
 import assessmentRoutes from './routes/assessmentRoutes.js';
 import progressRoutes from './routes/progressRoutes.js';
 import ragRoutes from './routes/ragRoutes.js';
+import aiMemoryRoutes from './routes/aiMemoryRoutes.js';
+import { preloadMemoryCache } from './services/semanticMemoryService.js';
 
 dotenv.config();
 
@@ -25,14 +28,36 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
-connectDB();
+connectDB().then(() => {
+  preloadMemoryCache();
+});
 
 // Initialize Firebase Admin SDK
 initFirebaseAdmin();
 
-// Middleware
+// Security Headers (Helmet)
+app.use(helmet({
+  contentSecurityPolicy: false, // Preserves embedded SVGs, canvas, and Vite assets
+  crossOriginResourcePolicy: { policy: 'cross-origin' }
+}));
+
+// CORS Configuration
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:5000',
+  'http://127.0.0.1:5000'
+].filter(Boolean);
+
 app.use(cors({
-  origin: true,
+  origin: (origin, callback) => {
+    // Allow non-browser or same-origin requests
+    if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS policy blocked access from origin: ${origin}`));
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -47,7 +72,9 @@ app.get('/api/health', (req, res) => {
     system: 'Nursing AI & LMS Backend API',
     timestamp: new Date(),
     auth: 'Dual/Hybrid Auth (Firebase + MongoDB JWT)',
-    rag: 'Chapter-Scoped Vector Search'
+    rag: 'Chapter-Scoped Vector Search',
+    memoryCache: 'OpenAI Semantic Memory Token Saver Active',
+    rateLimiter: 'Upstash Redis Rate Limiting Active (15 req/min AI Shield)'
   });
 });
 
@@ -58,6 +85,7 @@ app.use('/api/courses', courseRoutes);
 app.use('/api/assessments', assessmentRoutes);
 app.use('/api/progress', progressRoutes);
 app.use('/api/rag', ragRoutes);
+app.use('/api/ai', aiMemoryRoutes);
 
 // In production or cloud deployments: Serve frontend from frontend/dist
 if (fs.existsSync(frontendDistPath)) {
@@ -112,3 +140,13 @@ app.listen(PORT, '0.0.0.0', () => {
   console.log(`[Nursing LMS Server] Running on http://127.0.0.1:${PORT}`);
   console.log(`[Healthcheck] http://127.0.0.1:${PORT}/api/health`);
 });
+
+// Process Safety Handlers
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[Unhandled Rejection at]:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('[Uncaught Exception]:', err);
+});
+
