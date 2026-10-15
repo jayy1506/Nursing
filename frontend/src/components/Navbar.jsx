@@ -63,10 +63,10 @@ const Navbar = () => {
           </div>
           <div className="flex flex-col leading-tight">
             <span className="text-sm font-extrabold tracking-tight bg-gradient-to-r from-emerald-600 to-sky-600 bg-clip-text text-transparent">
-              MetaNutriBio AI
+              MedPulse
             </span>
             <span className="text-[10px] text-slate-500 font-medium">
-              Clinical & Nutrition Portal
+              Medical & Nursing LMS
             </span>
           </div>
         </Link>

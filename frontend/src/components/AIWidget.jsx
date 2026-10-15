@@ -104,7 +104,7 @@ export const AIWidget = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `Hello! 👋 I am your **MetaNutriBio AI Clinical Tutor** powered by an **OpenAI Semantic Memory Token Saver**.\n\n• **Token Optimization**: When any user searches a topic, it is saved in memory.\n• If you or any other student search a similar question next time, it retrieves directly from memory with **0 Tokens Used**!\n\nAsk any question or choose an action below!`,
+      content: `Hello! 👋 I am your **MedPulse AI Clinical Tutor** powered by an **OpenAI Semantic Memory Token Saver**.\n\n• **Token Optimization**: When any user searches a topic, it is saved in memory.\n• If you or any other student search a similar question next time, it retrieves directly from memory with **0 Tokens Used**!\n\nAsk any question or choose an action below!`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
       fromMemory: true,
       tokensUsed: 0,
@@ -534,7 +534,7 @@ export const AIWidget = () => {
               <div>
                 <div className="flex items-center gap-2">
                   <h3 className="font-extrabold text-sm text-white tracking-tight">
-                    MetaNutriBio AI Tutor
+                    MedPulse AI Tutor
                   </h3>
                   <button
                     onClick={() => setShowMemoryStats(!showMemoryStats)}
