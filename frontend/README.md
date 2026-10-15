@@ -1,4 +1,4 @@
-# MetaNutriBio Frontend Application
+# MedPulse Frontend Application
 
 Modern clinical education user interface built with React 19, Vite, Tailwind CSS, Framer Motion, and Lucide Icons.
 
@@ -7,7 +7,7 @@ Modern clinical education user interface built with React 19, Vite, Tailwind CSS
 ```
 frontend/
 ├── public/                  # Static assets & favicon
-│   └── favicon.svg          # MetaNutriBio clinical brand badge
+│   └── favicon.svg          # MedPulse clinical brand badge
 ├── src/
 │   ├── api/                 # API client with token interceptor
 │   │   └── client.js

@@ -1,6 +1,6 @@
-# MetaNutriBio — Clinical Biochemistry & Nutrition LMS Portal
+# MedPulse — Foundational Medical Sciences & Clinical Nursing LMS Portal
 
-MetaNutriBio is an interactive clinical education and learning management platform designed for nursing and healthcare students to master human biochemistry, dietetics, and clinical nutrition.
+MedPulse is an interactive clinical education and learning management platform designed for nursing and healthcare students to master foundational medical sciences: Anatomy, Physiology, Clinical Biochemistry, and Applied Nutrition.
 
 ---
 

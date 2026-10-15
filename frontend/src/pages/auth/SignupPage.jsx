@@ -96,10 +96,10 @@ export const SignupPage = () => {
             </div>
             <div className="text-left">
               <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600 bg-clip-text text-transparent">
-                MetaNutriBio AI
+                MedPulse
               </span>
               <span className="block text-[11px] font-medium text-slate-500">
-                Clinical Nutrition & Biochemistry
+                Medical & Nursing LMS
               </span>
             </div>
           </Link>

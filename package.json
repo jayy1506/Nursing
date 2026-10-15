@@ -1,7 +1,7 @@
 {
-  "name": "metanutribio-workspace",
+  "name": "medpulse-workspace",
   "version": "1.0.0",
-  "description": "MetaNutriBio — Clinical Biochemistry & Nutrition Learning Portal (Fullstack Monorepo)",
+  "description": "MedPulse — Foundational Medical Sciences & Clinical Nursing LMS (Fullstack Monorepo)",
   "private": true,
   "type": "module",
   "workspaces": [

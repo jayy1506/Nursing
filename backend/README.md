@@ -1,6 +1,6 @@
-# MetaNutriBio Backend Service
+# MedPulse Backend Service
 
-RESTful API and AI RAG service powering the MetaNutriBio clinical education platform.
+RESTful API and AI RAG service powering the MedPulse clinical education platform.
 
 ## 📁 Directory Structure
 

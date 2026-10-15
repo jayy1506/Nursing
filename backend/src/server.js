@@ -104,7 +104,7 @@ if (fs.existsSync(frontendDistPath)) {
   app.get('/', (req, res) => {
     res.status(200).json({
       success: true,
-      message: 'MetaNutriBio Nursing AI & LMS Backend API is running.',
+      message: 'MedPulse Medical & Nursing LMS Backend API is running.',
       frontendUrl: 'http://localhost:5173',
       health: '/api/health'
     });
