@@ -28,8 +28,10 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Connect to MongoDB
-connectDB().then(() => {
-  preloadMemoryCache();
+connectDB().then((connected) => {
+  if (connected) {
+    preloadMemoryCache();
+  }
 });
 
 // Initialize Firebase Admin SDK

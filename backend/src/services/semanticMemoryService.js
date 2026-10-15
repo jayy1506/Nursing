@@ -90,6 +90,9 @@ let isCacheLoaded = false;
  * Preloads existing stored memories from MongoDB into RAM
  */
 export const preloadMemoryCache = async () => {
+  if (mongoose.connection.readyState !== 1) {
+    return; // Skip querying when database is not connected to avoid buffer timeout warnings
+  }
   try {
     const memories = await SemanticMemory.find().sort({ hitCount: -1, createdAt: -1 }).limit(2000).lean();
     memoryRamCache = memories.map((m) => ({

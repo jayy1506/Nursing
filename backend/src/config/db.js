@@ -17,9 +17,12 @@ export const connectDB = async () => {
     mongoose.connection.on('disconnected', () => {
       console.warn('[Database Disconnected]: Reconnecting to MongoDB...');
     });
+
+    return true;
   } catch (error) {
     console.error(`[Database] MongoDB Connection Warning: ${error.message}`);
     console.warn(`[Database Hint] If using MongoDB Atlas, ensure Network Access IP Whitelist has 0.0.0.0/0 (Allow Access from Anywhere) enabled.`);
+    return false;
   }
 };
 
