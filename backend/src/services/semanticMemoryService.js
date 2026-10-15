@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import SemanticMemory from '../models/SemanticMemory.js';
 import { generateLocalEmbedding, cosineSimilarity } from './embeddingService.js';
 import { getCached, setCached, deleteCached, clearLocalCache } from './redisCacheService.js';
