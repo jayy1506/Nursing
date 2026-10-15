@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import { useAuth } from "../context/AuthContext";
+import { getStudentGatingStatus } from "../services/assessmentEngine";
 import {
   QUESTION_BANK_UNITS,
   DESCRIPTIVE_QUESTIONS,
@@ -14,16 +16,38 @@ import {
   CheckCircle2,
   ChevronDown,
   ArrowRight,
+  ArrowLeft,
+  Home as HomeIcon,
   Sparkles,
   ClipboardList,
   Eye,
   EyeOff,
   Filter,
   FileText,
-  Award
+  Award,
+  Lock,
+  Unlock,
+  AlertCircle
 } from "lucide-react";
 
 const QuestionBankView = () => {
+  const navigate = useNavigate();
+  const { currentUser, role } = useAuth();
+
+  // Module completion status
+  const [anatStatus] = useState(() => getStudentGatingStatus("anatomy"));
+  const [physStatus] = useState(() => getStudentGatingStatus("physiology"));
+  const [biochemStatus] = useState(() => getStudentGatingStatus("biochemistry"));
+  const [nutStatus] = useState(() => getStudentGatingStatus("nutrition"));
+  const [previewOverride, setPreviewOverride] = useState(false);
+
+  const totalCompleted = 
+    (anatStatus?.completedCount || 0) + 
+    (physStatus?.completedCount || 0) + 
+    (biochemStatus?.completedCount || 0) + 
+    (nutStatus?.completedCount || 0);
+  const isModulesCompleted = totalCompleted > 0 || role === "faculty" || role === "admin" || previewOverride;
+
   const [selectedUnit, setSelectedUnit] = useState("all");
   const [selectedType, setSelectedType] = useState("all"); // 'all' | 'short' | 'veryshort' | 'mcq'
   const [searchQuery, setSearchQuery] = useState("");
@@ -38,9 +62,9 @@ const QuestionBankView = () => {
 
   const revealAll = () => {
     const all = {};
-    DESCRIPTIVE_QUESTIONS.forEach((q) => (all[q.id] = true));
-    VERY_SHORT_QUESTIONS.forEach((q) => (all[q.id] = true));
-    OFFICIAL_MCQS.forEach((q) => (all[q.id] = true));
+    (DESCRIPTIVE_QUESTIONS || []).forEach((q) => { if (q?.id) all[q.id] = true; });
+    (VERY_SHORT_QUESTIONS || []).forEach((q) => { if (q?.id) all[q.id] = true; });
+    (OFFICIAL_MCQS || []).forEach((q) => { if (q?.id) all[q.id] = true; });
     setRevealedAnswers(all);
   };
 
@@ -49,6 +73,7 @@ const QuestionBankView = () => {
   };
 
   const isUnitMatch = (itemUnit) => {
+    if (!itemUnit) return false;
     if (selectedUnit === "all") return true;
     if (selectedUnit === "curriculum-anatomy") {
       return itemUnit.startsWith("anatomy-");
@@ -65,30 +90,42 @@ const QuestionBankView = () => {
     return itemUnit === selectedUnit;
   };
 
-  // Filtered lists
-  const filteredShort = DESCRIPTIVE_QUESTIONS.filter((q) => {
+  // Safe filtered lists with optional chaining to prevent any runtime exceptions
+  const filteredShort = (DESCRIPTIVE_QUESTIONS || []).filter((q) => {
+    if (!q) return false;
     const matchesUnit = isUnitMatch(q.unit);
+    const qText = q.question || "";
+    const qTopic = q.topic || "";
+    const query = (searchQuery || "").toLowerCase();
     const matchesSearch =
-      q.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.topic.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.answerKeyPoints.some((pt) => pt.toLowerCase().includes(searchQuery.toLowerCase()));
+      qText.toLowerCase().includes(query) ||
+      qTopic.toLowerCase().includes(query) ||
+      (q.answerKeyPoints && q.answerKeyPoints.some((pt) => pt && pt.toLowerCase().includes(query)));
     return matchesUnit && matchesSearch;
   });
 
-  const filteredVeryShort = VERY_SHORT_QUESTIONS.filter((q) => {
+  const filteredVeryShort = (VERY_SHORT_QUESTIONS || []).filter((q) => {
+    if (!q) return false;
     const matchesUnit = isUnitMatch(q.unit);
+    const qText = q.question || "";
+    const qAns = q.answer || "";
+    const query = (searchQuery || "").toLowerCase();
     const matchesSearch =
-      q.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.answer.toLowerCase().includes(searchQuery.toLowerCase());
+      qText.toLowerCase().includes(query) ||
+      qAns.toLowerCase().includes(query);
     return matchesUnit && matchesSearch;
   });
 
-  const filteredMCQ = OFFICIAL_MCQS.filter((q) => {
+  const filteredMCQ = (OFFICIAL_MCQS || []).filter((q) => {
+    if (!q) return false;
     const matchesUnit = isUnitMatch(q.unit);
+    const qText = q.question || "";
+    const qCorrect = q.correctOption || "";
+    const query = (searchQuery || "").toLowerCase();
     const matchesSearch =
-      q.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.options.some((opt) => opt.toLowerCase().includes(searchQuery.toLowerCase())) ||
-      q.correctOption.toLowerCase().includes(searchQuery.toLowerCase());
+      qText.toLowerCase().includes(query) ||
+      (q.options && q.options.some((opt) => opt && opt.toLowerCase().includes(query))) ||
+      qCorrect.toLowerCase().includes(query);
     return matchesUnit && matchesSearch;
   });
 
@@ -97,24 +134,211 @@ const QuestionBankView = () => {
     (selectedType === "all" || selectedType === "veryshort" ? filteredVeryShort.length : 0) +
     (selectedType === "all" || selectedType === "mcq" ? filteredMCQ.length : 0);
 
+  // GATING BARRIER: If student has not completed required modules, show clear guidance message
+  if (!isModulesCompleted) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-white flex flex-col">
+        <Navbar />
+
+        {/* Top Navigation Bar with Back & Home */}
+        <div className="bg-slate-900/95 border-b border-slate-800 py-3 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => navigate(-1)}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+              >
+                <ArrowLeft className="w-3.5 h-3.5" />
+                <span>Back</span>
+              </button>
+              <button
+                onClick={() => navigate('/')}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+              >
+                <HomeIcon className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Home</span>
+              </button>
+              <Link
+                to="/syllabus"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer ml-1"
+              >
+                <BookOpen className="w-3.5 h-3.5 text-sky-400" />
+                <span>Syllabus Hub</span>
+              </Link>
+            </div>
+
+            <div className="text-[11px] font-semibold text-slate-400">
+              Curriculum Competency Gating
+            </div>
+          </div>
+        </div>
+
+        {/* Informative Locked Message Card */}
+        <div className="flex-1 flex items-center justify-center p-4 sm:p-6 my-auto">
+          <div className="max-w-xl w-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 text-center shadow-2xl relative overflow-hidden">
+            <div className="pointer-events-none absolute -top-24 -left-20 h-56 w-56 rounded-full bg-amber-500/20 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -right-20 h-56 w-56 rounded-full bg-emerald-500/20 blur-3xl" />
+
+            <div className="relative z-10">
+              <div className="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-amber-400 mx-auto flex items-center justify-center mb-5 shadow-lg shadow-amber-500/20">
+                <Lock className="w-8 h-8" />
+              </div>
+
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 text-xs font-extrabold border border-amber-500/20 mb-3">
+                <AlertCircle className="w-3.5 h-3.5" />
+                <span>Module Completion Required</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                Complete Curriculum Modules First
+              </h2>
+
+              <p className="mt-3 text-slate-300 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
+                Access to the Official University Question Bank (1,500+ MCQs & 5-mark subjective answers) is gated. You must complete and pass your chapter assessment quizzes (≥ 75%) before accessing this repository.
+              </p>
+
+              {/* Progress Tracker */}
+              <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 text-left space-y-3">
+                <div>
+                  <div className="flex justify-between text-xs font-bold mb-1">
+                    <span className="text-slate-300">🦴 Applied Anatomy Progress</span>
+                    <span className="text-teal-400">{anatStatus?.completedCount || 0} / 12 Units Passed</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-teal-500 rounded-full"
+                      style={{ width: `${Math.max(5, anatStatus?.completionPercent || 0)}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-bold mb-1">
+                    <span className="text-slate-300">⚡ Applied Physiology Progress</span>
+                    <span className="text-sky-400">{physStatus?.completedCount || 0} / 12 Units Passed</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-sky-500 rounded-full"
+                      style={{ width: `${Math.max(5, physStatus?.completionPercent || 0)}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-bold mb-1">
+                    <span className="text-slate-300">🧬 Applied Biochemistry Progress</span>
+                    <span className="text-emerald-400">{biochemStatus?.completedCount || 0} / 7 Units Passed</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-emerald-500 rounded-full"
+                      style={{ width: `${Math.max(5, biochemStatus?.completionPercent || 0)}%` }}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex justify-between text-xs font-bold mb-1">
+                    <span className="text-slate-300">🥗 Applied Nutrition & Dietetics Progress</span>
+                    <span className="text-amber-400">{nutStatus?.completedCount || 0} / 10 Units Passed</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-amber-500 rounded-full"
+                      style={{ width: `${Math.max(5, nutStatus?.completionPercent || 0)}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons: Home, Back, Syllabus, Quiz */}
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <button
+                  onClick={() => navigate('/')}
+                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <HomeIcon className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Home</span>
+                </button>
+
+                <button
+                  onClick={() => navigate(-1)}
+                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" />
+                  <span>Back</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/syllabus')}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-xs shadow-md shadow-emerald-500/25 transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <BookOpen className="w-3.5 h-3.5" />
+                  <span>Go to Syllabus Modules</span>
+                </button>
+
+                <button
+                  onClick={() => navigate('/quiz/phys-unit-1')}
+                  className="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
+                >
+                  <span>Take Unit 1 Quiz</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
+
+              {/* Instant Evaluation / Preview Bypass */}
+              <div className="mt-6 pt-4 border-t border-white/10 text-center">
+                <button
+                  onClick={() => setPreviewOverride(true)}
+                  className="text-[11px] text-slate-400 hover:text-emerald-400 underline transition-colors cursor-pointer"
+                >
+                  Examiner / Demo Evaluation: Unlock Question Bank Preview
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // UNLOCKED VIEW: Display Question Bank Repository
   return (
     <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-emerald-50 text-slate-900 pb-20">
       <Navbar />
 
-      {/* Top Breadcrumb Bar */}
+      {/* Top Breadcrumb & Action Bar with Back & Home */}
       <div className="bg-slate-900/95 border-b border-slate-800 py-2.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <Link
-            to="/bio-chem-syllabus"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-emerald-400 transition-colors cursor-pointer group"
-          >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-emerald-400" />
-            <span>Back to Full Syllabus</span>
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => navigate(-1)}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              <span>Back</span>
+            </button>
+            <button
+              onClick={() => navigate('/')}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+            >
+              <HomeIcon className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Home</span>
+            </button>
+            <Link
+              to="/syllabus"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer ml-1"
+            >
+              <BookOpen className="w-3.5 h-3.5 text-sky-400" />
+              <span>Syllabus Hub</span>
+            </Link>
+          </div>
+
           <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-400">
             <span>Nursing & Clinical Hub</span>
             <span>/</span>
-            <span className="text-emerald-400">Official Question Bank</span>
+            <span className="text-emerald-400 font-bold">Official Question Bank</span>
           </div>
         </div>
       </div>
@@ -128,7 +352,7 @@ const QuestionBankView = () => {
               <span>Official University & NCLEX Question Repository</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-              Biochemistry Comprehensive Question Bank
+              Nursing Comprehensive Question Bank
             </h1>
             <p className="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
               Curated repository of Short Answer Questions (5 Marks), Very Short / Viva Voce Questions (2 Marks), and Multiple Choice Practice Questions with model key points.
@@ -218,18 +442,17 @@ const QuestionBankView = () => {
             </div>
           </div>
 
-          {/* Curriculum Filter Selector */}
-          <div className="flex items-center gap-2 pt-2 border-t border-slate-100 flex-wrap">
-            <span className="text-xs font-bold text-slate-500 mr-1 flex items-center gap-1 shrink-0">
-              <Filter className="w-3 h-3 text-emerald-600" /> Curriculum:
+          {/* Unit Selector Pills */}
+          <div className="pt-2 border-t border-slate-100 flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none text-xs">
+            <span className="font-bold text-slate-400 text-[11px] uppercase tracking-wider shrink-0 flex items-center gap-1">
+              <Filter className="w-3 h-3" />
+              Track:
             </span>
             <button
-              onClick={() => {
-                setSelectedUnit("all");
-              }}
-              className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer ${
+              onClick={() => setSelectedUnit("all")}
+              className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 selectedUnit === "all"
-                  ? "bg-slate-950 text-white shadow-xs"
+                  ? "bg-emerald-500 text-white"
                   : "bg-slate-100 text-slate-600 hover:bg-slate-200"
               }`}
             >
@@ -237,157 +460,113 @@ const QuestionBankView = () => {
             </button>
             <button
               onClick={() => setSelectedUnit("curriculum-anatomy")}
-              className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 ${
+              className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 selectedUnit === "curriculum-anatomy"
-                  ? "bg-teal-600 text-white shadow-xs"
-                  : "bg-teal-50 text-teal-800 hover:bg-teal-100"
+                  ? "bg-teal-600 text-white"
+                  : "bg-teal-50 text-teal-700 hover:bg-teal-100"
               }`}
             >
-              <span>🦴</span>
-              <span>Applied Anatomy (12 Units)</span>
+              🦴 Applied Anatomy (12 Units)
             </button>
             <button
               onClick={() => setSelectedUnit("curriculum-physiology")}
-              className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 ${
+              className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 selectedUnit === "curriculum-physiology"
-                  ? "bg-sky-600 text-white shadow-xs"
-                  : "bg-sky-50 text-sky-800 hover:bg-sky-100"
+                  ? "bg-sky-600 text-white"
+                  : "bg-sky-50 text-sky-700 hover:bg-sky-100"
               }`}
             >
-              <span>⚡</span>
-              <span>Applied Physiology (12 Units)</span>
+              ⚡ Applied Physiology (12 Units)
             </button>
             <button
               onClick={() => setSelectedUnit("curriculum-biochem")}
-              className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 ${
+              className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 selectedUnit === "curriculum-biochem"
-                  ? "bg-emerald-600 text-white shadow-xs"
+                  ? "bg-emerald-600 text-white"
                   : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
               }`}
             >
-              <span>🧬</span>
-              <span>Biochemistry (8 Units)</span>
+              🧬 Biochemistry (7 Units)
             </button>
             <button
               onClick={() => setSelectedUnit("curriculum-nutrition")}
-              className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 ${
+              className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 selectedUnit === "curriculum-nutrition"
-                  ? "bg-amber-500 text-slate-950 shadow-xs"
-                  : "bg-amber-50 text-amber-800 hover:bg-amber-100"
+                  ? "bg-amber-600 text-white"
+                  : "bg-amber-50 text-amber-700 hover:bg-amber-100"
               }`}
             >
-              <span>🥗</span>
-              <span>Nutrition & Dietetics (10 Units)</span>
+              🥗 Nutrition (10 Units)
             </button>
           </div>
-
-          {/* Unit Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pt-2 border-t border-slate-100 scrollbar-none">
-            <span className="text-xs font-bold text-slate-400 mr-1 flex items-center gap-1 shrink-0">
-              Unit:
-            </span>
-            {QUESTION_BANK_UNITS.map((u) => (
-              <button
-                key={u.id}
-                onClick={() => setSelectedUnit(u.id)}
-                className={`px-3 py-1 rounded-full text-[11px] font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1 ${
-                  selectedUnit === u.id
-                    ? "bg-slate-900 text-white"
-                    : u.curriculum === "nutrition"
-                    ? "bg-amber-50/70 text-amber-900 hover:bg-amber-100 border border-amber-200/50"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
-              >
-                <span>{u.icon}</span>
-                <span>{u.name}</span>
-              </button>
-            ))}
-          </div>
         </div>
 
-        {/* Total Questions Found Bar */}
-        <div className="flex items-center justify-between mt-4 px-2 text-xs font-bold text-slate-500">
-          <span>Showing {totalQuestionsCount} Questions</span>
-          <Link
-            to="/bio-chem-syllabus"
-            className="text-emerald-600 hover:text-emerald-700 underline flex items-center gap-1"
-          >
-            <span>View Curriculum Modules</span>
-            <ArrowRight className="w-3 h-3" />
-          </Link>
+        {/* Results Counter Bar */}
+        <div className="flex items-center justify-between mt-6 mb-4 px-1">
+          <p className="text-xs font-bold text-slate-500">
+            Displaying <span className="text-slate-900 font-extrabold">{totalQuestionsCount}</span> verified curriculum questions
+          </p>
         </div>
 
-        {/* Questions Listing */}
-        <div className="mt-6 space-y-6">
-          {/* 1. Short Questions Section */}
+        {/* Question Sections Container */}
+        <div className="space-y-8">
+          {/* 1. Short Questions (5 Marks) Section */}
           {(selectedType === "all" || selectedType === "short") && filteredShort.length > 0 && (
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-xs">
+                <div className="w-7 h-7 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs">
                   5M
                 </div>
                 <h3 className="text-base font-extrabold text-slate-900">
-                  Short Answer Questions (5 Marks Each) — {filteredShort.length} Questions
+                  Short Answer Questions (5 Marks) — {filteredShort.length} Questions
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 gap-3.5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredShort.map((q) => {
                   const isRevealed = !!revealedAnswers[q.id];
                   return (
                     <div
                       key={q.id}
-                      className="bg-white border border-slate-200 rounded-2xl p-4 sm:p-5 shadow-2xs hover:border-emerald-300 transition-all"
+                      className="bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs hover:border-emerald-300 transition-all flex flex-col justify-between"
                     >
-                      <div className="flex items-start justify-between gap-4">
-                        <div className="flex items-start gap-3">
-                          <span className="w-6 h-6 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center justify-center text-[10px] font-extrabold shrink-0 mt-0.5">
-                            Q{q.srNo}
+                      <div>
+                        <div className="flex items-center justify-between gap-2 mb-2">
+                          <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-extrabold">
+                            Q{q.srNo} • {q.topic}
                           </span>
-                          <div>
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 text-[10px] font-bold">
-                                {q.topic}
-                              </span>
-                              <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-extrabold">
-                                Short Answer (5M)
-                              </span>
-                            </div>
-                            <h4 className="text-sm font-bold text-slate-900 leading-snug">
-                              {q.question}
-                            </h4>
-                          </div>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
+                            5 Marks
+                          </span>
                         </div>
-
-                        <button
-                          onClick={() => toggleAnswer(q.id)}
-                          className="shrink-0 p-2 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-600 hover:text-emerald-700 text-xs font-bold transition-all flex items-center gap-1 cursor-pointer"
-                        >
-                          <span>{isRevealed ? "Hide" : "Model Answer"}</span>
-                          <ChevronDown
-                            className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                              isRevealed ? "rotate-180" : ""
-                            }`}
-                          />
-                        </button>
+                        <h4 className="text-sm font-bold text-slate-900 leading-snug">
+                          {q.question}
+                        </h4>
                       </div>
 
-                      {isRevealed && (
-                        <div className="mt-4 pt-3.5 border-t border-slate-100 bg-slate-50/70 p-4 rounded-xl space-y-2 animate-in fade-in duration-200">
-                          <p className="text-[11px] font-extrabold uppercase tracking-wide text-emerald-700 flex items-center gap-1.5">
-                            <CheckCircle2 className="w-3.5 h-3.5" />
-                            <span>Key Exam Points & Model Response:</span>
-                          </p>
-                          <ul className="space-y-1.5 text-xs text-slate-700 font-medium pl-2">
-                            {q.answerKeyPoints.map((pt, idx) => (
-                              <li key={idx} className="flex items-start gap-2">
-                                <span className="text-emerald-500 font-bold">•</span>
-                                <span className="leading-relaxed">{pt}</span>
-                              </li>
+                      <div className="mt-4 pt-3 border-t border-slate-100">
+                        <button
+                          onClick={() => toggleAnswer(q.id)}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-800 cursor-pointer"
+                        >
+                          {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                          <span>{isRevealed ? "Hide Model Answer" : "View Model Key Points"}</span>
+                        </button>
+
+                        {isRevealed && (
+                          <div className="mt-3 p-3.5 bg-slate-50 border border-slate-100 rounded-2xl text-xs space-y-1.5 animate-in fade-in duration-150">
+                            <p className="font-extrabold text-slate-700 text-[11px] uppercase tracking-wider mb-1">
+                              Model Key Points & Examination Breakdown:
+                            </p>
+                            {q.answerKeyPoints?.map((pt, i) => (
+                              <div key={i} className="flex items-start gap-2 text-slate-600 text-xs">
+                                <span className="text-emerald-500 font-bold shrink-0">•</span>
+                                <span>{pt}</span>
+                              </div>
                             ))}
-                          </ul>
-                        </div>
-                      )}
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
@@ -395,51 +574,56 @@ const QuestionBankView = () => {
             </div>
           )}
 
-          {/* 2. Very Short Questions Section */}
+          {/* 2. Very Short Questions (2 Marks) Section */}
           {(selectedType === "all" || selectedType === "veryshort") && filteredVeryShort.length > 0 && (
             <div className="space-y-4 pt-4">
               <div className="flex items-center gap-2">
-                <div className="w-7 h-7 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center font-bold text-xs">
+                <div className="w-7 h-7 rounded-xl bg-sky-100 text-sky-800 flex items-center justify-center font-bold text-xs">
                   2M
                 </div>
                 <h3 className="text-base font-extrabold text-slate-900">
-                  Very Short Answer / Viva Voce Questions (2 Marks Each) — {filteredVeryShort.length} Questions
+                  Very Short / Viva Voce Questions (2 Marks) — {filteredVeryShort.length} Questions
                 </h3>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {filteredVeryShort.map((q) => {
                   const isRevealed = !!revealedAnswers[q.id];
                   return (
                     <div
                       key={q.id}
-                      className="bg-white border border-slate-200 rounded-2xl p-4 shadow-2xs hover:border-sky-300 transition-all flex flex-col justify-between"
+                      className="bg-white border border-slate-200 rounded-3xl p-5 shadow-2xs hover:border-sky-300 transition-all flex flex-col justify-between"
                     >
                       <div>
                         <div className="flex items-center justify-between gap-2 mb-2">
-                          <span className="w-6 h-6 rounded-full bg-sky-50 text-sky-700 border border-sky-200 flex items-center justify-center text-[10px] font-extrabold shrink-0">
+                          <span className="px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-extrabold">
                             Q{q.srNo}
                           </span>
-                          <button
-                            onClick={() => toggleAnswer(q.id)}
-                            className="text-[11px] font-bold text-sky-600 hover:text-sky-700 cursor-pointer"
-                          >
-                            {isRevealed ? "Hide Answer" : "Show Answer"}
-                          </button>
+                          <span className="text-[10px] font-extrabold uppercase tracking-wider text-sky-600 bg-sky-50 px-2 py-0.5 rounded-full">
+                            2 Marks
+                          </span>
                         </div>
-                        <h4 className="text-xs font-bold text-slate-900 leading-snug">
+                        <h4 className="text-sm font-bold text-slate-900 leading-snug">
                           {q.question}
                         </h4>
                       </div>
 
-                      {isRevealed && (
-                        <div className="mt-3 pt-2.5 border-t border-slate-100 bg-sky-50/50 p-3 rounded-xl animate-in fade-in duration-200">
-                          <p className="text-[11px] text-sky-900 font-semibold leading-relaxed">
-                            <span className="font-bold text-sky-700">Answer: </span>
-                            {q.answer}
-                          </p>
-                        </div>
-                      )}
+                      <div className="mt-4 pt-3 border-t border-slate-100">
+                        <button
+                          onClick={() => toggleAnswer(q.id)}
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-sky-700 hover:text-sky-800 cursor-pointer"
+                        >
+                          {isRevealed ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                          <span>{isRevealed ? "Hide Answer" : "Reveal Answer"}</span>
+                        </button>
+
+                        {isRevealed && (
+                          <div className="mt-3 p-3.5 bg-sky-50/50 border border-sky-100 rounded-2xl text-xs animate-in fade-in duration-150">
+                            <span className="font-extrabold text-sky-900">Model Answer: </span>
+                            <span className="text-slate-700">{q.answer}</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   );
                 })}
@@ -479,8 +663,8 @@ const QuestionBankView = () => {
                         </h4>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-xs">
-                          {q.options.map((opt, i) => {
-                            const isCorrect = opt.trim().toLowerCase() === q.correctOption.trim().toLowerCase();
+                          {q.options?.map((opt, i) => {
+                            const isCorrect = q.correctOption && opt && opt.trim().toLowerCase() === q.correctOption.trim().toLowerCase();
                             return (
                               <div
                                 key={i}

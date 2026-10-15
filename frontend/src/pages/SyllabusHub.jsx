@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import { ANATOMY_UNITS } from "../constants/anatomyData";
 import { PHYSIOLOGY_UNITS } from "../constants/physiologyData";
@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 
 const SyllabusHub = () => {
+  const navigate = useNavigate();
   const [activeSubject, setActiveSubject] = useState("all"); // 'all' | 'anatomy' | 'physiology' | 'biochem' | 'nutrition'
 
   const biochemUnits = [
@@ -34,9 +35,8 @@ const SyllabusHub = () => {
     { number: 3, title: "Proteins & Amino Acids", lessons: 4, icon: "🥩", color: "from-amber-500 to-orange-600", desc: "Structure, Zwitterions, Essential Amino Acids, Urea Cycle, Hyperammonemia." },
     { number: 4, title: "Clinical Enzymology & MI", lessons: 3, icon: "⚡", color: "from-purple-500 to-indigo-600", desc: "Enzyme Kinetics, Inhibitors, Isoenzymes, Cardiac Biomarkers (Troponins, CK-MB, LDH)." },
     { number: 5, title: "Acid-Base Balance & Blood Buffers", lessons: 3, icon: "⚖️", color: "from-rose-500 to-pink-600", desc: "Bicarbonate Buffer, Henderson-Hasselbalch, Respiratory/Renal mechanisms, Anion Gap." },
-    { number: 6, title: "Heme Catabolism & Jaundice", lessons: 3, icon: "🩸", color: "from-red-500 to-rose-600", desc: "Heme degradation, Bilirubin metabolism, Differential diagnosis of Pre/Hepatic/Post Jaundice." },
-    { number: 7, title: "Organ Function Tests", lessons: 3, icon: "🔬", color: "from-cyan-500 to-teal-600", desc: "Renal Clearance (CrCl, GFR), Liver Function Tests (LFTs), Thyroid Profiles (T3/T4/TSH)." },
-    { number: 8, title: "Immunochemistry & Immunoassays", lessons: 3, icon: "🛡️", color: "from-violet-500 to-purple-600", desc: "Immunoglobulins (IgG/IgM/IgA/IgE/IgD), Antigen-Antibody reactions, ELISA principles." }
+    { number: 6, title: "Heme Catabolism & Renal Function", lessons: 3, icon: "🩸", color: "from-teal-500 to-emerald-600", desc: "Heme degradation, Bilirubin metabolism, Pre/Hepatic/Post Jaundice, Creatinine Clearance & GFR." },
+    { number: 7, title: "Immunochemistry & ELISA", lessons: 3, icon: "🛡️", color: "from-cyan-500 to-blue-600", desc: "5 Immunoglobulin classes (IgG/A/M/E/D), Antigen-Antibody reactions, Direct/Indirect/Sandwich ELISA." }
   ];
 
   const nutritionUnits = [
@@ -117,7 +117,7 @@ const SyllabusHub = () => {
               }`}
             >
               <Dna className="w-3.5 h-3.5 text-emerald-300" />
-              <span>Biochemistry (8 Units)</span>
+              <span>Biochemistry (7 Units)</span>
             </button>
 
             <button
@@ -149,10 +149,13 @@ const SyllabusHub = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* TRACK 1: APPLIED ANATOMY */}
           {(activeSubject === "all" || activeSubject === "anatomy") && (
-            <div className="bg-white rounded-3xl border-2 border-teal-500/30 hover:border-teal-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+            <div
+              onClick={() => navigate("/anatomy-syllabus")}
+              className="bg-white rounded-3xl border-2 border-teal-500/30 hover:border-teal-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group cursor-pointer"
+            >
               <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-teal-500/25 group-hover:scale-105 transition-transform">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-teal-500/25 group-hover:scale-110 transition-transform">
                     🦴
                   </div>
                   <span className="px-3 py-1 rounded-full bg-teal-100 text-teal-800 font-extrabold text-xs uppercase tracking-wider border border-teal-200">
@@ -187,23 +190,25 @@ const SyllabusHub = () => {
                 <span className="text-xs font-bold text-slate-500">
                   Includes 199+ Labeled Anatomical Diagrams
                 </span>
-                <Link
-                  to="/anatomy-syllabus"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs shadow-md shadow-teal-500/25 group-hover:translate-x-0.5 transition-all cursor-pointer"
+                <div
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs shadow-md shadow-teal-500/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Anatomy Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </div>
               </div>
             </div>
           )}
 
           {/* TRACK 2: APPLIED PHYSIOLOGY */}
           {(activeSubject === "all" || activeSubject === "physiology") && (
-            <div className="bg-white rounded-3xl border-2 border-sky-500/30 hover:border-sky-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+            <div
+              onClick={() => navigate("/physiology-syllabus")}
+              className="bg-white rounded-3xl border-2 border-sky-500/30 hover:border-sky-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group cursor-pointer"
+            >
               <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-sky-500/25 group-hover:scale-105 transition-transform">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-sky-500/25 group-hover:scale-110 transition-transform">
                     ⚡
                   </div>
                   <span className="px-3 py-1 rounded-full bg-sky-100 text-sky-800 font-extrabold text-xs uppercase tracking-wider border border-sky-200">
@@ -238,23 +243,25 @@ const SyllabusHub = () => {
                 <span className="text-xs font-bold text-slate-500">
                   Includes 1,024 Verified CBME MCQs
                 </span>
-                <Link
-                  to="/physiology-syllabus"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-500/25 group-hover:translate-x-0.5 transition-all cursor-pointer"
+                <div
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-500/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Physiology Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </div>
               </div>
             </div>
           )}
 
           {/* TRACK 3: APPLIED BIOCHEMISTRY */}
           {(activeSubject === "all" || activeSubject === "biochem") && (
-            <div className="bg-white rounded-3xl border-2 border-emerald-500/30 hover:border-emerald-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+            <div
+              onClick={() => navigate("/bio-chem-syllabus")}
+              className="bg-white rounded-3xl border-2 border-emerald-500/30 hover:border-emerald-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group cursor-pointer"
+            >
               <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-emerald-500/25 group-hover:scale-105 transition-transform">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-emerald-500/25 group-hover:scale-110 transition-transform">
                     🧬
                   </div>
                   <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 font-extrabold text-xs uppercase tracking-wider border border-emerald-200">
@@ -289,23 +296,25 @@ const SyllabusHub = () => {
                 <span className="text-xs font-bold text-slate-500">
                   Includes Interactive Diagnostic Simulators
                 </span>
-                <Link
-                  to="/bio-chem-syllabus"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md shadow-emerald-500/25 group-hover:translate-x-0.5 transition-all cursor-pointer"
+                <div
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-md shadow-emerald-500/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Biochemistry Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </div>
               </div>
             </div>
           )}
 
           {/* TRACK 4: APPLIED NUTRITION & DIETETICS */}
           {(activeSubject === "all" || activeSubject === "nutrition") && (
-            <div className="bg-white rounded-3xl border-2 border-amber-500/30 hover:border-amber-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group">
+            <div
+              onClick={() => navigate("/nutrition-syllabus")}
+              className="bg-white rounded-3xl border-2 border-amber-500/30 hover:border-amber-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group cursor-pointer"
+            >
               <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-emerald-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-amber-500/25 group-hover:scale-105 transition-transform">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-amber-500 to-emerald-600 text-white flex items-center justify-center text-3xl shadow-lg shadow-amber-500/25 group-hover:scale-110 transition-transform">
                     🥗
                   </div>
                   <span className="px-3 py-1 rounded-full bg-amber-100 text-amber-800 font-extrabold text-xs uppercase tracking-wider border border-amber-200">
@@ -340,13 +349,12 @@ const SyllabusHub = () => {
                 <span className="text-xs font-bold text-slate-500">
                   Includes 99 Official University Q&As
                 </span>
-                <Link
-                  to="/nutrition-syllabus"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shadow-md shadow-amber-500/25 group-hover:translate-x-0.5 transition-all cursor-pointer"
+                <div
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs shadow-md shadow-amber-500/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Nutrition Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
-                </Link>
+                </div>
               </div>
             </div>
           )}

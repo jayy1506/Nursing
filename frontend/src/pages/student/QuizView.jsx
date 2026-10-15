@@ -30,7 +30,11 @@ export const QuizView = () => {
   // Load assessment data dynamically
   const assessmentData = getAssessmentByTopic(topicId);
   const questions = assessmentData?.questions || [];
-  const subject = assessmentData?.subject || (topicId?.includes('phys') ? 'physiology' : 'anatomy');
+  const subject = assessmentData?.subject || (
+    topicId?.includes('phys') ? 'physiology' :
+    (topicId?.includes('nut') ? 'nutrition' :
+    (topicId?.includes('carb') || topicId?.includes('lipid') || topicId?.includes('protein') || topicId?.includes('enzyme') || topicId?.includes('biochem') ? 'biochemistry' : 'anatomy'))
+  );
 
   // Gating status
   const gating = getStudentGatingStatus(subject);
@@ -161,7 +165,7 @@ export const QuizView = () => {
           </h1>
 
           <p className="text-slate-600 text-xs sm:text-sm max-w-lg mx-auto leading-relaxed mb-6">
-            Under official Indian Nursing Council (INC) CBME standards, the Comprehensive Grand Final is locked until you have completed and passed all 12 units with minimum 75% score.
+            Under official Indian Nursing Council (INC) CBME standards, the Comprehensive Grand Final is locked until you have completed and passed all {gating.totalUnits} units with minimum 75% score.
           </p>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm mb-8 text-left space-y-4">
@@ -180,15 +184,33 @@ export const QuizView = () => {
             </p>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              to={subject === 'physiology' ? '/physiology-syllabus' : '/anatomy-syllabus'}
-              className="w-full sm:w-auto px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-md transition-all inline-flex items-center justify-center gap-2"
-            >
-              <span>Return to {subject === 'physiology' ? 'Physiology' : 'Anatomy'} Syllabus</span>
-              <ChevronRight className="w-4 h-4" />
-            </Link>
-          </div>
+          {(() => {
+            const syllabusRoutes = {
+              physiology: { path: '/physiology-syllabus', name: 'Physiology' },
+              anatomy: { path: '/anatomy-syllabus', name: 'Anatomy' },
+              biochemistry: { path: '/bio-chem-syllabus', name: 'Biochemistry' },
+              nutrition: { path: '/nutrition-syllabus', name: 'Nutrition' }
+            };
+            const target = syllabusRoutes[subject] || { path: '/syllabus', name: 'Syllabus' };
+
+            return (
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <Link
+                  to={target.path}
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-md transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>Return to {target.name} Syllabus</span>
+                  <ChevronRight className="w-4 h-4" />
+                </Link>
+                <Link
+                  to="/syllabus"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                >
+                  <span>All Syllabi Hub</span>
+                </Link>
+              </div>
+            );
+          })()}
         </div>
       </div>
     );

@@ -24,6 +24,108 @@ const nutritionVeryShortFrom99 = NUTRITION_99_QUESTIONS.filter(q => q.type === "
   answer: q.answer || (q.answerKeyPoints ? q.answerKeyPoints.join(" ") : "")
 }));
 
+// =========================================================================
+// --- APPLIED ANATOMY & PHYSIOLOGY QUESTION BANK EXTRACTORS ---
+// =========================================================================
+
+export const ANATOMY_OFFICIAL_MCQS = [];
+export const ANATOMY_DESCRIPTIVE_QUESTIONS = [];
+export const ANATOMY_VERY_SHORT_QUESTIONS = [];
+
+Object.values(ANATOMY_CHAPTERS).forEach(ch => {
+  if (ch.mcqs) {
+    ch.mcqs.forEach((m) => {
+      ANATOMY_OFFICIAL_MCQS.push({
+        id: m.id,
+        unit: ch.id,
+        curriculum: "anatomy",
+        topic: ch.title,
+        question: m.question,
+        options: [m.correctAnswer],
+        correctOption: m.correctAnswer,
+        explanation: `CBME Verified Anatomy MCQ for ${ch.title} (${m.subtopic || 'General'}).`
+      });
+    });
+  }
+
+  if (ch.subjectiveQuestions) {
+    ch.subjectiveQuestions.forEach((sq) => {
+      if (sq.type === "Very Short" || sq.marks <= 2) {
+        ANATOMY_VERY_SHORT_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "anatomy",
+          type: "Very Short",
+          question: sq.question,
+          answer: `Review detailed anatomical relations in Chapter: ${ch.title}.`
+        });
+      } else {
+        ANATOMY_DESCRIPTIVE_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "anatomy",
+          type: sq.type || "Short",
+          topic: ch.title,
+          question: sq.question,
+          answerKeyPoints: [
+            `Official INC University Exam Question (${sq.marks} Marks).`,
+            `Refer to Unit ${ch.unitNumber}: ${ch.title} histological and gross anatomy sections.`
+          ]
+        });
+      }
+    });
+  }
+});
+
+export const PHYSIOLOGY_OFFICIAL_MCQS = [];
+export const PHYSIOLOGY_DESCRIPTIVE_QUESTIONS = [];
+export const PHYSIOLOGY_VERY_SHORT_QUESTIONS = [];
+
+Object.values(PHYSIOLOGY_CHAPTERS).forEach(ch => {
+  if (ch.mcqs) {
+    ch.mcqs.forEach((m) => {
+      PHYSIOLOGY_OFFICIAL_MCQS.push({
+        id: m.id,
+        unit: ch.id,
+        curriculum: "physiology",
+        topic: ch.title,
+        question: m.question,
+        options: [m.correctAnswer],
+        correctOption: m.correctAnswer,
+        explanation: `CBME Verified Physiology MCQ for ${ch.title} (${m.subtopic || 'General'}).`
+      });
+    });
+  }
+
+  if (ch.subjectiveQuestions) {
+    ch.subjectiveQuestions.forEach((sq) => {
+      if (sq.type === "Very Short" || sq.marks <= 2) {
+        PHYSIOLOGY_VERY_SHORT_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "physiology",
+          type: "Very Short",
+          question: sq.question,
+          answer: `Review physiological regulatory mechanisms in Chapter: ${ch.title}.`
+        });
+      } else {
+        PHYSIOLOGY_DESCRIPTIVE_QUESTIONS.push({
+          id: sq.id,
+          unit: ch.id,
+          curriculum: "physiology",
+          type: sq.type || "Short",
+          topic: ch.title,
+          question: sq.question,
+          answerKeyPoints: [
+            `Official INC University Exam Question (${sq.marks} Marks).`,
+            `Refer to Unit ${ch.unitNumber}: ${ch.title} physiological regulation and negative feedback loops.`
+          ]
+        });
+      }
+    });
+  }
+});
+
 // Official Curriculum Question Bank for Nursing Biochemistry & Nutrition-Dietetics
 // Contains Short Questions (5 Marks), Very Short Questions (2 Marks), and Multiple Choice Questions (MCQs) for all Curriculum Units.
 
@@ -979,105 +1081,3 @@ export const OFFICIAL_MCQS = [
   { id: "MCQ-198", srNo: 198, unit: "unit-2-lipids", topic: "II Lipids", question: "Beta-oxidation of fatty acids occurs in the", options: ["Peroxisome", "Nucleus", "Mitochondria", "Lysosomes"], correctOption: "Mitochondria" }
 ];
 
-
-// =========================================================================
-// --- APPLIED ANATOMY & PHYSIOLOGY QUESTION BANK EXTRACTORS ---
-// =========================================================================
-
-export const ANATOMY_OFFICIAL_MCQS = [];
-export const ANATOMY_DESCRIPTIVE_QUESTIONS = [];
-export const ANATOMY_VERY_SHORT_QUESTIONS = [];
-
-Object.values(ANATOMY_CHAPTERS).forEach(ch => {
-  if (ch.mcqs) {
-    ch.mcqs.forEach((m) => {
-      ANATOMY_OFFICIAL_MCQS.push({
-        id: m.id,
-        unit: ch.id,
-        curriculum: "anatomy",
-        topic: ch.title,
-        question: m.question,
-        options: [m.correctAnswer],
-        correctOption: m.correctAnswer,
-        explanation: `CBME Verified Anatomy MCQ for ${ch.title} (${m.subtopic || 'General'}).`
-      });
-    });
-  }
-
-  if (ch.subjectiveQuestions) {
-    ch.subjectiveQuestions.forEach((sq) => {
-      if (sq.type === "Very Short" || sq.marks <= 2) {
-        ANATOMY_VERY_SHORT_QUESTIONS.push({
-          id: sq.id,
-          unit: ch.id,
-          curriculum: "anatomy",
-          type: "Very Short",
-          question: sq.question,
-          answer: `Review detailed anatomical relations in Chapter: ${ch.title}.`
-        });
-      } else {
-        ANATOMY_DESCRIPTIVE_QUESTIONS.push({
-          id: sq.id,
-          unit: ch.id,
-          curriculum: "anatomy",
-          type: sq.type || "Short",
-          topic: ch.title,
-          question: sq.question,
-          answerKeyPoints: [
-            `Official INC University Exam Question (${sq.marks} Marks).`,
-            `Refer to Unit ${ch.unitNumber}: ${ch.title} histological and gross anatomy sections.`
-          ]
-        });
-      }
-    });
-  }
-});
-
-export const PHYSIOLOGY_OFFICIAL_MCQS = [];
-export const PHYSIOLOGY_DESCRIPTIVE_QUESTIONS = [];
-export const PHYSIOLOGY_VERY_SHORT_QUESTIONS = [];
-
-Object.values(PHYSIOLOGY_CHAPTERS).forEach(ch => {
-  if (ch.mcqs) {
-    ch.mcqs.forEach((m) => {
-      PHYSIOLOGY_OFFICIAL_MCQS.push({
-        id: m.id,
-        unit: ch.id,
-        curriculum: "physiology",
-        topic: ch.title,
-        question: m.question,
-        options: [m.correctAnswer],
-        correctOption: m.correctAnswer,
-        explanation: `CBME Verified Physiology MCQ for ${ch.title} (${m.subtopic || 'General'}).`
-      });
-    });
-  }
-
-  if (ch.subjectiveQuestions) {
-    ch.subjectiveQuestions.forEach((sq) => {
-      if (sq.type === "Very Short" || sq.marks <= 2) {
-        PHYSIOLOGY_VERY_SHORT_QUESTIONS.push({
-          id: sq.id,
-          unit: ch.id,
-          curriculum: "physiology",
-          type: "Very Short",
-          question: sq.question,
-          answer: `Review physiological regulatory mechanisms in Chapter: ${ch.title}.`
-        });
-      } else {
-        PHYSIOLOGY_DESCRIPTIVE_QUESTIONS.push({
-          id: sq.id,
-          unit: ch.id,
-          curriculum: "physiology",
-          type: sq.type || "Short",
-          topic: ch.title,
-          question: sq.question,
-          answerKeyPoints: [
-            `Official INC University Exam Question (${sq.marks} Marks).`,
-            `Refer to Unit ${ch.unitNumber}: ${ch.title} physiological regulation and negative feedback loops.`
-          ]
-        });
-      }
-    });
-  }
-});

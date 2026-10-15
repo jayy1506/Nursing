@@ -118,66 +118,86 @@ export const StudentResults = () => {
         </div>
 
         {/* Course Completion & Grand Final Unlocking Card */}
-        <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm mb-8 space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <TrendingUp className="w-5 h-5 text-sky-600" />
-              <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
-                {subject === 'physiology' ? 'Physiology' : 'Anatomy'} Curriculum Mastery
-              </h3>
-            </div>
-            <span className="text-xs font-black text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">
-              {gating.completedCount} / {gating.totalUnits} Units Completed ({gating.completionPercent}%)
-            </span>
-          </div>
+        {(() => {
+          const subjectNameMap = {
+            physiology: 'Applied Physiology',
+            anatomy: 'Applied Anatomy',
+            biochemistry: 'Applied Biochemistry',
+            nutrition: 'Applied Nutrition & Dietetics'
+          };
+          const subjectDisplayName = subjectNameMap[subject] || 'Curriculum';
 
-          <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
-            <div
-              className="bg-gradient-to-r from-sky-500 to-indigo-600 h-3 rounded-full transition-all duration-500"
-              style={{ width: `${gating.completionPercent}%` }}
-            />
-          </div>
+          const grandFinalSlugMap = {
+            physiology: 'physiology-grand-final',
+            anatomy: 'anatomy-grand-final',
+            biochemistry: 'biochem-grand-final',
+            nutrition: 'nutrition-grand-final'
+          };
+          const grandFinalSlug = grandFinalSlugMap[subject] || `${subject}-grand-final`;
 
-          {/* Grand Final Lock Status Callout */}
-          <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${
-            gating.isFinalUnlocked
-              ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950'
-              : 'bg-slate-50 border-slate-200 text-slate-700'
-          }`}>
-            <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                gating.isFinalUnlocked ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'
+          return (
+            <div className="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm mb-8 space-y-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <TrendingUp className="w-5 h-5 text-sky-600" />
+                  <h3 className="text-sm font-black text-slate-900 uppercase tracking-wider">
+                    {subjectDisplayName} Curriculum Mastery
+                  </h3>
+                </div>
+                <span className="text-xs font-black text-sky-700 bg-sky-50 px-2.5 py-1 rounded-full border border-sky-200">
+                  {gating.completedCount} / {gating.totalUnits} Units Completed ({gating.completionPercent}%)
+                </span>
+              </div>
+
+              <div className="w-full bg-slate-100 rounded-full h-3 overflow-hidden">
+                <div
+                  className="bg-gradient-to-r from-sky-500 to-indigo-600 h-3 rounded-full transition-all duration-500"
+                  style={{ width: `${gating.completionPercent}%` }}
+                />
+              </div>
+
+              {/* Grand Final Lock Status Callout */}
+              <div className={`p-4 rounded-2xl border flex items-center justify-between gap-4 ${
+                gating.isFinalUnlocked
+                  ? 'bg-emerald-50/80 border-emerald-300 text-emerald-950'
+                  : 'bg-slate-50 border-slate-200 text-slate-700'
               }`}>
-                {gating.isFinalUnlocked ? <Unlock className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
-              </div>
-              <div>
-                <h4 className="text-xs sm:text-sm font-extrabold text-slate-900">
-                  {gating.isFinalUnlocked
-                    ? '🎉 100% Course Completed! Grand Final Examination Unlocked'
-                    : 'Grand Final Comprehensive Assessment Locked'}
-                </h4>
-                <p className="text-[11px] text-slate-500">
-                  {gating.isFinalUnlocked
-                    ? 'You have completed all 12 modules. You are eligible to take the cumulative mixed exam.'
-                    : `Must achieve 100% completion across all 12 modules. Remaining: ${gating.remainingCount} modules.`}
-                </p>
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
+                    gating.isFinalUnlocked ? 'bg-emerald-500 text-white' : 'bg-slate-200 text-slate-500'
+                  }`}>
+                    {gating.isFinalUnlocked ? <Unlock className="w-5 h-5" /> : <Lock className="w-5 h-5" />}
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-extrabold text-slate-900">
+                      {gating.isFinalUnlocked
+                        ? '🎉 100% Course Completed! Grand Final Examination Unlocked'
+                        : 'Grand Final Comprehensive Assessment Locked'}
+                    </h4>
+                    <p className="text-[11px] text-slate-500">
+                      {gating.isFinalUnlocked
+                        ? `You have completed all ${gating.totalUnits} modules. You are eligible to take the cumulative mixed exam.`
+                        : `Must achieve 100% completion across all ${gating.totalUnits} modules. Remaining: ${gating.remainingCount} modules.`}
+                    </p>
+                  </div>
+                </div>
+
+                {gating.isFinalUnlocked ? (
+                  <Link
+                    to={`/quiz/${grandFinalSlug}`}
+                    className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 shadow-sm transition-all"
+                  >
+                    Take Grand Final →
+                  </Link>
+                ) : (
+                  <span className="text-[11px] font-bold text-slate-400 bg-slate-200/80 px-3 py-1.5 rounded-lg shrink-0">
+                    Locked (100% Needed)
+                  </span>
+                )}
               </div>
             </div>
-
-            {gating.isFinalUnlocked ? (
-              <Link
-                to={`/quiz/${subject}-grand-final`}
-                className="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shrink-0 shadow-sm transition-all"
-              >
-                Take Grand Final →
-              </Link>
-            ) : (
-              <span className="text-[11px] font-bold text-slate-400 bg-slate-200/80 px-3 py-1.5 rounded-lg shrink-0">
-                Locked (100% Needed)
-              </span>
-            )}
-          </div>
-        </div>
+          );
+        })()}
 
         {/* Question by Question Review Header */}
         <div className="flex items-center justify-between mb-4">

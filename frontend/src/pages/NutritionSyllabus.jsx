@@ -15,8 +15,11 @@ import {
   Layers,
   FileText,
   Apple,
-  Scale
+  Scale,
+  Lock,
+  Unlock
 } from "lucide-react";
+import { getStudentGatingStatus } from "../services/assessmentEngine";
 
 export const NutritionSyllabus = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -140,11 +143,11 @@ export const NutritionSyllabus = () => {
                 <span>Nutrition Question Bank</span>
               </Link>
               <Link
-                to="/student/quiz/comprehensive"
+                to="/quiz/nutrition-grand-final"
                 className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-bold text-xs shadow-sm shadow-amber-600/20 transition-all hover:-translate-y-0.5"
               >
                 <Award className="w-3.5 h-3.5 text-amber-100" />
-                <span>Comprehensive Dietetics Quiz</span>
+                <span>Grand Final Assessment (40 Qs)</span>
               </Link>
             </div>
           </div>
@@ -153,6 +156,85 @@ export const NutritionSyllabus = () => {
 
       {/* Main Interactive Workspace */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+        {/* Grand Final Mixed Assessment Gating Card */}
+        {(() => {
+          const gating = getStudentGatingStatus('nutrition');
+          return (
+            <div className={`p-6 sm:p-7 rounded-3xl border mb-6 transition-all ${
+              gating.isFinalUnlocked
+                ? 'bg-gradient-to-r from-emerald-500/10 via-amber-50 to-white border-emerald-300 shadow-sm'
+                : 'bg-gradient-to-r from-slate-900 via-slate-800 to-amber-950 text-white border-slate-700 shadow-lg'
+            }`}>
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+                <div className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                      gating.isFinalUnlocked
+                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
+                        : 'bg-slate-700/80 text-amber-300 border border-slate-600'
+                    }`}>
+                      {gating.isFinalUnlocked ? <Unlock className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5 text-amber-400" />}
+                      <span>{gating.isFinalUnlocked ? 'Grand Final Unlocked (100% Completed)' : 'Cumulative Final Exam Gated'}</span>
+                    </span>
+                    <span className="text-xs font-semibold text-slate-400">
+                      Minimum 75% Passing Standard
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg sm:text-xl font-black">
+                    Comprehensive Nutrition & Dietetics Grand Final Assessment
+                  </h3>
+
+                  <p className={`text-xs max-w-2xl leading-relaxed ${gating.isFinalUnlocked ? 'text-slate-600' : 'text-slate-300'}`}>
+                    {gating.isFinalUnlocked
+                      ? 'Congratulations! You have demonstrated core competency across all 10 Nutrition units. You are eligible to take the 40-question comprehensive grand final exam.'
+                      : `This exam is locked. You must complete and pass each of the 10 chapter assessments with at least 75% marks before taking the cumulative course assessment. Current Progress: ${gating.completedCount} / 10 Units passed.`
+                    }
+                  </p>
+
+                  {/* Progress Meter */}
+                  <div className="pt-2 max-w-md">
+                    <div className="flex justify-between text-xs font-bold mb-1">
+                      <span className={gating.isFinalUnlocked ? 'text-slate-700' : 'text-slate-300'}>
+                        Curriculum Mastery: {gating.completedCount} / 10 Units
+                      </span>
+                      <span className={gating.isFinalUnlocked ? 'text-emerald-700' : 'text-amber-400'}>
+                        {gating.completionPercent}%
+                      </span>
+                    </div>
+                    <div className="w-full h-2.5 bg-slate-700/50 rounded-full overflow-hidden border border-white/10">
+                      <div
+                        className="h-full bg-gradient-to-r from-amber-500 to-emerald-400 rounded-full transition-all duration-500"
+                        style={{ width: `${Math.max(5, gating.completionPercent)}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="shrink-0 flex flex-col sm:flex-row gap-3">
+                  <Link
+                    to={gating.isFinalUnlocked ? "/quiz/nutrition-grand-final" : "#"}
+                    onClick={(e) => {
+                      if (!gating.isFinalUnlocked) {
+                        e.preventDefault();
+                        alert(`Grand Final Locked! Please complete all 10 units first. You have passed ${gating.completedCount} of 10 units.`);
+                      }
+                    }}
+                    className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-black text-xs transition-all shadow-md ${
+                      gating.isFinalUnlocked
+                        ? 'bg-amber-600 hover:bg-amber-700 text-white shadow-amber-600/30 cursor-pointer hover:scale-105'
+                        : 'bg-slate-700 text-slate-400 border border-slate-600 cursor-not-allowed opacity-90'
+                    }`}
+                  >
+                    {gating.isFinalUnlocked ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4 text-amber-400" />}
+                    <span>{gating.isFinalUnlocked ? 'Take Grand Final Exam (40 Qs)' : `Locked (${gating.completedCount}/10 Units)`}</span>
+                  </Link>
+                </div>
+              </div>
+            </div>
+          );
+        })()}
+
         {/* Clean Filter & Unit Segmented Selector */}
         <div className="bg-white rounded-2xl border border-slate-200 p-3 sm:p-4 shadow-xs mb-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-3">
@@ -266,7 +348,7 @@ export const NutritionSyllabus = () => {
 
                       {/* Quick Quiz Shortcut Button */}
                       <Link
-                        to={`/student/quiz/${unit.quizSlug}`}
+                        to={`/quiz/${unit.quizSlug || unit.id}`}
                         className="self-start sm:self-center inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 font-bold text-xs transition-colors shrink-0"
                       >
                         <ClipboardList className="w-3.5 h-3.5 text-amber-600" />

@@ -142,10 +142,10 @@ export const SYLLABUS_MODULES = [
     ],
     memoryHook: "Ordinarily Careless Crappers Are Also Frivolous = Ornithine, Carbamoyl P, Citrulline, Aspartate, Argininosuccinate, Fumarate, Arginine, Urea.",
     topics: [
-      { label: "Protein Structure & Denaturation", route: "/classification-of-carb" },
-      { label: "Amino Acid Chemistry & Zwitterions", route: "/digestion-of-carb" },
-      { label: "Protein Digestion & Absorption", route: "/absorption-of-carb" },
-      { label: "Urea Cycle & Ammonia Detoxification", route: "/MetabolicPathwaysOfCarb" }
+      { label: "Protein Structure & Denaturation", route: "/biochemistry/lesson/protein-structure-denaturation" },
+      { label: "Amino Acid Chemistry & Zwitterions", route: "/biochemistry/lesson/amino-acid-chemistry-zwitterions" },
+      { label: "Protein Digestion & Absorption", route: "/biochemistry/lesson/protein-digestion-absorption" },
+      { label: "Urea Cycle & Ammonia Detoxification", route: "/biochemistry/lesson/urea-cycle-ammonia-detox" }
     ],
     quizSlug: "unit-3-proteins"
   },
@@ -185,9 +185,9 @@ export const SYLLABUS_MODULES = [
     ],
     memoryHook: "CK-MB = Myocardial Band (Heart). Competitive = Km increases, Vmax constant. Non-competitive = Vmax drops, Km constant.",
     topics: [
-      { label: "Enzyme Kinetics & Theories", route: "/MetabolicPathwaysOfCarb" },
-      { label: "Enzyme Inhibitors & Specificity", route: "/DisordersOfCarb" },
-      { label: "Isoenzymes & MI Cardiac Biomarkers", route: "/RegulationOfBloodGlucose" }
+      { label: "Enzyme Kinetics & Theories", route: "/biochemistry/lesson/enzyme-kinetics-theories" },
+      { label: "Enzyme Inhibitors & Specificity", route: "/biochemistry/lesson/enzyme-inhibitors-specificity" },
+      { label: "Isoenzymes & MI Cardiac Biomarkers", route: "/biochemistry/lesson/isoenzymes-cardiac-biomarkers" }
     ],
     quizSlug: "unit-4-enzymes"
   },
@@ -226,9 +226,9 @@ export const SYLLABUS_MODULES = [
     ],
     memoryHook: "ROME = Respiratory Opposite (pH ↑ PaCO₂ ↓), Metabolic Equal (pH ↑ HCO₃⁻ ↑). 20:1 ratio keeps pH at 7.40.",
     topics: [
-      { label: "Blood Buffers & Henderson-Hasselbalch", route: "/RegulationOfBloodGlucose" },
-      { label: "Respiratory & Renal Compensation", route: "/DisordersOfCarb" },
-      { label: "ABG Interpretation & Anion Gap", route: "/DiabetesMellitusType1" }
+      { label: "Blood Buffers & Henderson-Hasselbalch", route: "/biochemistry/lesson/blood-buffers-henderson-hasselbalch" },
+      { label: "Respiratory & Renal Compensation", route: "/biochemistry/lesson/respiratory-renal-compensation" },
+      { label: "ABG Interpretation & Anion Gap", route: "/biochemistry/lesson/abg-interpretation-anion-gap" }
     ],
     quizSlug: "unit-5-acid-base"
   },
@@ -267,9 +267,9 @@ export const SYLLABUS_MODULES = [
     ],
     memoryHook: "Pre-hepatic = Indirect Bilirubin ↑. Post-hepatic = Direct Bilirubin ↑, Clay stool, Tea urine. Inulin = Gold standard GFR.",
     topics: [
-      { label: "Heme Biosynthesis & Structure", route: "/classification-of-carb" },
-      { label: "Heme Degradation & Jaundice Types", route: "/DisordersOfCarb" },
-      { label: "Renal Function & Clearance Tests", route: "/RegulationOfBloodGlucose" }
+      { label: "Heme Biosynthesis & Structure", route: "/biochemistry/lesson/heme-biosynthesis-structure" },
+      { label: "Heme Degradation & Jaundice Types", route: "/biochemistry/lesson/heme-degradation-jaundice-types" },
+      { label: "Renal Function & Clearance Tests", route: "/biochemistry/lesson/renal-function-clearance-tests" }
     ],
     quizSlug: "unit-6-heme-renal"
   },
@@ -309,9 +309,9 @@ export const SYLLABUS_MODULES = [
     ],
     memoryHook: "GAMED = IgG (Greatest/Placenta), IgA (Airway/Gut/Breastmilk), IgM (Mega pentamer/First), IgE (Emergency allergy), IgD (Differentiation receptor).",
     topics: [
-      { label: "Immunoglobulin Classes & Structure", route: "/classification-of-carb" },
-      { label: "Antibody Functions & Hypersensitivity", route: "/DisordersOfCarb" },
-      { label: "ELISA Formats (Direct, Indirect, Sandwich)", route: "/RegulationOfBloodGlucose" }
+      { label: "Immunoglobulin Classes & Structure", route: "/biochemistry/lesson/immunoglobulin-classes-structure" },
+      { label: "Antibody Functions & Hypersensitivity", route: "/biochemistry/lesson/antibody-functions-hypersensitivity" },
+      { label: "ELISA Formats (Direct, Indirect, Sandwich)", route: "/biochemistry/lesson/elisa-formats-diagnostic-assays" }
     ],
     quizSlug: "unit-7-immunochem"
   }

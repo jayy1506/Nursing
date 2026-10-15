@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import {
   LogOut,
@@ -18,8 +18,10 @@ import {
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [userDropdown, setUserDropdown] = useState(false);
+  const [syllabusDropdown, setSyllabusDropdown] = useState(false);
   const { currentUser, role, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = async () => {
     await logout();
@@ -42,6 +44,13 @@ const Navbar = () => {
   const navLinkInactive = "text-slate-600 hover:text-emerald-600 hover:bg-emerald-50/70";
   const navLinkActive = "text-white bg-emerald-500 shadow-sm shadow-emerald-400/30 hover:bg-emerald-600";
 
+  const isSyllabusActive =
+    location.pathname === '/syllabus' ||
+    location.pathname.startsWith('/anatomy') ||
+    location.pathname.startsWith('/physiology') ||
+    location.pathname.startsWith('/bio-chem') ||
+    location.pathname.startsWith('/nutrition');
+
   return (
     <nav className="sticky top-0 z-40 border-b border-slate-200/80 bg-white/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2.5 sm:px-6 lg:px-8">
@@ -62,8 +71,8 @@ const Navbar = () => {
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
-        <div className="hidden items-center gap-1.5 md:flex">
+        {/* Desktop Navigation Links - Clean & Uncrowded */}
+        <div className="hidden items-center gap-2 md:flex">
           <NavLink
             to="/"
             className={({ isActive }) =>
@@ -73,55 +82,99 @@ const Navbar = () => {
             Home
           </NavLink>
 
-          <NavLink
-            to="/syllabus"
-            className={({ isActive }) =>
-              `${navLinkBase} ${isActive && window.location.pathname === '/syllabus' ? navLinkActive : navLinkInactive}`
-            }
+          {/* Unified Syllabus Button: Click goes to /syllabus where all syllabi are laid out; Hover reveals fast track picker */}
+          <div
+            className="relative"
+            onMouseEnter={() => setSyllabusDropdown(true)}
+            onMouseLeave={() => setSyllabusDropdown(false)}
           >
-            <BookOpen className="w-3.5 h-3.5" />
-            <span>Syllabus Hub</span>
-          </NavLink>
+            <NavLink
+              to="/syllabus"
+              className={`${navLinkBase} ${isSyllabusActive ? navLinkActive : navLinkInactive}`}
+            >
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Syllabus</span>
+              <ChevronDown className={`w-3 h-3 transition-transform duration-150 ${syllabusDropdown ? 'rotate-180' : ''}`} />
+            </NavLink>
 
-          <NavLink
-            to="/anatomy-syllabus"
-            className={({ isActive }) =>
-              `${navLinkBase} ${isActive || window.location.pathname.includes('/anatomy') ? "text-white bg-teal-600 shadow-sm" : navLinkInactive}`
-            }
-          >
-            <span>🦴</span>
-            <span>Anatomy</span>
-          </NavLink>
+            {/* Syllabus Dropdown Flyout */}
+            {syllabusDropdown && (
+              <div className="absolute left-0 top-full pt-1.5 w-64 z-50">
+                <div className="bg-white border border-slate-200 rounded-2xl shadow-xl py-2 animate-in fade-in slide-in-from-top-1 duration-150">
+                  <div className="px-3.5 py-1.5 border-b border-slate-100 flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                      Curriculum Tracks
+                    </span>
+                    <span className="text-[10px] text-emerald-600 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">
+                      4 Subjects
+                    </span>
+                  </div>
 
-          <NavLink
-            to="/physiology-syllabus"
-            className={({ isActive }) =>
-              `${navLinkBase} ${isActive || window.location.pathname.includes('/physiology') ? "text-white bg-sky-600 shadow-sm" : navLinkInactive}`
-            }
-          >
-            <span>⚡</span>
-            <span>Physiology</span>
-          </NavLink>
+                  <Link
+                    to="/syllabus"
+                    onClick={() => setSyllabusDropdown(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+                  >
+                    <span className="text-base">📚</span>
+                    <div>
+                      <div className="font-extrabold text-slate-800">All Syllabi Hub</div>
+                      <div className="text-[10px] font-medium text-slate-500">View all course modules & tracks</div>
+                    </div>
+                  </Link>
 
-          <NavLink
-            to="/bio-chem-syllabus"
-            className={({ isActive }) =>
-              `${navLinkBase} ${isActive ? navLinkActive : navLinkInactive}`
-            }
-          >
-            <span>🧬</span>
-            <span>Biochem</span>
-          </NavLink>
+                  <div className="h-px bg-slate-100 my-1 mx-2" />
 
-          <NavLink
-            to="/nutrition-syllabus"
-            className={({ isActive }) =>
-              `${navLinkBase} ${isActive ? "text-white bg-amber-600 shadow-sm" : navLinkInactive}`
-            }
-          >
-            <span>🥗</span>
-            <span>Nutrition</span>
-          </NavLink>
+                  <Link
+                    to="/anatomy-syllabus"
+                    onClick={() => setSyllabusDropdown(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                  >
+                    <span className="text-base">🦴</span>
+                    <div>
+                      <div className="font-extrabold text-slate-800">Applied Anatomy</div>
+                      <div className="text-[10px] font-medium text-slate-500">12 Units • 199+ Diagrams</div>
+                    </div>
+                  </Link>
+
+                  <Link
+                    to="/physiology-syllabus"
+                    onClick={() => setSyllabusDropdown(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-sky-50 hover:text-sky-700 transition-colors"
+                  >
+                    <span className="text-base">⚡</span>
+                    <div>
+                      <div className="font-extrabold text-slate-800">Applied Physiology</div>
+                      <div className="text-[10px] font-medium text-slate-500">12 Units • 74+ Mechanism Figures</div>
+                    </div>
+                  </Link>
+
+                  <Link
+                    to="/bio-chem-syllabus"
+                    onClick={() => setSyllabusDropdown(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+                  >
+                    <span className="text-base">🧬</span>
+                    <div>
+                      <div className="font-extrabold text-slate-800">Applied Biochemistry</div>
+                      <div className="text-[10px] font-medium text-slate-500">8 Units • Clinical Biomarkers</div>
+                    </div>
+                  </Link>
+
+                  <Link
+                    to="/nutrition-syllabus"
+                    onClick={() => setSyllabusDropdown(false)}
+                    className="flex items-center gap-2.5 px-3.5 py-2 text-xs text-slate-700 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                  >
+                    <span className="text-base">🥗</span>
+                    <div>
+                      <div className="font-extrabold text-slate-800">Nutrition & Dietetics</div>
+                      <div className="text-[10px] font-medium text-slate-500">10 Units • Diet Therapy</div>
+                    </div>
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
 
           <NavLink
             to="/question-bank"
@@ -349,52 +402,55 @@ const Navbar = () => {
           <NavLink
             to="/syllabus"
             onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `block ${navLinkBase} ${isActive && window.location.pathname === '/syllabus' ? navLinkActive : navLinkInactive}`
+            className={
+              `block ${navLinkBase} ${isSyllabusActive ? navLinkActive : navLinkInactive}`
             }
           >
-            📚 Full Academic Syllabus Hub
+            <div className="flex items-center justify-between w-full">
+              <div className="flex items-center gap-2">
+                <BookOpen className="w-4 h-4" />
+                <span>Syllabus Portal (All 4 Tracks)</span>
+              </div>
+              <span className="text-[10px] bg-emerald-100 text-emerald-800 font-extrabold px-2 py-0.5 rounded-full">
+                All
+              </span>
+            </div>
           </NavLink>
 
-          <NavLink
-            to="/anatomy-syllabus"
-            onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `block ${navLinkBase} ${isActive ? "text-white bg-teal-600" : navLinkInactive}`
-            }
-          >
-            🦴 Applied Anatomy (12 Units • 199+ Plates)
-          </NavLink>
-
-          <NavLink
-            to="/physiology-syllabus"
-            onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `block ${navLinkBase} ${isActive ? "text-white bg-sky-600" : navLinkInactive}`
-            }
-          >
-            ⚡ Applied Physiology (12 Units • 74+ Diagrams)
-          </NavLink>
-
-          <NavLink
-            to="/bio-chem-syllabus"
-            onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `block ${navLinkBase} ${isActive ? "text-white bg-emerald-600" : navLinkInactive}`
-            }
-          >
-            🧬 Applied Biochemistry (8 Units)
-          </NavLink>
-
-          <NavLink
-            to="/nutrition-syllabus"
-            onClick={() => setOpen(false)}
-            className={({ isActive }) =>
-              `block ${navLinkBase} ${isActive ? "text-white bg-amber-600" : navLinkInactive}`
-            }
-          >
-            🥗 Nutrition & Dietetics (10 Units)
-          </NavLink>
+          <div className="pl-3 pr-1 py-1 space-y-1 bg-slate-50/80 rounded-xl border border-slate-100">
+            <Link
+              to="/anatomy-syllabus"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between py-1.5 px-2 text-xs font-semibold text-slate-700 hover:text-teal-700 hover:bg-white rounded-lg transition-colors"
+            >
+              <span>🦴 Applied Anatomy</span>
+              <span className="text-[10px] text-slate-400">12 Units</span>
+            </Link>
+            <Link
+              to="/physiology-syllabus"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between py-1.5 px-2 text-xs font-semibold text-slate-700 hover:text-sky-700 hover:bg-white rounded-lg transition-colors"
+            >
+              <span>⚡ Applied Physiology</span>
+              <span className="text-[10px] text-slate-400">12 Units</span>
+            </Link>
+            <Link
+              to="/bio-chem-syllabus"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between py-1.5 px-2 text-xs font-semibold text-slate-700 hover:text-emerald-700 hover:bg-white rounded-lg transition-colors"
+            >
+              <span>🧬 Applied Biochemistry</span>
+              <span className="text-[10px] text-slate-400">8 Units</span>
+            </Link>
+            <Link
+              to="/nutrition-syllabus"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-between py-1.5 px-2 text-xs font-semibold text-slate-700 hover:text-amber-700 hover:bg-white rounded-lg transition-colors"
+            >
+              <span>🥗 Nutrition & Dietetics</span>
+              <span className="text-[10px] text-slate-400">10 Units</span>
+            </Link>
+          </div>
 
           <NavLink
             to="/question-bank"

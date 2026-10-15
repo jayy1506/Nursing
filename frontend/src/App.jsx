@@ -11,6 +11,7 @@ const SignupPage = lazy(() => import('./pages/auth/SignupPage'));
 const Home = lazy(() => import('./pages/Home'));
 const SyllabusHub = lazy(() => import('./pages/SyllabusHub'));
 const BioChemistrySyllabus = lazy(() => import('./pages/BioChemistrySyllabus'));
+const BiochemistryLessonView = lazy(() => import('./pages/BioChemistryPages/BiochemistryLessonView'));
 const AnatomySyllabus = lazy(() => import('./pages/AnatomySyllabus'));
 const AnatomyLessonView = lazy(() => import('./pages/AnatomyPages/AnatomyLessonView'));
 const PhysiologySyllabus = lazy(() => import('./pages/PhysiologySyllabus'));
@@ -85,6 +86,7 @@ const AppRoutes = () => {
             <Route path="/syllabus" element={<SyllabusHub />} />
             <Route path="/curriculum" element={<Navigate to="/syllabus" replace />} />
             <Route path="/bio-chem-syllabus" element={<BioChemistrySyllabus />} />
+            <Route path="/biochemistry/lesson/:lessonSlug" element={<BiochemistryLessonView />} />
             <Route path="/anatomy-syllabus" element={<AnatomySyllabus />} />
             <Route path="/anatomy/lesson/:chapterId" element={<AnatomyLessonView />} />
             <Route path="/physiology-syllabus" element={<PhysiologySyllabus />} />
@@ -93,6 +95,7 @@ const AppRoutes = () => {
             <Route path="/nutrition/lesson/:submoduleSlug" element={<NutritionLessonView />} />
             <Route path="/question-bank" element={<QuestionBankView />} />
             <Route path="/student/quiz/:topicId" element={<QuizView />} />
+            <Route path="/quiz/:topicId" element={<QuizView />} />
             <Route path="/student/results" element={<StudentResults />} />
 
             {/* Module 1 */}
