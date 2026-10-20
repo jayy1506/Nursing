@@ -82,7 +82,7 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 relative overflow-hidden transition-colors">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 flex flex-col justify-between p-4 sm:p-6 relative overflow-hidden transition-colors">
       {/* Top Bar with Brand & Theme Toggle */}
       <header className="flex items-center justify-between max-w-5xl mx-auto w-full pt-2">
         <MedPulseLogo size="md" showTagline={true} />
@@ -91,28 +91,28 @@ export const LoginPage = () => {
 
       {/* Background radial gradient glow */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden opacity-60 dark:opacity-20">
-        <div className="absolute top-1/4 -left-20 h-96 w-96 rounded-full bg-teal-300 blur-3xl" />
-        <div className="absolute bottom-1/4 -right-20 h-96 w-96 rounded-full bg-sky-300 blur-3xl" />
+        <div className="absolute top-1/4 -left-20 h-96 w-96 rounded-full bg-green-400 blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 h-96 w-96 rounded-full bg-neutral-100 blur-3xl" />
       </div>
 
       {/* Main Login Card */}
       <div className="w-full max-w-md mx-auto my-auto relative z-10 py-6">
-        <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none">
+        <div className="bg-white/90 dark:bg-neutral-900/90 border border-neutral-200 dark:border-neutral-800 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-xl shadow-neutral-200/50 dark:shadow-none">
           <div className="text-center mb-6">
-            <span className="inline-block px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+            <span className="inline-block px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider rounded-full bg-green-50 dark:bg-green-900/60 text-green-700 dark:text-green-400 border border-green-100 dark:border-green-700">
               Institutional Clinical Access
             </span>
-            <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 mt-2 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-neutral-900 dark:text-neutral-100 mt-2 tracking-tight">
               Sign In to MedPulse
             </h1>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+            <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
               Foundational medical sciences, mastered.
             </p>
           </div>
 
           {error && (
-            <div className="mb-5 p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2.5">
-              <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
+            <div className="mb-5 p-3 rounded-2xl bg-neutral-100 dark:bg-neutral-900/30 border border-neutral-400 dark:border-neutral-700 text-black dark:text-white dark:text-neutral-300 text-xs flex items-center gap-2.5">
+              <AlertCircle className="w-4 h-4 shrink-0 text-black dark:text-white" />
               <p className="flex-1 font-medium">{error}</p>
             </div>
           )}
@@ -122,23 +122,23 @@ export const LoginPage = () => {
             type="button"
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold transition-all duration-150 disabled:opacity-50 shadow-xs mb-4 cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-500"
+            className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-750 border border-neutral-200 dark:border-neutral-700 text-neutral-700 dark:text-neutral-200 text-sm font-semibold transition-all duration-150 disabled:opacity-50 shadow-xs mb-4 cursor-pointer focus-visible:ring-2 focus-visible:ring-green-500"
           >
             <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
-                fill="#EA4335"
+                fill="#22C55E"
                 d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"
               />
               <path
-                fill="#4285F4"
+                fill="#22C55E"
                 d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"
               />
               <path
-                fill="#FBBC05"
+                fill="#22C55E"
                 d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2s.7 5.5 1.9 7.9l3.7-2.9c-.3-.7-.5-1.5-.5-2.4z"
               />
               <path
-                fill="#34A853"
+                fill="#22C55E"
                 d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 17c1.8 3.7 5.6 6.5 10.1 6.5z"
               />
             </svg>
@@ -146,11 +146,11 @@ export const LoginPage = () => {
           </button>
 
           <div className="flex items-center gap-3 mb-4">
-            <div className="flex-1 h-[1px] bg-slate-200 dark:bg-slate-800" />
-            <span className="text-[10px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
+            <div className="flex-1 h-[1px] bg-neutral-200 dark:bg-neutral-800" />
+            <span className="text-[10px] font-bold tracking-wider text-neutral-400 dark:text-neutral-500 uppercase">
               Or with credentials
             </span>
-            <div className="flex-1 h-[1px] bg-slate-200 dark:bg-slate-800" />
+            <div className="flex-1 h-[1px] bg-neutral-200 dark:bg-neutral-800" />
           </div>
 
           <form onSubmit={handleEmailLogin} className="space-y-4">
@@ -161,7 +161,7 @@ export const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="nurse@hospital.edu"
-              leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
+              leftIcon={<Mail className="w-4 h-4 text-neutral-400" />}
             />
 
             <Input
@@ -171,7 +171,7 @@ export const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="••••••••"
-              leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
+              leftIcon={<Lock className="w-4 h-4 text-neutral-400" />}
             />
 
             <Button
@@ -187,23 +187,23 @@ export const LoginPage = () => {
           </form>
 
           {/* Closed Access Notice */}
-          <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 text-center">
-            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+          <div className="mt-6 pt-5 border-t border-neutral-100 dark:border-neutral-800 text-center">
+            <p className="text-[11px] text-neutral-500 dark:text-neutral-400 leading-relaxed">
               Closed institutional platform. Student and Faculty accounts are provisioned and authorized by the{' '}
-              <span className="font-semibold text-slate-800 dark:text-slate-200">Department Administrator</span>.
+              <span className="font-semibold text-neutral-800 dark:text-neutral-200">Department Administrator</span>.
             </p>
           </div>
         </div>
 
         {/* Security Footer Note */}
-        <div className="flex items-center justify-center gap-2 mt-5 text-slate-400 dark:text-slate-500 text-[11px]">
-          <ShieldCheck className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+        <div className="flex items-center justify-center gap-2 mt-5 text-neutral-400 dark:text-neutral-500 text-[11px]">
+          <ShieldCheck className="w-4 h-4 text-green-500 dark:text-green-400" />
           <span>INC CBME Standards &bull; Encrypted Session Authentication</span>
         </div>
       </div>
 
       {/* Footer copyright */}
-      <footer className="text-center text-[11px] text-slate-400 dark:text-slate-600 pb-2">
+      <footer className="text-center text-[11px] text-neutral-400 dark:text-neutral-600 pb-2">
         MedPulse &copy; {new Date().getFullYear()} &bull; Foundational Medical Sciences & Clinical Nursing LMS
       </footer>
     </div>

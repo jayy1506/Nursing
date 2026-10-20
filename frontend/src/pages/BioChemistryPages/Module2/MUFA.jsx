@@ -32,26 +32,26 @@ const MUFA = () => {
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-        isDark ? "bg-slate-950 text-slate-50" : "bg-slate-50 text-slate-900"
+        isDark ? "bg-neutral-950 text-neutral-50" : "bg-neutral-50 text-neutral-900"
       }`}
     >
       {/* Navbar at top */}
       <Navbar />
 
       {/* Top Back Navigation Bar */}
-      <div className={`border-b py-2.5 px-4 sm:px-6 lg:px-8 ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
+      <div className={`border-b py-2.5 px-4 sm:px-6 lg:px-8 ${isDark ? 'bg-neutral-900 border-neutral-800' : 'bg-white border-neutral-200'}`}>
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link
             to="/bio-chem-syllabus"
-            className="inline-flex items-center gap-2 text-xs font-bold text-sky-600 hover:text-sky-700 transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-2 text-xs font-bold text-green-700 hover:text-green-700 transition-colors cursor-pointer group"
           >
             <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform" />
             <span>Back to Full Syllabus</span>
           </Link>
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-400">
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-neutral-400">
             <span>Unit 2: Lipids & Fatty Acids</span>
             <span>/</span>
-            <span className="text-sky-600">Lesson 2 of 4</span>
+            <span className="text-green-700">Lesson 2 of 4</span>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@ const MUFA = () => {
         {/* Top bar / title */}
         <div className="mb-6 flex items-center justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-emerald-500">
+            <p className="text-xs font-semibold uppercase tracking-wide text-green-500">
               Biochemistry • Lipid metabolism
             </p>
             <h1 className="mt-1 text-2xl font-bold sm:text-3xl lg:text-4xl">
@@ -73,7 +73,7 @@ const MUFA = () => {
             </h1>
             <p
               className={`mt-2 text-sm sm:text-base ${
-                isDark ? "text-slate-300" : "text-slate-600"
+                isDark ? "text-neutral-300" : "text-neutral-600"
               }`}
             >
               Definition, common examples and food sources, and brief clinical
@@ -86,13 +86,13 @@ const MUFA = () => {
             onClick={toggleTheme}
             className={`flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold transition ${
               isDark
-                ? "border-slate-600 bg-slate-900 text-slate-100 hover:border-emerald-400"
-                : "border-slate-200 bg-white text-slate-800 hover:border-sky-300"
+                ? "border-neutral-600 bg-neutral-900 text-neutral-100 hover:border-green-400"
+                : "border-neutral-200 bg-white text-neutral-800 hover:border-neutral-300"
             }`}
           >
             <span
               className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-[10px] ${
-                isDark ? "bg-slate-800" : "bg-yellow-300"
+                isDark ? "bg-neutral-800" : "bg-neutral-100"
               }`}
             >
               {isDark ? "🌙" : "☀️"}
@@ -105,15 +105,15 @@ const MUFA = () => {
         <section
           className={`grid gap-6 rounded-3xl border p-5 shadow-sm md:grid-cols-[3fr,2fr] ${
             isDark
-              ? "border-slate-700 bg-slate-900/70"
-              : "border-slate-200 bg-white"
+              ? "border-neutral-700 bg-neutral-900/70"
+              : "border-neutral-200 bg-white"
           }`}
         >
           <div className="flex flex-col justify-center">
             <h2 className="text-lg font-semibold sm:text-xl">Definition</h2>
             <p
               className={`mt-2 text-sm sm:text-base ${
-                isDark ? "text-slate-300" : "text-slate-700"
+                isDark ? "text-neutral-300" : "text-neutral-700"
               }`}
             >
               Mono‑unsaturated fatty acids (MUFA) are fatty acids that contain a
@@ -124,30 +124,30 @@ const MUFA = () => {
             <div className="mt-4 grid gap-3 text-xs sm:grid-cols-3 sm:text-sm">
               <div
                 className={`rounded-2xl p-3 ${
-                  isDark ? "bg-slate-800/80" : "bg-emerald-50"
+                  isDark ? "bg-neutral-800/80" : "bg-green-50"
                 }`}
               >
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-emerald-500">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-green-500">
                   Key structural point
                 </p>
                 <p>Exactly one double bond in the chain.</p>
               </div>
               <div
                 className={`rounded-2xl p-3 ${
-                  isDark ? "bg-slate-800/80" : "bg-sky-50"
+                  isDark ? "bg-neutral-800/80" : "bg-neutral-100"
                 }`}
               >
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-sky-500">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-green-700">
                   Main example
                 </p>
                 <p>Oleic acid (18:1, ω‑9) is the most abundant MUFA in diet.</p>
               </div>
               <div
                 className={`rounded-2xl p-3 ${
-                  isDark ? "bg-slate-800/80" : "bg-amber-50"
+                  isDark ? "bg-neutral-800/80" : "bg-neutral-100"
                 }`}
               >
-                <p className="text-[11px] font-semibold uppercase tracking-wide text-amber-500">
+                <p className="text-[11px] font-semibold uppercase tracking-wide text-neutral-800">
                   Physical property
                 </p>
                 <p>Generally liquid at room temperature, solid when chilled.</p>
@@ -158,11 +158,11 @@ const MUFA = () => {
           <div
             className={`rounded-2xl border text-xs sm:text-sm ${
               isDark
-                ? "border-slate-700 bg-slate-900/80 text-slate-200"
-                : "border-slate-200 bg-slate-50 text-slate-700"
+                ? "border-neutral-700 bg-neutral-900/80 text-neutral-200"
+                : "border-neutral-200 bg-neutral-50 text-neutral-700"
             }`}
           >
-            <div className="border-b px-4 py-2 text-[11px] font-semibold uppercase tracking-wide text-emerald-500 border-slate-700/60">
+            <div className="border-b px-4 py-2 text-[11px] font-semibold uppercase tracking-wide text-green-500 border-neutral-700/60">
               Concept snapshot
             </div>
             <div className="p-4 space-y-2">
@@ -185,22 +185,22 @@ const MUFA = () => {
               animate="visible"
               className={`rounded-3xl p-5 shadow-sm ${
                 isDark
-                  ? "border border-slate-700 bg-slate-900/80"
-                  : "border border-slate-200 bg-white"
+                  ? "border border-neutral-700 bg-neutral-900/80"
+                  : "border border-neutral-200 bg-white"
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <h2 className="text-lg font-semibold">
                   1. Structure and key examples
                 </h2>
-                <span className="rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-emerald-500">
+                <span className="rounded-full bg-green-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-green-500">
                   basic science
                 </span>
               </div>
 
               <p
                 className={`mt-3 text-sm ${
-                  isDark ? "text-slate-300" : "text-slate-700"
+                  isDark ? "text-neutral-300" : "text-neutral-700"
                 }`}
               >
                 The single double bond in MUFA introduces a “kink” in the
@@ -211,10 +211,10 @@ const MUFA = () => {
               <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <div
                   className={`rounded-2xl p-3 ${
-                    isDark ? "bg-slate-800/80" : "bg-emerald-50"
+                    isDark ? "bg-neutral-800/80" : "bg-green-50"
                   }`}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-emerald-500">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-green-500">
                     Common MUFA in humans
                   </p>
                   <ul className="mt-1 space-y-1 list-disc pl-4">
@@ -226,10 +226,10 @@ const MUFA = () => {
 
                 <div
                   className={`rounded-2xl p-3 ${
-                    isDark ? "bg-slate-800/80" : "bg-sky-50"
+                    isDark ? "bg-neutral-800/80" : "bg-neutral-100"
                   }`}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-sky-500">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-green-700">
                     Main dietary sources
                   </p>
                   <ul className="mt-1 space-y-1 list-disc pl-4">
@@ -249,22 +249,22 @@ const MUFA = () => {
               animate="visible"
               className={`rounded-3xl p-5 shadow-sm ${
                 isDark
-                  ? "border border-slate-700 bg-slate-900/80"
-                  : "border border-slate-200 bg-white"
+                  ? "border border-neutral-700 bg-neutral-900/80"
+                  : "border border-neutral-200 bg-white"
               }`}
             >
               <div className="flex items-center justify-between gap-2">
                 <h2 className="text-lg font-semibold">
                   2. Clinical significance – cardiovascular and metabolic health
                 </h2>
-                <span className="rounded-full bg-sky-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-sky-500">
+                <span className="rounded-full bg-green-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-green-700">
                   health effects
                 </span>
               </div>
 
               <p
                 className={`mt-3 text-sm ${
-                  isDark ? "text-slate-300" : "text-slate-700"
+                  isDark ? "text-neutral-300" : "text-neutral-700"
                 }`}
               >
                 MUFA‑rich dietary patterns, such as Mediterranean‑type diets,
@@ -275,10 +275,10 @@ const MUFA = () => {
               <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
                 <div
                   className={`rounded-2xl p-3 ${
-                    isDark ? "bg-slate-800/80" : "bg-emerald-50"
+                    isDark ? "bg-neutral-800/80" : "bg-green-50"
                   }`}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-emerald-500">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-green-500">
                     Potential benefits (evidence‑based trends)
                   </p>
                   <ul className="mt-1 space-y-1 list-disc pl-4">
@@ -300,10 +300,10 @@ const MUFA = () => {
 
                 <div
                   className={`rounded-2xl p-3 ${
-                    isDark ? "bg-slate-800/80" : "bg-amber-50"
+                    isDark ? "bg-neutral-800/80" : "bg-neutral-100"
                   }`}
                 >
-                  <p className="text-xs font-semibold uppercase tracking-wide text-amber-500">
+                  <p className="text-xs font-semibold uppercase tracking-wide text-neutral-800">
                     Important considerations
                   </p>
                   <ul className="mt-1 space-y-1 list-disc pl-4">
@@ -332,8 +332,8 @@ const MUFA = () => {
               animate="visible"
               className={`rounded-3xl p-5 shadow-sm ${
                 isDark
-                  ? "border border-slate-700 bg-slate-900/80"
-                  : "border border-slate-200 bg-white"
+                  ? "border border-neutral-700 bg-neutral-900/80"
+                  : "border border-neutral-200 bg-white"
               }`}
             >
               <h2 className="text-lg font-semibold">
@@ -341,7 +341,7 @@ const MUFA = () => {
               </h2>
               <p
                 className={`mt-3 text-sm ${
-                  isDark ? "text-slate-300" : "text-slate-700"
+                  isDark ? "text-neutral-300" : "text-neutral-700"
                 }`}
               >
                 From an exam perspective, focus on contrasting MUFA with
@@ -374,14 +374,14 @@ const MUFA = () => {
             animate="visible"
             className={`h-fit rounded-3xl p-5 shadow-sm ${
               isDark
-                ? "border border-slate-700 bg-slate-900/80"
-                : "border border-slate-200 bg-white"
+                ? "border border-neutral-700 bg-neutral-900/80"
+                : "border border-neutral-200 bg-white"
             }`}
           >
             <h2 className="text-lg font-semibold">Exam‑oriented summary</h2>
             <ul
               className={`mt-3 space-y-2 text-sm ${
-                isDark ? "text-slate-200" : "text-slate-700"
+                isDark ? "text-neutral-200" : "text-neutral-700"
               }`}
             >
               <li>
@@ -405,8 +405,8 @@ const MUFA = () => {
               </li>
             </ul>
 
-            <div className="mt-4 rounded-2xl bg-emerald-500/10 p-3 text-xs text-emerald-300">
-              <p className="font-semibold text-emerald-200">
+            <div className="mt-4 rounded-2xl bg-green-500/10 p-3 text-xs text-green-400">
+              <p className="font-semibold text-green-100">
                 Quick memory hook
               </p>
               <p className="mt-1">
@@ -415,7 +415,7 @@ const MUFA = () => {
               </p>
             </div>
 
-            <p className="mt-4 text-[11px] text-slate-400">
+            <p className="mt-4 text-[11px] text-neutral-400">
               Link this topic with saturated fats, PUFA, and dietary lipid
               recommendations in later sections.
             </p>
@@ -423,18 +423,18 @@ const MUFA = () => {
         </div>
 
         {/* Bottom Lesson Navigation */}
-        <div className="mt-12 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 pb-20">
+        <div className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 pb-20">
           <Link
             to="/fatty-acids-classification"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-200 hover:text-sky-600 transition-all shadow-sm group"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-xs font-bold text-neutral-700 dark:text-neutral-200 hover:text-green-700 transition-all shadow-sm group"
           >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-sky-500" />
+            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-green-700" />
             <span>Previous: Fatty Acids Classification</span>
           </Link>
 
           <Link
             to="/pufa"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-600 hover:to-indigo-700 text-xs font-bold text-white transition-all shadow-md shadow-sky-500/20 group"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-green-500 to-green-500 hover:from-green-500 hover:to-green-500 text-xs font-bold text-white transition-all shadow-md shadow-md group"
           >
             <span>Next: Polyunsaturated Fatty Acids (PUFA)</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

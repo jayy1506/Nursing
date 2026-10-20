@@ -21,18 +21,14 @@ import {
   Check,
   RotateCcw,
   BookOpen,
-  Stethoscope,
-  HelpCircle,
   Zap,
-  Lightbulb,
   Database,
   Coins,
   ShieldCheck,
   ShieldAlert,
   ExternalLink,
   TrendingUp,
-  Trash2,
-  ArrowRight
+  Trash2
 } from 'lucide-react';
 
 const getRandomQuestions = (allQuestions) => {
@@ -95,7 +91,7 @@ export const AIWidget = () => {
   const [open, setOpen] = useState(false);
   const [showMemoryStats, setShowMemoryStats] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [tutorMode, setTutorMode] = useState('default'); // 'default' | 'simple' | 'quiz' | 'case'
+  const [tutorMode, setTutorMode] = useState('default');
   const [chapters, setChapters] = useState([]);
   const [selectedChapterId, setSelectedChapterId] = useState('');
   const [memoryStats, setMemoryStats] = useState({
@@ -124,15 +120,7 @@ export const AIWidget = () => {
   const [copiedIndex, setCopiedIndex] = useState(null);
 
   const chatEndRef = useRef(null);
-  const geminiApiKey = import.meta.env.VITE_GEMINI_API_KEY;
-  const geminiBaseUrl = import.meta.env.VITE_GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com';
-  const geminiModel = import.meta.env.VITE_GEMINI_MODEL || 'gemini-1.5-flash';
 
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-  const apiUrl = import.meta.env.VITE_OPENAI_API_URL || 'https://api.openai.com/v1/chat/completions';
-  const aiModel = import.meta.env.VITE_OPENAI_MODEL || 'gpt-3.5-turbo';
-
-  // Load and sync memory stats
   const refreshMemoryStats = async () => {
     try {
       const backendRes = await apiClient('/api/ai/stats');
@@ -160,7 +148,6 @@ export const AIWidget = () => {
     refreshMemoryStats();
   }, [open]);
 
-  // Fetch course hierarchy to populate chapter scoping selector
   useEffect(() => {
     const fetchChapters = async () => {
       try {
@@ -179,21 +166,18 @@ export const AIWidget = () => {
     fetchChapters();
   }, []);
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     if (open) {
       chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
   }, [messages, open, loading]);
 
-  // Responsive listener
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Update suggestions on route change
   useEffect(() => {
     const currentPath = location.pathname;
     const routeData = ROUTE_QUESTIONS[currentPath];
@@ -212,7 +196,6 @@ export const AIWidget = () => {
     }
   }, [location.pathname]);
 
-  // Helper: Save Chat Logs to telemetry for Admin Audit
   const logChatTelemetry = (userQuery, botResponse, tokenData = {}) => {
     try {
       const savedLogs = localStorage.getItem('nursing_chat_logs');
@@ -234,7 +217,6 @@ export const AIWidget = () => {
     } catch {}
   };
 
-  // Generate Smart Clinical Response Fallback
   const generateClinicalResponse = (query) => {
     const q = query.toLowerCase();
 
@@ -263,18 +245,6 @@ export const AIWidget = () => {
     return `### Clinical Tutor Synthesis on: "${query}"\n\n1. **Core Biochemical Principle**:\n   - This concept ties directly to cellular fuel availability, enzymatic catalysis, and physiological homeostasis in clinical patients.\n\n2. **Nursing Assessment & Care Priorities**:\n   - Monitor blood glucose, electrolyte panels (especially K⁺ and Na⁺), and hydration status.\n   - Ensure timely patient education on dietary intake, medication timing (e.g., insulin before meals), and early signs of acute metabolic decompensation.\n\n3. **NCLEX High-Yield Takeaway**:\n   - Always prioritize airway/breathing, rapid glucose verification, and intravenous access when evaluating acute metabolic or endocrine crises.\n\n*Would you like a clinical scenario quiz, a step-by-step pathway breakdown, or an exam mnemonic on this topic?*`;
   };
 
-  /**
-   * Main query handler with OpenAI Semantic Memory Token-Saving System:
-   * 1. Checks shared memory (server + client)
-   * 2. If similar query exists -> returns from memory (0 tokens!)
-   * 3. If new query -> generates response, stores in memory for next user
-   */
-  /**
-   * Main query handler with MedPulse Chapter-Scoped RAG & Fallback:
-   * 1. Calls backend /api/rag/chat with chapterId, query, and tutorMode
-   * 2. Receives answer, structured citations, and scoping confidence
-   * 3. Renders citations and refusal warnings in the UI
-   */
   const handleSendMessage = async (textToSend, overrideMode = null) => {
     const messageContent = (textToSend || input).trim();
     if (!messageContent || loading) return;
@@ -305,7 +275,6 @@ export const AIWidget = () => {
       let matchedQuery = null;
       let modelUsed = 'MedPulse Scoped RAG Hybrid';
 
-      // 1. Primary: Backend Chapter-Scoped RAG Service
       let ragSuccess = false;
       const targetChapterId = selectedChapterId || (chapters.length > 0 ? chapters[0]._id : null);
 
@@ -336,7 +305,6 @@ export const AIWidget = () => {
         }
       }
 
-      // 2. Fallback: Semantic Memory or local clinical generator
       if (!ragSuccess) {
         const localHit = findSimilarLocal(messageContent);
         if (localHit && localHit.hit) {
@@ -394,7 +362,6 @@ export const AIWidget = () => {
     }
   };
 
-  // Quick Action Buttons
   const handleActionPill = (actionType) => {
     setTutorMode(actionType);
     const activeCh = chapters.find((c) => c._id === selectedChapterId);
@@ -417,7 +384,6 @@ export const AIWidget = () => {
     handleSendMessage(prompt, actionType);
   };
 
-  // Text-To-Speech (Voice Audio)
   const toggleSpeech = (text) => {
     if (!('speechSynthesis' in window)) return;
 
@@ -471,61 +437,59 @@ export const AIWidget = () => {
 
   return (
     <>
-      {/* Floating Widget Trigger Button */}
+      {/* Floating Widget Trigger Button: Green fill, black text, bottom-right, collapsed to icon on mobile */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white font-bold shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border border-emerald-400/40 group"
+          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-green-500 hover:bg-green-400 text-black font-extrabold shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border-2 border-black focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 group"
+          aria-label="Ask AI Clinical Tutor"
         >
-          <div className="relative">
-            <Sparkles className="w-5 h-5 text-emerald-200 animate-spin-slow group-hover:rotate-12 transition-transform" />
-            <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-400 border-2 border-emerald-900 rounded-full animate-pulse" />
-          </div>
-          <span className="text-xs sm:text-sm tracking-wide font-extrabold">Ask AI Clinical Tutor</span>
+          <Sparkles className="w-5 h-5 text-black shrink-0" />
+          <span className="hidden sm:inline text-xs sm:text-sm font-extrabold tracking-tight">
+            Ask AI Clinical Tutor
+          </span>
           {memoryStats.totalTokensSaved > 0 && (
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-950/80 text-emerald-300 border border-emerald-400/30 flex items-center gap-1">
-              <Zap className="w-2.5 h-2.5 text-amber-300" />
+            <span className="hidden md:flex px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-black text-white items-center gap-1">
+              <Zap className="w-2.5 h-2.5 text-green-400" />
               {memoryStats.totalTokensSaved.toLocaleString()} Saved
             </span>
           )}
         </button>
       )}
 
-      {/* Main Tutor Window */}
+      {/* Main Tutor Window: pure black/white/green */}
       {open && (
         <div
-          className={`fixed z-50 flex flex-col bg-slate-900/98 text-slate-100 backdrop-blur-2xl border border-slate-700/70 shadow-2xl transition-all duration-300 ${
+          className={`fixed z-50 flex flex-col bg-white dark:bg-black text-black dark:text-white border border-neutral-300 dark:border-neutral-800 shadow-2xl transition-all duration-300 ${
             isMobile
               ? 'inset-0 w-full h-full rounded-none'
               : 'bottom-6 right-6 w-[540px] h-[720px] max-h-[88vh] rounded-3xl overflow-hidden'
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-slate-800 bg-gradient-to-r from-slate-950 via-slate-900 to-emerald-950/50">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-400 to-sky-500 p-[1.5px] shadow-lg shadow-emerald-500/20">
-                <div className="w-full h-full bg-slate-900 rounded-[15px] flex items-center justify-center">
-                  <Sparkles className="w-5 h-5 text-emerald-400" />
-                </div>
+              <div className="w-9 h-9 rounded-2xl bg-green-500 flex items-center justify-center text-black font-extrabold shadow-xs">
+                <Sparkles className="w-5 h-5" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-extrabold text-sm text-white tracking-tight">
+                  <h3 className="font-extrabold text-sm text-black dark:text-white tracking-tight">
                     MedPulse AI Tutor
                   </h3>
                   <button
                     onClick={() => setShowMemoryStats(!showMemoryStats)}
-                    className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:bg-emerald-500/30 transition-colors flex items-center gap-1 cursor-pointer"
-                    title="View OpenAI Token Saver Memory Dashboard"
+                    className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-neutral-200 dark:bg-neutral-800 text-black dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-green-500 transition-colors flex items-center gap-1 cursor-pointer"
+                    title="View Token Memory Stats"
                   >
-                    <Zap className="w-3 h-3 text-amber-400 fill-amber-400" />
+                    <Zap className="w-3 h-3 text-green-600 dark:text-green-400" />
                     <span>0-Token Memory</span>
                   </button>
                 </div>
-                <p className="text-[11px] text-slate-400 flex items-center gap-1.5 mt-0.5">
+                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5 mt-0.5">
                   <span>{currentRouteData ? `${currentRouteData.icon} ${currentRouteData.category}` : 'Clinical Nursing & Biochemistry'}</span>
-                  <span className="text-slate-600">•</span>
-                  <span className="text-emerald-400 font-semibold">{memoryStats.totalTokensSaved.toLocaleString()} tokens saved</span>
+                  <span>&bull;</span>
+                  <span className="text-green-700 dark:text-green-400 font-semibold">{memoryStats.totalTokensSaved.toLocaleString()} tokens saved</span>
                 </p>
               </div>
             </div>
@@ -533,9 +497,9 @@ export const AIWidget = () => {
             <div className="flex items-center gap-1.5">
               <button
                 onClick={() => setShowMemoryStats(!showMemoryStats)}
-                title="OpenAI Memory & Token Analytics"
+                title="Memory Analytics"
                 className={`p-2 rounded-xl transition-colors cursor-pointer ${
-                  showMemoryStats ? 'bg-emerald-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-800'
+                  showMemoryStats ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800'
                 }`}
               >
                 <Database className="w-4 h-4" />
@@ -543,7 +507,7 @@ export const AIWidget = () => {
               <button
                 onClick={handleClearChat}
                 title="Reset Chat Session"
-                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                className="p-2 rounded-xl text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
@@ -553,26 +517,26 @@ export const AIWidget = () => {
                   setIsSpeaking(false);
                   setOpen(false);
                 }}
-                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                className="p-2 rounded-xl text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
               >
                 {isMobile ? <ChevronDown className="w-5 h-5" /> : <X className="w-5 h-5" />}
               </button>
             </div>
           </div>
 
-          {/* Token Memory Dashboard Drawer (Expandable) */}
+          {/* Token Memory Dashboard Drawer */}
           {showMemoryStats && (
-            <div className="bg-slate-950 border-b border-slate-800 p-4 animate-in slide-in-from-top-2 duration-200">
+            <div className="bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 p-4 animate-in slide-in-from-top-2 duration-200">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-2">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span className="text-xs font-bold text-white tracking-wide">
-                    OpenAI Token Memory System
+                  <ShieldCheck className="w-4 h-4 text-green-700 dark:text-green-400" />
+                  <span className="text-xs font-bold text-black dark:text-white tracking-wide">
+                    Semantic Token Memory System
                   </span>
                 </div>
                 <button
                   onClick={handleClearMemory}
-                  className="text-[10px] text-rose-400 hover:text-rose-300 flex items-center gap-1 transition-colors cursor-pointer"
+                  className="text-[10px] text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white flex items-center gap-1 transition-colors cursor-pointer underline"
                 >
                   <Trash2 className="w-3 h-3" />
                   <span>Clear Memory</span>
@@ -581,50 +545,44 @@ export const AIWidget = () => {
 
               {/* Stats Counters Grid */}
               <div className="grid grid-cols-3 gap-2 mb-3 text-center">
-                <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2">
-                  <div className="flex items-center justify-center gap-1 text-[10px] text-emerald-400 font-bold mb-0.5">
+                <div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl p-2">
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-green-700 dark:text-green-400 font-bold mb-0.5">
                     <Coins className="w-3 h-3" />
                     <span>Tokens Saved</span>
                   </div>
-                  <div className="text-base font-extrabold text-white">
+                  <div className="text-base font-extrabold text-black dark:text-white">
                     {memoryStats.totalTokensSaved.toLocaleString()}
                   </div>
-                  <div className="text-[9px] text-slate-400">0 Tokens consumed</div>
+                  <div className="text-[9px] text-neutral-500">0 Tokens consumed</div>
                 </div>
 
-                <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2">
-                  <div className="flex items-center justify-center gap-1 text-[10px] text-sky-400 font-bold mb-0.5">
+                <div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl p-2">
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-neutral-600 dark:text-neutral-400 font-bold mb-0.5">
                     <TrendingUp className="w-3 h-3" />
                     <span>Memory Hits</span>
                   </div>
-                  <div className="text-base font-extrabold text-white">
+                  <div className="text-base font-extrabold text-black dark:text-white">
                     {memoryStats.totalHits || 0}
                   </div>
-                  <div className="text-[9px] text-slate-400">Repeated searches</div>
+                  <div className="text-[9px] text-neutral-500">Repeated searches</div>
                 </div>
 
-                <div className="bg-slate-900/90 border border-slate-800 rounded-xl p-2">
-                  <div className="flex items-center justify-center gap-1 text-[10px] text-amber-400 font-bold mb-0.5">
+                <div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl p-2">
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-neutral-600 dark:text-neutral-400 font-bold mb-0.5">
                     <Database className="w-3 h-3" />
                     <span>In Memory</span>
                   </div>
-                  <div className="text-base font-extrabold text-white">
+                  <div className="text-base font-extrabold text-black dark:text-white">
                     {memoryStats.totalStored || recentMemories.length}
                   </div>
-                  <div className="text-[9px] text-slate-400">Cached queries</div>
+                  <div className="text-[9px] text-neutral-500">Cached queries</div>
                 </div>
               </div>
 
-              {/* Explanation Note */}
-              <p className="text-[10px] text-slate-400 leading-relaxed bg-slate-900/60 rounded-xl p-2 border border-slate-800/80 mb-2.5">
-                💡 <strong className="text-emerald-300">How it saves tokens:</strong> When you or another user searches a topic, it stores the semantic vector and response in shared memory. Any subsequent similar query fetches directly from memory at <span className="text-emerald-400 font-bold">0 tokens</span>!
-              </p>
-
-              {/* Try Stored Query Quick Pills */}
               {recentMemories.length > 0 && (
                 <div>
-                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">
-                    Try Similar Search (Will Hit Memory at 0 Tokens):
+                  <span className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider block mb-1.5">
+                    Try Similar Search (0 Tokens):
                   </span>
                   <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto pr-1">
                     {recentMemories.slice(0, 4).map((m, idx) => (
@@ -634,9 +592,9 @@ export const AIWidget = () => {
                           setShowMemoryStats(false);
                           handleSendMessage(m.query);
                         }}
-                        className="text-[10px] bg-slate-900 hover:bg-emerald-950/60 border border-slate-700 hover:border-emerald-500/60 text-slate-300 hover:text-emerald-300 px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1 cursor-pointer truncate max-w-full"
+                        className="text-[10px] bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 hover:border-green-500 text-black dark:text-white px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1 cursor-pointer truncate max-w-full"
                       >
-                        <Zap className="w-2.5 h-2.5 text-amber-400 shrink-0" />
+                        <Zap className="w-2.5 h-2.5 text-green-500 shrink-0" />
                         <span className="truncate">{m.query}</span>
                       </button>
                     ))}
@@ -646,18 +604,17 @@ export const AIWidget = () => {
             </div>
           )}
 
-          {/* Quick Action Navigation Tabs */}
           {/* Chapter Scope Bar & Tutor Mode Selector */}
-          <div className="px-3 py-2 bg-slate-950 border-b border-slate-800 space-y-2">
+          <div className="px-3 py-2 bg-neutral-100 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 space-y-2">
             <div className="flex items-center justify-between gap-2 text-[11px]">
-              <span className="text-slate-400 font-medium shrink-0 flex items-center gap-1">
-                <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+              <span className="text-neutral-600 dark:text-neutral-400 font-medium shrink-0 flex items-center gap-1">
+                <BookOpen className="w-3.5 h-3.5 text-green-700 dark:text-green-400" />
                 <span>Scope:</span>
               </span>
               <select
                 value={selectedChapterId}
                 onChange={(e) => setSelectedChapterId(e.target.value)}
-                className="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-slate-200 text-[11px] focus:outline-none focus:border-emerald-500 w-full truncate cursor-pointer font-medium"
+                className="bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 rounded-lg px-2 py-1 text-black dark:text-white text-[11px] focus:outline-none focus:border-green-500 w-full truncate cursor-pointer font-medium"
               >
                 {chapters.length > 0 ? (
                   chapters.map((ch) => (
@@ -677,45 +634,45 @@ export const AIWidget = () => {
                 onClick={() => setTutorMode('default')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'default'
-                    ? 'bg-emerald-600 text-white font-extrabold shadow-sm'
-                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
+                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
                 }`}
-                title="Evidence-based clinical nursing guidance"
+                title="Standard Tutor"
               >
-                🎓 Tutor
+                Tutor
               </button>
               <button
                 onClick={() => handleActionPill('simple')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'simple'
-                    ? 'bg-amber-600 text-white font-extrabold shadow-sm'
-                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
+                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
                 }`}
-                title="Plain-English explanation with real-life analogies"
+                title="Explain Simply"
               >
-                💡 Simple
+                Simple
               </button>
               <button
                 onClick={() => handleActionPill('quiz')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'quiz'
-                    ? 'bg-rose-600 text-white font-extrabold shadow-sm'
-                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
+                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
                 }`}
-                title="NCLEX-style multiple choice scenario practice"
+                title="Quiz Me"
               >
-                📝 Quiz Me
+                Quiz
               </button>
               <button
                 onClick={() => handleActionPill('case')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'case'
-                    ? 'bg-sky-600 text-white font-extrabold shadow-sm'
-                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
+                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
                 }`}
-                title="SBAR patient presentation walkthrough"
+                title="SBAR Case"
               >
-                🏥 SBAR Case
+                SBAR Case
               </button>
             </div>
           </div>
@@ -730,41 +687,24 @@ export const AIWidget = () => {
                   className={`flex flex-col ${isUser ? 'items-end' : 'items-start'} animate-in fade-in duration-200`}
                 >
                   <div
-                    className={`max-w-[90%] rounded-2xl p-4 leading-relaxed shadow-lg ${
+                    className={`max-w-[90%] rounded-2xl p-4 leading-relaxed shadow-xs ${
                       isUser
-                        ? 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-medium rounded-tr-none'
-                        : 'bg-slate-800/95 border border-slate-700/80 text-slate-200 rounded-tl-none'
+                        ? 'bg-black text-white dark:bg-white dark:text-black font-medium rounded-tr-none'
+                        : 'bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-black dark:text-white rounded-tl-none'
                     }`}
                   >
-                    {/* Token & Memory Badge on AI responses */}
                     {!isUser && (
-                      <div className="mb-2 pb-2 border-b border-slate-700/50 flex flex-wrap items-center gap-1.5">
+                      <div className="mb-2 pb-2 border-b border-neutral-200 dark:border-neutral-800 flex flex-wrap items-center gap-1.5">
                         {msg.fromMemory ? (
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-emerald-950 to-teal-950 text-emerald-300 border border-emerald-500/40 shadow-sm">
-                            <Zap className="w-3 h-3 text-amber-400 fill-amber-400 animate-pulse" />
-                            <span>⚡ Served from Memory (0 Tokens Used)</span>
-                            {msg.similarity && (
-                              <span className="text-emerald-400 font-mono">
-                                • {Math.round(msg.similarity * 100)}% match
-                              </span>
-                            )}
+                          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-green-100 dark:bg-green-950 text-green-900 dark:text-green-300 border border-green-500/40 shadow-xs">
+                            <Zap className="w-3 h-3 text-green-700 dark:text-green-400" />
+                            <span>Served from Memory (0 Tokens)</span>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-900/90 text-sky-300 border border-sky-500/30">
-                            <Sparkles className="w-3 h-3 text-sky-400" />
-                            <span>🤖 Fresh AI Generation • Stored in memory</span>
-                            {msg.tokensUsed > 0 && (
-                              <span className="text-slate-400 font-mono">
-                                ({msg.tokensUsed} tokens)
-                              </span>
-                            )}
+                          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-neutral-200 dark:bg-neutral-800 text-black dark:text-white border border-neutral-300 dark:border-neutral-700">
+                            <Sparkles className="w-3 h-3 text-green-700 dark:text-green-400" />
+                            <span>Clinical RAG Synthesizer</span>
                           </div>
-                        )}
-
-                        {msg.fromMemory && msg.tokensSaved > 0 && (
-                          <span className="px-2 py-0.5 rounded-full text-[9px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/20">
-                            Saved ~{msg.tokensSaved} tokens
-                          </span>
                         )}
                       </div>
                     )}
@@ -773,24 +713,22 @@ export const AIWidget = () => {
                       {msg.content}
                     </div>
 
-                    {/* Scoping Refusal Notice */}
                     {!isUser && msg.refusal && (
-                      <div className="mt-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] flex items-start gap-2">
-                        <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                      <div className="mt-3 p-2.5 rounded-xl border-2 border-black dark:border-white bg-neutral-200 dark:bg-neutral-800 text-black dark:text-white text-[11px] flex items-start gap-2">
+                        <ShieldAlert className="w-4 h-4 text-black dark:text-white shrink-0 mt-0.5" />
                         <div>
-                          <div className="font-bold text-amber-300">Strictly Scoped Clinical Tutor</div>
-                          <div className="text-[10px] text-amber-200/80 mt-0.5">
-                            I am strictly scoped to this chapter's accredited clinical curriculum. Questions outside this scope are politely declined to prevent clinical inaccuracies.
+                          <div className="font-bold">Strictly Scoped Clinical Tutor</div>
+                          <div className="text-[10px] text-neutral-600 dark:text-neutral-400 mt-0.5">
+                            I am strictly scoped to this chapter's accredited clinical curriculum. Questions outside this scope are politely declined.
                           </div>
                         </div>
                       </div>
                     )}
 
-                    {/* Structured Lesson Citations */}
                     {!isUser && msg.citations && msg.citations.length > 0 && (
-                      <div className="mt-3 pt-2.5 border-t border-slate-700/60">
-                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                          <BookOpen className="w-3 h-3 text-emerald-400" />
+                      <div className="mt-3 pt-2.5 border-t border-neutral-200 dark:border-neutral-800">
+                        <div className="text-[10px] font-bold text-neutral-500 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                          <BookOpen className="w-3 h-3 text-green-700 dark:text-green-400" />
                           <span>Clinical Curriculum Citations:</span>
                         </div>
                         <div className="flex flex-wrap gap-1.5">
@@ -798,12 +736,10 @@ export const AIWidget = () => {
                             <a
                               key={cIdx}
                               href={c.lessonUrl || '#'}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-medium bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/40 text-emerald-300 hover:text-emerald-200 transition-colors cursor-pointer group"
-                              title={`Confidence: ${Math.round(c.confidence * 100)}%\n\nExcerpt: ${c.snippet}`}
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-medium bg-white dark:bg-black hover:border-green-500 border border-neutral-300 dark:border-neutral-700 text-black dark:text-white transition-colors cursor-pointer group"
                             >
-                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 group-hover:scale-125 transition-transform" />
+                              <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                               <span>Ch {c.chapterOrder}: {c.section}</span>
-                              <span className="text-[9px] text-emerald-400/80 font-mono">({Math.round(c.confidence * 100)}%)</span>
                               <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />
                             </a>
                           ))}
@@ -811,36 +747,28 @@ export const AIWidget = () => {
                       </div>
                     )}
 
-                    {/* Bottom message utility bar (for assistant) */}
                     {!isUser && (
-                      <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-slate-700/60 text-[10px] text-slate-400">
-                        <div className="flex items-center gap-1">
-                          <span>{msg.timestamp}</span>
-                          {msg.matchedQuery && (
-                            <span className="text-[9px] text-slate-500 truncate max-w-[150px]">
-                              • Ref: "{msg.matchedQuery}"
-                            </span>
-                          )}
-                        </div>
+                      <div className="flex items-center justify-between mt-3 pt-2.5 border-t border-neutral-200 dark:border-neutral-800 text-[10px] text-neutral-500">
+                        <span>{msg.timestamp}</span>
                         <div className="flex items-center gap-2">
                           <button
                             onClick={() => toggleSpeech(msg.content)}
-                            className="p-1 hover:text-emerald-400 rounded transition-colors cursor-pointer"
-                            title={isSpeaking ? 'Stop Audio' : 'Listen with Speech Voice'}
+                            className="p-1 hover:text-green-700 dark:hover:text-green-400 rounded transition-colors cursor-pointer"
+                            title={isSpeaking ? 'Stop Audio' : 'Listen with Speech'}
                           >
                             {isSpeaking ? (
-                              <VolumeX className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+                              <VolumeX className="w-3.5 h-3.5 text-green-600" />
                             ) : (
                               <Volume2 className="w-3.5 h-3.5" />
                             )}
                           </button>
                           <button
                             onClick={() => handleCopy(msg.content, idx)}
-                            className="p-1 hover:text-emerald-400 rounded transition-colors cursor-pointer"
+                            className="p-1 hover:text-green-700 dark:hover:text-green-400 rounded transition-colors cursor-pointer"
                             title="Copy text"
                           >
                             {copiedIndex === idx ? (
-                              <Check className="w-3.5 h-3.5 text-emerald-400" />
+                              <Check className="w-3.5 h-3.5 text-green-600" />
                             ) : (
                               <Copy className="w-3.5 h-3.5" />
                             )}
@@ -853,10 +781,9 @@ export const AIWidget = () => {
               );
             })}
 
-            {/* Loading Indicator */}
             {loading && (
-              <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-slate-800/80 border border-slate-700/60 text-emerald-400 w-fit">
-                <div className="w-4 h-4 border-2 border-emerald-400/30 border-t-emerald-400 rounded-full animate-spin" />
+              <div className="flex items-center gap-2.5 p-3 rounded-2xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-black dark:text-white w-fit">
+                <div className="w-4 h-4 border-2 border-neutral-400 border-t-green-500 rounded-full animate-spin" />
                 <span className="text-[11px] font-bold">
                   Checking semantic memory & synthesizing clinical rationale...
                 </span>
@@ -867,9 +794,9 @@ export const AIWidget = () => {
 
           {/* Suggested Topic Questions Carousel */}
           {randomQuestions.length > 0 && (
-            <div className="px-4 py-2 border-t border-slate-800/80 bg-slate-950/70">
-              <div className="flex items-center gap-1.5 mb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
-                <BookOpen className="w-3 h-3 text-emerald-400" />
+            <div className="px-4 py-2 border-t border-neutral-200 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-950">
+              <div className="flex items-center gap-1.5 mb-1.5 text-[10px] font-extrabold uppercase tracking-wider text-neutral-500">
+                <BookOpen className="w-3 h-3 text-green-700 dark:text-green-400" />
                 <span>Suggested Clinical Inquiries</span>
               </div>
               <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
@@ -877,9 +804,9 @@ export const AIWidget = () => {
                   <button
                     key={i}
                     onClick={() => handleSendMessage(q)}
-                    className="shrink-0 px-3 py-1.5 rounded-full bg-slate-800/90 hover:bg-emerald-600/20 border border-slate-700/80 hover:border-emerald-500/50 text-[11px] text-slate-300 hover:text-emerald-300 font-medium transition-all cursor-pointer truncate max-w-[260px]"
+                    className="shrink-0 px-3 py-1.5 rounded-full bg-white dark:bg-neutral-900 hover:border-green-500 border border-neutral-300 dark:border-neutral-700 text-[11px] text-black dark:text-white font-medium transition-all cursor-pointer truncate max-w-[260px]"
                   >
-                    ❓ {q}
+                    {q}
                   </button>
                 ))}
               </div>
@@ -887,7 +814,7 @@ export const AIWidget = () => {
           )}
 
           {/* Input Section */}
-          <div className="p-3.5 bg-slate-950 border-t border-slate-800">
+          <div className="p-3.5 bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -900,22 +827,22 @@ export const AIWidget = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask or search anything (e.g. carbohydrate digestion, insulin, DKA)..."
-                className="flex-1 bg-slate-900 border border-slate-700 focus:border-emerald-500 rounded-2xl py-2.5 px-4 text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-emerald-500 transition-all font-medium"
+                className="flex-1 bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 focus:border-green-500 rounded-2xl py-2.5 px-4 text-xs text-black dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-green-500 transition-all font-medium"
               />
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="p-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-2xl shadow-md shadow-emerald-500/20 disabled:opacity-40 transition-all cursor-pointer"
+                className="p-2.5 bg-green-500 hover:bg-green-400 text-black rounded-2xl shadow-xs disabled:opacity-40 transition-all cursor-pointer"
                 title="Send query"
               >
                 <Send className="w-4 h-4" />
               </button>
             </form>
-            <div className="flex items-center justify-between text-[10px] text-slate-500 px-1 mt-1.5">
+            <div className="flex items-center justify-between text-[10px] text-neutral-500 px-1 mt-1.5">
               <span>Press Enter to ask</span>
-              <span className="text-emerald-400/90 font-medium flex items-center gap-1">
-                <Zap className="w-2.5 h-2.5 text-amber-400" />
-                Repeated & similar questions use 0 tokens
+              <span className="text-green-700 dark:text-green-400 font-semibold flex items-center gap-1">
+                <Zap className="w-2.5 h-2.5" />
+                Repeated questions use 0 tokens
               </span>
             </div>
           </div>

@@ -4,7 +4,7 @@ export const ProgressBar = ({
   value = 0,
   max = 100,
   size = 'md',
-  color = 'teal',
+  color = 'green',
   showLabel = false,
   className = ''
 }) => {
@@ -17,28 +17,26 @@ export const ProgressBar = ({
   };
 
   const colorClasses = {
-    teal: 'bg-teal-500',
-    emerald: 'bg-emerald-500',
-    amber: 'bg-amber-500',
-    rose: 'bg-rose-500',
-    sky: 'bg-sky-500'
+    green: 'bg-green-500',
+    black: 'bg-black dark:bg-white',
+    neutral: 'bg-neutral-500 dark:bg-neutral-400'
   };
 
   return (
     <div className={`w-full ${className}`}>
       {showLabel && (
-        <div className="flex justify-between items-center mb-1 text-xs font-semibold text-slate-700 dark:text-slate-300">
+        <div className="flex justify-between items-center mb-1 text-xs font-semibold text-neutral-800 dark:text-neutral-200">
           <span>Progress</span>
-          <span>{percent}%</span>
+          <span className="font-mono">{percent}%</span>
         </div>
       )}
-      <div className={`w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden ${sizeClasses[size] || sizeClasses.md}`}>
+      <div className={`w-full bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden ${sizeClasses[size] || sizeClasses.md}`}>
         <div
           role="progressbar"
           aria-valuenow={value}
           aria-valuemin={0}
           aria-valuemax={max}
-          className={`${sizeClasses[size] || sizeClasses.md} ${colorClasses[color] || colorClasses.teal} rounded-full transition-all duration-500 ease-out`}
+          className={`${sizeClasses[size] || sizeClasses.md} ${colorClasses[color] || colorClasses.green} rounded-full transition-all duration-500 ease-out`}
           style={{ width: `${percent}%` }}
         />
       </div>
@@ -51,8 +49,8 @@ export const ProgressRing = ({
   max = 100,
   size = 64,
   strokeWidth = 6,
-  color = '#0d9488',
-  trackColor = '#e2e8f0',
+  color = '#22C55E',
+  trackColor = '#E5E5E5',
   children,
   className = ''
 }) => {
@@ -71,7 +69,7 @@ export const ProgressRing = ({
           stroke={trackColor}
           strokeWidth={strokeWidth}
           fill="transparent"
-          className="dark:stroke-slate-800"
+          className="dark:stroke-neutral-800"
         />
         <circle
           cx={size / 2}
@@ -90,7 +88,7 @@ export const ProgressRing = ({
         {children ? (
           children
         ) : (
-          <span className="text-xs font-extrabold text-slate-800 dark:text-slate-100">
+          <span className="text-xs font-extrabold text-black dark:text-white">
             {percent}%
           </span>
         )}

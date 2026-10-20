@@ -58,9 +58,9 @@ import ForceChangePasswordModal from './components/auth/ForceChangePasswordModal
 
 // Clean Minimal Page Loading Skeleton
 const PageLoader = () => (
-  <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6">
-    <div className="w-10 h-10 border-3 border-teal-200 dark:border-teal-900 border-t-teal-600 dark:border-t-teal-400 rounded-full animate-spin mb-3" />
-    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wide animate-pulse">
+  <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col items-center justify-center p-6">
+    <div className="w-10 h-10 border-3 border-green-100 dark:border-green-900 border-t-green-500 dark:border-t-green-400 rounded-full animate-spin mb-3" />
+    <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 tracking-wide animate-pulse">
       Loading MedPulse curriculum...
     </span>
   </div>
@@ -84,11 +84,11 @@ const AppRoutes = () => {
   const showAIWidget = currentUser && !isAuthPage;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-teal-500 selection:text-white">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-sans selection:bg-green-500 selection:text-white">
       {/* Skip to Main Content Link for Keyboard and Screen Reader Accessibility */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-600 focus:text-white focus:font-semibold focus:text-xs focus:rounded-xl focus:shadow-xl focus:ring-2 focus:ring-white focus:outline-none"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-green-500 focus:text-white focus:font-semibold focus:text-xs focus:rounded-xl focus:shadow-xl focus:ring-2 focus:ring-white focus:outline-none"
       >
         Skip to main content
       </a>

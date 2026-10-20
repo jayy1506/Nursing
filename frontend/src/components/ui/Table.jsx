@@ -1,7 +1,7 @@
 import React from 'react';
 
 export const Table = ({ children, className = '' }) => (
-  <div className="w-full overflow-x-auto border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 shadow-sm">
+  <div className="w-full overflow-x-auto border border-neutral-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-black shadow-xs">
     <table className={`w-full text-left text-sm ${className}`}>
       {children}
     </table>
@@ -9,13 +9,13 @@ export const Table = ({ children, className = '' }) => (
 );
 
 export const TableHeader = ({ children, className = '' }) => (
-  <thead className={`bg-slate-50/80 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 text-[11px] font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400 ${className}`}>
+  <thead className={`bg-neutral-50 dark:bg-neutral-900 border-b border-neutral-200 dark:border-neutral-800 text-[11px] font-extrabold uppercase tracking-wider text-neutral-500 dark:text-neutral-400 ${className}`}>
     {children}
   </thead>
 );
 
 export const TableBody = ({ children, className = '' }) => (
-  <tbody className={`divide-y divide-slate-100 dark:divide-slate-800/60 ${className}`}>
+  <tbody className={`divide-y divide-neutral-100 dark:divide-neutral-800 ${className}`}>
     {children}
   </tbody>
 );
@@ -23,7 +23,7 @@ export const TableBody = ({ children, className = '' }) => (
 export const TableRow = ({ children, className = '', hover = true, ...props }) => (
   <tr
     className={`transition-colors ${
-      hover ? 'hover:bg-slate-50/60 dark:hover:bg-slate-800/40' : ''
+      hover ? 'hover:bg-neutral-50 dark:hover:bg-neutral-900/60' : ''
     } ${className}`}
     {...props}
   >
@@ -32,13 +32,13 @@ export const TableRow = ({ children, className = '', hover = true, ...props }) =
 );
 
 export const TableHead = ({ children, className = '', ...props }) => (
-  <th className={`px-4 py-3 font-bold text-slate-700 dark:text-slate-300 ${className}`} {...props}>
+  <th className={`px-4 py-3 font-bold text-neutral-900 dark:text-neutral-100 ${className}`} {...props}>
     {children}
   </th>
 );
 
 export const TableCell = ({ children, className = '', ...props }) => (
-  <td className={`px-4 py-3.5 text-slate-700 dark:text-slate-300 align-middle ${className}`} {...props}>
+  <td className={`px-4 py-3.5 text-neutral-800 dark:text-neutral-200 align-middle ${className}`} {...props}>
     {children}
   </td>
 );

@@ -14,3 +14,4 @@ export * from './ErrorState';
 export * from './ProgressBar';
 export * from './Avatar';
 export * from './Breadcrumbs';
+export * from './Toast';

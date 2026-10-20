@@ -24,10 +24,10 @@ export const Avatar = ({
   };
 
   const statusColors = {
-    online: 'bg-emerald-500',
-    offline: 'bg-slate-400',
-    busy: 'bg-rose-500',
-    away: 'bg-amber-500'
+    online: 'bg-green-500',
+    offline: 'bg-neutral-400',
+    busy: 'bg-black dark:bg-white',
+    away: 'bg-neutral-600'
   };
 
   return (
@@ -36,13 +36,13 @@ export const Avatar = ({
         <img
           src={src}
           alt={name}
-          className={`${sizeClasses[size] || sizeClasses.md} rounded-full object-cover border border-slate-200 dark:border-slate-700`}
+          className={`${sizeClasses[size] || sizeClasses.md} rounded-full object-cover border border-neutral-200 dark:border-neutral-700`}
         />
       ) : (
         <div
           className={`${
             sizeClasses[size] || sizeClasses.md
-          } rounded-full bg-gradient-to-tr from-teal-600 to-sky-600 text-white font-extrabold flex items-center justify-center shadow-xs border border-white/20 select-none`}
+          } rounded-full bg-black dark:bg-white text-white dark:text-black font-extrabold flex items-center justify-center shadow-xs border border-neutral-300 dark:border-neutral-700 select-none`}
         >
           {getInitials(name)}
         </div>
@@ -50,7 +50,7 @@ export const Avatar = ({
 
       {status && (
         <span
-          className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-white dark:ring-slate-900 ${
+          className={`absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full ring-2 ring-white dark:ring-black ${
             statusColors[status] || statusColors.online
           }`}
         />

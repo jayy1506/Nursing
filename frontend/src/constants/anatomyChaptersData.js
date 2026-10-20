@@ -7,7 +7,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "Introduction to Anatomical Terms & Organization",
     "category": "General Anatomy & Cellular Organization",
     "icon": "🧬",
-    "color": "from-teal-500 to-emerald-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of Introduction to Anatomical Terms & Organization.",
     "objectives": [
@@ -930,7 +930,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Skeletal System & Joints",
     "category": "Osteology & Arthrology",
     "icon": "🦴",
-    "color": "from-amber-500 to-orange-600",
+    "color": "from-neutral-800 to-neutral-800",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Skeletal System & Joints.",
     "objectives": [
@@ -1636,7 +1636,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Muscular System",
     "category": "Myology & Muscular Mechanics",
     "icon": "💪",
-    "color": "from-red-500 to-rose-600",
+    "color": "from-black dark:from-white to-black dark:to-white",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Muscular System.",
     "objectives": [
@@ -2271,7 +2271,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Respiratory System",
     "category": "Pulmonology & Airways",
     "icon": "🫁",
-    "color": "from-sky-500 to-blue-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Respiratory System.",
     "objectives": [
@@ -2840,7 +2840,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Digestive System",
     "category": "Gastroenterology & Alimentary Canal",
     "icon": "🍽️",
-    "color": "from-emerald-500 to-teal-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Digestive System.",
     "objectives": [
@@ -3488,7 +3488,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Cardiovascular System",
     "category": "Angiology & Heart Anatomy",
     "icon": "🫀",
-    "color": "from-rose-500 to-red-600",
+    "color": "from-black dark:from-white to-black dark:to-white",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Cardiovascular System.",
     "objectives": [
@@ -4052,7 +4052,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Urinary (Excretory) System",
     "category": "Nephrology & Renal Tract",
     "icon": "💧",
-    "color": "from-cyan-500 to-blue-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Urinary (Excretory) System.",
     "objectives": [
@@ -4632,7 +4632,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Reproductive System",
     "category": "Reproductive Anatomy & Embryology",
     "icon": "👶",
-    "color": "from-purple-500 to-pink-600",
+    "color": "from-green-700 to-black dark:to-white",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Reproductive System.",
     "objectives": [
@@ -5279,7 +5279,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Endocrine System",
     "category": "Endocrinology & Glandular Anatomy",
     "icon": "⚡",
-    "color": "from-amber-500 to-yellow-600",
+    "color": "from-neutral-800 to-neutral-800",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Endocrine System.",
     "objectives": [
@@ -5840,7 +5840,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Nervous System (CNS & PNS)",
     "category": "Neuroanatomy & Brain Structures",
     "icon": "🧠",
-    "color": "from-indigo-500 to-purple-600",
+    "color": "from-green-500 to-green-700",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Nervous System (CNS & PNS).",
     "objectives": [
@@ -6486,7 +6486,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Sensory Organs (Eye, Ear, Skin)",
     "category": "Special Senses & Integumentary",
     "icon": "👁️",
-    "color": "from-teal-500 to-cyan-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Sensory Organs (Eye, Ear, Skin).",
     "objectives": [
@@ -7090,7 +7090,7 @@ export const ANATOMY_CHAPTERS = {
     "title": "The Lymphatic & Immune System",
     "category": "Immunology & Lymphatic Drainage",
     "icon": "🛡️",
-    "color": "from-emerald-600 to-teal-700",
+    "color": "from-green-500 to-green-700",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed anatomical architecture, gross positions, microscopic tissues, clinical alterations and official INC competencies of The Lymphatic & Immune System.",
     "objectives": [

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { MedPulseLogo, MedPulseIcon } from '../brand/MedPulseLogo';
+import { MedPulseLogo } from '../brand/MedPulseLogo';
 import ThemeToggle from './ThemeToggle';
 import { Avatar } from '../ui/Avatar';
 import { Badge } from '../ui/Badge';
@@ -9,13 +9,11 @@ import {
   Home,
   BookOpen,
   ClipboardList,
-  HelpCircle,
   Stethoscope,
   ShieldCheck,
   Users,
   Bell,
   Search,
-  ChevronLeft,
   ChevronRight,
   ChevronDown,
   LogOut,
@@ -23,7 +21,13 @@ import {
   BarChart3,
   Layers,
   Menu,
-  X
+  X,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Bone,
+  Activity,
+  Dna,
+  Utensils
 } from 'lucide-react';
 
 export const AppShell = ({ children }) => {
@@ -95,10 +99,10 @@ export const AppShell = ({ children }) => {
   if (role === 'admin') navItems = adminNavItems;
 
   const curriculumTracks = [
-    { label: 'Applied Anatomy', to: '/anatomy-syllabus', emoji: '🦴', units: '12 Units' },
-    { label: 'Applied Physiology', to: '/physiology-syllabus', emoji: '⚡', units: '12 Units' },
-    { label: 'Applied Biochemistry', to: '/bio-chem-syllabus', emoji: '🧬', units: '8 Units' },
-    { label: 'Nutrition & Dietetics', to: '/nutrition-syllabus', emoji: '🥗', units: '10 Units' },
+    { label: 'Applied Anatomy', to: '/anatomy-syllabus', icon: <Bone className="w-4 h-4 shrink-0 text-green-400" />, units: '12 Units' },
+    { label: 'Applied Physiology', to: '/physiology-syllabus', icon: <Activity className="w-4 h-4 shrink-0 text-green-400" />, units: '12 Units' },
+    { label: 'Applied Biochemistry', to: '/bio-chem-syllabus', icon: <Dna className="w-4 h-4 shrink-0 text-green-400" />, units: '8 Units' },
+    { label: 'Nutrition & Dietetics', to: '/nutrition-syllabus', icon: <Utensils className="w-4 h-4 shrink-0 text-green-400" />, units: '10 Units' },
   ];
 
   const filteredTracks = curriculumTracks.filter(t =>
@@ -106,30 +110,34 @@ export const AppShell = ({ children }) => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col selection:bg-green-500 selection:text-black">
       {/* Top Header Bar */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           {/* Mobile hamburger */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden focus-visible:ring-2 focus-visible:ring-emerald-500"
+            className="p-2 rounded-xl text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 lg:hidden focus-visible:ring-2 focus-visible:ring-green-500"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          {/* One-Click Desktop Navigation Menu Toggle Button */}
+          {/* Proper collapse icon button with aria-label "Toggle sidebar" */}
           <button
             type="button"
             onClick={() => setCollapsed(!collapsed)}
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 border border-emerald-200/80 dark:border-emerald-800 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-emerald-500"
-            aria-label={collapsed ? 'Open Navigation Menu (One Click)' : 'Collapse Navigation Sidebar'}
-            title={collapsed ? 'Open Navigation Menu (One Click)' : 'Collapse Sidebar for Full Width'}
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-black dark:text-white border border-neutral-300 dark:border-neutral-800 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-green-500"
+            aria-label="Toggle sidebar"
+            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
-            <Menu className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
-            <span>{collapsed ? 'Menu' : 'Close'}</span>
+            {collapsed ? (
+              <PanelLeftOpen className="w-4 h-4 text-green-700 dark:text-green-400" />
+            ) : (
+              <PanelLeftClose className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
+            )}
+            <span className="sr-only">Toggle sidebar</span>
           </button>
 
           {/* Logo with Tagline */}
@@ -142,11 +150,11 @@ export const AppShell = ({ children }) => {
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200/70 dark:hover:bg-slate-800 rounded-xl border border-slate-200/60 dark:border-slate-700/60 transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 text-xs text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-xl border border-neutral-300 dark:border-neutral-800 transition-colors cursor-pointer"
           >
             <Search className="w-3.5 h-3.5" />
             <span className="hidden md:inline">Quick search curriculum...</span>
-            <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded text-slate-400">
+            <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 rounded text-neutral-500">
               Ctrl+K
             </kbd>
           </button>
@@ -159,34 +167,34 @@ export const AppShell = ({ children }) => {
             <button
               type="button"
               onClick={() => setNotificationsOpen(!notificationsOpen)}
-              className="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer"
+              className="p-2 rounded-xl text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors relative focus-visible:ring-2 focus-visible:ring-green-500 cursor-pointer"
               aria-label="Notifications"
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-emerald-500 rounded-full ring-2 ring-white dark:ring-slate-900" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-green-500 rounded-full ring-2 ring-white dark:ring-black" />
             </button>
 
             {notificationsOpen && (
               <div
-                className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute right-0 mt-2 w-80 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
                 onMouseLeave={() => setNotificationsOpen(false)}
               >
-                <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-3">
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
+                <div className="flex items-center justify-between pb-2 border-b border-neutral-100 dark:border-neutral-800 mb-3">
+                  <h4 className="text-xs font-bold text-black dark:text-white uppercase tracking-wider">
                     Notifications
                   </h4>
-                  <Badge variant="primary" size="sm">New</Badge>
+                  <Badge variant="high" size="sm">New</Badge>
                 </div>
                 <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50">
-                    <p className="font-bold text-emerald-800 dark:text-emerald-300">Welcome to MedPulse</p>
-                    <p className="text-slate-600 dark:text-slate-400 text-[11px] mt-0.5">
+                  <div className="p-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
+                    <p className="font-bold text-black dark:text-white">Welcome to MedPulse</p>
+                    <p className="text-neutral-600 dark:text-neutral-400 text-[11px] mt-0.5">
                       Explore all 4 foundational tracks with chapter-scoped AI tutoring.
                     </p>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50">
-                    <p className="font-semibold text-slate-800 dark:text-slate-200">Formative Assessments Ready</p>
-                    <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
+                  <div className="p-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800">
+                    <p className="font-semibold text-black dark:text-white">Formative Assessments Ready</p>
+                    <p className="text-neutral-500 dark:text-neutral-400 text-[11px] mt-0.5">
                       Practice INC question bank with bedside rationales.
                     </p>
                   </div>
@@ -201,35 +209,35 @@ export const AppShell = ({ children }) => {
               <button
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:border-emerald-400 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500"
+                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 hover:border-green-500 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-green-500"
                 aria-label="User navigation menu"
               >
                 <Avatar name={nickname} size="sm" />
                 <div className="hidden sm:flex flex-col text-left leading-none">
-                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
+                  <span className="text-xs font-bold text-black dark:text-white">
                     {nickname}
                   </span>
-                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">
+                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-green-700 dark:text-green-400 mt-0.5">
                     {role}
                   </span>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
+                <ChevronDown className="w-3.5 h-3.5 text-neutral-400 hidden sm:block" />
               </button>
 
               {userMenuOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  className="absolute right-0 mt-2 w-56 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
                   onMouseLeave={() => setUserMenuOpen(false)}
                 >
-                  <div className="px-4 py-2.5 border-b border-slate-100 dark:border-slate-800">
-                    <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
+                  <div className="px-4 py-2.5 border-b border-neutral-100 dark:border-neutral-800">
+                    <p className="text-xs font-bold text-black dark:text-white truncate">
                       {fullName}
                     </p>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                    <p className="text-[11px] text-neutral-500 dark:text-neutral-400 truncate">
                       {currentUser.email}
                     </p>
                     <div className="mt-1.5">
-                      <Badge variant="primary" size="sm" dot>{role}</Badge>
+                      <Badge variant="medium" size="sm">{role}</Badge>
                     </div>
                   </div>
 
@@ -237,26 +245,26 @@ export const AppShell = ({ children }) => {
                     <Link
                       to="/"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900"
                     >
-                      <Home className="w-3.5 h-3.5 text-slate-400" />
+                      <Home className="w-3.5 h-3.5 text-neutral-400" />
                       <span>Home Hub</span>
                     </Link>
                     <Link
                       to="/syllabus"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900"
                     >
-                      <BookOpen className="w-3.5 h-3.5 text-slate-400" />
+                      <BookOpen className="w-3.5 h-3.5 text-neutral-400" />
                       <span>Curriculum Tracks</span>
                     </Link>
                   </div>
 
-                  <div className="pt-1 border-t border-slate-100 dark:border-slate-800">
+                  <div className="pt-1 border-t border-neutral-100 dark:border-neutral-800">
                     <button
                       type="button"
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-black dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors cursor-pointer"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>Sign Out</span>
@@ -268,7 +276,7 @@ export const AppShell = ({ children }) => {
           ) : (
             <Link
               to="/login"
-              className="px-4 py-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-colors"
+              className="px-4 py-1.5 text-xs font-bold text-black bg-green-500 hover:bg-green-400 rounded-xl shadow-xs transition-colors"
             >
               Sign In
             </Link>
@@ -283,27 +291,28 @@ export const AppShell = ({ children }) => {
           <button
             type="button"
             onClick={() => setCollapsed(false)}
-            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-r-xl shadow-lg text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-emerald-600 border-l-0"
+            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-black text-white hover:border-green-500 rounded-r-xl shadow-lg text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-neutral-800 border-l-0"
             title="Open Navigation Menu"
+            aria-label="Toggle sidebar"
           >
-            <ChevronRight className="w-3.5 h-3.5 text-emerald-200" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold">Menu</span>
+            <ChevronRight className="w-3.5 h-3.5 text-green-400" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-green-400">Menu</span>
           </button>
         )}
 
-        {/* Desktop Collapsible Sidebar */}
+        {/* Desktop Sidebar: Pure Black Background in both modes as specified in requirements */}
         <aside
-          className={`hidden lg:flex flex-col bg-white dark:bg-slate-900 transition-all duration-300 shrink-0 select-none ${
+          className={`hidden lg:flex flex-col bg-black text-white border-r border-neutral-800 transition-all duration-300 shrink-0 select-none ${
             collapsed
               ? 'w-0 opacity-0 overflow-hidden border-none pointer-events-none'
-              : 'w-64 opacity-100 border-r border-slate-200/80 dark:border-slate-800/80'
+              : 'w-64 opacity-100'
           }`}
         >
           <div className="p-3.5 flex-1 flex flex-col space-y-6 overflow-y-auto">
             {/* Primary Nav Links */}
             <div className="space-y-1">
               {!collapsed && (
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
                   Main Navigation
                 </span>
               )}
@@ -313,10 +322,10 @@ export const AppShell = ({ children }) => {
                   to={item.to}
                   end={item.to === '/'}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
+                    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                       isActive
-                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200/60 dark:border-emerald-800/60'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/70 dark:hover:bg-slate-800/70'
+                        ? 'border-l-4 border-green-500 bg-neutral-900 text-green-400 font-extrabold pl-2.5'
+                        : 'text-neutral-300 hover:text-white hover:bg-neutral-900/80 border-l-4 border-transparent'
                     } ${collapsed ? 'justify-center' : ''}`
                   }
                   title={collapsed ? item.label : undefined}
@@ -327,23 +336,23 @@ export const AppShell = ({ children }) => {
               ))}
             </div>
 
-            {/* Fast-Track Curriculum Syllabi */}
+            {/* Single style monochrome line icons for curriculum tracks */}
             {!collapsed && (
-              <div className="space-y-1.5 pt-3 border-t border-slate-100 dark:border-slate-800">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3">
+              <div className="space-y-1.5 pt-3 border-t border-neutral-800">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
                   Curriculum Tracks
                 </span>
                 {curriculumTracks.map((track) => (
                   <Link
                     key={track.to}
                     to={track.to}
-                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors"
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-neutral-900 rounded-xl transition-colors"
                   >
-                    <span className="flex items-center gap-2">
-                      <span>{track.emoji}</span>
+                    <span className="flex items-center gap-2.5">
+                      {track.icon}
                       <span className="truncate">{track.label}</span>
                     </span>
-                    <span className="text-[10px] text-slate-400 dark:text-slate-500">{track.units}</span>
+                    <span className="text-[10px] text-neutral-400">{track.units}</span>
                   </Link>
                 ))}
               </div>
@@ -351,43 +360,44 @@ export const AppShell = ({ children }) => {
           </div>
 
           {/* Sidebar Footer info */}
-          <div className="p-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 dark:text-slate-500">
+          <div className="p-4 border-t border-neutral-800 text-[11px] text-neutral-400">
             {!collapsed ? (
               <div className="flex items-center justify-between">
                 <span>INC CBME v2026</span>
-                <span className="w-2 h-2 rounded-full bg-emerald-500" title="System Operational" />
+                <span className="w-2 h-2 rounded-full bg-green-500" title="System Operational" />
               </div>
             ) : (
               <div className="flex justify-center">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" title="Online" />
+                <span className="w-2 h-2 rounded-full bg-green-500" title="Online" />
               </div>
             )}
           </div>
         </aside>
 
         {/* Content Outlet Container */}
-        <div className="flex-1 overflow-y-auto pb-16 lg:pb-0">
+        <div className="flex-1 overflow-y-auto pb-16 lg:pb-0 bg-white dark:bg-black">
           {children}
         </div>
       </div>
 
       {/* Mobile Drawer Navigation (When hamburger tapped) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm lg:hidden animate-in fade-in duration-200">
-          <div className="fixed inset-y-0 left-0 w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-5 flex flex-col space-y-5 animate-in slide-in-from-left duration-200">
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm lg:hidden animate-in fade-in duration-200">
+          <div className="fixed inset-y-0 left-0 w-72 bg-black border-r border-neutral-800 p-5 flex flex-col space-y-5 animate-in slide-in-from-left duration-200 text-white">
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
               <MedPulseLogo />
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg"
+                className="p-1.5 text-neutral-400 hover:text-white rounded-lg"
+                aria-label="Toggle sidebar"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             <div className="flex-1 space-y-1 overflow-y-auto">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-3">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
                 Menu
               </span>
               {navItems.map((item) => (
@@ -398,8 +408,8 @@ export const AppShell = ({ children }) => {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                       isActive
-                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold'
-                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                        ? 'border-l-4 border-green-500 bg-neutral-900 text-green-400 font-extrabold pl-2.5'
+                        : 'text-neutral-300 hover:bg-neutral-900'
                     }`
                   }
                 >
@@ -408,8 +418,8 @@ export const AppShell = ({ children }) => {
                 </NavLink>
               ))}
 
-              <div className="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-3">
+              <div className="pt-4 mt-2 border-t border-neutral-800 space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
                   Syllabi Tracks
                 </span>
                 {curriculumTracks.map((track) => (
@@ -417,21 +427,24 @@ export const AppShell = ({ children }) => {
                     key={track.to}
                     to={track.to}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400"
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-neutral-300 hover:text-white"
                   >
-                    <span>{track.emoji} {track.label}</span>
-                    <span className="text-[10px] text-slate-400">{track.units}</span>
+                    <span className="flex items-center gap-2">
+                      {track.icon}
+                      <span>{track.label}</span>
+                    </span>
+                    <span className="text-[10px] text-neutral-400">{track.units}</span>
                   </Link>
                 ))}
               </div>
             </div>
 
             {currentUser && (
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+              <div className="pt-3 border-t border-neutral-800">
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/30 rounded-xl"
+                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-white bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-xl"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Sign Out</span>
@@ -442,13 +455,13 @@ export const AppShell = ({ children }) => {
         </div>
       )}
 
-      {/* Mobile Bottom Tab Bar (Thumbs-friendly navigation) */}
-      <nav aria-label="Mobile Navigation" className="fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200/80 dark:border-slate-800/80 lg:hidden flex items-center justify-around py-2 px-1">
+      {/* Mobile Bottom Tab Bar */}
+      <nav aria-label="Mobile Navigation" className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-black border-t border-neutral-200 dark:border-neutral-800 lg:hidden flex items-center justify-around py-2 px-1">
         <NavLink
           to="/"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
+              isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
             }`
           }
         >
@@ -460,7 +473,7 @@ export const AppShell = ({ children }) => {
           to="/syllabus"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
+              isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
             }`
           }
         >
@@ -472,7 +485,7 @@ export const AppShell = ({ children }) => {
           to="/question-bank"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
+              isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
             }`
           }
         >
@@ -485,7 +498,7 @@ export const AppShell = ({ children }) => {
             to="/student/quiz/comprehensive"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
+                isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
               }`
             }
           >
@@ -499,7 +512,7 @@ export const AppShell = ({ children }) => {
             to="/faculty/dashboard"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
+                isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
               }`
             }
           >
@@ -513,7 +526,7 @@ export const AppShell = ({ children }) => {
             to="/admin/dashboard"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
+                isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
               }`
             }
           >
@@ -528,33 +541,33 @@ export const AppShell = ({ children }) => {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-start justify-center pt-20 p-4 animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-20 p-4 animate-in fade-in duration-150"
           onClick={(e) => {
             if (e.target === e.currentTarget) setSearchOpen(false);
           }}
         >
-          <div className="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
-            <div className="p-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2.5">
-              <Search className="w-5 h-5 text-slate-400" />
+          <div className="w-full max-w-lg bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
+            <div className="p-3 border-b border-neutral-100 dark:border-neutral-800 flex items-center gap-2.5">
+              <Search className="w-5 h-5 text-neutral-400" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search curriculum tracks, chapters, or topics..."
-                className="w-full bg-transparent text-sm text-slate-900 dark:text-slate-100 focus:outline-none placeholder:text-slate-400"
+                className="w-full bg-transparent text-sm text-black dark:text-white focus:outline-none placeholder:text-neutral-400"
                 autoFocus
               />
               <button
                 type="button"
                 onClick={() => setSearchOpen(false)}
-                className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg text-xs"
+                className="p-1 text-neutral-400 hover:text-black dark:hover:text-white rounded-lg text-xs"
               >
                 ESC
               </button>
             </div>
 
             <div className="p-3 max-h-72 overflow-y-auto space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-2">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-2">
                 Curriculum Modules
               </span>
               {filteredTracks.map((track) => (
@@ -562,23 +575,23 @@ export const AppShell = ({ children }) => {
                   key={track.to}
                   to={track.to}
                   onClick={() => setSearchOpen(false)}
-                  className="flex items-center justify-between p-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-slate-800 text-xs text-slate-800 dark:text-slate-200 transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-900 text-xs text-black dark:text-white transition-colors"
                 >
                   <span className="flex items-center gap-2 font-medium">
-                    <span>{track.emoji}</span>
+                    {track.icon}
                     <span>{track.label}</span>
                   </span>
-                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">{track.units}</span>
+                  <span className="text-[10px] text-green-700 dark:text-green-400 font-semibold">{track.units}</span>
                 </Link>
               ))}
 
-              <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+              <div className="pt-2 border-t border-neutral-100 dark:border-neutral-800">
                 <Link
                   to="/question-bank"
                   onClick={() => setSearchOpen(false)}
-                  className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300"
+                  className="flex items-center gap-2 p-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-900 text-xs text-black dark:text-white"
                 >
-                  <Layers className="w-4 h-4 text-slate-400" />
+                  <Layers className="w-4 h-4 text-neutral-400" />
                   <span>University Question Bank (All Modules)</span>
                 </Link>
               </div>

@@ -23,52 +23,52 @@ export const GlucoseHomeostasisSimulator = () => {
     if (val < 70) {
       return {
         label: "Hypoglycemia (Critical Low)",
-        color: "text-rose-600 bg-rose-50 border-rose-200",
+        color: "text-black dark:text-white bg-neutral-100 border-neutral-400",
         hormone: "Glucagon & Epinephrine release ↑",
         metabolism: "Glycogenolysis in liver stimulated, gluconeogenesis activated.",
         symptoms: "Diaphoresis, tremors, tachycardia, confusion, blurred vision.",
         nursingAction: "Rule of 15: Give 15g fast-acting carbs (juice/glucose tabs), recheck in 15 mins. If unconscious, IV D50 or IM Glucagon.",
-        gaugeColor: "#ef4444"
+        gaugeColor: "#000000"
       };
     } else if (val <= 99) {
       return {
         label: "Normal Euglycemia (Fasting)",
-        color: "text-emerald-700 bg-emerald-50 border-emerald-200",
+        color: "text-green-700 bg-green-50 border-green-100",
         hormone: "Basal Insulin secretion (β-cells of Pancreas)",
         metabolism: "Balanced cellular glucose uptake via GLUT4, normal glycolysis.",
         symptoms: "Eustasis, normal cellular respiration and cognitive alertness.",
         nursingAction: "Maintain balanced dietary intake and hydration. Routine screening.",
-        gaugeColor: "#10b981"
+        gaugeColor: "#22C55E"
       };
     } else if (val <= 125) {
       return {
         label: "Impaired Fasting Glucose (Prediabetes)",
-        color: "text-amber-700 bg-amber-50 border-amber-200",
+        color: "text-neutral-800 bg-neutral-100 border-neutral-300",
         hormone: "Compensatory Hyperinsulinemia due to peripheral resistance",
         metabolism: "Reduced GLUT4 translocation into muscle and adipose tissues.",
         symptoms: "Usually asymptomatic, subtle fatigue, borderline HbA1c 5.7–6.4%.",
         nursingAction: "Lifestyle counseling: Mediterranean diet, regular aerobic exercise, annual HbA1c surveillance.",
-        gaugeColor: "#f59e0b"
+        gaugeColor: "#22C55E"
       };
     } else if (val <= 249) {
       return {
         label: "Diabetes Mellitus (Hyperglycemia)",
-        color: "text-orange-700 bg-orange-50 border-orange-200",
+        color: "text-neutral-800 bg-neutral-100 border-neutral-300",
         hormone: "Absolute or Relative Insulin Deficiency",
         metabolism: "Excess hepatic gluconeogenesis; glucose spills into urine exceeding renal threshold (180 mg/dL).",
         symptoms: "Classic 3 Ps: Polyuria, Polydipsia, Polyphagia, fatigue, weight loss.",
         nursingAction: "Initiate insulin therapy or oral hypoglycemics (Metformin), check urine ketones, foot inspection.",
-        gaugeColor: "#ea580c"
+        gaugeColor: "#22C55E"
       };
     } else {
       return {
         label: "Severe Hyperglycemia / DKA Risk Alert",
-        color: "text-red-700 bg-red-100 border-red-300",
+        color: "text-black dark:text-white bg-neutral-100 border-neutral-400",
         hormone: "Severe Insulin Collapse with Counter-Regulatory Surge",
         metabolism: "Massive lipolysis → Free fatty acids → Liver converts to Ketones (Acetoacetate & β-hydroxybutyrate).",
         symptoms: "Kussmaul breathing (deep/rapid), fruity acetone breath, dehydration, vomiting, altered sensorium.",
         nursingAction: "EMERGENCY: IV Normal Saline bolus, continuous IV regular insulin infusion, strict Potassium (K⁺) monitoring.",
-        gaugeColor: "#dc2626"
+        gaugeColor: "#000000"
       };
     }
   };
@@ -82,18 +82,18 @@ export const GlucoseHomeostasisSimulator = () => {
   const angle = -90 + ((clampedG - minG) / (maxG - minG)) * 180;
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+    <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3 mb-4">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-green-700 bg-green-50 px-2 py-0.5 rounded-md border border-green-100">
             Interactive Physiology Simulator
           </span>
-          <h4 className="text-sm font-bold text-slate-900 mt-1 flex items-center gap-1.5">
-            <Activity className="w-4 h-4 text-emerald-600" />
+          <h4 className="text-sm font-bold text-neutral-900 mt-1 flex items-center gap-1.5">
+            <Activity className="w-4 h-4 text-green-500" />
             <span>Blood Glucose & Cellular Homeostasis Meter</span>
           </h4>
         </div>
-        <div className="text-xs text-slate-500 font-medium">
+        <div className="text-xs text-neutral-500 font-medium">
           Drag the slider to observe metabolic & clinical shifts
         </div>
       </div>
@@ -105,11 +105,11 @@ export const GlucoseHomeostasisSimulator = () => {
             {/* Gauge Background Arcs */}
             <defs>
               <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#ef4444" />
-                <stop offset="20%" stopColor="#10b981" />
-                <stop offset="45%" stopColor="#f59e0b" />
-                <stop offset="70%" stopColor="#ea580c" />
-                <stop offset="100%" stopColor="#dc2626" />
+                <stop offset="0%" stopColor="#000000" />
+                <stop offset="20%" stopColor="#22C55E" />
+                <stop offset="45%" stopColor="#22C55E" />
+                <stop offset="70%" stopColor="#22C55E" />
+                <stop offset="100%" stopColor="#000000" />
               </linearGradient>
             </defs>
 
@@ -117,7 +117,7 @@ export const GlucoseHomeostasisSimulator = () => {
             <path
               d="M 20 100 A 80 80 0 0 1 180 100"
               fill="none"
-              stroke="#e2e8f0"
+              stroke="#E5E5E5"
               strokeWidth="16"
               strokeLinecap="round"
             />
@@ -132,22 +132,22 @@ export const GlucoseHomeostasisSimulator = () => {
 
             {/* Gauge Needle with transition */}
             <g transform={`rotate(${angle} 100 100)`} className="transition-transform duration-200 ease-out">
-              <line x1="100" y1="100" x2="100" y2="30" stroke="#0f172a" strokeWidth="3" strokeLinecap="round" />
-              <polygon points="97,35 103,35 100,22" fill="#0f172a" />
-              <circle cx="100" cy="100" r="7" fill="#0f172a" />
+              <line x1="100" y1="100" x2="100" y2="30" stroke="#111111" strokeWidth="3" strokeLinecap="round" />
+              <polygon points="97,35 103,35 100,22" fill="#111111" />
+              <circle cx="100" cy="100" r="7" fill="#111111" />
               <circle cx="100" cy="100" r="3" fill="#ffffff" />
             </g>
 
             {/* Labels */}
-            <text x="22" y="115" fontSize="8" fill="#64748b" textAnchor="middle" fontWeight="bold">60 (Low)</text>
-            <text x="75" y="55" fontSize="8" fill="#10b981" textAnchor="middle" fontWeight="bold">70-99 Normal</text>
-            <text x="178" y="115" fontSize="8" fill="#dc2626" textAnchor="middle" fontWeight="bold">300+ (High)</text>
+            <text x="22" y="115" fontSize="8" fill="#525252" textAnchor="middle" fontWeight="bold">60 (Low)</text>
+            <text x="75" y="55" fontSize="8" fill="#22C55E" textAnchor="middle" fontWeight="bold">70-99 Normal</text>
+            <text x="178" y="115" fontSize="8" fill="#000000" textAnchor="middle" fontWeight="bold">300+ (High)</text>
           </svg>
 
           {/* Current Value Display & Interactive Slider */}
           <div className="w-full max-w-xs text-center mt-1">
-            <div className="text-2xl font-black text-slate-900 tracking-tight">
-              {glucose} <span className="text-xs font-bold text-slate-500">mg/dL</span>
+            <div className="text-2xl font-black text-neutral-900 tracking-tight">
+              {glucose} <span className="text-xs font-bold text-neutral-500">mg/dL</span>
             </div>
             <input
               type="range"
@@ -156,9 +156,9 @@ export const GlucoseHomeostasisSimulator = () => {
               step="5"
               value={glucose}
               onChange={(e) => setGlucose(Number(e.target.value))}
-              className="w-full accent-emerald-600 mt-2 cursor-pointer"
+              className="w-full accent-green-500 mt-2 cursor-pointer"
             />
-            <div className="flex justify-between text-[10px] text-slate-400 font-semibold px-1 mt-1">
+            <div className="flex justify-between text-[10px] text-neutral-400 font-semibold px-1 mt-1">
               <span>Severe Low (50)</span>
               <span>Normal (100)</span>
               <span>Crisis (350)</span>
@@ -174,27 +174,27 @@ export const GlucoseHomeostasisSimulator = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/80">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">Hormonal Profile</span>
-              <p className="font-semibold text-slate-800 mt-0.5">{status.hormone}</p>
+            <div className="bg-neutral-50 p-3 rounded-xl border border-neutral-200/80">
+              <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wide block">Hormonal Profile</span>
+              <p className="font-semibold text-neutral-800 mt-0.5">{status.hormone}</p>
             </div>
-            <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/80">
-              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">Metabolic Pathway</span>
-              <p className="font-semibold text-slate-800 mt-0.5">{status.metabolism}</p>
+            <div className="bg-neutral-50 p-3 rounded-xl border border-neutral-200/80">
+              <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wide block">Metabolic Pathway</span>
+              <p className="font-semibold text-neutral-800 mt-0.5">{status.metabolism}</p>
             </div>
           </div>
 
-          <div className="bg-slate-50 p-3 rounded-xl border border-slate-200/80 text-xs">
-            <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wide block">Clinical Signs & Symptoms</span>
-            <p className="font-medium text-slate-700 mt-0.5">{status.symptoms}</p>
+          <div className="bg-neutral-50 p-3 rounded-xl border border-neutral-200/80 text-xs">
+            <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wide block">Clinical Signs & Symptoms</span>
+            <p className="font-medium text-neutral-700 mt-0.5">{status.symptoms}</p>
           </div>
 
-          <div className="bg-emerald-50/80 border border-emerald-200 p-3 rounded-xl text-xs">
-            <span className="text-[10px] font-extrabold text-emerald-800 uppercase tracking-wide flex items-center gap-1">
-              <CheckCircle className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="bg-green-50/80 border border-green-100 p-3 rounded-xl text-xs">
+            <span className="text-[10px] font-extrabold text-green-700 uppercase tracking-wide flex items-center gap-1">
+              <CheckCircle className="w-3.5 h-3.5 text-green-500" />
               <span>Priority Nursing Action Protocol</span>
             </span>
-            <p className="text-emerald-900 font-medium mt-1 leading-relaxed">{status.nursingAction}</p>
+            <p className="text-green-900 font-medium mt-1 leading-relaxed">{status.nursingAction}</p>
           </div>
         </div>
       </div>
@@ -222,49 +222,49 @@ export const CardiacBiomarkerTimeline = () => {
   const currentInfo = timepoints.find((t) => t.hours === selectedHour) || timepoints[2];
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+    <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3 mb-4">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-purple-700 bg-purple-50 px-2 py-0.5 rounded-md border border-purple-200">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-green-700 bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-300">
             Interactive Diagnostic Timeline
           </span>
-          <h4 className="text-sm font-bold text-slate-900 mt-1 flex items-center gap-1.5">
-            <HeartPulse className="w-4 h-4 text-purple-600" />
+          <h4 className="text-sm font-bold text-neutral-900 mt-1 flex items-center gap-1.5">
+            <HeartPulse className="w-4 h-4 text-green-700" />
             <span>Post-Myocardial Infarction Cardiac Enzyme Kinetics</span>
           </h4>
         </div>
         <div className="flex items-center gap-3 text-xs font-semibold">
-          <span className="flex items-center gap-1 text-rose-600">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-600 inline-block" /> Troponin I
+          <span className="flex items-center gap-1 text-black dark:text-white">
+            <span className="w-2.5 h-2.5 rounded-full bg-black dark:bg-white inline-block" /> Troponin I
           </span>
-          <span className="flex items-center gap-1 text-emerald-600">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-600 inline-block" /> CK-MB
+          <span className="flex items-center gap-1 text-green-500">
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500 inline-block" /> CK-MB
           </span>
-          <span className="flex items-center gap-1 text-sky-600">
-            <span className="w-2.5 h-2.5 rounded-full bg-sky-600 inline-block" /> Total LDH
+          <span className="flex items-center gap-1 text-green-700">
+            <span className="w-2.5 h-2.5 rounded-full bg-green-500 inline-block" /> Total LDH
           </span>
         </div>
       </div>
 
       {/* SVG Kinetic Curves Chart */}
-      <div className="relative bg-slate-50 rounded-xl p-3 border border-slate-200/80">
+      <div className="relative bg-neutral-50 rounded-xl p-3 border border-neutral-200/80">
         <svg viewBox="0 0 500 200" className="w-full h-44 overflow-visible">
           {/* Grid lines */}
-          <line x1="50" y1="20" x2="480" y2="20" stroke="#e2e8f0" strokeDasharray="3 3" />
-          <line x1="50" y1="70" x2="480" y2="70" stroke="#e2e8f0" strokeDasharray="3 3" />
-          <line x1="50" y1="120" x2="480" y2="120" stroke="#e2e8f0" strokeDasharray="3 3" />
-          <line x1="50" y1="170" x2="480" y2="170" stroke="#cbd5e1" strokeWidth="1.5" />
+          <line x1="50" y1="20" x2="480" y2="20" stroke="#E5E5E5" strokeDasharray="3 3" />
+          <line x1="50" y1="70" x2="480" y2="70" stroke="#E5E5E5" strokeDasharray="3 3" />
+          <line x1="50" y1="120" x2="480" y2="120" stroke="#E5E5E5" strokeDasharray="3 3" />
+          <line x1="50" y1="170" x2="480" y2="170" stroke="#E5E5E5" strokeWidth="1.5" />
 
           {/* Y Axis labels */}
-          <text x="45" y="24" fontSize="9" fill="#94a3b8" textAnchor="end">Peak</text>
-          <text x="45" y="95" fontSize="9" fill="#94a3b8" textAnchor="end">Moderate</text>
-          <text x="45" y="173" fontSize="9" fill="#94a3b8" textAnchor="end">Normal</text>
+          <text x="45" y="24" fontSize="9" fill="#E5E5E5" textAnchor="end">Peak</text>
+          <text x="45" y="95" fontSize="9" fill="#E5E5E5" textAnchor="end">Moderate</text>
+          <text x="45" y="173" fontSize="9" fill="#E5E5E5" textAnchor="end">Normal</text>
 
           {/* Troponin curve (Red): Rises 4h, Peaks 24h, Remains elevated 10-14 days */}
           <path
             d="M 60 170 Q 140 25 180 25 T 320 120 T 480 168"
             fill="none"
-            stroke="#e11d48"
+            stroke="#000000"
             strokeWidth="3.5"
             strokeLinecap="round"
           />
@@ -273,7 +273,7 @@ export const CardiacBiomarkerTimeline = () => {
           <path
             d="M 60 170 Q 130 40 170 40 Q 230 170 270 170 L 480 170"
             fill="none"
-            stroke="#059669"
+            stroke="#22C55E"
             strokeWidth="3"
             strokeLinecap="round"
           />
@@ -282,29 +282,29 @@ export const CardiacBiomarkerTimeline = () => {
           <path
             d="M 60 170 L 140 170 Q 220 50 260 50 Q 360 140 440 170"
             fill="none"
-            stroke="#0284c7"
+            stroke="#15803D"
             strokeWidth="2.5"
             strokeDasharray="4 2"
             strokeLinecap="round"
           />
 
           {/* Time Marker Vertical Guideline */}
-          {selectedHour === 2 && <line x1="75" y1="20" x2="75" y2="170" stroke="#0f172a" strokeWidth="2" strokeDasharray="4 2" />}
-          {selectedHour === 6 && <line x1="110" y1="20" x2="110" y2="170" stroke="#0f172a" strokeWidth="2" strokeDasharray="4 2" />}
-          {selectedHour === 12 && <line x1="145" y1="20" x2="145" y2="170" stroke="#0f172a" strokeWidth="2" strokeDasharray="4 2" />}
-          {selectedHour === 24 && <line x1="175" y1="20" x2="175" y2="170" stroke="#0f172a" strokeWidth="2" strokeDasharray="4 2" />}
-          {selectedHour === 48 && <line x1="225" y1="20" x2="225" y2="170" stroke="#0f172a" strokeWidth="2" strokeDasharray="4 2" />}
-          {selectedHour === 72 && <line x1="260" y1="20" x2="260" y2="170" stroke="#0f172a" strokeWidth="2" strokeDasharray="4 2" />}
-          {selectedHour === 168 && <line x1="380" y1="20" x2="380" y2="170" stroke="#0f172a" strokeWidth="2" strokeDasharray="4 2" />}
+          {selectedHour === 2 && <line x1="75" y1="20" x2="75" y2="170" stroke="#111111" strokeWidth="2" strokeDasharray="4 2" />}
+          {selectedHour === 6 && <line x1="110" y1="20" x2="110" y2="170" stroke="#111111" strokeWidth="2" strokeDasharray="4 2" />}
+          {selectedHour === 12 && <line x1="145" y1="20" x2="145" y2="170" stroke="#111111" strokeWidth="2" strokeDasharray="4 2" />}
+          {selectedHour === 24 && <line x1="175" y1="20" x2="175" y2="170" stroke="#111111" strokeWidth="2" strokeDasharray="4 2" />}
+          {selectedHour === 48 && <line x1="225" y1="20" x2="225" y2="170" stroke="#111111" strokeWidth="2" strokeDasharray="4 2" />}
+          {selectedHour === 72 && <line x1="260" y1="20" x2="260" y2="170" stroke="#111111" strokeWidth="2" strokeDasharray="4 2" />}
+          {selectedHour === 168 && <line x1="380" y1="20" x2="380" y2="170" stroke="#111111" strokeWidth="2" strokeDasharray="4 2" />}
 
           {/* X Axis Time Labels */}
-          <text x="60" y="185" fontSize="9" fill="#64748b" textAnchor="middle">0h</text>
-          <text x="110" y="185" fontSize="9" fill="#64748b" textAnchor="middle">6h</text>
-          <text x="175" y="185" fontSize="9" fill="#64748b" textAnchor="middle">24h</text>
-          <text x="225" y="185" fontSize="9" fill="#64748b" textAnchor="middle">48h</text>
-          <text x="260" y="185" fontSize="9" fill="#64748b" textAnchor="middle">3 Days</text>
-          <text x="380" y="185" fontSize="9" fill="#64748b" textAnchor="middle">7 Days</text>
-          <text x="470" y="185" fontSize="9" fill="#64748b" textAnchor="middle">14 Days</text>
+          <text x="60" y="185" fontSize="9" fill="#525252" textAnchor="middle">0h</text>
+          <text x="110" y="185" fontSize="9" fill="#525252" textAnchor="middle">6h</text>
+          <text x="175" y="185" fontSize="9" fill="#525252" textAnchor="middle">24h</text>
+          <text x="225" y="185" fontSize="9" fill="#525252" textAnchor="middle">48h</text>
+          <text x="260" y="185" fontSize="9" fill="#525252" textAnchor="middle">3 Days</text>
+          <text x="380" y="185" fontSize="9" fill="#525252" textAnchor="middle">7 Days</text>
+          <text x="470" y="185" fontSize="9" fill="#525252" textAnchor="middle">14 Days</text>
         </svg>
       </div>
 
@@ -316,8 +316,8 @@ export const CardiacBiomarkerTimeline = () => {
             onClick={() => setSelectedHour(t.hours)}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all cursor-pointer ${
               selectedHour === t.hours
-                ? "bg-purple-700 text-white shadow-xs scale-102"
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                ? "bg-neutral-900 text-white shadow-xs scale-102"
+                : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
             }`}
           >
             {t.label}
@@ -326,13 +326,13 @@ export const CardiacBiomarkerTimeline = () => {
       </div>
 
       {/* Selected Timepoint Clinical Interpretation */}
-      <div className="mt-3 p-3.5 rounded-xl bg-purple-50/70 border border-purple-200/80 text-xs flex items-start gap-2.5">
-        <Info className="w-4 h-4 text-purple-700 shrink-0 mt-0.5" />
+      <div className="mt-3 p-3.5 rounded-xl bg-neutral-100/70 border border-neutral-300/80 text-xs flex items-start gap-2.5">
+        <Info className="w-4 h-4 text-green-700 shrink-0 mt-0.5" />
         <div>
-          <span className="font-extrabold text-purple-900 block">
+          <span className="font-extrabold text-neutral-800 block">
             Clinical Window: {currentInfo.label} Post-Infarction
           </span>
-          <p className="text-purple-950 font-medium mt-0.5 leading-relaxed">
+          <p className="text-neutral-800 font-medium mt-0.5 leading-relaxed">
             {currentInfo.desc}
           </p>
         </div>
@@ -360,8 +360,8 @@ export const ABGDiagnosticCalculator = () => {
     const lowHco3 = hco3 < 22;
 
     if (isNormalPh) {
-      if (highCo2 && highHco3) return { condition: "Fully Compensated Respiratory Acidosis or Metabolic Alkalosis", tag: "Compensated", color: "text-emerald-700 bg-emerald-50 border-emerald-200" };
-      return { condition: "Normal Blood Gas Homeostasis (pH 7.35–7.45)", tag: "Normal", color: "text-emerald-700 bg-emerald-50 border-emerald-200" };
+      if (highCo2 && highHco3) return { condition: "Fully Compensated Respiratory Acidosis or Metabolic Alkalosis", tag: "Compensated", color: "text-green-700 bg-green-50 border-green-100" };
+      return { condition: "Normal Blood Gas Homeostasis (pH 7.35–7.45)", tag: "Normal", color: "text-green-700 bg-green-50 border-green-100" };
     }
 
     if (isAcidemia) {
@@ -369,7 +369,7 @@ export const ABGDiagnosticCalculator = () => {
         return {
           condition: "Respiratory Acidosis (Hypoventilation / COPD / Sedation)",
           tag: "Respiratory",
-          color: "text-rose-700 bg-rose-50 border-rose-200",
+          color: "text-black dark:text-white bg-neutral-100 border-neutral-400",
           action: "Support ventilation, check airway patency, titrate O₂, consider bronchodilators or Naloxone if opioid-induced."
         };
       }
@@ -377,14 +377,14 @@ export const ABGDiagnosticCalculator = () => {
         return {
           condition: "Metabolic Acidosis (DKA / Lactic Acidosis / Renal Failure)",
           tag: "Metabolic",
-          color: "text-rose-700 bg-rose-50 border-rose-200",
+          color: "text-black dark:text-white bg-neutral-100 border-neutral-400",
           action: "Calculate Serum Anion Gap, administer IV regular insulin + fluids if DKA, evaluate renal function."
         };
       }
       return {
         condition: "Combined / Mixed Acidosis (Critical)",
         tag: "Critical Mixed",
-        color: "text-red-700 bg-red-100 border-red-300",
+        color: "text-black dark:text-white bg-neutral-100 border-neutral-400",
         action: "Intensive care resuscitation. Urgent dual respiratory and metabolic correction required."
       };
     }
@@ -394,7 +394,7 @@ export const ABGDiagnosticCalculator = () => {
         return {
           condition: "Respiratory Alkalosis (Hyperventilation / Panic / Pulmonary Embolism)",
           tag: "Respiratory",
-          color: "text-sky-700 bg-sky-50 border-sky-200",
+          color: "text-green-700 bg-neutral-100 border-neutral-300",
           action: "Reassure patient, calm breathing rhythm, treat underlying fever, pain, or pulmonary hypoxemia."
         };
       }
@@ -402,46 +402,46 @@ export const ABGDiagnosticCalculator = () => {
         return {
           condition: "Metabolic Alkalosis (Severe Vomiting / Nasogastric Suction / Diuretics)",
           tag: "Metabolic",
-          color: "text-sky-700 bg-sky-50 border-sky-200",
+          color: "text-green-700 bg-neutral-100 border-neutral-300",
           action: "Check serum potassium (hypokalemia risk), administer IV isotonic saline, stop diuretic loss."
         };
       }
       return {
         condition: "Mixed Alkalosis",
         tag: "Mixed",
-        color: "text-sky-700 bg-sky-50 border-sky-200",
+        color: "text-green-700 bg-neutral-100 border-neutral-300",
         action: "Address both respiratory and metabolic triggers promptly."
       };
     }
 
-    return { condition: "Complex State", tag: "Borderline", color: "text-slate-700 bg-slate-50 border-slate-200" };
+    return { condition: "Complex State", tag: "Borderline", color: "text-neutral-700 bg-neutral-50 border-neutral-200" };
   };
 
   const result = analyzeABG();
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+    <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3 mb-4">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-rose-700 bg-rose-50 px-2 py-0.5 rounded-md border border-rose-200">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-black dark:text-white bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-400">
             Interactive Diagnostic Analyzer
           </span>
-          <h4 className="text-sm font-bold text-slate-900 mt-1 flex items-center gap-1.5">
-            <Scale className="w-4 h-4 text-rose-600" />
+          <h4 className="text-sm font-bold text-neutral-900 mt-1 flex items-center gap-1.5">
+            <Scale className="w-4 h-4 text-black dark:text-white" />
             <span>Arterial Blood Gas (ABG) & ROME Rule Calculator</span>
           </h4>
         </div>
-        <div className="text-xs text-slate-500 font-semibold">
+        <div className="text-xs text-neutral-500 font-semibold">
           ROME: Respiratory Opposite • Metabolic Equal
         </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {/* pH Control */}
-        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+        <div className="bg-neutral-50 p-3.5 rounded-xl border border-neutral-200">
           <div className="flex justify-between items-center text-xs mb-1">
-            <span className="font-bold text-slate-700">Arterial pH</span>
-            <span className="font-black text-slate-900 text-sm">{ph.toFixed(2)}</span>
+            <span className="font-bold text-neutral-700">Arterial pH</span>
+            <span className="font-black text-neutral-900 text-sm">{ph.toFixed(2)}</span>
           </div>
           <input
             type="range"
@@ -450,9 +450,9 @@ export const ABGDiagnosticCalculator = () => {
             step="0.01"
             value={ph}
             onChange={(e) => setPh(Number(e.target.value))}
-            className="w-full accent-rose-600 cursor-pointer"
+            className="w-full accent-green-500 cursor-pointer"
           />
-          <div className="flex justify-between text-[10px] text-slate-400 mt-1 font-semibold">
+          <div className="flex justify-between text-[10px] text-neutral-400 mt-1 font-semibold">
             <span>Acidemia (&lt;7.35)</span>
             <span>Normal (7.40)</span>
             <span>Alkalemia (&gt;7.45)</span>
@@ -460,10 +460,10 @@ export const ABGDiagnosticCalculator = () => {
         </div>
 
         {/* PaCO2 Control */}
-        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+        <div className="bg-neutral-50 p-3.5 rounded-xl border border-neutral-200">
           <div className="flex justify-between items-center text-xs mb-1">
-            <span className="font-bold text-slate-700">PaCO₂ (Respiratory)</span>
-            <span className="font-black text-slate-900 text-sm">{paco2} mmHg</span>
+            <span className="font-bold text-neutral-700">PaCO₂ (Respiratory)</span>
+            <span className="font-black text-neutral-900 text-sm">{paco2} mmHg</span>
           </div>
           <input
             type="range"
@@ -472,9 +472,9 @@ export const ABGDiagnosticCalculator = () => {
             step="1"
             value={paco2}
             onChange={(e) => setPaco2(Number(e.target.value))}
-            className="w-full accent-rose-600 cursor-pointer"
+            className="w-full accent-green-500 cursor-pointer"
           />
-          <div className="flex justify-between text-[10px] text-slate-400 mt-1 font-semibold">
+          <div className="flex justify-between text-[10px] text-neutral-400 mt-1 font-semibold">
             <span>Hypocapnia (&lt;35)</span>
             <span>Normal (35-45)</span>
             <span>Hypercapnia (&gt;45)</span>
@@ -482,10 +482,10 @@ export const ABGDiagnosticCalculator = () => {
         </div>
 
         {/* HCO3- Control */}
-        <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+        <div className="bg-neutral-50 p-3.5 rounded-xl border border-neutral-200">
           <div className="flex justify-between items-center text-xs mb-1">
-            <span className="font-bold text-slate-700">HCO₃⁻ (Renal / Metabolic)</span>
-            <span className="font-black text-slate-900 text-sm">{hco3} mEq/L</span>
+            <span className="font-bold text-neutral-700">HCO₃⁻ (Renal / Metabolic)</span>
+            <span className="font-black text-neutral-900 text-sm">{hco3} mEq/L</span>
           </div>
           <input
             type="range"
@@ -494,9 +494,9 @@ export const ABGDiagnosticCalculator = () => {
             step="1"
             value={hco3}
             onChange={(e) => setHco3(Number(e.target.value))}
-            className="w-full accent-rose-600 cursor-pointer"
+            className="w-full accent-green-500 cursor-pointer"
           />
-          <div className="flex justify-between text-[10px] text-slate-400 mt-1 font-semibold">
+          <div className="flex justify-between text-[10px] text-neutral-400 mt-1 font-semibold">
             <span>Low (&lt;22)</span>
             <span>Normal (22-26)</span>
             <span>High (&gt;26)</span>
@@ -508,12 +508,12 @@ export const ABGDiagnosticCalculator = () => {
       <div className={`mt-4 p-4 rounded-xl border text-xs ${result.color}`}>
         <div className="flex items-center justify-between font-bold text-sm">
           <span>Interpretation: {result.condition}</span>
-          <span className="px-2 py-0.5 rounded-md bg-white/70 text-slate-900 text-[10px] uppercase">
+          <span className="px-2 py-0.5 rounded-md bg-white/70 text-neutral-900 text-[10px] uppercase">
             {result.tag}
           </span>
         </div>
         {result.action && (
-          <p className="mt-2 text-slate-800 font-medium leading-relaxed">
+          <p className="mt-2 text-neutral-800 font-medium leading-relaxed">
             <strong>Clinical Nursing Intervention:</strong> {result.action}
           </p>
         )}
@@ -560,18 +560,18 @@ export const InteractiveAntibodyDiagram = () => {
   const active = parts[selectedPart];
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+    <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3 mb-4">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded-md border border-cyan-200">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-green-700 bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-300">
             Interactive Structural Diagram
           </span>
-          <h4 className="text-sm font-bold text-slate-900 mt-1 flex items-center gap-1.5">
-            <ShieldCheck className="w-4 h-4 text-cyan-600" />
+          <h4 className="text-sm font-bold text-neutral-900 mt-1 flex items-center gap-1.5">
+            <ShieldCheck className="w-4 h-4 text-green-700" />
             <span>Immunoglobulin G (IgG) Y-Shaped Molecular Architecture</span>
           </h4>
         </div>
-        <span className="text-xs text-slate-500 font-medium">Click regions on the diagram to inspect</span>
+        <span className="text-xs text-neutral-500 font-medium">Click regions on the diagram to inspect</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
@@ -584,10 +584,10 @@ export const InteractiveAntibodyDiagram = () => {
               className="cursor-pointer group"
             >
               {/* Variable Region */}
-              <rect x="40" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#06b6d4" : "#e0f2fe"} stroke="#0284c7" strokeWidth="2" />
-              <rect x="75" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#0284c7" : "#bae6fd"} stroke="#0284c7" strokeWidth="2" />
-              <text x="55" y="55" fontSize="9" fill="#0369a1" fontWeight="bold" textAnchor="middle">VL</text>
-              <text x="90" y="55" fontSize="9" fill="#0369a1" fontWeight="bold" textAnchor="middle">VH</text>
+              <rect x="40" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#6B6B6B" : "#15803D"} stroke="#15803D" strokeWidth="2" />
+              <rect x="75" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#15803D" : "#15803D"} stroke="#15803D" strokeWidth="2" />
+              <text x="55" y="55" fontSize="9" fill="#15803D" fontWeight="bold" textAnchor="middle">VL</text>
+              <text x="90" y="55" fontSize="9" fill="#15803D" fontWeight="bold" textAnchor="middle">VH</text>
             </g>
 
             {/* Right Fab Arm */}
@@ -595,39 +595,39 @@ export const InteractiveAntibodyDiagram = () => {
               onClick={() => setSelectedPart("fab")}
               className="cursor-pointer group"
             >
-              <rect x="195" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#0284c7" : "#bae6fd"} stroke="#0284c7" strokeWidth="2" />
-              <rect x="230" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#06b6d4" : "#e0f2fe"} stroke="#0284c7" strokeWidth="2" />
-              <text x="210" y="55" fontSize="9" fill="#0369a1" fontWeight="bold" textAnchor="middle">VH</text>
-              <text x="245" y="55" fontSize="9" fill="#0369a1" fontWeight="bold" textAnchor="middle">VL</text>
+              <rect x="195" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#15803D" : "#15803D"} stroke="#15803D" strokeWidth="2" />
+              <rect x="230" y="30" width="30" height="40" rx="6" fill={selectedPart === "fab" ? "#6B6B6B" : "#15803D"} stroke="#15803D" strokeWidth="2" />
+              <text x="210" y="55" fontSize="9" fill="#15803D" fontWeight="bold" textAnchor="middle">VH</text>
+              <text x="245" y="55" fontSize="9" fill="#15803D" fontWeight="bold" textAnchor="middle">VL</text>
             </g>
 
             {/* Antigen bindings stars */}
-            <circle cx="55" cy="20" r="5" fill="#f59e0b" />
-            <circle cx="245" cy="20" r="5" fill="#f59e0b" />
-            <text x="150" y="20" fontSize="8" fill="#d97706" textAnchor="middle" fontWeight="bold">Ag Binding Sites</text>
+            <circle cx="55" cy="20" r="5" fill="#22C55E" />
+            <circle cx="245" cy="20" r="5" fill="#22C55E" />
+            <text x="150" y="20" fontSize="8" fill="#22C55E" textAnchor="middle" fontWeight="bold">Ag Binding Sites</text>
 
             {/* Fab Constant Segments */}
-            <rect x="50" y="75" width="25" height="45" rx="5" fill="#e2e8f0" stroke="#64748b" strokeWidth="1.5" />
-            <rect x="80" y="75" width="25" height="45" rx="5" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
-            <rect x="195" y="75" width="25" height="45" rx="5" fill="#cbd5e1" stroke="#64748b" strokeWidth="1.5" />
-            <rect x="225" y="75" width="25" height="45" rx="5" fill="#e2e8f0" stroke="#64748b" strokeWidth="1.5" />
+            <rect x="50" y="75" width="25" height="45" rx="5" fill="#E5E5E5" stroke="#525252" strokeWidth="1.5" />
+            <rect x="80" y="75" width="25" height="45" rx="5" fill="#E5E5E5" stroke="#525252" strokeWidth="1.5" />
+            <rect x="195" y="75" width="25" height="45" rx="5" fill="#E5E5E5" stroke="#525252" strokeWidth="1.5" />
+            <rect x="225" y="75" width="25" height="45" rx="5" fill="#E5E5E5" stroke="#525252" strokeWidth="1.5" />
 
             {/* Hinge Region */}
             <g onClick={() => setSelectedPart("hinge")} className="cursor-pointer">
-              <path d="M 95 120 C 110 140, 130 145, 135 155" fill="none" stroke={selectedPart === "hinge" ? "#f59e0b" : "#475569"} strokeWidth="4" />
-              <path d="M 205 120 C 190 140, 170 145, 165 155" fill="none" stroke={selectedPart === "hinge" ? "#f59e0b" : "#475569"} strokeWidth="4" />
-              <line x1="135" y1="145" x2="165" y2="145" stroke="#ef4444" strokeWidth="2.5" />
-              <text x="150" y="140" fontSize="7" fill="#dc2626" textAnchor="middle" fontWeight="bold">-S-S-</text>
+              <path d="M 95 120 C 110 140, 130 145, 135 155" fill="none" stroke={selectedPart === "hinge" ? "#22C55E" : "#525252"} strokeWidth="4" />
+              <path d="M 205 120 C 190 140, 170 145, 165 155" fill="none" stroke={selectedPart === "hinge" ? "#22C55E" : "#525252"} strokeWidth="4" />
+              <line x1="135" y1="145" x2="165" y2="145" stroke="#000000" strokeWidth="2.5" />
+              <text x="150" y="140" fontSize="7" fill="#000000" textAnchor="middle" fontWeight="bold">-S-S-</text>
             </g>
 
             {/* Fc Stem (CH2 & CH3 domains) */}
             <g onClick={() => setSelectedPart("fc")} className="cursor-pointer">
-              <rect x="125" y="155" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#818cf8" : "#f1f5f9"} stroke="#4f46e5" strokeWidth="2" />
-              <rect x="151" y="155" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#818cf8" : "#f1f5f9"} stroke="#4f46e5" strokeWidth="2" />
-              <rect x="125" y="208" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#6366f1" : "#e2e8f0"} stroke="#4f46e5" strokeWidth="2" />
-              <rect x="151" y="208" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#6366f1" : "#e2e8f0"} stroke="#4f46e5" strokeWidth="2" />
-              <text x="150" y="185" fontSize="8" fill="#4338ca" fontWeight="bold" textAnchor="middle">CH2</text>
-              <text x="150" y="238" fontSize="8" fill="#4338ca" fontWeight="bold" textAnchor="middle">CH3 (Fc)</text>
+              <rect x="125" y="155" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#6B6B6B" : "#E5E5E5"} stroke="#6B6B6B" strokeWidth="2" />
+              <rect x="151" y="155" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#6B6B6B" : "#E5E5E5"} stroke="#6B6B6B" strokeWidth="2" />
+              <rect x="125" y="208" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#15803D" : "#E5E5E5"} stroke="#6B6B6B" strokeWidth="2" />
+              <rect x="151" y="208" width="24" height="48" rx="6" fill={selectedPart === "fc" ? "#15803D" : "#E5E5E5"} stroke="#6B6B6B" strokeWidth="2" />
+              <text x="150" y="185" fontSize="8" fill="#6B6B6B" fontWeight="bold" textAnchor="middle">CH2</text>
+              <text x="150" y="238" fontSize="8" fill="#6B6B6B" fontWeight="bold" textAnchor="middle">CH3 (Fc)</text>
             </g>
           </svg>
         </div>
@@ -641,8 +641,8 @@ export const InteractiveAntibodyDiagram = () => {
                 onClick={() => setSelectedPart(key)}
                 className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
                   selectedPart === key
-                    ? "bg-cyan-700 text-white shadow-xs"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                    ? "bg-green-500 text-white shadow-xs"
+                    : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                 }`}
               >
                 {key.toUpperCase()}
@@ -650,17 +650,17 @@ export const InteractiveAntibodyDiagram = () => {
             ))}
           </div>
 
-          <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
-            <h5 className="font-extrabold text-slate-900 text-sm mb-1">{active.name}</h5>
-            <p className="text-slate-700 leading-relaxed font-medium">{active.desc}</p>
+          <div className="bg-neutral-50 p-4 rounded-xl border border-neutral-200 text-xs">
+            <h5 className="font-extrabold text-neutral-900 text-sm mb-1">{active.name}</h5>
+            <p className="text-neutral-700 leading-relaxed font-medium">{active.desc}</p>
           </div>
 
-          <div className="bg-cyan-50/80 border border-cyan-200 p-3.5 rounded-xl text-xs">
-            <span className="text-[10px] font-extrabold text-cyan-800 uppercase tracking-wide flex items-center gap-1">
-              <Sparkles className="w-3.5 h-3.5 text-cyan-600" />
+          <div className="bg-neutral-100/80 border border-neutral-300 p-3.5 rounded-xl text-xs">
+            <span className="text-[10px] font-extrabold text-green-700 uppercase tracking-wide flex items-center gap-1">
+              <Sparkles className="w-3.5 h-3.5 text-green-700" />
               <span>Clinical & Laboratory Significance</span>
             </span>
-            <p className="text-cyan-950 font-medium mt-1 leading-relaxed">{active.clinicalRole}</p>
+            <p className="text-neutral-800 font-medium mt-1 leading-relaxed">{active.clinicalRole}</p>
           </div>
         </div>
       </div>
@@ -714,27 +714,27 @@ export const ClinicalCaseChallenge = ({ unitNumber }) => {
   const currentCase = cases[unitNumber] || cases[2];
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
+    <div className="bg-white rounded-2xl border border-neutral-200 p-5 shadow-xs">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-neutral-100 pb-3 mb-4">
         <div>
-          <span className="text-[10px] font-extrabold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+          <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-800 bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-300">
             Interactive NCLEX Clinical Challenge
           </span>
-          <h4 className="text-sm font-bold text-slate-900 mt-1 flex items-center gap-1.5">
-            <AlertTriangle className="w-4 h-4 text-amber-600" />
+          <h4 className="text-sm font-bold text-neutral-900 mt-1 flex items-center gap-1.5">
+            <AlertTriangle className="w-4 h-4 text-neutral-800" />
             <span>{currentCase.title}</span>
           </h4>
         </div>
-        <span className="text-xs text-slate-500 font-medium">Test clinical reasoning before revealing diagnosis</span>
+        <span className="text-xs text-neutral-500 font-medium">Test clinical reasoning before revealing diagnosis</span>
       </div>
 
-      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
-        <p className="font-bold text-slate-500 uppercase tracking-wider text-[10px] mb-1">Patient Presentation</p>
-        <p className="text-slate-800 leading-relaxed font-medium">{currentCase.vignette}</p>
+      <div className="bg-neutral-50 p-4 rounded-xl border border-neutral-200 text-xs">
+        <p className="font-bold text-neutral-500 uppercase tracking-wider text-[10px] mb-1">Patient Presentation</p>
+        <p className="text-neutral-800 leading-relaxed font-medium">{currentCase.vignette}</p>
         
-        <div className="mt-3 pt-3 border-t border-slate-200">
-          <p className="font-extrabold text-slate-900 flex items-center gap-1.5">
-            <HelpCircle className="w-4 h-4 text-amber-600" />
+        <div className="mt-3 pt-3 border-t border-neutral-200">
+          <p className="font-extrabold text-neutral-900 flex items-center gap-1.5">
+            <HelpCircle className="w-4 h-4 text-neutral-800" />
             <span>Diagnostic Question: {currentCase.question}</span>
           </p>
         </div>
@@ -743,23 +743,23 @@ export const ClinicalCaseChallenge = ({ unitNumber }) => {
       <div className="mt-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <button
           onClick={() => setRevealed(!revealed)}
-          className="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
+          className="px-4 py-2 rounded-xl bg-neutral-900 hover:bg-neutral-800 text-white font-bold text-xs transition-all shadow-xs cursor-pointer flex items-center justify-center gap-2"
         >
           <span>{revealed ? "Hide Diagnostic Findings" : "Reveal Diagnosis & Clinical Nursing Action"}</span>
           <ArrowRight className={`w-3.5 h-3.5 transition-transform ${revealed ? "rotate-90" : ""}`} />
         </button>
-        <span className="text-[11px] text-slate-400 font-medium">Click to self-test clinical rationale</span>
+        <span className="text-[11px] text-neutral-400 font-medium">Click to self-test clinical rationale</span>
       </div>
 
       {revealed && (
-        <div className="mt-4 p-4 rounded-xl bg-emerald-50/80 border border-emerald-200 text-xs space-y-2.5 animate-in fade-in duration-200">
+        <div className="mt-4 p-4 rounded-xl bg-green-50/80 border border-green-100 text-xs space-y-2.5 animate-in fade-in duration-200">
           <div className="flex items-center gap-2">
-            <CheckCircle className="w-4 h-4 text-emerald-600" />
-            <span className="text-emerald-900 font-black text-sm">
+            <CheckCircle className="w-4 h-4 text-green-500" />
+            <span className="text-green-900 font-black text-sm">
               Confirmed Diagnosis: {currentCase.answer}
             </span>
           </div>
-          <ul className="space-y-1.5 pl-6 list-disc text-emerald-950 font-medium leading-relaxed">
+          <ul className="space-y-1.5 pl-6 list-disc text-green-900 font-medium leading-relaxed">
             {currentCase.rationales.map((r, i) => (
               <li key={i}>{r}</li>
             ))}

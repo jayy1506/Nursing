@@ -50,7 +50,7 @@ const NutritionLessonView = () => {
   return (
     <div
       className={`min-h-screen transition-colors duration-300 ${
-        isDark ? "bg-slate-950 text-slate-50" : "bg-slate-50 text-slate-900"
+        isDark ? "bg-neutral-950 text-neutral-50" : "bg-neutral-50 text-neutral-900"
       }`}
     >
       <Navbar />
@@ -58,22 +58,22 @@ const NutritionLessonView = () => {
       {/* Top Breadcrumb Bar */}
       <div
         className={`border-b py-2.5 px-4 sm:px-6 lg:px-8 ${
-          isDark ? "bg-slate-900 border-slate-800" : "bg-white border-slate-200"
+          isDark ? "bg-neutral-900 border-neutral-800" : "bg-white border-neutral-200"
         }`}
       >
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <Link
             to="/nutrition-syllabus"
-            className="inline-flex items-center gap-2 text-xs font-bold text-amber-700 hover:text-amber-800 transition-colors cursor-pointer group"
+            className="inline-flex items-center gap-2 text-xs font-bold text-neutral-800 hover:text-neutral-800 transition-colors cursor-pointer group"
           >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-amber-600" />
+            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-neutral-800" />
             <span>Back to Nutrition Syllabus</span>
           </Link>
 
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-400">
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-neutral-400">
             <span>{lesson.unitTitle}</span>
             <span>/</span>
-            <span className="text-amber-700 font-bold">
+            <span className="text-neutral-800 font-bold">
               Lesson {lesson.lessonNumber} of {lesson.totalLessonsInUnit}
             </span>
           </div>
@@ -90,17 +90,17 @@ const NutritionLessonView = () => {
         {/* Title Header */}
         <div className="mb-8 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 text-amber-800 border border-amber-200/80 text-xs font-extrabold mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-800/10 text-neutral-800 border border-neutral-300/80 text-xs font-extrabold mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-neutral-800" />
               <span>Applied Nutrition & Dietetics • {lesson.category}</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-neutral-900 tracking-tight">
               {lesson.title}
             </h1>
             <p
               className={`mt-2 text-sm sm:text-base max-w-3xl ${
-                isDark ? "text-slate-300" : "text-slate-600"
+                isDark ? "text-neutral-300" : "text-neutral-600"
               }`}
             >
               {lesson.summary}
@@ -111,8 +111,8 @@ const NutritionLessonView = () => {
             onClick={toggleTheme}
             className={`self-start md:self-auto flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-semibold transition cursor-pointer shadow-2xs ${
               isDark
-                ? "border-slate-700 bg-slate-900 text-slate-100 hover:border-amber-400"
-                : "border-slate-200 bg-white text-slate-800 hover:border-amber-300"
+                ? "border-neutral-700 bg-neutral-900 text-neutral-100 border-neutral-300"
+                : "border-neutral-200 bg-white text-neutral-800 hover:border-neutral-300"
             }`}
           >
             <span>{isDark ? "🌙 Dark" : "☀️ Light"}</span>
@@ -120,13 +120,13 @@ const NutritionLessonView = () => {
         </div>
 
         {/* Hero Concept Card with Visual Indicator */}
-        <div className="p-6 rounded-3xl bg-gradient-to-r from-amber-900 via-emerald-950 to-slate-900 text-white shadow-xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 rounded-3xl bg-gradient-to-r from-neutral-900 via-green-900 to-neutral-900 text-white shadow-xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-2xl">
-            <div className="text-xs font-extrabold uppercase tracking-wider text-amber-400 mb-1 flex items-center gap-1.5">
+            <div className="text-xs font-extrabold uppercase tracking-wider text-neutral-300 mb-1 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4" />
               <span>Core Physiological Concept</span>
             </div>
-            <p className="text-sm sm:text-base leading-relaxed text-slate-200 font-medium">
+            <p className="text-sm sm:text-base leading-relaxed text-neutral-200 font-medium">
               {lesson.overview}
             </p>
           </div>
@@ -147,19 +147,19 @@ const NutritionLessonView = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm"
+                className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm"
               >
-                <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-                  <Info className="w-4 h-4 text-amber-600" />
+                <h2 className="text-base font-extrabold text-neutral-900 mb-4 flex items-center gap-2">
+                  <Info className="w-4 h-4 text-neutral-800" />
                   <span>Key Definitions & Standards</span>
                 </h2>
                 <div className="space-y-3">
                   {lesson.keyDefinitions.map((def, idx) => (
-                    <div key={idx} className="p-3.5 rounded-2xl bg-slate-50 border border-slate-100">
-                      <p className="text-xs font-extrabold text-amber-800 uppercase tracking-wide">
+                    <div key={idx} className="p-3.5 rounded-2xl bg-neutral-50 border border-neutral-100">
+                      <p className="text-xs font-extrabold text-neutral-800 uppercase tracking-wide">
                         {def.term}
                       </p>
-                      <p className="text-xs text-slate-700 mt-0.5 leading-relaxed font-medium">
+                      <p className="text-xs text-neutral-700 mt-0.5 leading-relaxed font-medium">
                         {def.text}
                       </p>
                     </div>
@@ -175,20 +175,20 @@ const NutritionLessonView = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm"
+                className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm"
               >
-                <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-                  <HeartPulse className="w-4 h-4 text-emerald-600" />
+                <h2 className="text-base font-extrabold text-neutral-900 mb-4 flex items-center gap-2">
+                  <HeartPulse className="w-4 h-4 text-green-500" />
                   <span>Relationship of Nutrition with Health</span>
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {lesson.relationshipPoints.map((pt, idx) => (
-                    <div key={idx} className="p-3.5 rounded-2xl bg-emerald-50/60 border border-emerald-100">
+                    <div key={idx} className="p-3.5 rounded-2xl bg-green-50/60 border border-green-100">
                       <div className="flex items-center gap-2 mb-1">
                         <span>{pt.icon}</span>
-                        <h3 className="text-xs font-extrabold text-emerald-900">{pt.title}</h3>
+                        <h3 className="text-xs font-extrabold text-green-900">{pt.title}</h3>
                       </div>
-                      <p className="text-xs text-slate-600 leading-relaxed font-medium">
+                      <p className="text-xs text-neutral-600 leading-relaxed font-medium">
                         {pt.desc}
                       </p>
                     </div>
@@ -204,21 +204,21 @@ const NutritionLessonView = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm"
+                className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm"
               >
-                <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-                  <Utensils className="w-4 h-4 text-amber-600" />
+                <h2 className="text-base font-extrabold text-neutral-900 mb-4 flex items-center gap-2">
+                  <Utensils className="w-4 h-4 text-neutral-800" />
                   <span>ICMR Five Food Group System</span>
                 </h2>
                 <div className="space-y-3">
                   {lesson.foodGroups.map((grp, idx) => (
-                    <div key={idx} className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200/60">
+                    <div key={idx} className="p-4 rounded-2xl bg-neutral-100/50 border border-neutral-300/60">
                       <div className="flex items-center justify-between mb-1">
-                        <h3 className="text-xs font-extrabold text-amber-900">{grp.group}</h3>
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200 text-amber-900">ICMR Standard</span>
+                        <h3 className="text-xs font-extrabold text-neutral-800">{grp.group}</h3>
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-neutral-100 text-neutral-800">ICMR Standard</span>
                       </div>
-                      <p className="text-xs text-slate-700 mb-1"><strong>Representative Foods:</strong> {grp.foods}</p>
-                      <p className="text-xs text-emerald-800 font-semibold"><strong>Nutrient Contribution:</strong> {grp.nutrients}</p>
+                      <p className="text-xs text-neutral-700 mb-1"><strong>Representative Foods:</strong> {grp.foods}</p>
+                      <p className="text-xs text-green-700 font-semibold"><strong>Nutrient Contribution:</strong> {grp.nutrients}</p>
                     </div>
                   ))}
                 </div>
@@ -232,19 +232,19 @@ const NutritionLessonView = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm"
+                className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm"
               >
-                <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-                  <Scale className="w-4 h-4 text-amber-600" />
+                <h2 className="text-base font-extrabold text-neutral-900 mb-4 flex items-center gap-2">
+                  <Scale className="w-4 h-4 text-neutral-800" />
                   <span>Soluble vs Insoluble Dietary Fibre</span>
                 </h2>
                 <div className="space-y-4">
                   {lesson.fiberTable.map((fib, idx) => (
-                    <div key={idx} className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
-                      <h3 className="text-xs font-extrabold text-slate-900 border-b pb-2 mb-2">{fib.type}</h3>
-                      <p className="text-xs text-slate-700 mb-1"><strong>Mechanism:</strong> {fib.mechanism}</p>
-                      <p className="text-xs text-slate-700 mb-1"><strong>Food Sources:</strong> {fib.sources}</p>
-                      <p className="text-xs text-emerald-800 font-semibold mt-2 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+                    <div key={idx} className="p-4 rounded-2xl bg-neutral-50 border border-neutral-200">
+                      <h3 className="text-xs font-extrabold text-neutral-900 border-b pb-2 mb-2">{fib.type}</h3>
+                      <p className="text-xs text-neutral-700 mb-1"><strong>Mechanism:</strong> {fib.mechanism}</p>
+                      <p className="text-xs text-neutral-700 mb-1"><strong>Food Sources:</strong> {fib.sources}</p>
+                      <p className="text-xs text-green-700 font-semibold mt-2 bg-green-50 p-2.5 rounded-xl border border-green-100">
                         <strong>Clinical Application:</strong> {fib.clinicalRole}
                       </p>
                     </div>
@@ -260,27 +260,27 @@ const NutritionLessonView = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm overflow-hidden"
+                className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm overflow-hidden"
               >
-                <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-                  <AlertTriangle className="w-4 h-4 text-rose-600" />
+                <h2 className="text-base font-extrabold text-neutral-900 mb-4 flex items-center gap-2">
+                  <AlertTriangle className="w-4 h-4 text-black dark:text-white" />
                   <span>Clinical Differential Table: Kwashiorkor vs Marasmus</span>
                 </h2>
-                <div className="overflow-x-auto rounded-2xl border border-slate-200">
+                <div className="overflow-x-auto rounded-2xl border border-neutral-200">
                   <table className="w-full text-left text-xs">
-                    <thead className="bg-slate-50 text-[11px] font-extrabold uppercase tracking-wider text-slate-600 border-b">
+                    <thead className="bg-neutral-50 text-[11px] font-extrabold uppercase tracking-wider text-neutral-600 border-b">
                       <tr>
                         <th className="px-4 py-3">Clinical Sign</th>
-                        <th className="px-4 py-3 text-rose-700">Kwashiorkor (Protein Def.)</th>
-                        <th className="px-4 py-3 text-amber-700">Marasmus (Calorie Def.)</th>
+                        <th className="px-4 py-3 text-black dark:text-white">Kwashiorkor (Protein Def.)</th>
+                        <th className="px-4 py-3 text-neutral-800">Marasmus (Calorie Def.)</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 font-medium text-slate-700">
+                    <tbody className="divide-y divide-neutral-100 font-medium text-neutral-700">
                       {lesson.diffTable.map((row, idx) => (
-                        <tr key={idx} className="hover:bg-slate-50/50">
-                          <td className="px-4 py-2.5 font-bold text-slate-900">{row.param}</td>
-                          <td className="px-4 py-2.5 text-rose-700 font-semibold">{row.kwash}</td>
-                          <td className="px-4 py-2.5 text-amber-700 font-semibold">{row.maras}</td>
+                        <tr key={idx} className="hover:bg-neutral-50/50">
+                          <td className="px-4 py-2.5 font-bold text-neutral-900">{row.param}</td>
+                          <td className="px-4 py-2.5 text-black dark:text-white font-semibold">{row.kwash}</td>
+                          <td className="px-4 py-2.5 text-neutral-800 font-semibold">{row.maras}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -296,17 +296,17 @@ const NutritionLessonView = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm"
+                className="p-6 rounded-3xl bg-white border border-neutral-200 shadow-sm"
               >
-                <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
-                  <Stethoscope className="w-4 h-4 text-sky-600" />
+                <h2 className="text-base font-extrabold text-neutral-900 mb-4 flex items-center gap-2">
+                  <Stethoscope className="w-4 h-4 text-green-700" />
                   <span>3-Tier Nursing Management Protocol in PEM</span>
                 </h2>
                 <div className="space-y-3">
                   {lesson.nursingTiers.map((tier, idx) => (
-                    <div key={idx} className="p-4 rounded-2xl bg-sky-50/60 border border-sky-200/70">
-                      <p className="text-xs font-extrabold text-sky-900 mb-1">{tier.tier}</p>
-                      <p className="text-xs text-slate-700 leading-relaxed font-medium">{tier.actions}</p>
+                    <div key={idx} className="p-4 rounded-2xl bg-neutral-100/60 border border-neutral-300/70">
+                      <p className="text-xs font-extrabold text-neutral-800 mb-1">{tier.tier}</p>
+                      <p className="text-xs text-neutral-700 leading-relaxed font-medium">{tier.actions}</p>
                     </div>
                   ))}
                 </div>
@@ -318,16 +318,16 @@ const NutritionLessonView = () => {
           <div className="space-y-6">
             {/* Clinical Case Study */}
             {lesson.clinicalCase && (
-              <div className="p-5 rounded-3xl bg-gradient-to-br from-amber-50 to-orange-50/60 border border-amber-200 shadow-sm">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/20 text-amber-900 text-[11px] font-extrabold mb-3">
-                  <Stethoscope className="w-3.5 h-3.5 text-amber-700" />
+              <div className="p-5 rounded-3xl bg-gradient-to-br bg-neutral-100 bg-neutral-100/60 border border-neutral-300 shadow-sm">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-800/20 text-neutral-800 text-[11px] font-extrabold mb-3">
+                  <Stethoscope className="w-3.5 h-3.5 text-neutral-800" />
                   <span>Clinical Case Scenario</span>
                 </div>
-                <h3 className="text-sm font-extrabold text-slate-900 mb-2">{lesson.clinicalCase.title}</h3>
-                <p className="text-xs text-slate-700 leading-relaxed mb-3">
+                <h3 className="text-sm font-extrabold text-neutral-900 mb-2">{lesson.clinicalCase.title}</h3>
+                <p className="text-xs text-neutral-700 leading-relaxed mb-3">
                   {lesson.clinicalCase.scenario}
                 </p>
-                <div className="p-3 rounded-2xl bg-white border border-amber-200/80 text-xs text-amber-950 font-medium">
+                <div className="p-3 rounded-2xl bg-white border border-neutral-300/80 text-xs text-neutral-800 font-medium">
                   <strong>Priority Nursing Action:</strong> {lesson.clinicalCase.nurseAction}
                 </div>
               </div>
@@ -335,14 +335,14 @@ const NutritionLessonView = () => {
 
             {/* High-Yield Memory Hook */}
             {lesson.memoryHook && (
-              <div className="p-5 rounded-3xl bg-emerald-50/80 border border-emerald-200 shadow-sm">
+              <div className="p-5 rounded-3xl bg-green-50/80 border border-green-100 shadow-sm">
                 <div className="flex items-start gap-3">
                   <span className="text-2xl shrink-0">🧠</span>
                   <div>
-                    <h3 className="text-xs font-extrabold text-emerald-900 uppercase tracking-wider">
+                    <h3 className="text-xs font-extrabold text-green-900 uppercase tracking-wider">
                       High-Yield Exam Memory Hook
                     </h3>
-                    <p className="text-xs text-emerald-800 font-bold mt-1 leading-relaxed">
+                    <p className="text-xs text-green-700 font-bold mt-1 leading-relaxed">
                       {lesson.memoryHook}
                     </p>
                   </div>
@@ -351,16 +351,16 @@ const NutritionLessonView = () => {
             )}
 
             {/* Quick Practice Prompt */}
-            <div className="p-5 rounded-3xl bg-slate-900 text-white shadow-md">
-              <h3 className="text-xs font-extrabold uppercase tracking-wider text-amber-400 mb-2">
+            <div className="p-5 rounded-3xl bg-neutral-900 text-white shadow-md">
+              <h3 className="text-xs font-extrabold uppercase tracking-wider text-neutral-300 mb-2">
                 University Question Bank Link
               </h3>
-              <p className="text-xs text-slate-300 mb-4 leading-relaxed">
+              <p className="text-xs text-neutral-300 mb-4 leading-relaxed">
                 Test your knowledge of {lesson.title} with official 2-mark viva questions, 5-mark short answers, and MCQs.
               </p>
               <Link
                 to="/question-bank"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold text-xs transition-all shadow-sm"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-neutral-950 font-extrabold text-xs transition-all shadow-sm"
               >
                 <span>Open Question Bank</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -370,21 +370,21 @@ const NutritionLessonView = () => {
         </div>
 
         {/* BOTTOM LESSON NAVIGATION */}
-        <div className="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 pb-28">
+        <div className="mt-12 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4 pb-28">
           {lesson.prevSlug ? (
             <Link
               to={`/nutrition/lesson/${lesson.prevSlug}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-amber-700 transition-all shadow-sm group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-neutral-200 text-xs font-bold text-neutral-700 hover:text-neutral-800 transition-all shadow-sm group"
             >
-              <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-amber-600" />
+              <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-neutral-800" />
               <span>Previous Lesson</span>
             </Link>
           ) : (
             <Link
               to="/nutrition-syllabus"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-amber-700 transition-all shadow-sm group"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-neutral-200 text-xs font-bold text-neutral-700 hover:text-neutral-800 transition-all shadow-sm group"
             >
-              <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-amber-600" />
+              <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-neutral-800" />
               <span>Back to Syllabus</span>
             </Link>
           )}
@@ -392,7 +392,7 @@ const NutritionLessonView = () => {
           {lesson.nextSlug ? (
             <Link
               to={`/nutrition/lesson/${lesson.nextSlug}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-emerald-600 hover:from-amber-600 hover:to-emerald-700 text-xs font-extrabold text-white transition-all shadow-md shadow-amber-500/20 group cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-neutral-800 to-green-500 hover:from-neutral-800 hover:to-green-700 text-xs font-extrabold text-white transition-all shadow-md shadow-md group cursor-pointer"
             >
               <span>Next Lesson</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -400,7 +400,7 @@ const NutritionLessonView = () => {
           ) : lesson.isUnitFinal ? (
             <Link
               to={`/student/quiz/${lesson.quizSlug}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 text-xs font-extrabold text-white transition-all shadow-md shadow-emerald-500/25 group cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-green-500 to-green-500 hover:from-green-700 hover:to-green-500 text-xs font-extrabold text-white transition-all shadow-md shadow-green-500/25 group cursor-pointer"
             >
               <ClipboardList className="w-4 h-4" />
               <span>Complete Unit: Take Assessment (15 Qs)</span>
@@ -409,7 +409,7 @@ const NutritionLessonView = () => {
           ) : (
             <Link
               to="/nutrition-syllabus"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-slate-200 text-xs font-bold text-slate-700 hover:text-amber-700 transition-all shadow-sm"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-neutral-200 text-xs font-bold text-neutral-700 hover:text-neutral-800 transition-all shadow-sm"
             >
               <span>Return to Syllabus</span>
             </Link>

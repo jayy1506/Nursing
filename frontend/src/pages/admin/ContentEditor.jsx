@@ -264,18 +264,18 @@ export const ContentEditor = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-emerald-50 text-slate-900">
+    <div className="min-h-screen bg-gradient-to-b bg-neutral-100 via-white to-green-50 text-neutral-900">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-              <BookOpen className="w-7 h-7 text-emerald-600" />
+            <h1 className="text-2xl font-extrabold text-neutral-900 tracking-tight flex items-center gap-2.5">
+              <BookOpen className="w-7 h-7 text-green-500" />
               <span>Curriculum & Assessment Editor</span>
             </h1>
-            <p className="text-slate-600 text-xs sm:text-sm mt-1">
+            <p className="text-neutral-600 text-xs sm:text-sm mt-1">
               Author and organize clinical modules, subjects, question items, and rationale rubrics.
             </p>
           </div>
@@ -286,21 +286,21 @@ export const ContentEditor = () => {
                 setUploadStats(null);
                 setShowUploadModal(true);
               }}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-neutral-900 hover:bg-neutral-800 border border-neutral-700 text-white rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer"
             >
-              <UploadCloud className="w-4 h-4 text-emerald-400" />
+              <UploadCloud className="w-4 h-4 text-green-400" />
               <span>Upload & Auto-Index Material</span>
             </button>
             <button
               onClick={() => setShowSubjectModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold shadow-sm transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-neutral-50 border border-neutral-200 text-neutral-700 rounded-xl text-xs font-bold shadow-sm transition-all cursor-pointer"
             >
-              <FolderPlus className="w-4 h-4 text-emerald-600" />
+              <FolderPlus className="w-4 h-4 text-green-500" />
               <span>Add Subject / Module</span>
             </button>
             <button
               onClick={() => setShowQuestionModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl text-xs font-bold shadow-md shadow-emerald-400/20 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-500 hover:bg-green-500 text-white rounded-xl text-xs font-bold shadow-md shadow-green-400/20 transition-all cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Add Assessment Question</span>
@@ -313,14 +313,14 @@ export const ContentEditor = () => {
           <div
             className={`mb-6 p-4 rounded-2xl flex items-center gap-3 text-xs font-semibold ${
               feedback.type === 'success'
-                ? 'bg-emerald-50 border border-emerald-200 text-emerald-800'
-                : 'bg-rose-50 border border-rose-200 text-rose-800'
+                ? 'bg-green-50 border border-green-100 text-green-700'
+                : 'bg-neutral-100 border border-neutral-400 text-black dark:text-white'
             }`}
           >
             {feedback.type === 'success' ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <CheckCircle2 className="w-4 h-4 text-green-500" />
             ) : (
-              <AlertCircle className="w-4 h-4 text-rose-600" />
+              <AlertCircle className="w-4 h-4 text-black dark:text-white" />
             )}
             <span>{feedback.text}</span>
           </div>
@@ -328,25 +328,25 @@ export const ContentEditor = () => {
 
         {/* Subjects / Modules Overview */}
         <div className="mb-8">
-          <h2 className="text-sm font-extrabold uppercase tracking-wider text-slate-500 mb-3 flex items-center gap-2">
-            <Layers className="w-4 h-4 text-emerald-600" />
+          <h2 className="text-sm font-extrabold uppercase tracking-wider text-neutral-500 mb-3 flex items-center gap-2">
+            <Layers className="w-4 h-4 text-green-500" />
             <span>Active Subjects & Modules ({subjects.length})</span>
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
             {subjects.map((sub) => (
               <div
                 key={sub.id}
-                className="bg-white/90 border border-slate-200 rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow"
+                className="bg-white/90 border border-neutral-200 rounded-2xl p-4 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow"
               >
                 <div>
-                  <h3 className="text-xs font-bold text-slate-900">{sub.name}</h3>
-                  <p className="text-[11px] text-slate-500 mt-0.5">
+                  <h3 className="text-xs font-bold text-neutral-900">{sub.name}</h3>
+                  <p className="text-[11px] text-neutral-500 mt-0.5">
                     {questions.filter((q) => q.moduleId === sub.id).length} Questions available
                   </p>
                 </div>
                 <button
                   onClick={() => handleDeleteSubject(sub.id)}
-                  className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                  className="p-1.5 text-neutral-400 hover:text-black dark:text-white hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer"
                   title="Remove Subject"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -357,15 +357,15 @@ export const ContentEditor = () => {
         </div>
 
         {/* Questions Filter Bar */}
-        <div className="bg-white/90 border border-slate-200 rounded-2xl p-4 shadow-sm mb-6 flex items-center justify-between gap-4">
+        <div className="bg-white/90 border border-neutral-200 rounded-2xl p-4 shadow-sm mb-6 flex items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <HelpCircle className="w-4 h-4 text-emerald-600" />
-            <span className="text-xs font-bold text-slate-700">Filter by Module:</span>
+            <HelpCircle className="w-4 h-4 text-green-500" />
+            <span className="text-xs font-bold text-neutral-700">Filter by Module:</span>
           </div>
           <select
             value={selectedModule}
             onChange={(e) => setSelectedModule(e.target.value)}
-            className="bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-3 text-xs text-slate-900 font-bold focus:outline-none focus:border-emerald-500 cursor-pointer"
+            className="bg-neutral-50 border border-neutral-200 rounded-xl py-1.5 px-3 text-xs text-neutral-900 font-bold focus:outline-none focus:border-green-500 cursor-pointer"
           >
             <option value="all">All Modules ({questions.length} Questions)</option>
             {subjects.map((sub) => (
@@ -382,31 +382,31 @@ export const ContentEditor = () => {
             filteredQuestions.map((q, idx) => (
               <div
                 key={q.id}
-                className="bg-white/95 border border-slate-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
+                className="bg-white/95 border border-neutral-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow"
               >
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center">
+                    <span className="w-6 h-6 rounded-full bg-green-100 text-green-700 text-xs font-bold flex items-center justify-center">
                       {idx + 1}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-700">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 text-neutral-700">
                       {q.moduleName}
                     </span>
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-700">
                       {q.difficulty}
                     </span>
                   </div>
 
                   <button
                     onClick={() => handleDeleteQuestion(q.id)}
-                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-neutral-400 hover:text-black dark:text-white hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer"
                     title="Delete Question"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
                 </div>
 
-                <p className="text-sm font-bold text-slate-900 mb-3">{q.text}</p>
+                <p className="text-sm font-bold text-neutral-900 mb-3">{q.text}</p>
 
                 {/* Options Grid */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">
@@ -415,15 +415,15 @@ export const ContentEditor = () => {
                       key={optIdx}
                       className={`p-2.5 rounded-xl text-xs font-medium border flex items-center gap-2 ${
                         optIdx === q.correctAnswer
-                          ? 'bg-emerald-50 border-emerald-300 text-emerald-900 font-bold'
-                          : 'bg-slate-50 border-slate-200 text-slate-700'
+                          ? 'bg-green-50 border-green-400 text-green-900 font-bold'
+                          : 'bg-neutral-50 border-neutral-200 text-neutral-700'
                       }`}
                     >
                       <span
                         className={`w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center ${
                           optIdx === q.correctAnswer
-                            ? 'bg-emerald-500 text-white'
-                            : 'bg-slate-200 text-slate-600'
+                            ? 'bg-green-500 text-white'
+                            : 'bg-neutral-200 text-neutral-600'
                         }`}
                       >
                         {String.fromCharCode(65 + optIdx)}
@@ -435,7 +435,7 @@ export const ContentEditor = () => {
 
                 {/* Clinical Rationale */}
                 {q.rationale && (
-                  <div className="bg-sky-50/70 border border-sky-100 rounded-xl p-3 text-xs text-sky-900">
+                  <div className="bg-neutral-100/70 border border-neutral-300 rounded-xl p-3 text-xs text-neutral-800">
                     <span className="font-bold">Clinical Rationale: </span>
                     <span>{q.rationale}</span>
                   </div>
@@ -443,7 +443,7 @@ export const ContentEditor = () => {
               </div>
             ))
           ) : (
-            <div className="text-center py-12 bg-white/80 rounded-2xl border border-slate-200 text-slate-400 text-xs">
+            <div className="text-center py-12 bg-white/80 rounded-2xl border border-neutral-200 text-neutral-400 text-xs">
               No questions found for the selected module. Click "Add Assessment Question" to create one.
             </div>
           )}
@@ -452,15 +452,15 @@ export const ContentEditor = () => {
         {/* Modal: Add Subject */}
         {showSubjectModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-            <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-slate-200">
+            <div className="bg-white rounded-3xl p-6 max-w-md w-full shadow-2xl border border-neutral-200">
               <div className="flex justify-between items-center mb-5">
-                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <FolderPlus className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-base font-bold text-neutral-900 flex items-center gap-2">
+                  <FolderPlus className="w-5 h-5 text-green-500" />
                   <span>New Subject / Module</span>
                 </h3>
                 <button
                   onClick={() => setShowSubjectModal(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  className="p-1 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 cursor-pointer"
                 >
                   ✕
                 </button>
@@ -468,28 +468,28 @@ export const ContentEditor = () => {
 
               <form onSubmit={handleAddSubject} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Subject Name</label>
+                  <label className="block text-xs font-bold text-neutral-700 mb-1">Subject Name</label>
                   <input
                     type="text"
                     required
                     value={newSubjectName}
                     onChange={(e) => setNewSubjectName(e.target.value)}
                     placeholder="e.g. Module 3: Protein & Amino Acid Metabolism"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 focus:outline-none focus:border-emerald-500 font-medium"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 focus:outline-none focus:border-green-500 font-medium"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-neutral-100">
                   <button
                     type="button"
                     onClick={() => setShowSubjectModal(false)}
-                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-neutral-600 hover:bg-neutral-100 cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 cursor-pointer"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer"
                   >
                     Add Subject
                   </button>
@@ -502,15 +502,15 @@ export const ContentEditor = () => {
         {/* Modal: Add Question */}
         {showQuestionModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 overflow-y-auto animate-in fade-in duration-200">
-            <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-slate-200 my-8">
+            <div className="bg-white rounded-3xl p-6 max-w-lg w-full shadow-2xl border border-neutral-200 my-8">
               <div className="flex justify-between items-center mb-5">
-                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                  <PlusCircle className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-base font-bold text-neutral-900 flex items-center gap-2">
+                  <PlusCircle className="w-5 h-5 text-green-500" />
                   <span>Create Assessment Item</span>
                 </h3>
                 <button
                   onClick={() => setShowQuestionModal(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  className="p-1 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 cursor-pointer"
                 >
                   ✕
                 </button>
@@ -518,11 +518,11 @@ export const ContentEditor = () => {
 
               <form onSubmit={handleSaveQuestion} className="space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Target Subject / Module</label>
+                  <label className="block text-xs font-bold text-neutral-700 mb-1">Target Subject / Module</label>
                   <select
                     value={questionForm.moduleId}
                     onChange={(e) => setQuestionForm({ ...questionForm, moduleId: e.target.value })}
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500 cursor-pointer"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500 cursor-pointer"
                   >
                     {subjects.map((sub) => (
                       <option key={sub.id} value={sub.id}>
@@ -533,19 +533,19 @@ export const ContentEditor = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Question Prompt</label>
+                  <label className="block text-xs font-bold text-neutral-700 mb-1">Question Prompt</label>
                   <textarea
                     rows="3"
                     required
                     value={questionForm.text}
                     onChange={(e) => setQuestionForm({ ...questionForm, text: e.target.value })}
                     placeholder="Enter the clinical scenario or biochemistry question..."
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-2">Answer Choices</label>
+                  <label className="block text-xs font-bold text-neutral-700 mb-2">Answer Choices</label>
                   <div className="space-y-2">
                     {questionForm.options.map((opt, idx) => (
                       <div key={idx} className="flex items-center gap-2">
@@ -554,10 +554,10 @@ export const ContentEditor = () => {
                           name="correctAnswer"
                           checked={questionForm.correctAnswer === idx}
                           onChange={() => setQuestionForm({ ...questionForm, correctAnswer: idx })}
-                          className="w-4 h-4 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
+                          className="w-4 h-4 text-green-500 focus:ring-green-500 cursor-pointer"
                           title="Select as correct answer"
                         />
-                        <span className="text-xs font-bold text-slate-600 w-4">
+                        <span className="text-xs font-bold text-neutral-600 w-4">
                           {String.fromCharCode(65 + idx)}:
                         </span>
                         <input
@@ -570,36 +570,36 @@ export const ContentEditor = () => {
                             setQuestionForm({ ...questionForm, options: newOpts });
                           }}
                           placeholder={`Option ${String.fromCharCode(65 + idx)}`}
-                          className="flex-1 bg-slate-50 border border-slate-200 rounded-xl py-1.5 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
+                          className="flex-1 bg-neutral-50 border border-neutral-200 rounded-xl py-1.5 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500"
                         />
                       </div>
                     ))}
                   </div>
-                  <p className="text-[10px] text-slate-400 mt-1">Select the radio button next to the correct answer choice.</p>
+                  <p className="text-[10px] text-neutral-400 mt-1">Select the radio button next to the correct answer choice.</p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Clinical Rationale & Explanation</label>
+                  <label className="block text-xs font-bold text-neutral-700 mb-1">Clinical Rationale & Explanation</label>
                   <textarea
                     rows="2"
                     value={questionForm.rationale}
                     onChange={(e) => setQuestionForm({ ...questionForm, rationale: e.target.value })}
                     placeholder="Explain why the correct answer is right and why others are incorrect..."
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500"
                   />
                 </div>
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-neutral-100">
                   <button
                     type="button"
                     onClick={() => setShowQuestionModal(false)}
-                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-neutral-600 hover:bg-neutral-100 cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 cursor-pointer"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer"
                   >
                     Save Question
                   </button>
@@ -611,21 +611,21 @@ export const ContentEditor = () => {
 
         {/* Upload & Auto-Index Material Pipeline Modal */}
         {showUploadModal && (
-          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+          <div className="fixed inset-0 bg-neutral-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-neutral-100 animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between pb-4 border-b border-neutral-100 mb-4">
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+                  <div className="w-9 h-9 rounded-xl bg-green-100 flex items-center justify-center text-green-700">
                     <Database className="w-5 h-5" />
                   </div>
                   <div>
-                    <h2 className="text-base font-extrabold text-slate-900">Curriculum Content & Auto-Index Pipeline</h2>
-                    <p className="text-[11px] text-slate-500">Ingest lecture material, parse clinical sections, chunk & generate vector embeddings</p>
+                    <h2 className="text-base font-extrabold text-neutral-900">Curriculum Content & Auto-Index Pipeline</h2>
+                    <p className="text-[11px] text-neutral-500">Ingest lecture material, parse clinical sections, chunk & generate vector embeddings</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setShowUploadModal(false)}
-                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  className="p-1 rounded-lg text-neutral-400 hover:text-neutral-600 hover:bg-neutral-100 cursor-pointer"
                 >
                   <XCircle className="w-5 h-5" />
                 </button>
@@ -634,11 +634,11 @@ export const ContentEditor = () => {
               <form onSubmit={handleUploadContent} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Target Course Chapter</label>
+                    <label className="block text-xs font-bold text-neutral-700 mb-1">Target Course Chapter</label>
                     <select
                       value={uploadForm.chapterId}
                       onChange={(e) => setUploadForm({ ...uploadForm, chapterId: e.target.value })}
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500 cursor-pointer"
+                      className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500 cursor-pointer"
                     >
                       {chapters.map((ch) => (
                         <option key={ch._id} value={ch._id}>
@@ -649,73 +649,73 @@ export const ContentEditor = () => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-700 mb-1">Topic / Lesson Title</label>
+                    <label className="block text-xs font-bold text-neutral-700 mb-1">Topic / Lesson Title</label>
                     <input
                       type="text"
                       required
                       value={uploadForm.title}
                       onChange={(e) => setUploadForm({ ...uploadForm, title: e.target.value })}
                       placeholder="e.g. Mechanical Ventilation & ARDS Nursing"
-                      className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
+                      className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500"
                     />
                   </div>
                 </div>
 
                 {/* File picker shortcut */}
-                <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                  <span className="text-[11px] text-slate-600 font-medium flex items-center gap-1.5">
-                    <FileText className="w-4 h-4 text-emerald-600" />
+                <div className="p-3 rounded-2xl bg-neutral-50 border border-neutral-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span className="text-[11px] text-neutral-600 font-medium flex items-center gap-1.5">
+                    <FileText className="w-4 h-4 text-green-500" />
                     <span>Upload markdown (.md) or text (.txt) file:</span>
                   </span>
                   <input
                     type="file"
                     accept=".md,.txt,text/plain,text/markdown"
                     onChange={handleContentFileUpload}
-                    className="text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"
+                    className="text-xs text-neutral-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Content Body (Markdown or Text)</label>
+                  <label className="block text-xs font-bold text-neutral-700 mb-1">Content Body (Markdown or Text)</label>
                   <textarea
                     rows={8}
                     required
                     value={uploadForm.contentBody}
                     onChange={(e) => setUploadForm({ ...uploadForm, contentBody: e.target.value })}
                     placeholder="## Standard Precautions&#10;Infection prevention is the cornerstone of clinical safety...&#10;&#10;### Nursing Interventions&#10;1. Wash hands with soap and water&#10;2. Wear fitted N95 respirator"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500 font-medium leading-relaxed"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-2xl p-3 text-xs font-mono text-neutral-800 focus:outline-none focus:border-green-500 font-medium leading-relaxed"
                   />
-                  <p className="text-[10px] text-slate-400 mt-1">
+                  <p className="text-[10px] text-neutral-400 mt-1">
                     Markdown headings (##, ###) will be detected automatically to generate section-aware chunks and citations.
                   </p>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 mb-1">Clinical Pearls & Memory Hooks (Optional, one per line)</label>
+                  <label className="block text-xs font-bold text-neutral-700 mb-1">Clinical Pearls & Memory Hooks (Optional, one per line)</label>
                   <textarea
                     rows={2}
                     value={uploadForm.clinicalPearls}
                     onChange={(e) => setUploadForm({ ...uploadForm, clinicalPearls: e.target.value })}
                     placeholder="Alcohol rub does not kill C. diff spores&#10;Always confirm 2 patient identifiers before procedure"
-                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500"
                   />
                 </div>
 
                 {/* Pipeline Execution Statistics */}
                 {uploadStats && (
-                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-2">
+                  <div className="p-4 rounded-2xl bg-green-50 border border-green-100 text-green-900 space-y-2">
                     <div className="flex items-center gap-2 text-xs font-bold">
-                      <Check className="w-4 h-4 text-emerald-600" />
+                      <Check className="w-4 h-4 text-green-500" />
                       <span>Ingestion Pipeline Complete: {uploadStats.chunksIndexed} chunks embedded & indexed!</span>
                     </div>
                     {uploadStats.sections && uploadStats.sections.length > 0 && (
                       <div>
-                        <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block mb-1">
+                        <span className="text-[10px] font-bold text-green-700 uppercase tracking-wider block mb-1">
                           Parsed Section Titles:
                         </span>
                         <div className="flex flex-wrap gap-1.5">
                           {uploadStats.sections.map((sec, sIdx) => (
-                            <span key={sIdx} className="px-2 py-0.5 rounded-lg bg-emerald-100/80 text-[10px] font-bold text-emerald-800">
+                            <span key={sIdx} className="px-2 py-0.5 rounded-lg bg-green-100/80 text-[10px] font-bold text-green-700">
                               {sec}
                             </span>
                           ))}
@@ -725,18 +725,18 @@ export const ContentEditor = () => {
                   </div>
                 )}
 
-                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <div className="flex justify-end gap-2 pt-3 border-t border-neutral-100">
                   <button
                     type="button"
                     onClick={() => setShowUploadModal(false)}
-                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-neutral-600 hover:bg-neutral-100 cursor-pointer"
                   >
                     Close
                   </button>
                   <button
                     type="submit"
                     disabled={uploadLoading || !uploadForm.contentBody.trim()}
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
                   >
                     <UploadCloud className="w-4 h-4" />
                     <span>{uploadLoading ? 'Chunking & Embedding...' : 'Upload, Chunk & Index'}</span>

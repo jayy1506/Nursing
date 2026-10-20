@@ -9,25 +9,15 @@ export const MedPulseIcon = ({ className = 'w-8 h-8', showCross = true }) => (
     className={className}
     aria-hidden="true"
   >
-    <defs>
-      <linearGradient id="medpulse-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#059669" />
-        <stop offset="100%" stopColor="#10b981" />
-      </linearGradient>
-      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#059669" floodOpacity="0.3" />
-      </filter>
-    </defs>
-
-    {/* Rounded Squircle Container */}
-    <rect width="48" height="48" rx="14" fill="url(#medpulse-grad)" filter="url(#glow)" />
+    {/* Squircle Container */}
+    <rect width="48" height="48" rx="14" fill="#22C55E" />
 
     {/* Soft Clinical Cross Motif */}
     {showCross && (
       <path
         d="M24 10V38M10 24H38"
-        stroke="white"
-        strokeOpacity="0.18"
+        stroke="#000000"
+        strokeOpacity="0.15"
         strokeWidth="6"
         strokeLinecap="round"
       />
@@ -36,14 +26,14 @@ export const MedPulseIcon = ({ className = 'w-8 h-8', showCross = true }) => (
     {/* Dynamic Heartbeat / Pulse Wave Line */}
     <path
       d="M8 24H16L19 15L23 33L27 19L30 27L33 24H40"
-      stroke="#ffffff"
-      strokeWidth="3.2"
+      stroke="#000000"
+      strokeWidth="3.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
 
     {/* Active Pulse Node */}
-    <circle cx="23" cy="33" r="2" fill="#38bdf8" />
+    <circle cx="23" cy="33" r="2.2" fill="#000000" />
   </svg>
 );
 
@@ -71,15 +61,15 @@ export const MedPulseLogo = ({
         <MedPulseIcon className={iconSizes[size] || iconSizes.md} />
       </div>
       <div className="flex flex-col leading-tight">
-        <span className={`font-black tracking-tight bg-gradient-to-r from-teal-600 via-teal-500 to-sky-600 dark:from-teal-400 dark:to-sky-400 bg-clip-text text-transparent ${textSizes[size] || textSizes.md}`}>
-          MedPulse
-        </span>
+        <div className={`font-black tracking-tight text-black dark:text-white ${textSizes[size] || textSizes.md}`}>
+          Med<span className="text-green-700 dark:text-green-400">Pulse</span>
+        </div>
         {showTagline ? (
-          <span className="text-[10px] text-slate-500 dark:text-slate-400 font-semibold tracking-wide">
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-semibold tracking-wide">
             Foundational medical sciences, mastered.
           </span>
         ) : (
-          <span className="text-[10px] text-slate-400 dark:text-slate-500 font-medium">
+          <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium">
             Clinical Nursing LMS
           </span>
         )}
@@ -88,7 +78,7 @@ export const MedPulseLogo = ({
   );
 
   return to ? (
-    <Link to={to} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 rounded-xl">
+    <Link to={to} className="focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 rounded-xl">
       {content}
     </Link>
   ) : (

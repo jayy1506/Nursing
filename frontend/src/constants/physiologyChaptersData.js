@@ -7,7 +7,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "General Physiology & Cell Function",
     "category": "Cellular Physiology & Transport",
     "icon": "🧬",
-    "color": "from-emerald-500 to-teal-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of General Physiology & Cell Function.",
     "objectives": [
@@ -856,7 +856,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Blood & Body Fluids",
     "category": "Hematology & Hemostasis",
     "icon": "🩸",
-    "color": "from-red-500 to-rose-600",
+    "color": "from-black dark:from-white to-black dark:to-white",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Blood & Body Fluids.",
     "objectives": [
@@ -1706,7 +1706,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Lymphatic System & Immunity",
     "category": "Immunophysiology & Defense",
     "icon": "🛡️",
-    "color": "from-teal-500 to-emerald-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Lymphatic System & Immunity.",
     "objectives": [
@@ -2394,7 +2394,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Musculoskeletal Physiology",
     "category": "Neuromuscular Transmission & Bone",
     "icon": "💪",
-    "color": "from-amber-500 to-orange-600",
+    "color": "from-neutral-800 to-neutral-800",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Musculoskeletal Physiology.",
     "objectives": [
@@ -3155,7 +3155,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Respiratory Physiology",
     "category": "Ventilation & Gas Exchange",
     "icon": "🫁",
-    "color": "from-sky-500 to-blue-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Respiratory Physiology.",
     "objectives": [
@@ -4006,7 +4006,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Digestive System Physiology",
     "category": "GI Secretion, Digestion & Motility",
     "icon": "🍽️",
-    "color": "from-emerald-500 to-teal-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Digestive System Physiology.",
     "objectives": [
@@ -4867,7 +4867,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Circulatory & Cardiac Physiology",
     "category": "Hemodynamics & Cardiac Cycle",
     "icon": "🫀",
-    "color": "from-rose-500 to-red-600",
+    "color": "from-black dark:from-white to-black dark:to-white",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Circulatory & Cardiac Physiology.",
     "objectives": [
@@ -5695,7 +5695,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Excretory & Renal Physiology",
     "category": "Urine Formation & Osmoregulation",
     "icon": "💧",
-    "color": "from-cyan-500 to-blue-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Excretory & Renal Physiology.",
     "objectives": [
@@ -6417,7 +6417,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Reproductive Physiology",
     "category": "Gametogenesis & Endocrine Regulation",
     "icon": "👶",
-    "color": "from-purple-500 to-pink-600",
+    "color": "from-green-700 to-black dark:to-white",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Reproductive Physiology.",
     "objectives": [
@@ -7212,7 +7212,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Endocrine Physiology",
     "category": "Hormonal Feedback & Regulation",
     "icon": "⚡",
-    "color": "from-amber-500 to-yellow-600",
+    "color": "from-neutral-800 to-neutral-800",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Endocrine Physiology.",
     "objectives": [
@@ -8069,7 +8069,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Nervous System Physiology",
     "category": "Neurophysiology, Reflexes & Synapses",
     "icon": "🧠",
-    "color": "from-indigo-500 to-purple-600",
+    "color": "from-green-500 to-green-700",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Nervous System Physiology.",
     "objectives": [
@@ -8903,7 +8903,7 @@ export const PHYSIOLOGY_CHAPTERS = {
     "title": "Sensory Organ Physiology",
     "category": "Sensory Pathways & Receptors",
     "icon": "👁️",
-    "color": "from-teal-500 to-cyan-600",
+    "color": "from-green-500 to-green-500",
     "teachingHours": "60 Hours INC Curriculum (Theory 18h + Practical 42h)",
     "summary": "Detailed functional mechanisms, regulation, homeostatic balance, clinical alterations and official INC competencies of Sensory Organ Physiology.",
     "objectives": [

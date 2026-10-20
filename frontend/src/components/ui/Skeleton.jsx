@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Skeleton = ({ className = '', ...props }) => (
   <div
-    className={`animate-pulse bg-slate-200 dark:bg-slate-800 rounded-lg ${className}`}
+    className={`animate-pulse bg-neutral-200 dark:bg-neutral-800 rounded-lg ${className}`}
     {...props}
   />
 );
@@ -19,7 +19,7 @@ export const SkeletonText = ({ lines = 3, className = '' }) => (
 );
 
 export const SkeletonCard = ({ className = '' }) => (
-  <div className={`p-5 border border-slate-200 dark:border-slate-800 rounded-2xl bg-white dark:bg-slate-900 space-y-4 ${className}`}>
+  <div className={`p-5 border border-neutral-200 dark:border-neutral-800 rounded-2xl bg-white dark:bg-black space-y-4 ${className}`}>
     <div className="flex items-center gap-3">
       <Skeleton className="w-10 h-10 rounded-xl" />
       <div className="space-y-1.5 flex-1">

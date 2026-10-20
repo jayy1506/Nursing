@@ -22,7 +22,7 @@ export const Tooltip = ({ children, content, position = 'top', className = '' })
       {isVisible && content && (
         <div
           role="tooltip"
-          className={`absolute ${positionStyles[position] || positionStyles.top} z-50 px-2.5 py-1 text-[11px] font-medium text-white bg-slate-900 dark:bg-slate-800 border border-slate-700 rounded-lg shadow-xl pointer-events-none whitespace-nowrap animate-in fade-in duration-150 ${className}`}
+          className={`absolute ${positionStyles[position] || positionStyles.top} z-50 px-2.5 py-1 text-[11px] font-medium text-white bg-black dark:bg-neutral-900 border border-neutral-800 rounded-lg shadow-xl pointer-events-none whitespace-nowrap animate-in fade-in duration-150 ${className}`}
         >
           {content}
         </div>

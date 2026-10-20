@@ -48,7 +48,7 @@ export const Drawer = ({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm animate-in fade-in duration-200"
+      className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm animate-in fade-in duration-200"
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
@@ -58,17 +58,17 @@ export const Drawer = ({
         tabIndex="-1"
         className={`fixed ${sideAnimations[side] || sideAnimations.right} w-full ${
           side !== 'bottom' ? sizeClasses[size] || sizeClasses.md : ''
-        } bg-white dark:bg-slate-900 border-l border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col focus:outline-none ${className}`}
+        } bg-white dark:bg-black border-l border-neutral-200 dark:border-neutral-800 shadow-2xl flex flex-col focus:outline-none ${className}`}
       >
-        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-slate-100 dark:border-slate-800 shrink-0">
-          <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
+        <div className="flex items-center justify-between p-4 sm:p-5 border-b border-neutral-100 dark:border-neutral-800 shrink-0">
+          <h2 className="text-base font-bold text-black dark:text-white">
             {title}
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Close panel"
-            className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors focus-visible:ring-2 focus-visible:ring-teal-500"
+            className="p-1.5 text-neutral-400 hover:text-black dark:hover:text-white rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors focus-visible:ring-2 focus-visible:ring-green-500"
           >
             <X className="w-5 h-5" />
           </button>

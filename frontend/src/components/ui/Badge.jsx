@@ -15,23 +15,43 @@ export const Badge = ({
   };
 
   const variantStyles = {
-    neutral: 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 border-slate-200 dark:border-slate-700',
-    primary: 'bg-teal-50 text-teal-700 dark:bg-teal-950/40 dark:text-teal-300 border-teal-200/80 dark:border-teal-800',
-    success: 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950/40 dark:text-emerald-300 border-emerald-200/80 dark:border-emerald-800',
-    danger: 'bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300 border-rose-200/80 dark:border-rose-800',
-    warning: 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 border-amber-200/80 dark:border-amber-800',
-    info: 'bg-sky-50 text-sky-700 dark:bg-sky-950/40 dark:text-sky-300 border-sky-200/80 dark:border-sky-800',
-    accent: 'bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 border-purple-200/80 dark:border-purple-800'
+    // Neutral gray
+    neutral: 'bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 border-neutral-300 dark:border-neutral-700',
+    // Success / Primary
+    primary: 'bg-green-100 text-green-900 dark:bg-green-900/60 dark:text-green-400 border-green-500',
+    success: 'bg-green-500 text-black border-transparent font-extrabold',
+    // Active / In-progress: green outline
+    active: 'bg-transparent text-green-700 dark:text-green-400 border-green-500',
+    // Locked
+    locked: 'bg-neutral-100 text-neutral-500 dark:bg-neutral-900 dark:text-neutral-500 border-neutral-300 dark:border-neutral-800',
+    // Warning: black filled pill (or white in dark mode)
+    warning: 'bg-black text-white dark:bg-white dark:text-black border-transparent',
+    // Danger / Error: heavy 2px border, no red
+    danger: 'bg-transparent text-black dark:text-white border-2 border-black dark:border-white font-extrabold',
+    error: 'bg-transparent text-black dark:text-white border-2 border-black dark:border-white font-extrabold',
+    // High-Yield Priority Chips
+    high: 'bg-green-500 text-black border-transparent font-extrabold',
+    medium: 'bg-transparent text-green-700 dark:text-green-400 border border-green-500 font-bold',
+    low: 'bg-transparent text-neutral-600 dark:text-neutral-400 border-transparent font-medium',
+    // Legacy mapping aliases for safety
+    info: 'bg-neutral-100 text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100 border-neutral-300 dark:border-neutral-700',
+    accent: 'bg-green-50 text-green-900 dark:bg-green-900/40 dark:text-green-400 border-green-500'
   };
 
   const dotStyles = {
-    neutral: 'bg-slate-400',
-    primary: 'bg-teal-500',
-    success: 'bg-emerald-500',
-    danger: 'bg-rose-500',
-    warning: 'bg-amber-500',
-    info: 'bg-sky-500',
-    accent: 'bg-purple-500'
+    neutral: 'bg-neutral-400',
+    primary: 'bg-green-500',
+    success: 'bg-black',
+    active: 'bg-green-500 animate-pulse',
+    locked: 'bg-neutral-400',
+    warning: 'bg-white dark:bg-black',
+    danger: 'bg-black dark:bg-white',
+    error: 'bg-black dark:bg-white',
+    high: 'bg-black',
+    medium: 'bg-green-500',
+    low: 'bg-neutral-400',
+    info: 'bg-neutral-500',
+    accent: 'bg-green-500'
   };
 
   return (

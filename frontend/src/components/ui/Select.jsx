@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, AlertCircle } from 'lucide-react';
 
 export const Select = React.forwardRef(({
   label,
@@ -17,7 +17,7 @@ export const Select = React.forwardRef(({
       {label && (
         <label
           htmlFor={selectId}
-          className="block text-xs font-semibold text-slate-700 dark:text-slate-300"
+          className="block text-xs font-semibold text-neutral-800 dark:text-neutral-200"
         >
           {label}
         </label>
@@ -27,24 +27,27 @@ export const Select = React.forwardRef(({
         <select
           ref={ref}
           id={selectId}
-          className={`w-full appearance-none rounded-xl border bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm px-3.5 py-2.5 pr-9 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
+          className={`w-full appearance-none rounded-xl border bg-white dark:bg-black text-black dark:text-white text-sm px-3.5 py-2.5 pr-9 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-black ${
             error
-              ? 'border-rose-500 focus-visible:ring-rose-500'
-              : 'border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600'
+              ? 'border-2 border-black dark:border-white font-medium'
+              : 'border-neutral-300 dark:border-neutral-700 hover:border-neutral-500 dark:hover:border-neutral-500'
           } ${className}`}
           {...props}
         >
           {children}
         </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-slate-400">
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-neutral-500">
           <ChevronDown className="w-4 h-4" />
         </div>
       </div>
 
       {error ? (
-        <p className="text-xs font-medium text-rose-500 dark:text-rose-400">{error}</p>
+        <div className="flex items-center gap-1.5 mt-1 text-xs font-bold text-black dark:text-white">
+          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+          <span>{error}</span>
+        </div>
       ) : helperText ? (
-        <p className="text-xs text-slate-500 dark:text-slate-400">{helperText}</p>
+        <p className="text-xs text-neutral-500 dark:text-neutral-400">{helperText}</p>
       ) : null}
     </div>
   );

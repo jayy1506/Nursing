@@ -1,4 +1,5 @@
 import React from 'react';
+import { AlertCircle } from 'lucide-react';
 
 export const Input = React.forwardRef(({
   label,
@@ -18,7 +19,7 @@ export const Input = React.forwardRef(({
       {label && (
         <label
           htmlFor={inputId}
-          className="block text-xs font-semibold text-slate-700 dark:text-slate-300"
+          className="block text-xs font-bold text-black dark:text-white"
         >
           {label}
         </label>
@@ -26,7 +27,7 @@ export const Input = React.forwardRef(({
 
       <div className="relative flex items-center">
         {leftIcon && (
-          <div className="absolute left-3 text-slate-400 dark:text-slate-500 pointer-events-none flex items-center">
+          <div className="absolute left-3 text-neutral-500 dark:text-neutral-400 pointer-events-none flex items-center">
             {leftIcon}
           </div>
         )}
@@ -35,27 +36,30 @@ export const Input = React.forwardRef(({
           ref={ref}
           id={inputId}
           type={type}
-          className={`w-full rounded-xl border bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 text-sm placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 focus-visible:border-teal-500 ${
+          className={`w-full rounded-xl border bg-white dark:bg-neutral-900 text-black dark:text-white text-sm placeholder:text-neutral-500 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:border-green-500 ${
             leftIcon ? 'pl-9' : 'pl-3.5'
           } ${rightIcon ? 'pr-9' : 'pr-3.5'} py-2.5 ${
             error
-              ? 'border-rose-500 focus-visible:ring-rose-500'
-              : 'border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600'
+              ? 'border-2 border-black dark:border-white'
+              : 'border-neutral-300 dark:border-neutral-700 hover:border-black dark:hover:border-neutral-400'
           } ${className}`}
           {...props}
         />
 
         {rightIcon && (
-          <div className="absolute right-3 text-slate-400 dark:text-slate-500 flex items-center">
+          <div className="absolute right-3 text-neutral-500 dark:text-neutral-400 flex items-center">
             {rightIcon}
           </div>
         )}
       </div>
 
       {error ? (
-        <p className="text-xs font-medium text-rose-500 dark:text-rose-400">{error}</p>
+        <p className="text-xs font-bold text-black dark:text-white flex items-center gap-1 mt-1">
+          <AlertCircle className="w-3.5 h-3.5 text-black dark:text-white" />
+          <span>{error}</span>
+        </p>
       ) : helperText ? (
-        <p className="text-xs text-slate-500 dark:text-slate-400">{helperText}</p>
+        <p className="text-xs text-neutral-600 dark:text-neutral-400">{helperText}</p>
       ) : null}
     </div>
   );

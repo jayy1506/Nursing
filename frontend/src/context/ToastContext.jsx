@@ -31,27 +31,27 @@ export const ToastProvider = ({ children }) => {
       >
         {toasts.map((toast) => {
           const typeIcons = {
-            success: <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0" />,
-            error: <AlertCircle className="w-5 h-5 text-rose-500 shrink-0" />,
-            warning: <AlertTriangle className="w-5 h-5 text-amber-500 shrink-0" />,
-            info: <Info className="w-5 h-5 text-sky-500 shrink-0" />
+            success: <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0" />,
+            error: <AlertCircle className="w-5 h-5 text-black dark:text-white shrink-0" />,
+            warning: <AlertTriangle className="w-5 h-5 text-neutral-800 shrink-0" />,
+            info: <Info className="w-5 h-5 text-green-700 shrink-0" />
           };
 
           return (
             <div
               key={toast.id}
               role="alert"
-              className="pointer-events-auto flex items-start gap-3 p-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl animate-in slide-in-from-bottom-2 duration-200"
+              className="pointer-events-auto flex items-start gap-3 p-4 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl animate-in slide-in-from-bottom-2 duration-200"
             >
               {typeIcons[toast.type] || typeIcons.info}
               <div className="flex-1 min-w-0">
                 {toast.title && (
-                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100">
+                  <h4 className="text-xs font-bold text-neutral-900 dark:text-neutral-100">
                     {toast.title}
                   </h4>
                 )}
                 {toast.message && (
-                  <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5 break-words">
+                  <p className="text-xs text-neutral-600 dark:text-neutral-400 mt-0.5 break-words">
                     {toast.message}
                   </p>
                 )}
@@ -60,7 +60,7 @@ export const ToastProvider = ({ children }) => {
                 type="button"
                 onClick={() => removeToast(toast.id)}
                 aria-label="Close notification"
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1 rounded-md"
+                className="text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-1 rounded-md"
               >
                 <X className="w-4 h-4" />
               </button>
