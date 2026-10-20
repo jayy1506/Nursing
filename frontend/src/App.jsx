@@ -58,9 +58,9 @@ import ForceChangePasswordModal from './components/auth/ForceChangePasswordModal
 
 // Clean Minimal Page Loading Skeleton
 const PageLoader = () => (
-  <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 flex flex-col items-center justify-center p-6">
-    <div className="w-10 h-10 border-3 border-green-100 dark:border-green-900 border-t-green-500 dark:border-t-green-400 rounded-full animate-spin mb-3" />
-    <span className="text-xs font-bold text-neutral-500 dark:text-neutral-400 tracking-wide animate-pulse">
+  <div className="min-h-screen bg-neutral-50 flex flex-col items-center justify-center p-6">
+    <div className="w-10 h-10 border-3 border-green-100 border-t-green-600 rounded-full animate-spin mb-3" />
+    <span className="text-xs font-bold text-neutral-500 tracking-wide animate-pulse">
       Loading MedPulse curriculum...
     </span>
   </div>
@@ -84,7 +84,7 @@ const AppRoutes = () => {
   const showAIWidget = currentUser && !isAuthPage;
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 font-sans selection:bg-green-500 selection:text-white">
+    <div className="min-h-screen bg-neutral-50 text-neutral-900 font-sans selection:bg-green-500 selection:text-white">
       {/* Skip to Main Content Link for Keyboard and Screen Reader Accessibility */}
       <a
         href="#main-content"

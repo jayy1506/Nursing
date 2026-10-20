@@ -61,15 +61,15 @@ export const MedPulseLogo = ({
         <MedPulseIcon className={iconSizes[size] || iconSizes.md} />
       </div>
       <div className="flex flex-col leading-tight">
-        <div className={`font-black tracking-tight text-black ${textSizes[size] || textSizes.md}`}>
-          Med<span className="text-green-700">Pulse</span>
+        <div className={`font-black tracking-tight text-neutral-900 ${textSizes[size] || textSizes.md}`}>
+          Med<span className="text-green-600">Pulse</span>
         </div>
         {showTagline ? (
-          <span className="text-[10px] text-neutral-600 font-semibold tracking-wide">
+          <span className="text-[10px] text-neutral-500 font-semibold tracking-wide">
             Foundational medical sciences, mastered.
           </span>
         ) : (
-          <span className="text-[10px] text-neutral-600 font-medium">
+          <span className="text-[10px] text-neutral-500 font-medium">
             Clinical Nursing LMS
           </span>
         )}

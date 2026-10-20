@@ -5,10 +5,10 @@ const ThemeContext = createContext();
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('medpulse_theme');
-    if (saved === 'dark' || saved === 'light') return saved;
-    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
+    // Enforce light theme by default for clean, crisp clinical aesthetic
+    if (saved === 'light') return 'light';
+    localStorage.setItem('medpulse_theme', 'light');
+    return 'light';
   });
 
   useEffect(() => {
@@ -21,17 +21,10 @@ export const ThemeProvider = ({ children }) => {
     localStorage.setItem('medpulse_theme', theme);
   }, [theme]);
 
-  // Listen for system changes when no manual preference is saved
+  // Clean initial mount to ensure no stale dark class remains on html
   useEffect(() => {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e) => {
-      const saved = localStorage.getItem('medpulse_theme');
-      if (!saved) {
-        setTheme(e.matches ? 'dark' : 'light');
-      }
-    };
-    mediaQuery.addEventListener('change', handleChange);
-    return () => mediaQuery.removeEventListener('change', handleChange);
+    document.documentElement.classList.remove('dark');
+    document.documentElement.setAttribute('data-theme', 'light');
   }, []);
 
   const toggleTheme = () => {

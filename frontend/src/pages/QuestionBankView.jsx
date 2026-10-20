@@ -400,7 +400,7 @@ const QuestionBankView = () => {
                 onClick={() => setSelectedType("all")}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
                   selectedType === "all"
-                    ? "bg-neutral-900 text-white shadow-sm"
+                    ? "bg-green-600 text-white shadow-sm"
                     : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                 }`}
               >
@@ -410,7 +410,7 @@ const QuestionBankView = () => {
                 onClick={() => setSelectedType("short")}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   selectedType === "short"
-                    ? "bg-green-500 text-white shadow-sm"
+                    ? "bg-green-600 text-white shadow-sm"
                     : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                 }`}
               >
@@ -421,7 +421,7 @@ const QuestionBankView = () => {
                 onClick={() => setSelectedType("veryshort")}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   selectedType === "veryshort"
-                    ? "bg-green-500 text-white shadow-sm"
+                    ? "bg-green-600 text-white shadow-sm"
                     : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                 }`}
               >
@@ -432,7 +432,7 @@ const QuestionBankView = () => {
                 onClick={() => setSelectedType("mcq")}
                 className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                   selectedType === "mcq"
-                    ? "bg-neutral-800 text-neutral-950 shadow-sm"
+                    ? "bg-green-600 text-white shadow-sm"
                     : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200"
                 }`}
               >

@@ -540,34 +540,34 @@ export const AIWidget = () => {
 
               {/* Stats Counters Grid */}
               <div className="grid grid-cols-3 gap-2 mb-3 text-center">
-                <div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl p-2">
-                  <div className="flex items-center justify-center gap-1 text-[10px] text-green-700 dark:text-green-400 font-bold mb-0.5">
+                <div className="bg-white border border-neutral-200 rounded-xl p-2 shadow-2xs">
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-green-700 font-bold mb-0.5">
                     <Coins className="w-3 h-3" />
                     <span>Tokens Saved</span>
                   </div>
-                  <div className="text-base font-extrabold text-black dark:text-white">
+                  <div className="text-base font-extrabold text-neutral-900">
                     {memoryStats.totalTokensSaved.toLocaleString()}
                   </div>
                   <div className="text-[9px] text-neutral-500">0 Tokens consumed</div>
                 </div>
 
-                <div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl p-2">
-                  <div className="flex items-center justify-center gap-1 text-[10px] text-neutral-600 dark:text-neutral-400 font-bold mb-0.5">
+                <div className="bg-white border border-neutral-200 rounded-xl p-2 shadow-2xs">
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-neutral-600 font-bold mb-0.5">
                     <TrendingUp className="w-3 h-3" />
                     <span>Memory Hits</span>
                   </div>
-                  <div className="text-base font-extrabold text-black dark:text-white">
+                  <div className="text-base font-extrabold text-neutral-900">
                     {memoryStats.totalHits || 0}
                   </div>
                   <div className="text-[9px] text-neutral-500">Repeated searches</div>
                 </div>
 
-                <div className="bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-xl p-2">
-                  <div className="flex items-center justify-center gap-1 text-[10px] text-neutral-600 dark:text-neutral-400 font-bold mb-0.5">
+                <div className="bg-white border border-neutral-200 rounded-xl p-2 shadow-2xs">
+                  <div className="flex items-center justify-center gap-1 text-[10px] text-neutral-600 font-bold mb-0.5">
                     <Database className="w-3 h-3" />
                     <span>In Memory</span>
                   </div>
-                  <div className="text-base font-extrabold text-black dark:text-white">
+                  <div className="text-base font-extrabold text-neutral-900">
                     {memoryStats.totalStored || recentMemories.length}
                   </div>
                   <div className="text-[9px] text-neutral-500">Cached queries</div>
@@ -809,7 +809,7 @@ export const AIWidget = () => {
           )}
 
           {/* Input Section */}
-          <div className="p-3.5 bg-neutral-100 dark:bg-neutral-900 border-t border-neutral-200 dark:border-neutral-800">
+          <div className="p-3.5 bg-neutral-50 border-t border-neutral-200">
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -822,7 +822,7 @@ export const AIWidget = () => {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask or search anything (e.g. carbohydrate digestion, insulin, DKA)..."
-                className="flex-1 bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 focus:border-green-500 rounded-2xl py-2.5 px-4 text-xs text-black dark:text-white placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-green-500 transition-all font-medium"
+                className="flex-1 bg-white border border-neutral-300 focus:border-green-600 rounded-2xl py-2.5 px-4 text-xs text-neutral-900 placeholder-neutral-400 focus:outline-none focus:ring-1 focus:ring-green-500 shadow-2xs font-medium"
               />
               <button
                 type="submit"

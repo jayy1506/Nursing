@@ -32,9 +32,9 @@ const SyllabusHub = () => {
   const biochemUnits = [
     { number: 1, title: "Carbohydrates & Metabolism", lessons: 8, icon: "🧬", color: "from-green-500 to-green-500", desc: "Monosaccharides, Glycolysis, Digestion, Absorption, Diabetes Mellitus Type 1 & 2." },
     { number: 2, title: "Lipids & Fatty Acids", lessons: 4, icon: "🥑", color: "from-green-500 to-green-500", desc: "Fatty Acid Classification, Saturated vs Unsaturated, MUFA, PUFA, Essential Fatty Acids." },
-    { number: 3, title: "Proteins & Amino Acids", lessons: 4, icon: "🥩", color: "from-neutral-800 to-neutral-800", desc: "Structure, Zwitterions, Essential Amino Acids, Urea Cycle, Hyperammonemia." },
+    { number: 3, title: "Proteins & Amino Acids", lessons: 4, icon: "🥩", color: "from-green-600 to-green-500", desc: "Structure, Zwitterions, Essential Amino Acids, Urea Cycle, Hyperammonemia." },
     { number: 4, title: "Clinical Enzymology & MI", lessons: 3, icon: "⚡", color: "from-green-700 to-green-500", desc: "Enzyme Kinetics, Inhibitors, Isoenzymes, Cardiac Biomarkers (Troponins, CK-MB, LDH)." },
-    { number: 5, title: "Acid-Base Balance & Blood Buffers", lessons: 3, icon: "⚖️", color: "from-black dark:from-white to-black dark:to-white", desc: "Bicarbonate Buffer, Henderson-Hasselbalch, Respiratory/Renal mechanisms, Anion Gap." },
+    { number: 5, title: "Acid-Base Balance & Blood Buffers", lessons: 3, icon: "⚖️", color: "from-green-600 to-green-500", desc: "Bicarbonate Buffer, Henderson-Hasselbalch, Respiratory/Renal mechanisms, Anion Gap." },
     { number: 6, title: "Heme Catabolism & Renal Function", lessons: 3, icon: "🩸", color: "from-green-500 to-green-700", desc: "Heme degradation, Bilirubin metabolism, Pre/Hepatic/Post Jaundice, Creatinine Clearance & GFR." },
     { number: 7, title: "Immunochemistry & ELISA", lessons: 3, icon: "🛡️", color: "from-green-500 to-green-500", desc: "5 Immunoglobulin classes (IgG/A/M/E/D), Antigen-Antibody reactions, Direct/Indirect/Sandwich ELISA." }
   ];
@@ -53,9 +53,9 @@ const SyllabusHub = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 pb-20 transition-colors">
+    <div className="min-h-screen bg-neutral-50 text-neutral-900 pb-20">
       {/* Hero Header - Clean White & Emerald Green */}
-      <section className="bg-white border-b border-neutral-200/80 text-neutral-900 py-10 px-4 sm:px-6 lg:px-8">
+      <section className="bg-white border-b border-neutral-200 text-neutral-900 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-extrabold border border-green-100 mb-3">
             <Sparkles className="w-3.5 h-3.5 text-green-500" />
@@ -308,19 +308,19 @@ const SyllabusHub = () => {
           {(activeSubject === "all" || activeSubject === "nutrition") && (
             <div
               onClick={() => navigate("/nutrition-syllabus")}
-              className="bg-white rounded-3xl border-2 border-neutral-500/30 hover:border-neutral-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group cursor-pointer"
+              className="bg-white rounded-3xl border-2 border-green-500/30 hover:border-green-500 shadow-md hover:shadow-xl transition-all overflow-hidden flex flex-col justify-between group cursor-pointer"
             >
               <div className="p-6 sm:p-8">
                 <div className="flex items-center justify-between gap-4 mb-4">
-                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-neutral-800 to-green-500 text-white flex items-center justify-center text-3xl shadow-lg shadow-md group-hover:scale-110 transition-transform">
+                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-green-500 to-green-500 text-white flex items-center justify-center text-3xl shadow-lg shadow-green-500/25 group-hover:scale-110 transition-transform">
                     🥗
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-neutral-100 text-neutral-800 font-extrabold text-xs uppercase tracking-wider border border-neutral-300">
+                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 font-extrabold text-xs uppercase tracking-wider border border-green-100">
                     10 Core Units • 99+ Q&As • 280+ MCQs
                   </span>
                 </div>
 
-                <h2 className="text-2xl font-extrabold text-neutral-900 group-hover:text-neutral-800 transition-colors">
+                <h2 className="text-2xl font-extrabold text-neutral-900 group-hover:text-green-700 transition-colors">
                   Applied Nutrition & Dietetics
                 </h2>
                 <p className="text-neutral-600 text-xs sm:text-sm mt-2 leading-relaxed">
@@ -329,15 +329,15 @@ const SyllabusHub = () => {
 
                 <div className="mt-5 space-y-2 text-xs text-neutral-700 font-medium">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-neutral-800 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
                     <span>Balanced Diets for Infancy, Pregnancy, Lactation & Geriatrics</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-neutral-800 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
                     <span>Therapeutic Diets, Enteral/Parenteral & Tube Feeding</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-neutral-800 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0" />
                     <span>Kwashiorkor vs Marasmus, Fluorosis & Lathyrism</span>
                   </div>
                 </div>
@@ -348,7 +348,7 @@ const SyllabusHub = () => {
                   Includes 99 Official University Q&As
                 </span>
                 <div
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-neutral-800 hover:bg-neutral-800 text-white font-extrabold text-xs shadow-md shadow-md group-hover:translate-x-1 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-green-500 hover:bg-green-700 text-white font-extrabold text-xs shadow-md shadow-green-500/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Nutrition Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
@@ -537,7 +537,7 @@ const SyllabusHub = () => {
 
                 <Link
                   to="/nutrition-syllabus"
-                  className="text-xs font-bold text-neutral-800 hover:text-neutral-800 flex items-center gap-1 underline"
+                  className="text-xs font-bold text-green-700 hover:text-green-800 flex items-center gap-1 underline"
                 >
                   <span>Open Full Nutrition Syllabus</span>
                   <ChevronRight className="w-3.5 h-3.5" />
@@ -549,16 +549,16 @@ const SyllabusHub = () => {
                   <Link
                     key={u.number}
                     to="/nutrition-syllabus"
-                    className="p-4 rounded-2xl bg-white border border-neutral-200/80 border-neutral-300 hover:shadow-md transition-all group flex flex-col justify-between"
+                    className="p-4 rounded-2xl bg-white border border-neutral-200 hover:border-green-400 hover:shadow-md transition-all group flex flex-col justify-between"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-2">
-                        <span className="w-8 h-8 rounded-xl bg-neutral-100 text-neutral-800 flex items-center justify-center font-extrabold text-xs">
+                        <span className="w-8 h-8 rounded-xl bg-green-50 text-green-700 flex items-center justify-center font-extrabold text-xs">
                           U{u.number}
                         </span>
                         <span className="text-lg">{u.icon}</span>
                       </div>
-                      <h4 className="text-xs font-extrabold text-neutral-800 group-hover:text-neutral-800 transition-colors line-clamp-2">
+                      <h4 className="text-xs font-extrabold text-neutral-800 group-hover:text-green-700 transition-colors line-clamp-2">
                         {u.title}
                       </h4>
                       <p className="text-[11px] text-neutral-500 mt-1 line-clamp-2">
@@ -566,7 +566,7 @@ const SyllabusHub = () => {
                       </p>
                     </div>
 
-                    <div className="mt-3 pt-2.5 border-t border-neutral-100 flex items-center justify-between text-[10px] font-bold text-neutral-400 group-hover:text-neutral-800">
+                    <div className="mt-3 pt-2.5 border-t border-neutral-100 flex items-center justify-between text-[10px] font-bold text-neutral-400 group-hover:text-green-600">
                       <span>Clinical Notes</span>
                       <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
                     </div>

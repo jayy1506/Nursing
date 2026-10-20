@@ -23,18 +23,18 @@ export const Button = React.forwardRef(({
   };
 
   const variantStyles = {
-    // Primary: green fill with white text
-    primary: 'bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-xs active:scale-[0.98]',
-    // Secondary: white background with black text
-    secondary: 'bg-white hover:bg-neutral-100 text-black border border-neutral-300',
-    // Outline: crisp border with black text, green on hover
-    outline: 'border-2 border-neutral-800 hover:border-green-600 hover:text-green-700 text-black bg-white',
+    // Primary: vibrant medical green fill with crisp white text
+    primary: 'bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-sm hover:shadow transition-all duration-150 active:scale-[0.98]',
+    // Secondary: pure white background with neutral border and dark text
+    secondary: 'bg-white hover:bg-neutral-50 text-neutral-800 border border-neutral-300 shadow-2xs font-bold hover:border-neutral-400 active:scale-[0.98]',
+    // Outline: crisp border with clean hover state
+    outline: 'border border-neutral-300 hover:border-green-600 hover:text-green-700 hover:bg-green-50 text-neutral-800 bg-white font-bold transition-all active:scale-[0.98]',
     // Ghost
-    ghost: 'text-neutral-700 hover:text-black hover:bg-neutral-100',
-    // Danger: white background with heavy border and black text
-    danger: 'border-2 border-neutral-800 bg-white text-black font-extrabold hover:bg-neutral-100 active:scale-[0.98]',
-    // Accent: green with white text
-    accent: 'bg-green-700 hover:bg-green-800 text-white font-bold active:scale-[0.98]'
+    ghost: 'text-neutral-700 hover:text-neutral-900 hover:bg-neutral-100 font-semibold transition-all',
+    // Danger: high-contrast dark button
+    danger: 'bg-neutral-900 hover:bg-black text-white font-bold shadow-xs active:scale-[0.98]',
+    // Accent: emerald green
+    accent: 'bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-sm active:scale-[0.98]'
   };
 
   return (

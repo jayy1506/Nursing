@@ -8,10 +8,10 @@ export const ProtectedRoute = ({ allowedRoles = [] }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-950 text-white">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50 text-neutral-900">
         <div className="flex flex-col items-center space-y-4">
-          <div className="w-12 h-12 border-4 border-green-500 border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-neutral-400 font-medium">Verifying credentials...</p>
+          <div className="w-10 h-10 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
+          <p className="text-neutral-500 font-semibold text-xs tracking-wide">Verifying credentials...</p>
         </div>
       </div>
     );
@@ -23,18 +23,18 @@ export const ProtectedRoute = ({ allowedRoles = [] }) => {
 
   if (allowedRoles.length > 0 && !allowedRoles.includes(role)) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-neutral-950 text-white p-6">
-        <div className="max-w-md w-full bg-neutral-900/80 border border-2 border-black dark:border-white/30 rounded-2xl p-8 text-center backdrop-blur-xl">
-          <div className="w-16 h-16 bg-black dark:bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="min-h-screen flex items-center justify-center bg-neutral-50 text-neutral-900 p-6">
+        <div className="max-w-md w-full bg-white border border-neutral-200 shadow-xl rounded-3xl p-8 text-center">
+          <div className="w-16 h-16 bg-green-50 text-green-700 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-green-200">
             <span className="text-3xl">🚫</span>
           </div>
-          <h2 className="text-xl font-bold text-white mb-2">Access Restricted</h2>
-          <p className="text-neutral-400 text-sm mb-6">
-            Your current role (<span className="text-green-400 font-semibold">{role}</span>) does not have permission to view this section.
+          <h2 className="text-xl font-extrabold text-neutral-900 mb-2">Access Restricted</h2>
+          <p className="text-neutral-600 text-xs sm:text-sm mb-6 leading-relaxed">
+            Your current role (<span className="text-green-700 font-bold">{role}</span>) does not have permission to view this section.
           </p>
           <a
             href="/"
-            className="inline-block px-6 py-2.5 bg-gradient-to-r from-green-500 to-green-500 text-white font-medium rounded-xl hover:shadow-lg hover:shadow-md transition-all"
+            className="inline-flex items-center justify-center px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-xl shadow-md shadow-green-600/20 transition-all cursor-pointer"
           >
             Return to Dashboard
           </a>
