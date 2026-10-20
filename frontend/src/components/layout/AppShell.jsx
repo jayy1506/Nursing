@@ -99,10 +99,10 @@ export const AppShell = ({ children }) => {
   if (role === 'admin') navItems = adminNavItems;
 
   const curriculumTracks = [
-    { label: 'Applied Anatomy', to: '/anatomy-syllabus', icon: <Bone className="w-4 h-4 shrink-0 text-green-400" />, units: '12 Units' },
-    { label: 'Applied Physiology', to: '/physiology-syllabus', icon: <Activity className="w-4 h-4 shrink-0 text-green-400" />, units: '12 Units' },
-    { label: 'Applied Biochemistry', to: '/bio-chem-syllabus', icon: <Dna className="w-4 h-4 shrink-0 text-green-400" />, units: '8 Units' },
-    { label: 'Nutrition & Dietetics', to: '/nutrition-syllabus', icon: <Utensils className="w-4 h-4 shrink-0 text-green-400" />, units: '10 Units' },
+    { label: 'Applied Anatomy', to: '/anatomy-syllabus', icon: <Bone className="w-4 h-4 shrink-0 text-green-600" />, units: '12 Units' },
+    { label: 'Applied Physiology', to: '/physiology-syllabus', icon: <Activity className="w-4 h-4 shrink-0 text-green-700" />, units: '12 Units' },
+    { label: 'Applied Biochemistry', to: '/bio-chem-syllabus', icon: <Dna className="w-4 h-4 shrink-0 text-green-600" />, units: '8 Units' },
+    { label: 'Nutrition & Dietetics', to: '/nutrition-syllabus', icon: <Utensils className="w-4 h-4 shrink-0 text-green-600" />, units: '10 Units' },
   ];
 
   const filteredTracks = curriculumTracks.filter(t =>
@@ -110,32 +110,32 @@ export const AppShell = ({ children }) => {
   );
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black text-black dark:text-white flex flex-col selection:bg-green-500 selection:text-black">
+    <div className="min-h-screen bg-white text-black flex flex-col selection:bg-green-500 selection:text-white">
       {/* Top Header Bar */}
-      <header className="sticky top-0 z-40 bg-white/95 dark:bg-black/95 backdrop-blur-md border-b border-neutral-200 dark:border-neutral-800 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           {/* Mobile hamburger */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-900 lg:hidden focus-visible:ring-2 focus-visible:ring-green-500"
+            className="p-2 rounded-xl text-neutral-700 hover:bg-neutral-100 lg:hidden focus-visible:ring-2 focus-visible:ring-green-600 cursor-pointer"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
 
-          {/* Proper collapse icon button with aria-label "Toggle sidebar" */}
+          {/* Icon-only toggle with tooltip and aria-label */}
           <button
             type="button"
             onClick={() => setCollapsed(!collapsed)}
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 text-black dark:text-white border border-neutral-300 dark:border-neutral-800 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-green-500"
+            className="hidden lg:flex items-center justify-center p-2 rounded-xl bg-white hover:bg-neutral-100 text-black border border-neutral-300 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-green-600"
             aria-label="Toggle sidebar"
             title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             {collapsed ? (
-              <PanelLeftOpen className="w-4 h-4 text-green-700 dark:text-green-400" />
+              <PanelLeftOpen className="w-4 h-4 text-green-700" />
             ) : (
-              <PanelLeftClose className="w-4 h-4 text-neutral-600 dark:text-neutral-300" />
+              <PanelLeftClose className="w-4 h-4 text-neutral-700" />
             )}
             <span className="sr-only">Toggle sidebar</span>
           </button>
@@ -150,11 +150,11 @@ export const AppShell = ({ children }) => {
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs text-neutral-600 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-900 hover:bg-neutral-200 dark:hover:bg-neutral-800 rounded-xl border border-neutral-300 dark:border-neutral-800 transition-colors cursor-pointer"
+            className="flex items-center gap-2 px-3 py-1.5 text-xs text-neutral-700 bg-white hover:bg-neutral-100 rounded-xl border border-neutral-300 transition-colors cursor-pointer shadow-xs"
           >
-            <Search className="w-3.5 h-3.5" />
-            <span className="hidden md:inline">Quick search curriculum...</span>
-            <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-black border border-neutral-300 dark:border-neutral-700 rounded text-neutral-500">
+            <Search className="w-3.5 h-3.5 text-neutral-600" />
+            <span className="hidden md:inline font-medium">Quick search curriculum...</span>
+            <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-neutral-100 border border-neutral-300 rounded text-neutral-600 font-semibold">
               Ctrl+K
             </kbd>
           </button>
@@ -167,34 +167,34 @@ export const AppShell = ({ children }) => {
             <button
               type="button"
               onClick={() => setNotificationsOpen(!notificationsOpen)}
-              className="p-2 rounded-xl text-neutral-600 hover:text-black dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors relative focus-visible:ring-2 focus-visible:ring-green-500 cursor-pointer"
+              className="relative p-2 rounded-xl text-neutral-700 hover:text-black hover:bg-neutral-100 transition-colors focus-visible:ring-2 focus-visible:ring-green-600 cursor-pointer"
               aria-label="Notifications"
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-green-500 rounded-full ring-2 ring-white dark:ring-black" />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-green-600 rounded-full ring-2 ring-white" />
             </button>
 
             {notificationsOpen && (
               <div
-                className="absolute right-0 mt-2 w-80 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                className="absolute right-0 mt-2 w-80 bg-white border border-neutral-200 rounded-2xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-black"
                 onMouseLeave={() => setNotificationsOpen(false)}
               >
-                <div className="flex items-center justify-between pb-2 border-b border-neutral-100 dark:border-neutral-800 mb-3">
-                  <h4 className="text-xs font-bold text-black dark:text-white uppercase tracking-wider">
+                <div className="flex items-center justify-between pb-2 border-b border-neutral-200 mb-3">
+                  <h4 className="text-xs font-bold text-black uppercase tracking-wider">
                     Notifications
                   </h4>
                   <Badge variant="high" size="sm">New</Badge>
                 </div>
                 <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800">
-                    <p className="font-bold text-black dark:text-white">Welcome to MedPulse</p>
-                    <p className="text-neutral-600 dark:text-neutral-400 text-[11px] mt-0.5">
+                  <div className="p-2.5 rounded-xl bg-green-50 border border-green-200">
+                    <p className="font-bold text-green-900">Welcome to MedPulse</p>
+                    <p className="text-neutral-700 text-[11px] mt-0.5">
                       Explore all 4 foundational tracks with chapter-scoped AI tutoring.
                     </p>
                   </div>
-                  <div className="p-2.5 rounded-xl bg-neutral-50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800">
-                    <p className="font-semibold text-black dark:text-white">Formative Assessments Ready</p>
-                    <p className="text-neutral-500 dark:text-neutral-400 text-[11px] mt-0.5">
+                  <div className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-200">
+                    <p className="font-semibold text-black">Formative Assessments Ready</p>
+                    <p className="text-neutral-600 text-[11px] mt-0.5">
                       Practice INC question bank with bedside rationales.
                     </p>
                   </div>
@@ -209,31 +209,31 @@ export const AppShell = ({ children }) => {
               <button
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-neutral-300 dark:border-neutral-700 bg-neutral-100 dark:bg-neutral-900 hover:border-green-500 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-green-500"
+                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-neutral-300 bg-white hover:border-green-600 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-green-600 shadow-xs"
                 aria-label="User navigation menu"
               >
                 <Avatar name={nickname} size="sm" />
                 <div className="hidden sm:flex flex-col text-left leading-none">
-                  <span className="text-xs font-bold text-black dark:text-white">
+                  <span className="text-xs font-bold text-black">
                     {nickname}
                   </span>
-                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-green-700 dark:text-green-400 mt-0.5">
+                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-green-700 mt-0.5">
                     {role}
                   </span>
                 </div>
-                <ChevronDown className="w-3.5 h-3.5 text-neutral-400 hidden sm:block" />
+                <ChevronDown className="w-3.5 h-3.5 text-neutral-500 hidden sm:block" />
               </button>
 
               {userMenuOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-56 bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-black"
                   onMouseLeave={() => setUserMenuOpen(false)}
                 >
-                  <div className="px-4 py-2.5 border-b border-neutral-100 dark:border-neutral-800">
-                    <p className="text-xs font-bold text-black dark:text-white truncate">
+                  <div className="px-4 py-2.5 border-b border-neutral-200">
+                    <p className="text-xs font-bold text-black truncate">
                       {fullName}
                     </p>
-                    <p className="text-[11px] text-neutral-500 dark:text-neutral-400 truncate">
+                    <p className="text-[11px] text-neutral-600 truncate">
                       {currentUser.email}
                     </p>
                     <div className="mt-1.5">
@@ -245,28 +245,28 @@ export const AppShell = ({ children }) => {
                     <Link
                       to="/"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-800 hover:bg-neutral-100"
                     >
-                      <Home className="w-3.5 h-3.5 text-neutral-400" />
+                      <Home className="w-3.5 h-3.5 text-neutral-500" />
                       <span>Home Hub</span>
                     </Link>
                     <Link
                       to="/syllabus"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-900"
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-800 hover:bg-neutral-100"
                     >
-                      <BookOpen className="w-3.5 h-3.5 text-neutral-400" />
+                      <BookOpen className="w-3.5 h-3.5 text-neutral-500" />
                       <span>Curriculum Tracks</span>
                     </Link>
                   </div>
 
-                  <div className="pt-1 border-t border-neutral-100 dark:border-neutral-800">
+                  <div className="pt-1 border-t border-neutral-200">
                     <button
                       type="button"
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-black dark:text-white hover:bg-neutral-100 dark:hover:bg-neutral-900 transition-colors cursor-pointer"
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-black hover:bg-neutral-100 transition-colors cursor-pointer"
                     >
-                      <LogOut className="w-3.5 h-3.5" />
+                      <LogOut className="w-3.5 h-3.5 text-neutral-600" />
                       <span>Sign Out</span>
                     </button>
                   </div>
@@ -276,7 +276,7 @@ export const AppShell = ({ children }) => {
           ) : (
             <Link
               to="/login"
-              className="px-4 py-1.5 text-xs font-bold text-black bg-green-500 hover:bg-green-400 rounded-xl shadow-xs transition-colors"
+              className="px-4 py-1.5 text-xs font-bold text-white bg-green-600 hover:bg-green-700 rounded-xl shadow-xs transition-colors"
             >
               Sign In
             </Link>
@@ -291,18 +291,18 @@ export const AppShell = ({ children }) => {
           <button
             type="button"
             onClick={() => setCollapsed(false)}
-            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-black text-white hover:border-green-500 rounded-r-xl shadow-lg text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-neutral-800 border-l-0"
+            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-white text-black hover:border-green-600 rounded-r-xl shadow-md text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-neutral-300 border-l-0"
             title="Open Navigation Menu"
             aria-label="Toggle sidebar"
           >
-            <ChevronRight className="w-3.5 h-3.5 text-green-400" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-green-400">Menu</span>
+            <ChevronRight className="w-3.5 h-3.5 text-green-700" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold text-green-700">Menu</span>
           </button>
         )}
 
-        {/* Desktop Sidebar: Pure Black Background in both modes as specified in requirements */}
+        {/* Desktop Sidebar: Pure White Background with Black Text */}
         <aside
-          className={`hidden lg:flex flex-col bg-black text-white border-r border-neutral-800 transition-all duration-300 shrink-0 select-none ${
+          className={`hidden lg:flex flex-col bg-white text-black border-r border-neutral-200 transition-all duration-300 shrink-0 select-none ${
             collapsed
               ? 'w-0 opacity-0 overflow-hidden border-none pointer-events-none'
               : 'w-64 opacity-100'
@@ -312,7 +312,7 @@ export const AppShell = ({ children }) => {
             {/* Primary Nav Links */}
             <div className="space-y-1">
               {!collapsed && (
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-500 px-3">
                   Main Navigation
                 </span>
               )}
@@ -324,8 +324,8 @@ export const AppShell = ({ children }) => {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
                       isActive
-                        ? 'border-l-4 border-green-500 bg-neutral-900 text-green-400 font-extrabold pl-2.5'
-                        : 'text-neutral-300 hover:text-white hover:bg-neutral-900/80 border-l-4 border-transparent'
+                        ? 'border-l-4 border-green-600 bg-green-50 text-green-800 font-extrabold pl-2.5'
+                        : 'text-neutral-700 hover:text-black hover:bg-neutral-100 border-l-4 border-transparent'
                     } ${collapsed ? 'justify-center' : ''}`
                   }
                   title={collapsed ? item.label : undefined}
@@ -338,21 +338,21 @@ export const AppShell = ({ children }) => {
 
             {/* Single style monochrome line icons for curriculum tracks */}
             {!collapsed && (
-              <div className="space-y-1.5 pt-3 border-t border-neutral-800">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
+              <div className="space-y-1.5 pt-3 border-t border-neutral-200">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-500 px-3">
                   Curriculum Tracks
                 </span>
                 {curriculumTracks.map((track) => (
                   <Link
                     key={track.to}
                     to={track.to}
-                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-neutral-300 hover:text-white hover:bg-neutral-900 rounded-xl transition-colors"
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-neutral-700 hover:text-black hover:bg-neutral-100 rounded-xl transition-colors"
                   >
                     <span className="flex items-center gap-2.5">
                       {track.icon}
                       <span className="truncate">{track.label}</span>
                     </span>
-                    <span className="text-[10px] text-neutral-400">{track.units}</span>
+                    <span className="text-[10px] text-neutral-500 font-semibold">{track.units}</span>
                   </Link>
                 ))}
               </div>
@@ -360,36 +360,36 @@ export const AppShell = ({ children }) => {
           </div>
 
           {/* Sidebar Footer info */}
-          <div className="p-4 border-t border-neutral-800 text-[11px] text-neutral-400">
+          <div className="p-4 border-t border-neutral-200 text-[11px] text-neutral-500">
             {!collapsed ? (
               <div className="flex items-center justify-between">
                 <span>INC CBME v2026</span>
-                <span className="w-2 h-2 rounded-full bg-green-500" title="System Operational" />
+                <span className="w-2 h-2 rounded-full bg-green-600" title="System Operational" />
               </div>
             ) : (
               <div className="flex justify-center">
-                <span className="w-2 h-2 rounded-full bg-green-500" title="Online" />
+                <span className="w-2 h-2 rounded-full bg-green-600" title="Online" />
               </div>
             )}
           </div>
         </aside>
 
         {/* Content Outlet Container */}
-        <div className="flex-1 overflow-y-auto pb-16 lg:pb-0 bg-white dark:bg-black">
+        <div className="flex-1 overflow-y-auto pb-28 lg:pb-24 bg-white text-black">
           {children}
         </div>
       </div>
 
       {/* Mobile Drawer Navigation (When hamburger tapped) */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm lg:hidden animate-in fade-in duration-200">
-          <div className="fixed inset-y-0 left-0 w-72 bg-black border-r border-neutral-800 p-5 flex flex-col space-y-5 animate-in slide-in-from-left duration-200 text-white">
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm lg:hidden animate-in fade-in duration-200">
+          <div className="fixed inset-y-0 left-0 w-72 bg-white border-r border-neutral-200 p-5 flex flex-col space-y-5 animate-in slide-in-from-left duration-200 text-black">
+            <div className="flex items-center justify-between pb-3 border-b border-neutral-200">
               <MedPulseLogo />
               <button
                 type="button"
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1.5 text-neutral-400 hover:text-white rounded-lg"
+                className="p-1.5 text-neutral-600 hover:text-black rounded-lg cursor-pointer"
                 aria-label="Toggle sidebar"
               >
                 <X className="w-5 h-5" />
@@ -397,7 +397,7 @@ export const AppShell = ({ children }) => {
             </div>
 
             <div className="flex-1 space-y-1 overflow-y-auto">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-500 px-3">
                 Menu
               </span>
               {navItems.map((item) => (
@@ -408,8 +408,8 @@ export const AppShell = ({ children }) => {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                       isActive
-                        ? 'border-l-4 border-green-500 bg-neutral-900 text-green-400 font-extrabold pl-2.5'
-                        : 'text-neutral-300 hover:bg-neutral-900'
+                        ? 'border-l-4 border-green-600 bg-green-50 text-green-800 font-extrabold pl-2.5'
+                        : 'text-neutral-700 hover:bg-neutral-100'
                     }`
                   }
                 >
@@ -418,8 +418,8 @@ export const AppShell = ({ children }) => {
                 </NavLink>
               ))}
 
-              <div className="pt-4 mt-2 border-t border-neutral-800 space-y-1">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-3">
+              <div className="pt-4 mt-2 border-t border-neutral-200 space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-500 px-3">
                   Syllabi Tracks
                 </span>
                 {curriculumTracks.map((track) => (
@@ -427,24 +427,24 @@ export const AppShell = ({ children }) => {
                     key={track.to}
                     to={track.to}
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-neutral-300 hover:text-white"
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-neutral-700 hover:text-black"
                   >
                     <span className="flex items-center gap-2">
                       {track.icon}
                       <span>{track.label}</span>
                     </span>
-                    <span className="text-[10px] text-neutral-400">{track.units}</span>
+                    <span className="text-[10px] text-neutral-500">{track.units}</span>
                   </Link>
                 ))}
               </div>
             </div>
 
             {currentUser && (
-              <div className="pt-3 border-t border-neutral-800">
+              <div className="pt-3 border-t border-neutral-200">
                 <button
                   type="button"
                   onClick={handleLogout}
-                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-white bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 rounded-xl"
+                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-black bg-neutral-100 hover:bg-neutral-200 border border-neutral-300 rounded-xl cursor-pointer"
                 >
                   <LogOut className="w-4 h-4" />
                   <span>Sign Out</span>
@@ -456,12 +456,12 @@ export const AppShell = ({ children }) => {
       )}
 
       {/* Mobile Bottom Tab Bar */}
-      <nav aria-label="Mobile Navigation" className="fixed bottom-0 inset-x-0 z-40 bg-white dark:bg-black border-t border-neutral-200 dark:border-neutral-800 lg:hidden flex items-center justify-around py-2 px-1">
+      <nav aria-label="Mobile Navigation" className="fixed bottom-0 inset-x-0 z-40 bg-white border-t border-neutral-200 lg:hidden flex items-center justify-around py-2 px-1">
         <NavLink
           to="/"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
+              isActive ? 'text-green-700' : 'text-neutral-600'
             }`
           }
         >
@@ -473,7 +473,7 @@ export const AppShell = ({ children }) => {
           to="/syllabus"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
+              isActive ? 'text-green-700' : 'text-neutral-600'
             }`
           }
         >
@@ -485,7 +485,7 @@ export const AppShell = ({ children }) => {
           to="/question-bank"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
+              isActive ? 'text-green-700' : 'text-neutral-600'
             }`
           }
         >
@@ -498,7 +498,7 @@ export const AppShell = ({ children }) => {
             to="/student/quiz/comprehensive"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
+                isActive ? 'text-green-700' : 'text-neutral-600'
               }`
             }
           >
@@ -512,7 +512,7 @@ export const AppShell = ({ children }) => {
             to="/faculty/dashboard"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
+                isActive ? 'text-green-700' : 'text-neutral-600'
               }`
             }
           >
@@ -526,7 +526,7 @@ export const AppShell = ({ children }) => {
             to="/admin/dashboard"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-green-700 dark:text-green-400' : 'text-neutral-500 dark:text-neutral-400'
+                isActive ? 'text-green-700' : 'text-neutral-600'
               }`
             }
           >
@@ -541,33 +541,33 @@ export const AppShell = ({ children }) => {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center pt-20 p-4 animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-start justify-center pt-20 p-4 animate-in fade-in duration-150"
           onClick={(e) => {
             if (e.target === e.currentTarget) setSearchOpen(false);
           }}
         >
-          <div className="w-full max-w-lg bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
-            <div className="p-3 border-b border-neutral-100 dark:border-neutral-800 flex items-center gap-2.5">
-              <Search className="w-5 h-5 text-neutral-400" />
+          <div className="w-full max-w-lg bg-white border border-neutral-300 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150 text-black">
+            <div className="p-3 border-b border-neutral-200 flex items-center gap-2.5">
+              <Search className="w-5 h-5 text-neutral-500" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search curriculum tracks, chapters, or topics..."
-                className="w-full bg-transparent text-sm text-black dark:text-white focus:outline-none placeholder:text-neutral-400"
+                className="w-full bg-transparent text-sm text-black focus:outline-none placeholder:text-neutral-400 font-medium"
                 autoFocus
               />
               <button
                 type="button"
                 onClick={() => setSearchOpen(false)}
-                className="p-1 text-neutral-400 hover:text-black dark:hover:text-white rounded-lg text-xs"
+                className="p-1 text-neutral-500 hover:text-black rounded-lg text-xs font-bold cursor-pointer"
               >
                 ESC
               </button>
             </div>
 
             <div className="p-3 max-h-72 overflow-y-auto space-y-1">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-400 px-2">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-500 px-2">
                 Curriculum Modules
               </span>
               {filteredTracks.map((track) => (
@@ -575,23 +575,23 @@ export const AppShell = ({ children }) => {
                   key={track.to}
                   to={track.to}
                   onClick={() => setSearchOpen(false)}
-                  className="flex items-center justify-between p-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-900 text-xs text-black dark:text-white transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-neutral-100 text-xs text-black transition-colors"
                 >
                   <span className="flex items-center gap-2 font-medium">
                     {track.icon}
                     <span>{track.label}</span>
                   </span>
-                  <span className="text-[10px] text-green-700 dark:text-green-400 font-semibold">{track.units}</span>
+                  <span className="text-[10px] text-green-700 font-semibold">{track.units}</span>
                 </Link>
               ))}
 
-              <div className="pt-2 border-t border-neutral-100 dark:border-neutral-800">
+              <div className="pt-2 border-t border-neutral-200">
                 <Link
                   to="/question-bank"
                   onClick={() => setSearchOpen(false)}
-                  className="flex items-center gap-2 p-2 rounded-xl hover:bg-neutral-100 dark:hover:bg-neutral-900 text-xs text-black dark:text-white"
+                  className="flex items-center gap-2 p-2 rounded-xl hover:bg-neutral-100 text-xs text-black"
                 >
-                  <Layers className="w-4 h-4 text-neutral-400" />
+                  <Layers className="w-4 h-4 text-neutral-500" />
                   <span>University Question Bank (All Modules)</span>
                 </Link>
               </div>

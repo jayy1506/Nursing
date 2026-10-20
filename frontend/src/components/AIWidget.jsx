@@ -437,59 +437,54 @@ export const AIWidget = () => {
 
   return (
     <>
-      {/* Floating Widget Trigger Button: Green fill, black text, bottom-right, collapsed to icon on mobile */}
+      {/* Floating Widget Trigger Button: Icon-only circle that expands on hover/focus */}
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex items-center gap-2 p-3 sm:px-4 sm:py-3 rounded-full bg-green-500 hover:bg-green-400 text-black font-extrabold shadow-2xl hover:scale-105 active:scale-95 transition-all duration-200 cursor-pointer border-2 border-black focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 group"
+          className="fixed bottom-6 right-6 z-50 flex items-center h-12 rounded-full bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-2xl hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer border border-green-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2 group px-3.5"
           aria-label="Ask AI Clinical Tutor"
+          title="Ask AI Clinical Tutor"
         >
-          <Sparkles className="w-5 h-5 text-black shrink-0" />
-          <span className="hidden sm:inline text-xs sm:text-sm font-extrabold tracking-tight">
+          <Sparkles className="w-5 h-5 text-white shrink-0" />
+          <span className="max-w-0 overflow-hidden whitespace-nowrap opacity-0 group-hover:max-w-xs group-hover:opacity-100 group-hover:ml-2 group-focus-visible:max-w-xs group-focus-visible:opacity-100 group-focus-visible:ml-2 transition-all duration-300 text-xs sm:text-sm font-extrabold text-white">
             Ask AI Clinical Tutor
           </span>
-          {memoryStats.totalTokensSaved > 0 && (
-            <span className="hidden md:flex px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-black text-white items-center gap-1">
-              <Zap className="w-2.5 h-2.5 text-green-400" />
-              {memoryStats.totalTokensSaved.toLocaleString()} Saved
-            </span>
-          )}
         </button>
       )}
 
-      {/* Main Tutor Window: pure black/white/green */}
+      {/* Main Tutor Window: pure white surfaces, black text, green accents */}
       {open && (
         <div
-          className={`fixed z-50 flex flex-col bg-white dark:bg-black text-black dark:text-white border border-neutral-300 dark:border-neutral-800 shadow-2xl transition-all duration-300 ${
+          className={`fixed z-50 flex flex-col bg-white text-black border border-neutral-300 shadow-2xl transition-all duration-300 ${
             isMobile
               ? 'inset-0 w-full h-full rounded-none'
               : 'bottom-6 right-6 w-[540px] h-[720px] max-h-[88vh] rounded-3xl overflow-hidden'
           }`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+          <div className="flex items-center justify-between px-5 py-3.5 border-b border-neutral-200 bg-neutral-50">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-green-500 flex items-center justify-center text-black font-extrabold shadow-xs">
-                <Sparkles className="w-5 h-5" />
+              <div className="w-9 h-9 rounded-2xl bg-green-600 flex items-center justify-center text-white font-extrabold shadow-xs">
+                <Sparkles className="w-5 h-5 text-white" />
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="font-extrabold text-sm text-black dark:text-white tracking-tight">
+                  <h3 className="font-extrabold text-sm text-black tracking-tight">
                     MedPulse AI Tutor
                   </h3>
                   <button
                     onClick={() => setShowMemoryStats(!showMemoryStats)}
-                    className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-neutral-200 dark:bg-neutral-800 text-black dark:text-white border border-neutral-300 dark:border-neutral-700 hover:border-green-500 transition-colors flex items-center gap-1 cursor-pointer"
+                    className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-neutral-100 text-black border border-neutral-300 hover:border-green-600 transition-colors flex items-center gap-1 cursor-pointer"
                     title="View Token Memory Stats"
                   >
-                    <Zap className="w-3 h-3 text-green-600 dark:text-green-400" />
+                    <Zap className="w-3 h-3 text-green-700" />
                     <span>0-Token Memory</span>
                   </button>
                 </div>
-                <p className="text-[11px] text-neutral-500 dark:text-neutral-400 flex items-center gap-1.5 mt-0.5">
+                <p className="text-[11px] text-neutral-600 flex items-center gap-1.5 mt-0.5">
                   <span>{currentRouteData ? `${currentRouteData.icon} ${currentRouteData.category}` : 'Clinical Nursing & Biochemistry'}</span>
                   <span>&bull;</span>
-                  <span className="text-green-700 dark:text-green-400 font-semibold">{memoryStats.totalTokensSaved.toLocaleString()} tokens saved</span>
+                  <span className="text-green-700 font-semibold">{memoryStats.totalTokensSaved.toLocaleString()} tokens saved</span>
                 </p>
               </div>
             </div>
@@ -499,7 +494,7 @@ export const AIWidget = () => {
                 onClick={() => setShowMemoryStats(!showMemoryStats)}
                 title="Memory Analytics"
                 className={`p-2 rounded-xl transition-colors cursor-pointer ${
-                  showMemoryStats ? 'bg-black text-white dark:bg-white dark:text-black' : 'text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800'
+                  showMemoryStats ? 'bg-green-600 text-white' : 'text-neutral-600 hover:text-black hover:bg-neutral-100'
                 }`}
               >
                 <Database className="w-4 h-4" />
@@ -507,7 +502,7 @@ export const AIWidget = () => {
               <button
                 onClick={handleClearChat}
                 title="Reset Chat Session"
-                className="p-2 rounded-xl text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                className="p-2 rounded-xl text-neutral-600 hover:text-black hover:bg-neutral-100 transition-colors cursor-pointer"
               >
                 <RotateCcw className="w-4 h-4" />
               </button>
@@ -517,7 +512,7 @@ export const AIWidget = () => {
                   setIsSpeaking(false);
                   setOpen(false);
                 }}
-                className="p-2 rounded-xl text-neutral-500 hover:text-black dark:hover:text-white hover:bg-neutral-200 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
+                className="p-2 rounded-xl text-neutral-600 hover:text-black hover:bg-neutral-100 transition-colors cursor-pointer"
               >
                 {isMobile ? <ChevronDown className="w-5 h-5" /> : <X className="w-5 h-5" />}
               </button>
@@ -634,8 +629,8 @@ export const AIWidget = () => {
                 onClick={() => setTutorMode('default')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'default'
-                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
-                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
+                    ? 'bg-green-600 text-white font-extrabold shadow-xs'
+                    : 'bg-neutral-100 text-black hover:bg-neutral-200 border border-neutral-300'
                 }`}
                 title="Standard Tutor"
               >
@@ -645,8 +640,8 @@ export const AIWidget = () => {
                 onClick={() => handleActionPill('simple')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'simple'
-                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
-                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
+                    ? 'bg-green-600 text-white font-extrabold shadow-xs'
+                    : 'bg-neutral-100 text-black hover:bg-neutral-200 border border-neutral-300'
                 }`}
                 title="Explain Simply"
               >
@@ -656,8 +651,8 @@ export const AIWidget = () => {
                 onClick={() => handleActionPill('quiz')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'quiz'
-                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
-                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
+                    ? 'bg-green-600 text-white font-extrabold shadow-xs'
+                    : 'bg-neutral-100 text-black hover:bg-neutral-200 border border-neutral-300'
                 }`}
                 title="Quiz Me"
               >
@@ -667,8 +662,8 @@ export const AIWidget = () => {
                 onClick={() => handleActionPill('case')}
                 className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
                   tutorMode === 'case'
-                    ? 'bg-green-500 text-black font-extrabold shadow-xs'
-                    : 'bg-white dark:bg-black text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800'
+                    ? 'bg-green-600 text-white font-extrabold shadow-xs'
+                    : 'bg-neutral-100 text-black hover:bg-neutral-200 border border-neutral-300'
                 }`}
                 title="SBAR Case"
               >
@@ -689,20 +684,20 @@ export const AIWidget = () => {
                   <div
                     className={`max-w-[90%] rounded-2xl p-4 leading-relaxed shadow-xs ${
                       isUser
-                        ? 'bg-black text-white dark:bg-white dark:text-black font-medium rounded-tr-none'
-                        : 'bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-black dark:text-white rounded-tl-none'
+                        ? 'bg-green-600 text-white font-medium rounded-tr-none'
+                        : 'bg-white border border-neutral-300 text-black rounded-tl-none'
                     }`}
                   >
                     {!isUser && (
-                      <div className="mb-2 pb-2 border-b border-neutral-200 dark:border-neutral-800 flex flex-wrap items-center gap-1.5">
+                      <div className="mb-2 pb-2 border-b border-neutral-200 flex flex-wrap items-center gap-1.5">
                         {msg.fromMemory ? (
-                          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-green-100 dark:bg-green-950 text-green-900 dark:text-green-300 border border-green-500/40 shadow-xs">
-                            <Zap className="w-3 h-3 text-green-700 dark:text-green-400" />
+                          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-green-100 text-green-900 border border-green-300 shadow-xs">
+                            <Zap className="w-3 h-3 text-green-700" />
                             <span>Served from Memory (0 Tokens)</span>
                           </div>
                         ) : (
-                          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-neutral-200 dark:bg-neutral-800 text-black dark:text-white border border-neutral-300 dark:border-neutral-700">
-                            <Sparkles className="w-3 h-3 text-green-700 dark:text-green-400" />
+                          <div className="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-neutral-100 text-black border border-neutral-300">
+                            <Sparkles className="w-3 h-3 text-green-700" />
                             <span>Clinical RAG Synthesizer</span>
                           </div>
                         )}
@@ -832,10 +827,10 @@ export const AIWidget = () => {
               <button
                 type="submit"
                 disabled={loading || !input.trim()}
-                className="p-2.5 bg-green-500 hover:bg-green-400 text-black rounded-2xl shadow-xs disabled:opacity-40 transition-all cursor-pointer"
+                className="p-2.5 bg-green-600 hover:bg-green-700 text-white rounded-2xl shadow-xs disabled:opacity-40 transition-all cursor-pointer"
                 title="Send query"
               >
-                <Send className="w-4 h-4" />
+                <Send className="w-4 h-4 text-white" />
               </button>
             </form>
             <div className="flex items-center justify-between text-[10px] text-neutral-500 px-1 mt-1.5">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 export const ProgressBar = ({
   value = 0,
@@ -11,6 +11,7 @@ export const ProgressBar = ({
   const percent = Math.min(100, Math.max(0, Math.round((value / max) * 100)));
 
   const sizeClasses = {
+    xs: 'h-1',
     sm: 'h-1.5',
     md: 'h-2.5',
     lg: 'h-4'
@@ -54,10 +55,20 @@ export const ProgressRing = ({
   children,
   className = ''
 }) => {
-  const percent = Math.min(100, Math.max(0, Math.round((value / max) * 100)));
+  const targetPercent = Math.min(100, Math.max(0, Math.round((value / max) * 100)));
+  const [animatedPercent, setAnimatedPercent] = useState(0);
+
+  useEffect(() => {
+    // Animate the competency ring filling smoothly on load
+    const frame = requestAnimationFrame(() => {
+      setAnimatedPercent(targetPercent);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [targetPercent]);
+
   const radius = (size - strokeWidth) / 2;
   const circumference = radius * 2 * Math.PI;
-  const strokeDashoffset = circumference - (percent / 100) * circumference;
+  const strokeDashoffset = circumference - (animatedPercent / 100) * circumference;
 
   return (
     <div className={`relative inline-flex items-center justify-center ${className}`} style={{ width: size, height: size }}>
@@ -69,7 +80,7 @@ export const ProgressRing = ({
           stroke={trackColor}
           strokeWidth={strokeWidth}
           fill="transparent"
-          className="dark:stroke-neutral-800"
+          className="dark:stroke-neutral-800 transition-colors"
         />
         <circle
           cx={size / 2}
@@ -81,7 +92,9 @@ export const ProgressRing = ({
           strokeDasharray={circumference}
           strokeDashoffset={strokeDashoffset}
           strokeLinecap="round"
-          className="transition-all duration-700 ease-out"
+          style={{
+            transition: 'stroke-dashoffset 900ms cubic-bezier(0.4, 0, 0.2, 1)'
+          }}
         />
       </svg>
       <div className="absolute inset-0 flex items-center justify-center">
@@ -89,7 +102,7 @@ export const ProgressRing = ({
           children
         ) : (
           <span className="text-xs font-extrabold text-black dark:text-white">
-            {percent}%
+            {targetPercent}%
           </span>
         )}
       </div>

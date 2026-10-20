@@ -13,7 +13,7 @@ export const Button = React.forwardRef(({
   type = 'button',
   ...props
 }, ref) => {
-  const baseStyles = 'inline-flex items-center justify-center font-bold transition-all duration-150 rounded-xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2';
+  const baseStyles = 'inline-flex items-center justify-center font-bold transition-all duration-150 rounded-xl cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600 focus-visible:ring-offset-2';
 
   const sizeStyles = {
     sm: 'text-xs px-3 py-1.5 gap-1.5 h-8',
@@ -23,18 +23,18 @@ export const Button = React.forwardRef(({
   };
 
   const variantStyles = {
-    // Primary: green-500 fill with black text (strict AA requirement)
-    primary: 'bg-green-500 hover:bg-green-400 text-black active:scale-[0.98]',
-    // Secondary: neutral/white background with black text
-    secondary: 'bg-neutral-100 hover:bg-neutral-200 text-black dark:bg-neutral-900 dark:hover:bg-neutral-800 dark:text-white border border-neutral-300 dark:border-neutral-700',
-    // Outline: crisp border, green hover
-    outline: 'border border-black dark:border-neutral-300 hover:border-green-500 hover:text-green-700 dark:hover:text-green-400 text-black dark:text-white bg-transparent',
+    // Primary: green fill with white text
+    primary: 'bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-xs active:scale-[0.98]',
+    // Secondary: white background with black text
+    secondary: 'bg-white hover:bg-neutral-100 text-black border border-neutral-300',
+    // Outline: crisp border with black text, green on hover
+    outline: 'border-2 border-neutral-800 hover:border-green-600 hover:text-green-700 text-black bg-white',
     // Ghost
-    ghost: 'text-neutral-600 hover:text-black hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-900',
-    // Danger: never red! 2px heavy border
-    danger: 'border-2 border-black dark:border-white bg-black dark:bg-white text-white dark:text-black font-extrabold hover:opacity-90 active:scale-[0.98]',
-    // Subtle Green
-    accent: 'bg-green-100 hover:bg-green-200 text-green-900 border border-green-500 font-bold active:scale-[0.98]'
+    ghost: 'text-neutral-700 hover:text-black hover:bg-neutral-100',
+    // Danger: white background with heavy border and black text
+    danger: 'border-2 border-neutral-800 bg-white text-black font-extrabold hover:bg-neutral-100 active:scale-[0.98]',
+    // Accent: green with white text
+    accent: 'bg-green-700 hover:bg-green-800 text-white font-bold active:scale-[0.98]'
   };
 
   return (
@@ -47,7 +47,7 @@ export const Button = React.forwardRef(({
     >
       {isLoading ? (
         <>
-          <Loader2 className="w-4 h-4 animate-spin text-black" />
+          <Loader2 className="w-4 h-4 animate-spin text-white" />
           <span>{children}</span>
         </>
       ) : (

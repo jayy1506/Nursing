@@ -6,6 +6,7 @@ import { ProgressRing, ProgressBar } from '../components/ui/ProgressBar';
 import { Card, CardHeader, CardTitle, CardContent } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { Button } from '../components/ui/Button';
+import { Skeleton, SkeletonCard } from '../components/ui/Skeleton';
 import {
   Sparkles,
   BookOpen,
@@ -18,6 +19,9 @@ import {
   PlayCircle,
   Clock,
   Timer,
+  ChevronRight,
+  Flame,
+  Target,
   Bone,
   Activity,
   Dna,
@@ -28,6 +32,7 @@ export const Home = () => {
   const navigate = useNavigate();
   const { currentUser } = useAuth();
 
+  const [loading, setLoading] = useState(true);
   const [anatStatus, setAnatStatus] = useState({ completedCount: 0, completionPercent: 0, isFinalUnlocked: false });
   const [physStatus, setPhysStatus] = useState({ completedCount: 0, completionPercent: 0, isFinalUnlocked: false });
   const [biocStatus, setBiocStatus] = useState({ completedCount: 0, completionPercent: 0, isFinalUnlocked: false });
@@ -57,32 +62,26 @@ export const Home = () => {
       if (att.reviewData && Array.isArray(att.reviewData)) {
         att.reviewData.forEach(q => {
           if (!q.isCorrect && q.subtopic) {
-            missedMap[q.subtopic] = (missedMap[q.subtopic] || 0) + 1;
+            missedMap[q.subtopic] = {
+              count: (missedMap[q.subtopic]?.count || 0) + 1,
+              accuracy: Math.round(((q.totalAnswered - 1) / (q.totalAnswered || 1)) * 100) || 50
+            };
           }
         });
       }
     });
 
     const sortedWeak = Object.entries(missedMap)
-      .sort((a, b) => b[1] - a[1])
+      .sort((a, b) => b[1].count - a[1].count)
       .slice(0, 4)
-      .map(([subtopic, count], idx) => ({
+      .map(([subtopic, data]) => ({
         subtopic,
-        count,
-        priority: idx === 0 ? 'high' : idx === 1 ? 'medium' : 'low'
+        count: data.count,
+        accuracy: data.accuracy
       }));
     
-    // Fallback clinical high-yield pearls if no quizzes attempted yet
-    if (sortedWeak.length === 0) {
-      setWeakTopics([
-        { subtopic: 'Diabetic Ketoacidosis & Lipolysis', priority: 'high', count: 'High Yield' },
-        { subtopic: 'Cardiac Hemodynamics & Valves', priority: 'medium', count: 'Priority' },
-        { subtopic: 'Cranial Nerves Clinical Tests', priority: 'medium', count: 'Medium' },
-        { subtopic: 'PEM: Kwashiorkor vs Marasmus', priority: 'low', count: 'Foundational' }
-      ]);
-    } else {
-      setWeakTopics(sortedWeak);
-    }
+    setWeakTopics(sortedWeak);
+    setLoading(false);
   }, []);
 
   const getNickname = () => {
@@ -113,7 +112,7 @@ export const Home = () => {
       id: 'anatomy',
       title: 'Applied Human Anatomy',
       code: 'ANAT 105',
-      icon: <Bone className="w-5 h-5 text-green-700 dark:text-green-400" />,
+      icon: <Bone className="w-5 h-5 text-green-700" />,
       units: 12,
       completed: anatStatus.completedCount,
       percent: anatStatus.completionPercent,
@@ -125,7 +124,7 @@ export const Home = () => {
       id: 'physiology',
       title: 'Applied Human Physiology',
       code: 'PHYS 110',
-      icon: <Activity className="w-5 h-5 text-green-700 dark:text-green-400" />,
+      icon: <Activity className="w-5 h-5 text-green-700" />,
       units: 12,
       completed: physStatus.completedCount,
       percent: physStatus.completionPercent,
@@ -137,7 +136,7 @@ export const Home = () => {
       id: 'biochemistry',
       title: 'Applied Biochemistry',
       code: 'BIOC 115',
-      icon: <Dna className="w-5 h-5 text-green-700 dark:text-green-400" />,
+      icon: <Dna className="w-5 h-5 text-green-700" />,
       units: 7,
       completed: biocStatus.completedCount,
       percent: biocStatus.completionPercent,
@@ -149,7 +148,7 @@ export const Home = () => {
       id: 'nutrition',
       title: 'Nutrition & Dietetics',
       code: 'NUTR 120',
-      icon: <Utensils className="w-5 h-5 text-green-700 dark:text-green-400" />,
+      icon: <Utensils className="w-5 h-5 text-green-700" />,
       units: 10,
       completed: nutrStatus.completedCount,
       percent: nutrStatus.completionPercent,
@@ -159,76 +158,117 @@ export const Home = () => {
     }
   ];
 
+  if (loading) {
+    return (
+      <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-8 bg-white text-black">
+        <Skeleton className="h-64 w-full rounded-3xl" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <Skeleton className="h-44 lg:col-span-2 rounded-2xl" />
+          <Skeleton className="h-44 rounded-2xl" />
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <SkeletonCard />
+          <SkeletonCard />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
-      {/* 1. Header Banner: Hero card - white card, 1px light border, subtle green-50 tint */}
-      <section className="relative overflow-hidden bg-white dark:bg-black border border-neutral-200 dark:border-neutral-800 rounded-3xl p-6 sm:p-8 shadow-xs">
-        <div className="pointer-events-none absolute inset-0 bg-green-50/40 dark:bg-green-950/10" />
+    <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-8 bg-white text-black">
+      {/* 1. Header Banner: Hero Card on Pure White Surface with Black Text */}
+      <section className="relative overflow-hidden bg-white border border-neutral-200 rounded-3xl p-6 sm:p-8 shadow-xs">
+        <div className="pointer-events-none absolute inset-0 bg-green-50/60" />
 
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
-          <div className="max-w-xl space-y-2.5">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white dark:bg-neutral-900 text-black dark:text-white text-[11px] font-bold border border-neutral-300 dark:border-neutral-700">
-              <Sparkles className="w-3.5 h-3.5 text-green-700 dark:text-green-400" />
+          <div className="max-w-xl space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-black text-[11px] font-bold border border-neutral-300 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-green-700" />
               <span>INC CBME Standardized Curriculum &bull; Semester I</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-black text-black dark:text-white tracking-tight">
-              Welcome back, <span className="text-green-700 dark:text-green-400">{nickname}</span>
+            <h1 className="text-2xl sm:text-4xl font-black text-black tracking-tight">
+              Welcome back, <span className="text-green-700">{nickname}</span>
             </h1>
 
-            <p className="text-neutral-600 dark:text-neutral-300 text-xs sm:text-sm leading-relaxed">
+            <p className="text-neutral-700 text-xs sm:text-sm leading-relaxed">
               Master human anatomy, physiological mechanisms, clinical biochemistry, and therapeutic nutrition with bedside case rationales and your chapter-scoped AI tutor.
             </p>
+
+            {/* Zero-progress state streak indicator */}
+            <div className="flex items-center gap-3 text-xs text-neutral-700 pt-1">
+              <span className="flex items-center gap-1 font-semibold">
+                <Flame className="w-4 h-4 text-green-700" />
+                <span>0 Day Streak</span>
+              </span>
+              <span>&bull;</span>
+              <span className="flex items-center gap-1 font-semibold">
+                <Target className="w-3.5 h-3.5 text-green-700" />
+                <span>Daily Goal: 0/1 Completed</span>
+              </span>
+            </div>
 
             <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3">
               <Button
                 variant="primary"
                 size="sm"
                 onClick={() => navigate('/syllabus')}
-                leftIcon={<BookOpen className="w-4 h-4" />}
+                leftIcon={<BookOpen className="w-4 h-4 text-white" />}
+                className="bg-green-600 hover:bg-green-700 text-white font-extrabold shadow-xs"
               >
                 Curriculum Hub
               </Button>
-              {/* Question Bank secondary button: clearly enabled outline button (black border, green on hover) */}
+
+              {/* Take Diagnostic Quiz button: Outlined style with crisp readable black text */}
               <button
                 type="button"
-                onClick={() => navigate('/question-bank')}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border-2 border-black dark:border-neutral-300 bg-white dark:bg-black text-black dark:text-white hover:border-green-500 hover:text-green-700 dark:hover:text-green-400 transition-all cursor-pointer shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500"
+                onClick={() => navigate('/student/quiz/comprehensive')}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold border-2 border-neutral-800 bg-white text-black hover:bg-green-600 hover:text-white hover:border-green-600 transition-all cursor-pointer shadow-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-green-600"
               >
                 <ClipboardList className="w-4 h-4" />
-                <span>Question Bank</span>
+                <span>Take Diagnostic Quiz</span>
               </button>
             </div>
           </div>
 
-          {/* Academic Standing & Progress Ring with 0% encouragement message */}
-          <div className="flex items-center gap-5 bg-white dark:bg-neutral-900 p-5 rounded-2xl border border-neutral-200 dark:border-neutral-800 shrink-0 w-full sm:w-auto justify-between sm:justify-start shadow-xs">
+          {/* Academic Standing & Progress Ring with Animated Load Fill */}
+          <div className="flex items-center gap-5 bg-white p-5 rounded-2xl border border-neutral-200 shrink-0 w-full sm:w-auto justify-between sm:justify-start shadow-xs">
             <ProgressRing
               value={overallPercentage}
               max={100}
               size={84}
               strokeWidth={7}
-              color="#22C55E"
+              color="#15803D"
               trackColor="#E5E5E5"
             >
               <div className="text-center">
-                <span className="text-base font-black text-black dark:text-white">{overallPercentage}%</span>
-                <span className="block text-[8px] uppercase tracking-wider text-green-700 dark:text-green-400 font-extrabold">Overall</span>
+                <span className="text-base font-black text-black">{overallPercentage}%</span>
+                <span className="block text-[8px] uppercase tracking-wider text-green-700 font-extrabold">Overall</span>
               </div>
             </ProgressRing>
 
-            <div className="space-y-1.5 max-w-[200px]">
+            <div className="space-y-1.5 max-w-[210px]">
               <div className="flex items-center gap-1.5">
-                <GraduationCap className="w-4 h-4 text-green-700 dark:text-green-400" />
-                <h4 className="text-xs font-bold text-black dark:text-white">Competency Progress</h4>
+                <GraduationCap className="w-4 h-4 text-green-700" />
+                <h4 className="text-xs font-bold text-black">Competency Progress</h4>
               </div>
-              <p className="text-xs text-neutral-800 dark:text-neutral-200 font-bold">
+              <p className="text-xs text-neutral-800 font-bold">
                 {totalCompletedUnits} of 41 Units Passed
               </p>
               {overallPercentage === 0 ? (
-                <p className="text-[11px] text-green-700 dark:text-green-400 font-semibold leading-tight">
-                  Pass your first unit to start your progress
-                </p>
+                <div className="space-y-1">
+                  <p className="text-[11px] text-green-700 font-semibold leading-tight">
+                    Pass your first unit to start your progress
+                  </p>
+                  <button
+                    type="button"
+                    onClick={() => navigate('/anatomy-syllabus')}
+                    className="inline-flex items-center gap-1 text-[11px] font-bold text-green-700 hover:text-green-800 underline cursor-pointer"
+                  >
+                    <span>Start with Anatomy Unit 1</span>
+                    <ArrowRight className="w-3 h-3" />
+                  </button>
+                </div>
               ) : (
                 <Badge variant="medium" size="sm">
                   Pass Criterion &ge; 75%
@@ -239,42 +279,50 @@ export const Home = () => {
         </div>
       </section>
 
-      {/* 2. Top Action Row: "Resume Learning" (Black card with green accent) & "Focus Revision Areas" */}
+      {/* 2. Top Action Row: "Resume Learning" (White card, Black text, Green button with White text) & "Focus Revision Areas" */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Resume Learning Card - Black card with green accent, progress bar, chapter name, elapsed time, estimated remaining time */}
-        <div className="lg:col-span-2 bg-black text-white border border-neutral-800 rounded-2xl p-5 sm:p-6 flex flex-col justify-between gap-4 shadow-md">
-          <div className="space-y-2">
+        {/* Resume Learning Card - Pure White surface */}
+        <div className="lg:col-span-2 bg-white text-black border border-neutral-200 rounded-2xl p-5 sm:p-6 flex flex-col justify-between gap-4 shadow-xs card-hover-lift">
+          <div className="space-y-3">
             <div className="flex items-center justify-between flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <Badge variant="high" size="sm">Resume Learning</Badge>
-                <span className="text-[11px] text-neutral-400 flex items-center gap-1">
-                  <Clock className="w-3 h-3 text-green-400" /> Active 2 hours ago
+                <div className="w-8 h-8 rounded-xl bg-green-50 border border-green-200 flex items-center justify-center">
+                  <Dna className="w-4 h-4 text-green-700" />
+                </div>
+                <div>
+                  <span className="text-[10px] uppercase tracking-wider text-green-700 font-extrabold block">
+                    Applied Biochemistry
+                  </span>
+                  <p className="text-xs text-neutral-600 font-medium">{lastLessonChapter}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2 text-[11px] text-neutral-600 font-medium">
+                <span className="flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-neutral-500" /> Active recently
+                </span>
+                <span>&bull;</span>
+                <span className="flex items-center gap-1">
+                  <Timer className="w-3 h-3 text-green-700" /> ~12 min left
                 </span>
               </div>
-              <span className="text-[11px] text-neutral-400 flex items-center gap-1">
-                <Timer className="w-3 h-3 text-green-400" /> ~15 min remaining
-              </span>
             </div>
 
             <div>
-              <p className="text-[11px] uppercase tracking-wider text-green-400 font-mono font-bold">
-                {lastLessonChapter}
-              </p>
-              <h3 className="text-base font-bold text-white mt-0.5">
+              <h3 className="text-base font-bold text-black">
                 {lastLessonTitle}
               </h3>
+              <p className="text-xs text-neutral-700 mt-1">
+                Monosaccharides, glycolysis steps, regulatory enzymes, and clinical diabetes rationales.
+              </p>
             </div>
 
-            <p className="text-xs text-neutral-300">
-              Continue clinical correlates, interactive review flashcards, and verified INC bedside rationales.
-            </p>
-
-            <div className="space-y-1 pt-1">
-              <div className="flex justify-between text-[11px] font-bold text-neutral-400">
-                <span>Lesson Progress</span>
-                <span className="text-green-400">65%</span>
+            {/* Structured Progress Bar */}
+            <div className="space-y-1.5 pt-1">
+              <div className="flex justify-between text-[11px] font-bold text-neutral-700">
+                <span>Lesson 3 of 6</span>
+                <span className="font-mono text-green-700">50% Complete</span>
               </div>
-              <ProgressBar value={65} max={100} size="sm" color="green" />
+              <ProgressBar value={50} max={100} size="sm" color="green" />
             </div>
           </div>
 
@@ -283,73 +331,89 @@ export const Home = () => {
               variant="primary"
               size="md"
               onClick={() => navigate(lastLesson)}
-              leftIcon={<PlayCircle className="w-4 h-4 text-black" />}
-              className="w-full sm:w-auto"
+              leftIcon={<PlayCircle className="w-4 h-4 text-white" />}
+              className="w-full sm:w-auto bg-green-600 hover:bg-green-700 text-white font-extrabold"
             >
               Continue Lesson
             </Button>
           </div>
         </div>
 
-        {/* Focus Revision Areas - Clean list with High/Med/Low chips and action link */}
-        <Card>
-          <CardHeader className="py-3.5 px-4 border-b border-neutral-200 dark:border-neutral-800">
+        {/* Focus Revision Areas: White card with black text and "High Yield" header badge */}
+        <Card className="card-hover-lift flex flex-col justify-between bg-white border border-neutral-200 text-black">
+          <CardHeader className="py-3.5 px-4 border-b border-neutral-200">
             <div className="flex items-center justify-between">
-              <CardTitle className="text-xs flex items-center gap-1.5 font-bold text-black dark:text-white">
-                <AlertTriangle className="w-3.5 h-3.5 text-black dark:text-white" />
-                Focus Revision Areas
+              <CardTitle className="text-xs flex items-center gap-1.5 font-bold text-black">
+                <AlertTriangle className="w-3.5 h-3.5 text-neutral-800" />
+                <span>Focus Revision Areas</span>
               </CardTitle>
-              <Link
-                to="/question-bank"
-                className="text-[11px] font-bold text-green-700 dark:text-green-400 hover:underline flex items-center gap-0.5"
-              >
-                Practice All <ArrowRight className="w-3 h-3" />
-              </Link>
+              <Badge variant="high" size="sm">High Yield</Badge>
             </div>
           </CardHeader>
-          <CardContent className="p-4 space-y-2.5">
-            {weakTopics.map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-center justify-between p-2 rounded-xl bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 gap-2 text-xs"
-              >
-                <div className="truncate flex-1">
-                  <p className="font-semibold text-black dark:text-white truncate">
-                    {item.subtopic}
-                  </p>
-                </div>
-                <div className="flex items-center gap-2 shrink-0">
-                  <Badge variant={item.priority || 'medium'} size="sm">
-                    {item.count}
-                  </Badge>
-                  <Link
-                    to="/question-bank"
-                    className="text-[11px] font-bold text-green-700 dark:text-green-400 hover:underline"
-                    title="Practice this topic"
-                  >
-                    Drill
-                  </Link>
-                </div>
+          <CardContent className="p-4 flex-1 flex flex-col justify-center">
+            {recentAttempts.length === 0 ? (
+              /* Empty state if user has 0% progress / no attempts */
+              <div className="text-center py-4 space-y-2">
+                <p className="text-xs font-semibold text-neutral-700">
+                  Complete a quiz to see your weak areas.
+                </p>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={() => navigate('/student/quiz/comprehensive')}
+                  className="text-xs mt-1 bg-green-600 hover:bg-green-700 text-white font-bold"
+                >
+                  Start Diagnostic Quiz
+                </Button>
               </div>
-            ))}
+            ) : weakTopics.length > 0 ? (
+              <div className="space-y-2">
+                {weakTopics.map((item, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => navigate('/question-bank')}
+                    className="w-full flex items-center justify-between p-2 rounded-xl bg-neutral-50 border border-neutral-200 hover:border-green-600 transition-colors text-xs text-left cursor-pointer group"
+                  >
+                    <div className="flex items-center gap-2 truncate">
+                      <span className="w-2 h-2 rounded-full bg-green-600 shrink-0" />
+                      <span className="font-semibold text-black truncate">
+                        {item.subtopic}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <span className="text-[11px] font-mono text-neutral-600 font-bold">
+                        {item.accuracy}% Accuracy
+                      </span>
+                      <ChevronRight className="w-3.5 h-3.5 text-neutral-500 group-hover:translate-x-0.5 transition-transform" />
+                    </div>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-4 text-xs text-neutral-600">
+                <p className="font-semibold text-black">All areas proficient</p>
+                <p className="text-[11px] mt-0.5">No critical review gaps detected.</p>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
 
-      {/* 3. Four Core Subject Tracks Grid - High contrast heading (contrast >= 4.5:1) */}
+      {/* 3. Four Core Subject Tracks Grid - Pure White Cards, Black Text */}
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-black dark:text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-black text-black tracking-tight">
               Curriculum Tracks & Gated Milestones
             </h2>
-            <p className="text-xs text-neutral-600 dark:text-neutral-400">
+            <p className="text-xs text-neutral-700 mt-0.5 font-medium">
               Complete each chapter assessment with &ge; 75% to unlock subject-wide Grand Finals.
             </p>
           </div>
           <Link
             to="/syllabus"
-            className="text-xs font-bold text-green-700 dark:text-green-400 hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-green-700 hover:underline flex items-center gap-1"
           >
             <span>View All</span>
             <ArrowRight className="w-3 h-3" />
@@ -361,58 +425,64 @@ export const Home = () => {
             <div
               key={track.id}
               onClick={() => navigate(track.href)}
-              className="group cursor-pointer rounded-2xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-black p-5 sm:p-6 flex flex-col justify-between space-y-4 hover:border-green-500 dark:hover:border-green-500 hover:-translate-y-0.5 transition-all shadow-xs"
+              className="group cursor-pointer rounded-2xl border border-neutral-200 bg-white p-5 sm:p-6 flex flex-col justify-between space-y-4 hover:border-green-600 card-hover-lift shadow-xs"
             >
               <div className="space-y-3">
-                <div className="flex items-center justify-between">
+                <div className="flex items-start justify-between gap-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 flex items-center justify-center group-hover:border-green-500 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-green-50 border border-green-200 flex items-center justify-center group-hover:border-green-600 transition-colors">
                       {track.icon}
                     </div>
                     <div>
                       <span className="text-[10px] font-mono font-extrabold uppercase tracking-wider text-neutral-500">
                         {track.code}
                       </span>
-                      <h3 className="text-base font-bold text-black dark:text-white">
+                      <h3 className="text-base font-bold text-black">
                         {track.title}
                       </h3>
                     </div>
                   </div>
 
-                  <Badge variant={track.percent >= 100 ? 'success' : 'medium'} size="sm">
-                    {track.completed}/{track.units} Units
-                  </Badge>
+                  <div className="flex flex-col items-end">
+                    <Badge variant={track.percent >= 100 ? 'success' : 'medium'} size="sm">
+                      {track.completed}/{track.units} Units
+                    </Badge>
+                    {/* Thin progress bar under unit badge */}
+                    <div className="w-20 mt-1.5">
+                      <ProgressBar value={track.percent} max={100} size="xs" color="green" />
+                    </div>
+                  </div>
                 </div>
 
-                <p className="text-xs text-neutral-600 dark:text-neutral-400 line-clamp-2">
+                <p className="text-xs text-neutral-700 line-clamp-2 leading-relaxed font-medium">
                   {track.desc}
                 </p>
 
-                {/* Progress bar */}
+                {/* Progress bar info */}
                 <div className="space-y-1">
-                  <div className="flex justify-between text-[11px] font-bold text-neutral-600 dark:text-neutral-400">
+                  <div className="flex justify-between text-[11px] font-bold text-neutral-700">
                     <span>Course Progress</span>
-                    <span className="font-mono text-black dark:text-white">{track.percent}%</span>
+                    <span className="font-mono text-black font-extrabold">{track.percent}%</span>
                   </div>
                   <ProgressBar value={track.percent} max={100} color="green" />
                 </div>
               </div>
 
-              <div className="pt-3 border-t border-neutral-100 dark:border-neutral-800 flex items-center justify-between text-xs">
-                <span className="text-neutral-600 dark:text-neutral-400 font-semibold flex items-center gap-1.5">
+              <div className="pt-3 border-t border-neutral-100 flex items-center justify-between text-xs">
+                <span className="text-neutral-700 font-semibold flex items-center gap-1.5">
                   {track.percent >= 100 ? (
                     <>
-                      <Unlock className="w-3.5 h-3.5 text-green-700 dark:text-green-400" />
+                      <Unlock className="w-3.5 h-3.5 text-green-700" />
                       Grand Final Unlocked
                     </>
                   ) : (
                     <>
-                      <Lock className="w-3.5 h-3.5 text-neutral-400" />
+                      <Lock className="w-3.5 h-3.5 text-neutral-500" />
                       Grand Final Locked
                     </>
                   )}
                 </span>
-                <span className="text-green-700 dark:text-green-400 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                <span className="text-green-700 font-bold flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
                   Open Syllabus <ArrowRight className="w-3 h-3" />
                 </span>
               </div>
@@ -425,16 +495,16 @@ export const Home = () => {
       <section className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-xl sm:text-2xl font-black text-black dark:text-white tracking-tight">
+            <h2 className="text-xl sm:text-2xl font-black text-black tracking-tight">
               Recent Assessment Attempts
             </h2>
-            <p className="text-xs text-neutral-600 dark:text-neutral-400">
+            <p className="text-xs text-neutral-700 mt-0.5 font-medium">
               Review your official scores and bedside clinical question rationales.
             </p>
           </div>
           <Link
             to="/student/results"
-            className="text-xs font-bold text-green-700 dark:text-green-400 hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-green-700 hover:underline flex items-center gap-1"
           >
             <span>Full History</span>
             <ArrowRight className="w-3 h-3" />
@@ -444,20 +514,20 @@ export const Home = () => {
         {recentAttempts.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {recentAttempts.map((attempt, idx) => (
-              <Card key={idx} hover onClick={() => navigate('/student/results')} className="cursor-pointer">
+              <Card key={idx} hover onClick={() => navigate('/student/results')} className="cursor-pointer card-hover-lift bg-white border border-neutral-200 text-black">
                 <CardContent className="p-4 space-y-2">
                   <div className="flex items-center justify-between">
                     <Badge variant={attempt.passed ? 'success' : 'danger'} size="sm">
                       {attempt.passed ? 'Passed' : 'Review'}
                     </Badge>
-                    <span className="text-xs font-black text-black dark:text-white font-mono">
+                    <span className="text-xs font-black text-black font-mono">
                       {attempt.percentage}%
                     </span>
                   </div>
-                  <h4 className="text-xs font-bold text-black dark:text-white line-clamp-1">
+                  <h4 className="text-xs font-bold text-black line-clamp-1">
                     {attempt.topicTitle || 'Comprehensive Quiz'}
                   </h4>
-                  <div className="flex items-center justify-between text-[10px] text-neutral-500 pt-1">
+                  <div className="flex items-center justify-between text-[10px] text-neutral-600 pt-1 font-semibold">
                     <span>{attempt.score}/{attempt.totalQuestions} Correct</span>
                     <span>{attempt.timeSpentFormatted || '5 min'}</span>
                   </div>
@@ -466,17 +536,17 @@ export const Home = () => {
             ))}
           </div>
         ) : (
-          <Card className="p-6 text-center">
-            <ClipboardList className="w-8 h-8 text-neutral-400 mx-auto mb-2" />
-            <h4 className="text-xs font-bold text-black dark:text-white">No Assessment Records Yet</h4>
-            <p className="text-[11px] text-neutral-500 mt-1 max-w-sm mx-auto">
+          <Card className="p-6 text-center card-hover-lift bg-white border border-neutral-200 text-black">
+            <ClipboardList className="w-8 h-8 text-neutral-500 mx-auto mb-2" />
+            <h4 className="text-xs font-bold text-black">No Assessment Records Yet</h4>
+            <p className="text-[11px] text-neutral-600 mt-1 max-w-sm mx-auto font-medium">
               Test your clinical understanding by taking an official chapter assessment.
             </p>
             <Button
-              variant="outline"
+              variant="primary"
               size="sm"
               onClick={() => navigate('/student/quiz/comprehensive')}
-              className="mt-3"
+              className="mt-3 bg-green-600 hover:bg-green-700 text-white font-bold"
             >
               Start Diagnostic Quiz
             </Button>
