@@ -1,0 +1,242 @@
+[
+  {
+    "id": 1,
+    "query": "What PPE is required for a patient with active tuberculosis and what is the proper donning order?",
+    "expectedChapterOrder": 1,
+    "expectedSectionKeywords": ["infection", "precautions", "tuberculosis", "n95", "donning"],
+    "expectedKeyFacts": ["n95", "airborne", "gown", "mask", "goggles", "gloves"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 2,
+    "query": "Can alcohol-based hand rub be used when caring for a patient with Clostridioides difficile?",
+    "expectedChapterOrder": 1,
+    "expectedSectionKeywords": ["infection", "difficile", "hand hygiene"],
+    "expectedKeyFacts": ["soap and water", "spores"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 3,
+    "query": "Which vital sign change is the earliest indicator of physiological deterioration in an adult?",
+    "expectedChapterOrder": 1,
+    "expectedSectionKeywords": ["vital signs", "respiratory", "deterioration"],
+    "expectedKeyFacts": ["respiratory rate", "tachypnea"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 4,
+    "query": "What is the criteria for diagnosing orthostatic hypotension?",
+    "expectedChapterOrder": 1,
+    "expectedSectionKeywords": ["orthostatic", "blood pressure", "vital signs"],
+    "expectedKeyFacts": ["20 mmhg", "10 mmhg", "systolic", "diastolic"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 5,
+    "query": "Can intravenous potassium chloride (KCl) be given via direct IV push?",
+    "expectedChapterOrder": 2,
+    "expectedSectionKeywords": ["potassium", "high-alert", "medication"],
+    "expectedKeyFacts": ["never", "contraindicated", "fatal", "cardiac arrest"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 6,
+    "query": "What are the high-alert PINCH medications that require an independent double check?",
+    "expectedChapterOrder": 2,
+    "expectedSectionKeywords": ["pinch", "high-alert", "medication"],
+    "expectedKeyFacts": ["potassium", "insulin", "narcotics", "chemotherapy", "heparin"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 7,
+    "query": "How do you calculate drops per minute flow rate from milliliters, hours, and drop factor?",
+    "expectedChapterOrder": 2,
+    "expectedSectionKeywords": ["dosage", "flow rate", "drop factor"],
+    "expectedKeyFacts": ["volume", "drop factor", "time in minutes"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 8,
+    "query": "What is the maximum peripheral infusion rate for potassium chloride?",
+    "expectedChapterOrder": 2,
+    "expectedSectionKeywords": ["potassium", "peripheral", "infusion rate"],
+    "expectedKeyFacts": ["10 meq/hr"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 9,
+    "query": "What are the classic diagnostic markers and symptoms of myocardial infarction and acute coronary syndrome?",
+    "expectedChapterOrder": 3,
+    "expectedSectionKeywords": ["cardiovascular", "coronary", "infarction", "troponin"],
+    "expectedKeyFacts": ["troponin", "stemi", "chest pain"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 10,
+    "query": "What is the primary medication monitoring parameter for unfractionated heparin therapy?",
+    "expectedChapterOrder": 3,
+    "expectedSectionKeywords": ["heparin", "anticoagulant", "aptt"],
+    "expectedKeyFacts": ["aptt", "ptt", "protamine sulfate"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 11,
+    "query": "What are the clinical signs of left-sided heart failure compared to right-sided heart failure?",
+    "expectedChapterOrder": 3,
+    "expectedSectionKeywords": ["heart failure", "pulmonary", "edema", "jvd"],
+    "expectedKeyFacts": ["crackles", "pulmonary edema", "jugular", "peripheral edema"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 12,
+    "query": "What is the antidote for warfarin and heparin overdose?",
+    "expectedChapterOrder": 3,
+    "expectedSectionKeywords": ["antidote", "warfarin", "heparin"],
+    "expectedKeyFacts": ["vitamin k", "protamine"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 13,
+    "query": "What is the emergency management protocol for acute severe asthma exacerbation?",
+    "expectedChapterOrder": 4,
+    "expectedSectionKeywords": ["respiratory", "asthma", "albuterol"],
+    "expectedKeyFacts": ["albuterol", "oxygen", "steroids"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 14,
+    "query": "What are the arterial blood gas (ABG) indicators for acute respiratory acidosis?",
+    "expectedChapterOrder": 4,
+    "expectedSectionKeywords": ["respiratory", "abg", "acidosis"],
+    "expectedKeyFacts": ["ph", "paco2", "hypoventilation"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 15,
+    "query": "What are the hallmark signs of stroke and what does the BE-FAST acronym represent?",
+    "expectedChapterOrder": 5,
+    "expectedSectionKeywords": ["neurological", "stroke", "fast"],
+    "expectedKeyFacts": ["balance", "eyes", "face", "arms", "speech", "time"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 16,
+    "query": "What is the Cushing's triad for increased intracranial pressure (ICP)?",
+    "expectedChapterOrder": 5,
+    "expectedSectionKeywords": ["intracranial pressure", "cushing", "triad"],
+    "expectedKeyFacts": ["bradycardia", "hypertension", "irregular respirations"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 17,
+    "query": "What are the three clinical hallmark criteria for Diabetic Ketoacidosis (DKA)?",
+    "expectedChapterOrder": 6,
+    "expectedSectionKeywords": ["diabetes", "dka", "ketoacidosis"],
+    "expectedKeyFacts": ["hyperglycemia", "ketosis", "acidosis"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 18,
+    "query": "What is the 'Rule of 15' when treating conscious hypoglycemia?",
+    "expectedChapterOrder": 6,
+    "expectedSectionKeywords": ["hypoglycemia", "rule of 15", "glucose"],
+    "expectedKeyFacts": ["15g", "carbohydrate", "15 minutes", "70 mg/dl"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 19,
+    "query": "What are the clinical differences between DKA and Hyperosmolar Hyperglycemic State (HHS)?",
+    "expectedChapterOrder": 6,
+    "expectedSectionKeywords": ["dka", "hhs", "hyperosmolar"],
+    "expectedKeyFacts": ["type 1", "type 2", "ketones", "600"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 20,
+    "query": "What ECG change is most characteristic of severe hyperkalemia?",
+    "expectedChapterOrder": 7,
+    "expectedSectionKeywords": ["hyperkalemia", "electrolyte", "ecg"],
+    "expectedKeyFacts": ["peaked t waves", "arrhythmia"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 21,
+    "query": "What are Chvostek's sign and Trousseau's sign indicative of in electrolyte disorders?",
+    "expectedChapterOrder": 7,
+    "expectedSectionKeywords": ["chvostek", "trousseau", "hypocalcemia"],
+    "expectedKeyFacts": ["hypocalcemia", "facial nerve", "carpal spasm"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 22,
+    "query": "What is the primary intervention for a patient with acute hyperkalemia with cardiac changes?",
+    "expectedChapterOrder": 7,
+    "expectedSectionKeywords": ["hyperkalemia", "calcium gluconate", "insulin"],
+    "expectedKeyFacts": ["calcium gluconate", "regular insulin", "dextrose"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 23,
+    "query": "What are the common clinical manifestations of hepatic encephalopathy and how is it managed?",
+    "expectedChapterOrder": 8,
+    "expectedSectionKeywords": ["hepatic", "encephalopathy", "lactulose"],
+    "expectedKeyFacts": ["asterixis", "ammonia", "lactulose"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 24,
+    "query": "What are the signs of preeclampsia in a pregnant patient?",
+    "expectedChapterOrder": 9,
+    "expectedSectionKeywords": ["maternal", "preeclampsia", "blood pressure"],
+    "expectedKeyFacts": ["hypertension", "proteinuria", "edema"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 25,
+    "query": "What is the APGAR scoring system evaluated at 1 and 5 minutes after birth?",
+    "expectedChapterOrder": 9,
+    "expectedSectionKeywords": ["apgar", "newborn", "scoring"],
+    "expectedKeyFacts": ["appearance", "pulse", "grimace", "activity", "respiration"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 26,
+    "query": "What are the signs of respiratory distress in pediatric and infant patients?",
+    "expectedChapterOrder": 10,
+    "expectedSectionKeywords": ["pediatric", "respiratory distress", "grunting"],
+    "expectedKeyFacts": ["nasal flaring", "retractions", "grunting"],
+    "shouldRefuse": false
+  },
+  {
+    "id": 27,
+    "query": "How do I configure a Kubernetes cluster with Docker Swarm for cloud deployments?",
+    "expectedChapterOrder": 1,
+    "expectedSectionKeywords": [],
+    "expectedKeyFacts": [],
+    "shouldRefuse": true
+  },
+  {
+    "id": 28,
+    "query": "What is the stock price history of Apple and Microsoft over the last decade?",
+    "expectedChapterOrder": 2,
+    "expectedSectionKeywords": [],
+    "expectedKeyFacts": [],
+    "shouldRefuse": true
+  },
+  {
+    "id": 29,
+    "query": "Can you write Python code to train a convolutional neural network for image recognition?",
+    "expectedChapterOrder": 3,
+    "expectedSectionKeywords": [],
+    "expectedKeyFacts": [],
+    "shouldRefuse": true
+  },
+  {
+    "id": 30,
+    "query": "Who won the FIFA World Cup championship in 2022?",
+    "expectedChapterOrder": 6,
+    "expectedSectionKeywords": [],
+    "expectedKeyFacts": [],
+    "shouldRefuse": true
+  }
+]

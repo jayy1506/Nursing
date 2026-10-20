@@ -2,7 +2,7 @@ import { Course } from '../models/Course.js';
 import { Chapter } from '../models/Chapter.js';
 import { Subtopic } from '../models/Subtopic.js';
 import { Progress } from '../models/Progress.js';
-import { indexSubtopicContent } from '../services/ragService.js';
+import { indexSubtopicContent, parseSections } from '../services/ragService.js';
 import { ensureStudentProgressInitialized } from '../services/gatingService.js';
 
 // Get course hierarchy with student progression status
@@ -221,6 +221,70 @@ export const upsertChapter = async (req, res) => {
     return res.status(500).json({
       success: false,
       error: 'Failed to save chapter',
+      details: error.message
+    });
+  }
+};
+
+// Admin/Faculty: Upload material, section-chunk, embed, and index automatically
+export const uploadAndIndexContent = async (req, res) => {
+  try {
+    const { chapterId, title, contentBody, summary, clinicalPearls } = req.body;
+
+    if (!chapterId || !title || !contentBody) {
+      return res.status(400).json({
+        success: false,
+        error: 'chapterId, title, and contentBody are required.'
+      });
+    }
+
+    const chapter = await Chapter.findById(chapterId);
+    if (!chapter) {
+      return res.status(404).json({
+        success: false,
+        error: `Chapter not found with ID ${chapterId}`
+      });
+    }
+
+    // 1. Calculate next order in chapter
+    const lastSubtopic = await Subtopic.findOne({ chapterId }).sort({ order: -1 });
+    const order = lastSubtopic ? lastSubtopic.order + 1 : 1;
+
+    // 2. Create Subtopic document in database
+    const subtopic = await Subtopic.create({
+      chapterId,
+      order,
+      title: title.trim(),
+      contentBody: contentBody.trim(),
+      summary: summary || `Clinical study material on ${title.trim()}`,
+      clinicalPearls: Array.isArray(clinicalPearls)
+        ? clinicalPearls
+        : (clinicalPearls ? [clinicalPearls] : [])
+    });
+
+    // 3. Run Section-Aware Chunking, Embedding & Indexing Pipeline
+    const parsedSections = parseSections(title, contentBody);
+    await indexSubtopicContent(chapterId, subtopic._id, title, contentBody);
+
+    return res.status(201).json({
+      success: true,
+      message: `Successfully ingested "${title}". Created and indexed ${parsedSections.length} section-aware chunks into vector store.`,
+      subtopic,
+      pipelineStats: {
+        chapterId: chapter._id,
+        chapterTitle: chapter.title,
+        chapterOrder: chapter.order,
+        subtopicId: subtopic._id,
+        subtopicTitle: subtopic.title,
+        chunksIndexed: parsedSections.length,
+        sections: parsedSections.map((s) => s.sectionTitle)
+      }
+    });
+  } catch (error) {
+    console.error('[Upload & Index Content Pipeline Error]:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Content upload and indexing pipeline failed',
       details: error.message
     });
   }

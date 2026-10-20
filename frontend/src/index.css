@@ -1,1 +1,125 @@
 @import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg-base: #f8fafc;
+    --color-bg-surface: #ffffff;
+    --color-bg-muted: #f1f5f9;
+    --color-border: #e2e8f0;
+    --color-border-subtle: #cbd5e1;
+    --color-text-main: #0f172a;
+    --color-text-muted: #64748b;
+    --color-text-subtle: #94a3b8;
+
+    /* Clinical Brand Tokens */
+    --color-primary: #0d9488;
+    --color-primary-hover: #0f766e;
+    --color-primary-subtle: #f0fdfa;
+    --color-primary-border: #99f6e4;
+
+    --color-accent: #f59e0b;
+    --color-accent-subtle: #fffbeb;
+
+    /* Semantic Status Tokens */
+    --color-success: #10b981;
+    --color-success-subtle: #ecfdf5;
+    --color-danger: #ef4444;
+    --color-danger-subtle: #fef2f2;
+    --color-warning: #f59e0b;
+    --color-warning-subtle: #fffbeb;
+    --color-info: #0284c7;
+    --color-info-subtle: #f0f9ff;
+  }
+
+  .dark {
+    --color-bg-base: #090d16;
+    --color-bg-surface: #111827;
+    --color-bg-muted: #1f2937;
+    --color-border: #374151;
+    --color-border-subtle: #4b5563;
+    --color-text-main: #f8fafc;
+    --color-text-muted: #94a3b8;
+    --color-text-subtle: #64748b;
+
+    /* Dark Mode Brand Tokens */
+    --color-primary: #14b8a6;
+    --color-primary-hover: #2dd4bf;
+    --color-primary-subtle: rgba(20, 184, 166, 0.15);
+    --color-primary-border: #134e4a;
+
+    --color-accent: #fbbf24;
+    --color-accent-subtle: rgba(251, 191, 36, 0.15);
+
+    /* Semantic Status Tokens Dark */
+    --color-success: #34d399;
+    --color-success-subtle: rgba(52, 211, 153, 0.15);
+    --color-danger: #f87171;
+    --color-danger-subtle: rgba(248, 113, 113, 0.15);
+    --color-warning: #fbbf24;
+    --color-warning-subtle: rgba(251, 191, 36, 0.15);
+    --color-info: #38bdf8;
+    --color-info-subtle: rgba(56, 189, 248, 0.15);
+  }
+
+  /* Default body styles */
+  body {
+    background-color: var(--color-bg-base);
+    color: var(--color-text-main);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  /* WCAG AA Visible Focus Ring across interactive elements */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 2px solid #0d9488;
+    outline-offset: 2px;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Reduced motion accessibility support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #374151;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}

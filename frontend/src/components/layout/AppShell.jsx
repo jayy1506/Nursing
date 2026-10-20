@@ -1,0 +1,593 @@
+import React, { useState } from 'react';
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { MedPulseLogo, MedPulseIcon } from '../brand/MedPulseLogo';
+import ThemeToggle from './ThemeToggle';
+import { Avatar } from '../ui/Avatar';
+import { Badge } from '../ui/Badge';
+import {
+  Home,
+  BookOpen,
+  ClipboardList,
+  HelpCircle,
+  Stethoscope,
+  ShieldCheck,
+  Users,
+  Bell,
+  Search,
+  ChevronLeft,
+  ChevronRight,
+  ChevronDown,
+  LogOut,
+  Sparkles,
+  BarChart3,
+  Layers,
+  Menu,
+  X
+} from 'lucide-react';
+
+export const AppShell = ({ children }) => {
+  const [collapsed, setCollapsed] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchOpen, setSearchOpen] = useState(false);
+
+  const { currentUser, role, logout } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  // Auto-collapse sidebar when student enters syllabus, lesson, or quiz views for full-screen focus
+  useEffect(() => {
+    const isCurriculumView =
+      location.pathname.includes('syllabus') ||
+      location.pathname.includes('/lesson/') ||
+      location.pathname.includes('/quiz/');
+    if (isCurriculumView) {
+      setCollapsed(true);
+    }
+  }, [location.pathname]);
+
+  const handleLogout = async () => {
+    await logout();
+    setUserMenuOpen(false);
+    navigate('/login');
+  };
+
+  const getNickname = () => {
+    if (!currentUser) return 'Guest';
+    if (currentUser.displayName) return currentUser.displayName.split(' ')[0];
+    if (currentUser.name) return currentUser.name.split(' ')[0];
+    if (currentUser.email) return currentUser.email.split('@')[0];
+    return 'User';
+  };
+
+  const nickname = getNickname();
+  const fullName = currentUser?.displayName || currentUser?.name || nickname;
+
+  // Navigation Items by Role
+  const studentNavItems = [
+    { label: 'Dashboard', to: '/', icon: <Home className="w-5 h-5 shrink-0" /> },
+    { label: 'Curriculum Hub', to: '/syllabus', icon: <BookOpen className="w-5 h-5 shrink-0" /> },
+    { label: 'Question Bank', to: '/question-bank', icon: <Layers className="w-5 h-5 shrink-0" /> },
+    { label: 'Assessments', to: '/student/quiz/comprehensive', icon: <ClipboardList className="w-5 h-5 shrink-0" /> },
+    { label: 'My Results', to: '/student/results', icon: <BarChart3 className="w-5 h-5 shrink-0" /> },
+  ];
+
+  const facultyNavItems = [
+    { label: 'Faculty Hub', to: '/faculty/dashboard', icon: <Stethoscope className="w-5 h-5 shrink-0" /> },
+    { label: 'Question Bank', to: '/faculty/questions', icon: <BookOpen className="w-5 h-5 shrink-0" /> },
+    { label: 'Cohort Results', to: '/faculty/results', icon: <BarChart3 className="w-5 h-5 shrink-0" /> },
+    { label: 'Curriculum View', to: '/syllabus', icon: <Layers className="w-5 h-5 shrink-0" /> },
+  ];
+
+  const adminNavItems = [
+    { label: 'Admin Dashboard', to: '/admin/dashboard', icon: <ShieldCheck className="w-5 h-5 shrink-0" /> },
+    { label: 'User Directory', to: '/admin/users', icon: <Users className="w-5 h-5 shrink-0" /> },
+    { label: 'Curriculum Editor', to: '/admin/content', icon: <BookOpen className="w-5 h-5 shrink-0" /> },
+    { label: 'Results Audit', to: '/admin/results', icon: <BarChart3 className="w-5 h-5 shrink-0" /> },
+    { label: 'Tutor Audit Logs', to: '/admin/chat-logs', icon: <Sparkles className="w-5 h-5 shrink-0" /> },
+  ];
+
+  let navItems = studentNavItems;
+  if (role === 'faculty') navItems = facultyNavItems;
+  if (role === 'admin') navItems = adminNavItems;
+
+  const curriculumTracks = [
+    { label: 'Applied Anatomy', to: '/anatomy-syllabus', emoji: '🦴', units: '12 Units' },
+    { label: 'Applied Physiology', to: '/physiology-syllabus', emoji: '⚡', units: '12 Units' },
+    { label: 'Applied Biochemistry', to: '/bio-chem-syllabus', emoji: '🧬', units: '8 Units' },
+    { label: 'Nutrition & Dietetics', to: '/nutrition-syllabus', emoji: '🥗', units: '10 Units' },
+  ];
+
+  const filteredTracks = curriculumTracks.filter(t =>
+    t.label.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-teal-500 selection:text-white">
+      {/* Top Header Bar */}
+      <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center gap-3">
+          {/* Mobile hamburger */}
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden focus-visible:ring-2 focus-visible:ring-teal-500"
+            aria-label="Toggle navigation menu"
+          >
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+
+          {/* One-Click Desktop Navigation Menu Toggle Button */}
+          <button
+            type="button"
+            onClick={() => setCollapsed(!collapsed)}
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/60 dark:hover:bg-teal-900/60 text-teal-800 dark:text-teal-200 border border-teal-200/80 dark:border-teal-800 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-teal-500"
+            aria-label={collapsed ? 'Open Navigation Menu (One Click)' : 'Collapse Navigation Sidebar'}
+            title={collapsed ? 'Open Navigation Menu (One Click)' : 'Collapse Sidebar for Full Width'}
+          >
+            <Menu className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+            <span>{collapsed ? 'Menu' : 'Close'}</span>
+          </button>
+
+          {/* Logo with Tagline */}
+          <MedPulseLogo showTagline={true} />
+        </div>
+
+        {/* Global Search & Action Center */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Search Trigger */}
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            className="flex items-center gap-2 px-3 py-1.5 text-xs text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200/70 dark:hover:bg-slate-800 rounded-xl border border-slate-200/60 dark:border-slate-700/60 transition-colors cursor-pointer"
+          >
+            <Search className="w-3.5 h-3.5" />
+            <span className="hidden md:inline">Quick search curriculum...</span>
+            <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded text-slate-400">
+              Ctrl+K
+            </kbd>
+          </button>
+
+          {/* Theme Mode Toggle */}
+          <ThemeToggle />
+
+          {/* Notifications Placeholder */}
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setNotificationsOpen(!notificationsOpen)}
+              className="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative focus-visible:ring-2 focus-visible:ring-teal-500 cursor-pointer"
+              aria-label="Notifications"
+            >
+              <Bell className="w-4 h-4" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-teal-500 rounded-full ring-2 ring-white dark:ring-slate-900" />
+            </button>
+
+            {notificationsOpen && (
+              <div
+                className="absolute right-0 mt-2 w-80 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                onMouseLeave={() => setNotificationsOpen(false)}
+              >
+                <div className="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800 mb-3">
+                  <h4 className="text-xs font-bold text-slate-900 dark:text-slate-100 uppercase tracking-wider">
+                    Notifications
+                  </h4>
+                  <Badge variant="primary" size="sm">New</Badge>
+                </div>
+                <div className="space-y-2 text-xs">
+                  <div className="p-2.5 rounded-xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-100 dark:border-teal-900/50">
+                    <p className="font-bold text-teal-800 dark:text-teal-300">Welcome to MedPulse</p>
+                    <p className="text-slate-600 dark:text-slate-400 text-[11px] mt-0.5">
+                      Explore all 4 foundational tracks with chapter-scoped AI tutoring.
+                    </p>
+                  </div>
+                  <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+                    <p className="font-semibold text-slate-800 dark:text-slate-200">Formative Assessments Ready</p>
+                    <p className="text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
+                      Practice INC question bank with bedside rationales.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* User Profile Menu */}
+          {currentUser ? (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setUserMenuOpen(!userMenuOpen)}
+                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:border-teal-400 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-500"
+                aria-label="User navigation menu"
+              >
+                <Avatar name={nickname} size="sm" />
+                <div className="hidden sm:flex flex-col text-left leading-none">
+                  <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
+                    {nickname}
+                  </span>
+                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-teal-600 dark:text-teal-400 mt-0.5">
+                    {role}
+                  </span>
+                </div>
+                <ChevronDown className="w-3.5 h-3.5 text-slate-400 hidden sm:block" />
+              </button>
+
+              {userMenuOpen && (
+                <div
+                  className="absolute right-0 mt-2 w-56 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150"
+                  onMouseLeave={() => setUserMenuOpen(false)}
+                >
+                  <div className="px-4 py-2.5 border-b border-slate-100 dark:border-slate-800">
+                    <p className="text-xs font-bold text-slate-900 dark:text-slate-100 truncate">
+                      {fullName}
+                    </p>
+                    <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                      {currentUser.email}
+                    </p>
+                    <div className="mt-1.5">
+                      <Badge variant="primary" size="sm" dot>{role}</Badge>
+                    </div>
+                  </div>
+
+                  <div className="py-1">
+                    <Link
+                      to="/"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                    >
+                      <Home className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Home Hub</span>
+                    </Link>
+                    <Link
+                      to="/syllabus"
+                      onClick={() => setUserMenuOpen(false)}
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                    >
+                      <BookOpen className="w-3.5 h-3.5 text-slate-400" />
+                      <span>Curriculum Tracks</span>
+                    </Link>
+                  </div>
+
+                  <div className="pt-1 border-t border-slate-100 dark:border-slate-800">
+                    <button
+                      type="button"
+                      onClick={handleLogout}
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition-colors cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="px-4 py-1.5 text-xs font-bold text-white bg-teal-600 hover:bg-teal-700 rounded-xl shadow-xs transition-colors"
+            >
+              Sign In
+            </Link>
+          )}
+        </div>
+      </header>
+
+      {/* Main Shell Layout (Sidebar + Content) */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Floating Quick Menu Access Tab when collapsed */}
+        {collapsed && (
+          <button
+            type="button"
+            onClick={() => setCollapsed(false)}
+            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-teal-700 hover:bg-teal-800 text-white rounded-r-xl shadow-lg text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-teal-600 border-l-0"
+            title="Open Navigation Menu"
+          >
+            <ChevronRight className="w-3.5 h-3.5 text-teal-200" />
+            <span className="text-[11px] uppercase tracking-wider font-extrabold">Menu</span>
+          </button>
+        )}
+
+        {/* Desktop Collapsible Sidebar */}
+        <aside
+          className={`hidden lg:flex flex-col bg-white dark:bg-slate-900 transition-all duration-300 shrink-0 select-none ${
+            collapsed
+              ? 'w-0 opacity-0 overflow-hidden border-none pointer-events-none'
+              : 'w-64 opacity-100 border-r border-slate-200/80 dark:border-slate-800/80'
+          }`}
+        >
+          <div className="p-3.5 flex-1 flex flex-col space-y-6 overflow-y-auto">
+            {/* Primary Nav Links */}
+            <div className="space-y-1">
+              {!collapsed && (
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3">
+                  Main Navigation
+                </span>
+              )}
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.to === '/'}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
+                      isActive
+                        ? 'bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 font-bold border border-teal-200/60 dark:border-teal-800/60'
+                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/70 dark:hover:bg-slate-800/70'
+                    } ${collapsed ? 'justify-center' : ''}`
+                  }
+                  title={collapsed ? item.label : undefined}
+                >
+                  {item.icon}
+                  {!collapsed && <span className="truncate">{item.label}</span>}
+                </NavLink>
+              ))}
+            </div>
+
+            {/* Fast-Track Curriculum Syllabi */}
+            {!collapsed && (
+              <div className="space-y-1.5 pt-3 border-t border-slate-100 dark:border-slate-800">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500 px-3">
+                  Curriculum Tracks
+                </span>
+                {curriculumTracks.map((track) => (
+                  <Link
+                    key={track.to}
+                    to={track.to}
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <span>{track.emoji}</span>
+                      <span className="truncate">{track.label}</span>
+                    </span>
+                    <span className="text-[10px] text-slate-400 dark:text-slate-500">{track.units}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar Footer info */}
+          <div className="p-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 dark:text-slate-500">
+            {!collapsed ? (
+              <div className="flex items-center justify-between">
+                <span>INC CBME v2026</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500" title="System Operational" />
+              </div>
+            ) : (
+              <div className="flex justify-center">
+                <span className="w-2 h-2 rounded-full bg-emerald-500" title="Online" />
+              </div>
+            )}
+          </div>
+        </aside>
+
+        {/* Content Outlet Container */}
+        <div className="flex-1 overflow-y-auto pb-16 lg:pb-0">
+          {children}
+        </div>
+      </div>
+
+      {/* Mobile Drawer Navigation (When hamburger tapped) */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm lg:hidden animate-in fade-in duration-200">
+          <div className="fixed inset-y-0 left-0 w-72 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 p-5 flex flex-col space-y-5 animate-in slide-in-from-left duration-200">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+              <MedPulseLogo />
+              <button
+                type="button"
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="flex-1 space-y-1 overflow-y-auto">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-3">
+                Menu
+              </span>
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={({ isActive }) =>
+                    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
+                      isActive
+                        ? 'bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 font-bold'
+                        : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                    }`
+                  }
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </NavLink>
+              ))}
+
+              <div className="pt-4 mt-2 border-t border-slate-100 dark:border-slate-800 space-y-1">
+                <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-3">
+                  Syllabi Tracks
+                </span>
+                {curriculumTracks.map((track) => (
+                  <Link
+                    key={track.to}
+                    to={track.to}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400"
+                  >
+                    <span>{track.emoji} {track.label}</span>
+                    <span className="text-[10px] text-slate-400">{track.units}</span>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {currentUser && (
+              <div className="pt-3 border-t border-slate-100 dark:border-slate-800">
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="w-full flex items-center justify-center gap-2 py-2 text-xs font-bold text-rose-600 bg-rose-50 dark:bg-rose-950/30 rounded-xl"
+                >
+                  <LogOut className="w-4 h-4" />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Mobile Bottom Tab Bar (Thumbs-friendly navigation) */}
+      <nav aria-label="Mobile Navigation" className="fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200/80 dark:border-slate-800/80 lg:hidden flex items-center justify-around py-2 px-1">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
+              isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+            }`
+          }
+        >
+          <Home className="w-5 h-5" />
+          <span>Home</span>
+        </NavLink>
+
+        <NavLink
+          to="/syllabus"
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
+              isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+            }`
+          }
+        >
+          <BookOpen className="w-5 h-5" />
+          <span>Syllabus</span>
+        </NavLink>
+
+        <NavLink
+          to="/question-bank"
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
+              isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+            }`
+          }
+        >
+          <Layers className="w-5 h-5" />
+          <span>Q-Bank</span>
+        </NavLink>
+
+        {role === 'student' && (
+          <NavLink
+            to="/student/quiz/comprehensive"
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
+                isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+              }`
+            }
+          >
+            <ClipboardList className="w-5 h-5" />
+            <span>Quiz</span>
+          </NavLink>
+        )}
+
+        {role === 'faculty' && (
+          <NavLink
+            to="/faculty/dashboard"
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
+                isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+              }`
+            }
+          >
+            <Stethoscope className="w-5 h-5" />
+            <span>Faculty</span>
+          </NavLink>
+        )}
+
+        {role === 'admin' && (
+          <NavLink
+            to="/admin/dashboard"
+            className={({ isActive }) =>
+              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
+                isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+              }`
+            }
+          >
+            <ShieldCheck className="w-5 h-5" />
+            <span>Admin</span>
+          </NavLink>
+        )}
+      </nav>
+
+      {/* Quick Search Modal */}
+      {searchOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-start justify-center pt-20 p-4 animate-in fade-in duration-150"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setSearchOpen(false);
+          }}
+        >
+          <div className="w-full max-w-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl overflow-hidden animate-in zoom-in-95 duration-150">
+            <div className="p-3 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2.5">
+              <Search className="w-5 h-5 text-slate-400" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search curriculum tracks, chapters, or topics..."
+                className="w-full bg-transparent text-sm text-slate-900 dark:text-slate-100 focus:outline-none placeholder:text-slate-400"
+                autoFocus
+              />
+              <button
+                type="button"
+                onClick={() => setSearchOpen(false)}
+                className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg text-xs"
+              >
+                ESC
+              </button>
+            </div>
+
+            <div className="p-3 max-h-72 overflow-y-auto space-y-1">
+              <span className="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 px-2">
+                Curriculum Modules
+              </span>
+              {filteredTracks.map((track) => (
+                <Link
+                  key={track.to}
+                  to={track.to}
+                  onClick={() => setSearchOpen(false)}
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-teal-50 dark:hover:bg-slate-800 text-xs text-slate-800 dark:text-slate-200 transition-colors"
+                >
+                  <span className="flex items-center gap-2 font-medium">
+                    <span>{track.emoji}</span>
+                    <span>{track.label}</span>
+                  </span>
+                  <span className="text-[10px] text-teal-600 dark:text-teal-400 font-semibold">{track.units}</span>
+                </Link>
+              ))}
+
+              <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                <Link
+                  to="/question-bank"
+                  onClick={() => setSearchOpen(false)}
+                  className="flex items-center gap-2 p-2 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300"
+                >
+                  <Layers className="w-4 h-4 text-slate-400" />
+                  <span>University Question Bank (All Modules)</span>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AppShell;

@@ -1,0 +1,203 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "MedPulse Clinical LMS & AI Tutor REST API",
+    "version": "1.0.0",
+    "description": "Comprehensive REST API documentation for the MedPulse Clinical Nursing LMS, Assessment Gating, and Chapter-Scoped AI Tutor with RAG."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000",
+      "description": "Local Development Server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Firebase ID Token or Backend JWT Token"
+      }
+    },
+    "schemas": {
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "success": { "type": "boolean", "example": false },
+          "error": { "type": "string", "example": "Detailed error message" }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": { "type": "string", "format": "email", "example": "student@nursing-lms.edu" },
+          "password": { "type": "string", "example": "StudentPass@2026" }
+        }
+      },
+      "RAGChatRequest": {
+        "type": "object",
+        "required": ["chapterId", "query"],
+        "properties": {
+          "chapterId": { "type": "string", "example": "651a2b3c4d5e6f7a8b9c0d1e" },
+          "query": { "type": "string", "example": "What PPE is required for a patient with active pulmonary tuberculosis?" },
+          "mode": {
+            "type": "string",
+            "enum": ["default", "simple", "quiz", "case"],
+            "example": "simple"
+          }
+        }
+      },
+      "BulkImportRequest": {
+        "type": "object",
+        "properties": {
+          "csvContent": {
+            "type": "string",
+            "example": "name,email,role,password,collegeId\nElena Rostova,elena@medpulse.edu,student,Pass@2026,COLLEGE_001"
+          }
+        }
+      },
+      "UploadContentRequest": {
+        "type": "object",
+        "required": ["chapterId", "title", "contentBody"],
+        "properties": {
+          "chapterId": { "type": "string" },
+          "title": { "type": "string", "example": "Arterial Blood Gas Analysis" },
+          "contentBody": { "type": "string", "example": "## Normal ABG Values\npH: 7.35-7.45\nPaCO2: 35-45 mmHg" },
+          "summary": { "type": "string" },
+          "clinicalPearls": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "System Healthcheck",
+        "description": "Returns operational status of database, auth, RAG, and rate limiting subsystems.",
+        "responses": {
+          "200": { "description": "System operational" }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Authenticate User",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Login successful with token & profile" },
+          "401": { "description": "Invalid credentials" }
+        }
+      }
+    },
+    "/api/auth/me": {
+      "get": {
+        "summary": "Get Current User Profile",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "User profile" },
+          "401": { "description": "Unauthorized" }
+        }
+      }
+    },
+    "/api/users": {
+      "get": {
+        "summary": "List All Users (Admin only)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "List of users" },
+          "403": { "description": "Forbidden - requires admin" }
+        }
+      },
+      "post": {
+        "summary": "Create Single User (Admin only)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "201": { "description": "User created" },
+          "400": { "description": "Validation error" }
+        }
+      }
+    },
+    "/api/users/bulk-import": {
+      "post": {
+        "summary": "Bulk Import Users from CSV (Admin only)",
+        "description": "Validates CSV and reports row-level errors for invalid emails, duplicate records, or weak passwords.",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/BulkImportRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Import processed with summary and row error list" }
+        }
+      }
+    },
+    "/api/courses/hierarchy": {
+      "get": {
+        "summary": "Get Course Curriculum Hierarchy",
+        "description": "Returns all course chapters and subtopics with role-based unlock/completion status.",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "Course hierarchy" }
+        }
+      }
+    },
+    "/api/courses/upload-content": {
+      "post": {
+        "summary": "Ingest, Chunk & Auto-Index Clinical Content (Admin & Faculty)",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/UploadContentRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Material chunked, embedded, and indexed" }
+        }
+      }
+    },
+    "/api/rag/chat": {
+      "post": {
+        "summary": "Ask Chapter-Scoped AI Clinical Tutor",
+        "description": "Performs hybrid search within the selected chapter, returning structured lesson citations and mode-guided clinical explanations. Refuses off-topic questions.",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RAGChatRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Clinical tutor answer with citations" },
+          "429": { "description": "Daily question quota exceeded" }
+        }
+      }
+    },
+    "/api/rag/logs": {
+      "get": {
+        "summary": "Retrieve Chat Audit Logs (Admin & Faculty)",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": { "description": "List of student chat interactions" }
+        }
+      }
+    }
+  }
+}

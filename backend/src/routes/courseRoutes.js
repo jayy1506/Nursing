@@ -4,7 +4,8 @@ import {
   getChapterById,
   getSubtopicById,
   upsertSubtopic,
-  upsertChapter
+  upsertChapter,
+  uploadAndIndexContent
 } from '../controllers/courseController.js';
 import { verifyFirebaseToken } from '../middleware/auth.js';
 import { requireRole } from '../middleware/roleGuard.js';
@@ -18,10 +19,11 @@ router.get('/hierarchy', getFullCourseHierarchy);
 router.get('/chapters/:id', getChapterById);
 router.get('/subtopics/:id', getSubtopicById);
 
-// Admin & Faculty can edit chapters & subtopics
+// Admin & Faculty can edit chapters & subtopics and upload curriculum material
 router.post('/chapters', requireRole(['admin', 'faculty']), upsertChapter);
 router.put('/chapters/:id', requireRole(['admin', 'faculty']), upsertChapter);
 router.post('/subtopics', requireRole(['admin', 'faculty']), upsertSubtopic);
 router.put('/subtopics/:id', requireRole(['admin', 'faculty']), upsertSubtopic);
+router.post('/upload-content', requireRole(['admin', 'faculty']), uploadAndIndexContent);
 
 export default router;

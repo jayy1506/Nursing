@@ -33,34 +33,49 @@ export const seedDatabase = async () => {
     await ChatLog.deleteMany({});
 
     console.log('[Seed] Seeding Default Users...');
-    // 1. Seed Core Users
+    // 1. Seed Core Users - Admin credentials MUST come from environment variables
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+
+    if (!adminEmail || !adminPassword) {
+      throw new Error(
+        'FATAL: ADMIN_EMAIL and ADMIN_PASSWORD environment variables are required to seed the database. Hardcoded credentials are strictly prohibited.'
+      );
+    }
+
     const adminUser = await User.create({
       firebaseUid: 'admin-firebase-uid-primary',
-      name: `${process.env.ADMIN_NAME || 'Aachal Karande'} (System Administrator)`,
-      email: process.env.ADMIN_EMAIL || 'karandeaachal@gmail.com',
-      password: process.env.ADMIN_PASSWORD || 'aachal2026',
+      name: process.env.ADMIN_NAME || 'System Administrator',
+      email: adminEmail.toLowerCase().trim(),
+      password: adminPassword,
       role: 'admin',
       status: 'active',
       isActive: true,
       createdBy: 'system'
     });
 
-    const adminUser2 = await User.create({
-      firebaseUid: 'admin-firebase-uid-secondary',
-      name: `${process.env.SECONDARY_ADMIN_NAME || 'Jay Thakre'} (System Administrator)`,
-      email: process.env.SECONDARY_ADMIN_EMAIL || 'jthakre62@gmail.com',
-      password: process.env.SECONDARY_ADMIN_PASSWORD || 'Jay@1523',
-      role: 'admin',
-      status: 'active',
-      isActive: true,
-      createdBy: 'system'
-    });
+    let adminUser2 = null;
+    if (process.env.SECONDARY_ADMIN_EMAIL && process.env.SECONDARY_ADMIN_PASSWORD) {
+      adminUser2 = await User.create({
+        firebaseUid: 'admin-firebase-uid-secondary',
+        name: process.env.SECONDARY_ADMIN_NAME || 'Secondary Administrator',
+        email: process.env.SECONDARY_ADMIN_EMAIL.toLowerCase().trim(),
+        password: process.env.SECONDARY_ADMIN_PASSWORD,
+        role: 'admin',
+        status: 'active',
+        isActive: true,
+        createdBy: 'system'
+      });
+    }
+
+    const facultyPassword = process.env.SEED_FACULTY_PASSWORD || 'FacultySecurePass!2026';
+    const studentPassword = process.env.SEED_STUDENT_PASSWORD || 'StudentSecurePass!2026';
 
     const facultyUser = await User.create({
       firebaseUid: 'faculty-firebase-uid-002',
-      name: 'Prof. Marcus Vance, MSN, CCRN',
-      email: 'faculty@nursing-lms.edu',
-      password: 'FacultyPass@2026',
+      name: process.env.FACULTY_NAME || 'Prof. Marcus Vance, MSN, CCRN',
+      email: (process.env.FACULTY_EMAIL || 'faculty@nursing-lms.edu').toLowerCase().trim(),
+      password: facultyPassword,
       role: 'faculty',
       status: 'active',
       isActive: true,
@@ -69,9 +84,9 @@ export const seedDatabase = async () => {
 
     const studentUser = await User.create({
       firebaseUid: 'student-firebase-uid-003',
-      name: 'Elena Rostova (Student RN)',
-      email: 'student@nursing-lms.edu',
-      password: 'StudentPass@2026',
+      name: process.env.STUDENT_NAME || 'Elena Rostova (Student RN)',
+      email: (process.env.STUDENT_EMAIL || 'student@nursing-lms.edu').toLowerCase().trim(),
+      password: studentPassword,
       role: 'student',
       status: 'active',
       isActive: true,

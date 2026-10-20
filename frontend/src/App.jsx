@@ -1,7 +1,10 @@
 import React, { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, Outlet } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
+import { ToastProvider } from './context/ToastContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import AppShell from './components/layout/AppShell';
 
 // Public Auth Pages (Lazy Loaded)
 const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
@@ -55,11 +58,22 @@ import ForceChangePasswordModal from './components/auth/ForceChangePasswordModal
 
 // Clean Minimal Page Loading Skeleton
 const PageLoader = () => (
-  <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center p-6">
-    <div className="w-10 h-10 border-3 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mb-3" />
-    <span className="text-xs font-bold text-slate-500 tracking-wide animate-pulse">Loading curriculum...</span>
+  <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6">
+    <div className="w-10 h-10 border-3 border-teal-200 dark:border-teal-900 border-t-teal-600 dark:border-t-teal-400 rounded-full animate-spin mb-3" />
+    <span className="text-xs font-bold text-slate-500 dark:text-slate-400 tracking-wide animate-pulse">
+      Loading MedPulse curriculum...
+    </span>
   </div>
 );
+
+// Unified App Shell Layout wrapper for all protected routes
+const AppLayout = () => {
+  return (
+    <AppShell>
+      <Outlet />
+    </AppShell>
+  );
+};
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -70,71 +84,84 @@ const AppRoutes = () => {
   const showAIWidget = currentUser && !isAuthPage;
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans selection:bg-emerald-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans selection:bg-teal-500 selection:text-white">
+      {/* Skip to Main Content Link for Keyboard and Screen Reader Accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-teal-600 focus:text-white focus:font-semibold focus:text-xs focus:rounded-xl focus:shadow-xl focus:ring-2 focus:ring-white focus:outline-none"
+      >
+        Skip to main content
+      </a>
+
       {/* Mandatory Password Change Popup on First Login */}
       <ForceChangePasswordModal />
 
-      <Suspense fallback={<PageLoader />}>
-        <Routes>
-          {/* Public Auth Routes */}
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<Navigate to="/login" replace />} />
+      <main id="main-content" tabIndex="-1" className="outline-none">
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            {/* Public Auth Routes */}
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<Navigate to="/login" replace />} />
 
-          {/* Student Learning & Assessment Routes (Accessible to student, faculty, admin) */}
-          <Route element={<ProtectedRoute allowedRoles={['student', 'faculty', 'admin']} />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/syllabus" element={<SyllabusHub />} />
-            <Route path="/curriculum" element={<Navigate to="/syllabus" replace />} />
-            <Route path="/bio-chem-syllabus" element={<BioChemistrySyllabus />} />
-            <Route path="/biochemistry/lesson/:lessonSlug" element={<BiochemistryLessonView />} />
-            <Route path="/anatomy-syllabus" element={<AnatomySyllabus />} />
-            <Route path="/anatomy/lesson/:chapterId" element={<AnatomyLessonView />} />
-            <Route path="/physiology-syllabus" element={<PhysiologySyllabus />} />
-            <Route path="/physiology/lesson/:chapterId" element={<PhysiologyLessonView />} />
-            <Route path="/nutrition-syllabus" element={<NutritionSyllabus />} />
-            <Route path="/nutrition/lesson/:submoduleSlug" element={<NutritionLessonView />} />
-            <Route path="/question-bank" element={<QuestionBankView />} />
-            <Route path="/student/quiz/:topicId" element={<QuizView />} />
-            <Route path="/quiz/:topicId" element={<QuizView />} />
-            <Route path="/student/results" element={<StudentResults />} />
+            {/* Authenticated Routes wrapped in unified AppLayout */}
+            <Route element={<AppLayout />}>
+              {/* Student Learning & Assessment Routes (Accessible to student, faculty, admin) */}
+              <Route element={<ProtectedRoute allowedRoles={['student', 'faculty', 'admin']} />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/syllabus" element={<SyllabusHub />} />
+                <Route path="/curriculum" element={<Navigate to="/syllabus" replace />} />
+                <Route path="/bio-chem-syllabus" element={<BioChemistrySyllabus />} />
+                <Route path="/biochemistry/lesson/:lessonSlug" element={<BiochemistryLessonView />} />
+                <Route path="/anatomy-syllabus" element={<AnatomySyllabus />} />
+                <Route path="/anatomy/lesson/:chapterId" element={<AnatomyLessonView />} />
+                <Route path="/physiology-syllabus" element={<PhysiologySyllabus />} />
+                <Route path="/physiology/lesson/:chapterId" element={<PhysiologyLessonView />} />
+                <Route path="/nutrition-syllabus" element={<NutritionSyllabus />} />
+                <Route path="/nutrition/lesson/:submoduleSlug" element={<NutritionLessonView />} />
+                <Route path="/question-bank" element={<QuestionBankView />} />
+                <Route path="/student/quiz/:topicId" element={<QuizView />} />
+                <Route path="/quiz/:topicId" element={<QuizView />} />
+                <Route path="/student/results" element={<StudentResults />} />
 
-            {/* Module 1 */}
-            <Route path="/classification-of-carb" element={<ClassificationOfCarb />} />
-            <Route path="/digestion-of-carb" element={<DigestionOfCarb />} />
-            <Route path="/absorption-of-carb" element={<AbsorptionOfCarb />} />
-            <Route path="/MetabolicPathwaysOfCarb" element={<MetabolicPathwaysOfCarb />} />
-            <Route path="/DisordersOfCarb" element={<DisordersOfCarb />} />
-            <Route path="/RegulationOfBloodGlucose" element={<RegulationOfBloodGlucose />} />
-            <Route path="/DiabetesMellitusType1" element={<DiabetesMellitusType1 />} />
-            <Route path="/DiabetesMellitusType2" element={<DiabetesMellitusType2 />} />
+                {/* Module 1 */}
+                <Route path="/classification-of-carb" element={<ClassificationOfCarb />} />
+                <Route path="/digestion-of-carb" element={<DigestionOfCarb />} />
+                <Route path="/absorption-of-carb" element={<AbsorptionOfCarb />} />
+                <Route path="/MetabolicPathwaysOfCarb" element={<MetabolicPathwaysOfCarb />} />
+                <Route path="/DisordersOfCarb" element={<DisordersOfCarb />} />
+                <Route path="/RegulationOfBloodGlucose" element={<RegulationOfBloodGlucose />} />
+                <Route path="/DiabetesMellitusType1" element={<DiabetesMellitusType1 />} />
+                <Route path="/DiabetesMellitusType2" element={<DiabetesMellitusType2 />} />
 
-            {/* Module 2 */}
-            <Route path="/FattyAcidsClassification" element={<FattyAcidsClassification />} />
-            <Route path="/MUFA" element={<MUFA />} />
-            <Route path="/PUFA" element={<PUFA />} />
-            <Route path="/EssentialFattyAcids" element={<EssentialFattyAcids />} />
-          </Route>
+                {/* Module 2 */}
+                <Route path="/FattyAcidsClassification" element={<FattyAcidsClassification />} />
+                <Route path="/MUFA" element={<MUFA />} />
+                <Route path="/PUFA" element={<PUFA />} />
+                <Route path="/EssentialFattyAcids" element={<EssentialFattyAcids />} />
+              </Route>
 
-          {/* Faculty Protected Routes */}
-          <Route element={<ProtectedRoute allowedRoles={['faculty', 'admin']} />}>
-            <Route path="/faculty/dashboard" element={<FacultyDashboard />} />
-            <Route path="/faculty/questions" element={<FacultyQuestions />} />
-            <Route path="/faculty/results" element={<FacultyResults />} />
-          </Route>
+              {/* Faculty Protected Routes */}
+              <Route element={<ProtectedRoute allowedRoles={['faculty', 'admin']} />}>
+                <Route path="/faculty/dashboard" element={<FacultyDashboard />} />
+                <Route path="/faculty/questions" element={<FacultyQuestions />} />
+                <Route path="/faculty/results" element={<FacultyResults />} />
+              </Route>
 
-          {/* Admin Protected Routes */}
-          <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            <Route path="/admin/users" element={<UserManagement />} />
-            <Route path="/admin/content" element={<ContentEditor />} />
-            <Route path="/admin/results" element={<ResultAudit />} />
-            <Route path="/admin/chat-logs" element={<ChatLogsView />} />
-          </Route>
+              {/* Admin Protected Routes */}
+              <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                <Route path="/admin/users" element={<UserManagement />} />
+                <Route path="/admin/content" element={<ContentEditor />} />
+                <Route path="/admin/results" element={<ResultAudit />} />
+                <Route path="/admin/chat-logs" element={<ChatLogsView />} />
+              </Route>
+            </Route>
 
-          {/* Fallback Catch-all -> Redirect to Login */}
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </Suspense>
+            {/* Fallback Catch-all -> Redirect to Login */}
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </Suspense>
+      </main>
 
       {/* Global AI Clinical Tutor */}
       {showAIWidget && <AIWidget />}
@@ -144,11 +171,15 @@ const AppRoutes = () => {
 
 const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
-    </AuthProvider>
+    <ThemeProvider>
+      <ToastProvider>
+        <AuthProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </AuthProvider>
+      </ToastProvider>
+    </ThemeProvider>
   );
 };
 

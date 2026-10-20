@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../../components/Navbar';
+import apiClient from '../../api/client';
 import {
   BookOpen,
   PlusCircle,
@@ -10,7 +11,12 @@ import {
   FolderPlus,
   Layers,
   Sparkles,
-  AlertCircle
+  AlertCircle,
+  UploadCloud,
+  FileText,
+  Database,
+  Check,
+  XCircle
 } from 'lucide-react';
 
 export const ContentEditor = () => {
@@ -80,6 +86,105 @@ export const ContentEditor = () => {
   const [showSubjectModal, setShowSubjectModal] = useState(false);
   const [newSubjectName, setNewSubjectName] = useState('');
   const [feedback, setFeedback] = useState({ type: '', text: '' });
+
+  // Content Upload & Auto-Index Pipeline State
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [chapters, setChapters] = useState([]);
+  const [uploadLoading, setUploadLoading] = useState(false);
+  const [uploadStats, setUploadStats] = useState(null);
+  const [uploadForm, setUploadForm] = useState({
+    chapterId: '',
+    title: '',
+    contentBody: '',
+    summary: '',
+    clinicalPearls: ''
+  });
+
+  useEffect(() => {
+    const fetchChapters = async () => {
+      try {
+        const res = await apiClient('/api/courses/hierarchy');
+        if (res && res.success && res.courses?.[0]?.chapters) {
+          const chList = res.courses[0].chapters;
+          setChapters(chList);
+          if (chList.length > 0) {
+            setUploadForm((prev) => ({ ...prev, chapterId: prev.chapterId || chList[0]._id }));
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to fetch chapters for upload pipeline:', err);
+      }
+    };
+    fetchChapters();
+  }, []);
+
+  const handleUploadContent = async (e) => {
+    e.preventDefault();
+    if (!uploadForm.title.trim() || !uploadForm.contentBody.trim() || !uploadForm.chapterId) {
+      setFeedback({ type: 'error', text: 'Please select a chapter, enter a title, and provide course content.' });
+      return;
+    }
+
+    setUploadLoading(true);
+    setUploadStats(null);
+
+    try {
+      const pearls = uploadForm.clinicalPearls
+        .split('\n')
+        .map((p) => p.trim())
+        .filter(Boolean);
+
+      const res = await apiClient('/api/courses/upload-content', {
+        method: 'POST',
+        body: JSON.stringify({
+          chapterId: uploadForm.chapterId,
+          title: uploadForm.title.trim(),
+          contentBody: uploadForm.contentBody.trim(),
+          summary: uploadForm.summary.trim(),
+          clinicalPearls: pearls
+        })
+      });
+
+      if (res && res.success) {
+        setUploadStats(res.pipelineStats);
+        setFeedback({
+          type: 'success',
+          text: `Successfully ingested "${uploadForm.title}". Created and indexed ${res.pipelineStats?.chunksIndexed} section-aware chunks into vector store.`
+        });
+        setUploadForm((prev) => ({
+          ...prev,
+          title: '',
+          contentBody: '',
+          summary: '',
+          clinicalPearls: ''
+        }));
+      } else {
+        setFeedback({
+          type: 'error',
+          text: res.error || 'Failed to upload and index material.'
+        });
+      }
+    } catch (err) {
+      setFeedback({ type: 'error', text: err.message || 'Error executing upload pipeline' });
+    } finally {
+      setUploadLoading(false);
+    }
+  };
+
+  const handleContentFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const text = event.target?.result || '';
+      setUploadForm((prev) => ({
+        ...prev,
+        contentBody: text,
+        title: prev.title || file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ')
+      }));
+    };
+    reader.readAsText(file);
+  };
 
   // Question Form State
   const [questionForm, setQuestionForm] = useState({
@@ -176,6 +281,16 @@ export const ContentEditor = () => {
           </div>
 
           <div className="flex flex-wrap gap-2.5">
+            <button
+              onClick={() => {
+                setUploadStats(null);
+                setShowUploadModal(true);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-slate-700 text-white rounded-xl text-xs font-bold shadow-md transition-all cursor-pointer"
+            >
+              <UploadCloud className="w-4 h-4 text-emerald-400" />
+              <span>Upload & Auto-Index Material</span>
+            </button>
             <button
               onClick={() => setShowSubjectModal(true)}
               className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 rounded-xl text-xs font-bold shadow-sm transition-all cursor-pointer"
@@ -487,6 +602,144 @@ export const ContentEditor = () => {
                     className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 cursor-pointer"
                   >
                     Save Question
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Upload & Auto-Index Material Pipeline Modal */}
+        {showUploadModal && (
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+                    <Database className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-extrabold text-slate-900">Curriculum Content & Auto-Index Pipeline</h2>
+                    <p className="text-[11px] text-slate-500">Ingest lecture material, parse clinical sections, chunk & generate vector embeddings</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowUploadModal(false)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                >
+                  <XCircle className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleUploadContent} className="space-y-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Target Course Chapter</label>
+                    <select
+                      value={uploadForm.chapterId}
+                      onChange={(e) => setUploadForm({ ...uploadForm, chapterId: e.target.value })}
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500 cursor-pointer"
+                    >
+                      {chapters.map((ch) => (
+                        <option key={ch._id} value={ch._id}>
+                          Ch {ch.order}: {ch.title}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">Topic / Lesson Title</label>
+                    <input
+                      type="text"
+                      required
+                      value={uploadForm.title}
+                      onChange={(e) => setUploadForm({ ...uploadForm, title: e.target.value })}
+                      placeholder="e.g. Mechanical Ventilation & ARDS Nursing"
+                      className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
+                    />
+                  </div>
+                </div>
+
+                {/* File picker shortcut */}
+                <div className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span className="text-[11px] text-slate-600 font-medium flex items-center gap-1.5">
+                    <FileText className="w-4 h-4 text-emerald-600" />
+                    <span>Upload markdown (.md) or text (.txt) file:</span>
+                  </span>
+                  <input
+                    type="file"
+                    accept=".md,.txt,text/plain,text/markdown"
+                    onChange={handleContentFileUpload}
+                    className="text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Content Body (Markdown or Text)</label>
+                  <textarea
+                    rows={8}
+                    required
+                    value={uploadForm.contentBody}
+                    onChange={(e) => setUploadForm({ ...uploadForm, contentBody: e.target.value })}
+                    placeholder="## Standard Precautions&#10;Infection prevention is the cornerstone of clinical safety...&#10;&#10;### Nursing Interventions&#10;1. Wash hands with soap and water&#10;2. Wear fitted N95 respirator"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500 font-medium leading-relaxed"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Markdown headings (##, ###) will be detected automatically to generate section-aware chunks and citations.
+                  </p>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Clinical Pearls & Memory Hooks (Optional, one per line)</label>
+                  <textarea
+                    rows={2}
+                    value={uploadForm.clinicalPearls}
+                    onChange={(e) => setUploadForm({ ...uploadForm, clinicalPearls: e.target.value })}
+                    placeholder="Alcohol rub does not kill C. diff spores&#10;Always confirm 2 patient identifiers before procedure"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-xl py-2 px-3 text-xs text-slate-900 font-medium focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+
+                {/* Pipeline Execution Statistics */}
+                {uploadStats && (
+                  <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-2">
+                    <div className="flex items-center gap-2 text-xs font-bold">
+                      <Check className="w-4 h-4 text-emerald-600" />
+                      <span>Ingestion Pipeline Complete: {uploadStats.chunksIndexed} chunks embedded & indexed!</span>
+                    </div>
+                    {uploadStats.sections && uploadStats.sections.length > 0 && (
+                      <div>
+                        <span className="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block mb-1">
+                          Parsed Section Titles:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {uploadStats.sections.map((sec, sIdx) => (
+                            <span key={sIdx} className="px-2 py-0.5 rounded-lg bg-emerald-100/80 text-[10px] font-bold text-emerald-800">
+                              {sec}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowUploadModal(false)}
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={uploadLoading || !uploadForm.contentBody.trim()}
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                  >
+                    <UploadCloud className="w-4 h-4" />
+                    <span>{uploadLoading ? 'Chunking & Embedding...' : 'Upload, Chunk & Index'}</span>
                   </button>
                 </div>
               </form>

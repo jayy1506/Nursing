@@ -20,6 +20,10 @@ const contentEmbeddingSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    sectionTitle: {
+      type: String,
+      default: ''
+    },
     title: {
       type: String,
       default: ''
@@ -32,6 +36,11 @@ const contentEmbeddingSchema = new mongoose.Schema(
       type: [Number],
       required: true
     },
+    keywords: {
+      type: [String],
+      default: [],
+      index: true
+    },
     tokens: {
       type: Number,
       default: 0
@@ -42,5 +51,4 @@ const contentEmbeddingSchema = new mongoose.Schema(
   }
 );
 
-// Index on chapterId is defined on field level
 export const ContentEmbedding = mongoose.model('ContentEmbedding', contentEmbeddingSchema);

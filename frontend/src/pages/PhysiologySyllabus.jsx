@@ -1,8 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { PHYSIOLOGY_UNITS } from "../constants/physiologyData";
-import { getStudentGatingStatus } from "../services/assessmentEngine";
+import { useCurriculumProgress } from "../services/curriculumProgress";
 import {
   BookOpen,
   ClipboardList,
@@ -14,20 +13,21 @@ import {
   ArrowRight,
   Layers,
   Award,
-  Image as ImageIcon,
   HelpCircle,
   FileText,
   Activity,
   Lock,
   Unlock,
-  ShieldAlert,
-  TrendingUp
+  ShieldCheck
 } from "lucide-react";
 
 export const PhysiologySyllabus = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [unitActiveTabs, setUnitActiveTabs] = useState({});
+
+  // Real-time automatic curriculum progress & gating
+  const { gating, isCompleted, toggleCompletion } = useCurriculumProgress('physiology');
 
   const categories = useMemo(() => {
     const cats = new Set(PHYSIOLOGY_UNITS.map((u) => u.category));
@@ -62,44 +62,42 @@ export const PhysiologySyllabus = () => {
   const totalSubjective = useMemo(() => PHYSIOLOGY_UNITS.reduce((sum, u) => sum + (u.totalSubjective || 0), 0), []);
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white pb-24">
-      <Navbar />
-
-      {/* Top Breadcrumb & Switcher Bar */}
-      <div className="bg-slate-900 border-b border-slate-800 text-slate-300 py-2.5 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased selection:bg-teal-500 selection:text-white pb-24 transition-colors">
+      {/* Top Breadcrumb & Curriculum Switcher Bar in Calm Clinical Nursing Scrub Palette */}
+      <div className="bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 text-slate-700 dark:text-slate-300 py-2.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             <Link
               to="/syllabus"
-              className="text-slate-400 hover:text-sky-400 font-medium inline-flex items-center gap-1 transition-colors"
+              className="text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 font-medium inline-flex items-center gap-1 transition-colors"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
               <span>Syllabus Hub</span>
             </Link>
-            <span className="text-slate-600">/</span>
-            <span className="text-sky-400 font-semibold">Applied Physiology (PHYS 110)</span>
+            <span className="text-slate-300 dark:text-slate-700">/</span>
+            <span className="text-teal-700 dark:text-teal-400 font-bold">Applied Physiology (PHYS 110)</span>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-slate-500 text-[11px] hidden sm:inline">Curriculum Tracks:</span>
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="text-slate-400 text-[11px] hidden sm:inline font-semibold">Tracks:</span>
             <Link
               to="/anatomy-syllabus"
-              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-medium text-[11px] transition-colors"
             >
-              🦴 Applied Anatomy
+              🦴 Anatomy
             </Link>
-            <span className="px-2.5 py-1 rounded-md bg-sky-500/20 text-sky-300 font-bold text-[11px] border border-sky-500/30">
-              ⚡ Applied Physiology (12 Units)
+            <span className="px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-200 font-extrabold text-[11px] border border-teal-200 dark:border-teal-800">
+              ⚡ Physiology (12 Units)
             </span>
             <Link
               to="/bio-chem-syllabus"
-              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-medium text-[11px] transition-colors"
             >
               🧬 Biochemistry
             </Link>
             <Link
               to="/nutrition-syllabus"
-              className="px-2.5 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-700 dark:text-slate-300 font-medium text-[11px] transition-colors"
             >
               🥗 Nutrition
             </Link>
@@ -108,37 +106,38 @@ export const PhysiologySyllabus = () => {
       </div>
 
       {/* Hero Header */}
-      <section className="bg-white border-b border-slate-200/80 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+      <section className="bg-white dark:bg-slate-900 border-b border-slate-200/80 dark:border-slate-800 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-800 text-xs font-bold border border-sky-200 mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-sky-600" />
-                <span>INC Standardized Syllabus • Course Code: PHYS 110 • Semester I</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 text-xs font-bold border border-teal-200 dark:border-teal-800 mb-3">
+                <Sparkles className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+                <span>INC Standardized Syllabus &bull; Course Code: PHYS 110 &bull; Semester I</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 dark:text-slate-100 tracking-tight">
                 Applied Human Physiology
               </h1>
-              <p className="text-slate-600 text-sm mt-2 leading-relaxed max-w-2xl">
-                Explore organ systems, regulation mechanisms, negative feedback loops, action potentials, fluid balances, and clinical pathology alterations with high-definition physiological flowcharts and INC question banks.
+              <p className="text-slate-600 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                Explore organ systems, regulation mechanisms, negative feedback loops, action potentials, fluid balances,
+                and clinical pathology alterations with high-definition physiological flowcharts and INC question banks.
               </p>
 
-              {/* KPI Strip */}
-              <div className="mt-5 flex flex-wrap items-center gap-3 text-xs">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 border border-sky-200 text-sky-900 font-bold">
-                  <Activity className="w-4 h-4 text-sky-600" />
+              {/* Badges Overview */}
+              <div className="flex flex-wrap items-center gap-2 mt-4 text-xs">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-teal-50 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800 text-teal-900 dark:text-teal-200 font-bold">
+                  <Activity className="w-4 h-4 text-teal-600 dark:text-teal-400" />
                   <span>12 Core Functional Units</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-900 font-bold">
-                  <ImageIcon className="w-4 h-4 text-emerald-600" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800 text-sky-900 dark:text-sky-200 font-bold">
+                  <Stethoscope className="w-4 h-4 text-sky-600 dark:text-sky-400" />
                   <span>{totalImages} Mechanism & Flow Diagrams</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 border border-amber-200 text-amber-900 font-bold">
-                  <HelpCircle className="w-4 h-4 text-amber-600" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 font-bold">
+                  <HelpCircle className="w-4 h-4 text-amber-600 dark:text-amber-400" />
                   <span>{totalMcqs} CBME MCQs</span>
                 </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 border border-purple-200 text-purple-900 font-bold">
-                  <FileText className="w-4 h-4 text-purple-600" />
+                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-950/40 border border-purple-200 dark:border-purple-800 text-purple-900 dark:text-purple-200 font-bold">
+                  <FileText className="w-4 h-4 text-purple-600 dark:text-purple-400" />
                   <span>{totalSubjective} University Exam Questions</span>
                 </div>
               </div>
@@ -148,23 +147,23 @@ export const PhysiologySyllabus = () => {
             <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
               <Link
                 to="/physiology/lesson/phys-unit-1"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-md shadow-sky-500/25 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs shadow-md shadow-teal-600/20 transition-all cursor-pointer"
               >
                 <span>Start Chapter 1: General Physiology</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
               <Link
                 to="/question-bank"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs border border-slate-300 transition-all cursor-pointer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-200 font-bold text-xs border border-slate-300 dark:border-slate-700 transition-all cursor-pointer"
               >
-                <ClipboardList className="w-4 h-4 text-slate-600" />
+                <ClipboardList className="w-4 h-4 text-slate-600 dark:text-slate-400" />
                 <span>Practice Physiology Question Bank</span>
               </Link>
             </div>
           </div>
 
           {/* Search & Category Filter */}
-          <div className="mt-8 pt-6 border-t border-slate-100 flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
             <div className="relative flex-1 max-w-md">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
               <input
@@ -172,7 +171,7 @@ export const PhysiologySyllabus = () => {
                 placeholder="Search physiology mechanisms, receptors, reflexes, cardiac cycle..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                className="w-full pl-10 pr-4 py-2 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:bg-white dark:focus:bg-slate-900 focus:outline-none focus:ring-2 focus:ring-teal-500 transition-all"
               />
             </div>
 
@@ -184,8 +183,8 @@ export const PhysiologySyllabus = () => {
                   onClick={() => setSelectedCategory(cat)}
                   className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
                     selectedCategory === cat
-                      ? "bg-sky-600 text-white shadow-sm"
-                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                      ? "bg-teal-600 text-white shadow-xs font-bold"
+                      : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700"
                   }`}
                 >
                   {cat === "all" ? "All Systems (12)" : cat}
@@ -198,119 +197,178 @@ export const PhysiologySyllabus = () => {
 
       {/* Main Units List */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
-        {/* Grand Final Mixed Assessment Gating Card */}
-        {(() => {
-          const gating = getStudentGatingStatus('physiology');
-          return (
-            <div className={`p-6 sm:p-7 rounded-3xl border mb-8 transition-all ${
-              gating.isFinalUnlocked
-                ? 'bg-gradient-to-r from-emerald-500/10 via-teal-50 to-white border-emerald-300 shadow-sm'
-                : 'bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-950 text-white border-slate-700 shadow-lg'
-            }`}>
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2">
-                    <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
-                      gating.isFinalUnlocked
-                        ? 'bg-emerald-100 text-emerald-800 border border-emerald-300'
-                        : 'bg-slate-700/80 text-amber-300 border border-slate-600'
-                    }`}>
-                      {gating.isFinalUnlocked ? <Unlock className="w-3.5 h-3.5" /> : <Lock className="w-3.5 h-3.5 text-amber-400" />}
-                      <span>{gating.isFinalUnlocked ? 'Grand Final Unlocked (100% Completed)' : 'Cumulative Final Exam Gated'}</span>
-                    </span>
-                    <span className={`text-xs font-bold ${gating.isFinalUnlocked ? 'text-slate-500' : 'text-slate-300'}`}>
-                      {gating.completedCount} of 12 Modules Mastered ({gating.completionPercent}%)
-                    </span>
-                  </div>
-
-                  <h3 className={`text-xl sm:text-2xl font-black tracking-tight ${gating.isFinalUnlocked ? 'text-slate-900' : 'text-white'}`}>
-                    Applied Physiology Comprehensive Grand Final Examination
-                  </h3>
-
-                  <p className={`text-xs sm:text-sm max-w-2xl leading-relaxed ${gating.isFinalUnlocked ? 'text-slate-600' : 'text-slate-300'}`}>
-                    {gating.isFinalUnlocked
-                      ? 'Congratulations! You have passed all 12 units. Take the 48-question cumulative mixed examination covering the entire INC Semester I syllabus.'
-                      : `Gated under INC competency standards. Pass each of the 12 individual unit assessment quizzes with ≥ 75% score to unlock this final examination. Remaining: ${gating.remainingCount} modules.`}
-                  </p>
-
-                  <div className="w-full max-w-md bg-white/20 rounded-full h-2.5 overflow-hidden pt-0.5">
-                    <div
-                      className={`h-2.5 rounded-full transition-all duration-500 ${
-                        gating.isFinalUnlocked ? 'bg-emerald-500' : 'bg-gradient-to-r from-amber-400 to-emerald-400'
-                      }`}
-                      style={{ width: `${gating.completionPercent}%` }}
-                    />
-                  </div>
-                </div>
-
-                <div className="shrink-0">
+        {/* Grand Final Mixed Assessment Gating Card with Live Auto-Updating Completion */}
+        <div
+          className={`p-6 sm:p-7 rounded-3xl border mb-8 transition-all ${
+            gating.isFinalUnlocked
+              ? "bg-gradient-to-r from-emerald-500/10 via-teal-50 to-white dark:from-emerald-950/30 dark:to-slate-900 border-emerald-300 dark:border-emerald-800 shadow-sm"
+              : "bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white border-teal-500/30 shadow-xl"
+          }`}
+        >
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-2 flex-wrap">
+                <span
+                  className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                    gating.isFinalUnlocked
+                      ? "bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300"
+                      : "bg-teal-900/80 text-teal-300 border border-teal-500/40"
+                  }`}
+                >
                   {gating.isFinalUnlocked ? (
-                    <Link
-                      to="/quiz/physiology-grand-final"
-                      className="px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      <span>Start Grand Final Exam →</span>
-                    </Link>
+                    <Unlock className="w-3.5 h-3.5" />
                   ) : (
-                    <Link
-                      to="/quiz/physiology-grand-final"
-                      className="px-5 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-600 font-bold text-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
-                    >
-                      <Lock className="w-4 h-4 text-amber-400" />
-                      <span>View Final Status (Locked)</span>
-                    </Link>
+                    <Lock className="w-3.5 h-3.5 text-amber-400" />
                   )}
-                </div>
+                  <span>
+                    {gating.isFinalUnlocked
+                      ? "Grand Final Unlocked (100% Completed)"
+                      : "Cumulative Final Exam Gated"}
+                  </span>
+                </span>
+                <span
+                  className={`text-xs font-bold ${
+                    gating.isFinalUnlocked ? "text-slate-600 dark:text-slate-400" : "text-teal-200"
+                  }`}
+                >
+                  {gating.completedCount} of 12 Modules Mastered ({gating.completionPercent}%)
+                </span>
+              </div>
+
+              <h3
+                className={`text-xl sm:text-2xl font-black tracking-tight ${
+                  gating.isFinalUnlocked ? "text-slate-900 dark:text-slate-100" : "text-white"
+                }`}
+              >
+                Applied Physiology Comprehensive Grand Final Examination
+              </h3>
+
+              <p
+                className={`text-xs sm:text-sm max-w-2xl leading-relaxed ${
+                  gating.isFinalUnlocked ? "text-slate-600 dark:text-slate-400" : "text-slate-300"
+                }`}
+              >
+                {gating.isFinalUnlocked
+                  ? "Congratulations! You have mastered all 12 units. Take the 48-question cumulative mixed examination covering the entire INC Semester I syllabus."
+                  : `Gated under INC competency standards. Complete each of the 12 individual unit assessment quizzes or mark chapters studied with ≥ 75% score to unlock this final examination. Remaining: ${gating.remainingCount} modules.`}
+              </p>
+
+              {/* Live Animated Progress Meter */}
+              <div className="w-full max-w-md bg-white/20 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden pt-0.5">
+                <div
+                  className={`h-2.5 rounded-full transition-all duration-500 ${
+                    gating.isFinalUnlocked
+                      ? "bg-emerald-500"
+                      : "bg-gradient-to-r from-amber-400 via-teal-400 to-emerald-400"
+                  }`}
+                  style={{ width: `${gating.completionPercent}%` }}
+                />
               </div>
             </div>
-          );
-        })()}
 
+            <div className="shrink-0">
+              {gating.isFinalUnlocked ? (
+                <Link
+                  to="/quiz/physiology-grand-final"
+                  className="px-6 py-3.5 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Start Grand Final Exam →</span>
+                </Link>
+              ) : (
+                <Link
+                  to="/quiz/physiology-grand-final"
+                  className="px-5 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 font-bold text-xs inline-flex items-center gap-2 transition-colors cursor-pointer"
+                >
+                  <Lock className="w-4 h-4 text-amber-400" />
+                  <span>View Final Status (Locked)</span>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Units Cards with Automatic Real-Time Completion Badges & Action Toggle */}
         <div className="space-y-6">
           {filteredUnits.map((unit) => {
             const activeTab = getUnitTab(unit.id);
+            const completed = isCompleted(unit.id);
+
             return (
               <div
                 key={unit.id}
-                className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+                className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow overflow-hidden"
               >
                 {/* Unit Header */}
-                <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="p-6 border-b border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 text-white flex items-center justify-center text-2xl shadow-sm shrink-0">
+                    <div className="w-12 h-12 rounded-xl bg-gradient-to-tr from-teal-500 to-sky-600 text-white flex items-center justify-center text-2xl shadow-sm shrink-0">
                       {unit.icon}
                     </div>
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="px-2.5 py-0.5 rounded-full bg-sky-50 text-sky-800 font-extrabold text-[11px] border border-sky-200">
-                          Unit {unit.unitNumber} • Semester I
+                        <span className="px-2.5 py-0.5 rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-300 font-extrabold text-[11px] border border-teal-200 dark:border-teal-800">
+                          Unit {unit.unitNumber} &bull; Semester I
                         </span>
                         <span className="text-xs font-semibold text-slate-400">
                           {unit.category}
                         </span>
+
+                        {/* Automatic Real-Time Completion Status Indicator */}
+                        {completed ? (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800">
+                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                            <span>Completed &bull; Mastered</span>
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                            <span>Not Completed</span>
+                          </span>
+                        )}
                       </div>
-                      <h2 className="text-xl font-extrabold text-slate-900 mt-1">
+
+                      <h2 className="text-xl font-extrabold text-slate-900 dark:text-slate-100 mt-1">
                         {unit.title}
                       </h2>
-                      <p className="text-xs text-slate-600 mt-1 max-w-3xl leading-relaxed">
+                      <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 max-w-3xl leading-relaxed">
                         {unit.summary}
                       </p>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-2 self-start sm:self-center shrink-0">
+                  {/* Actions: Toggle Studied / Take Quiz / Study Chapter */}
+                  <div className="flex flex-wrap items-center gap-2 self-start sm:self-center shrink-0">
+                    {/* One-click automatic completion toggle */}
+                    <button
+                      type="button"
+                      onClick={() => toggleCompletion(unit.id)}
+                      className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                        completed
+                          ? "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700"
+                          : "bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/60 dark:hover:bg-teal-900/60 text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800 shadow-xs"
+                      }`}
+                      title="Click to toggle chapter completion and update Grand Final standing"
+                    >
+                      <CheckCircle2
+                        className={`w-3.5 h-3.5 ${
+                          completed ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400"
+                        }`}
+                      />
+                      <span>{completed ? "Mark Incomplete" : "Mark as Studied"}</span>
+                    </button>
+
                     <Link
                       to={`/quiz/${unit.id}`}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs border border-emerald-200 shadow-xs transition-all cursor-pointer"
-                      title="Take Chapter Assessment Quiz"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 font-extrabold text-xs border border-emerald-200 dark:border-emerald-800 shadow-xs transition-all cursor-pointer"
+                      title="Take Chapter Assessment Quiz (auto-completes on pass ≥ 75%)"
                     >
-                      <ClipboardList className="w-3.5 h-3.5 text-emerald-600" />
+                      <ClipboardList className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                       <span>Take Quiz</span>
                     </Link>
+
                     <Link
                       to={`/physiology/lesson/${unit.id}`}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs shadow-sm shadow-sky-500/20 transition-all cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-teal-600 hover:bg-teal-700 text-white font-extrabold text-xs shadow-xs shadow-teal-600/20 transition-all cursor-pointer"
                     >
                       <span>Study Chapter</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -319,13 +377,13 @@ export const PhysiologySyllabus = () => {
                 </div>
 
                 {/* Tab Navigation inside Card */}
-                <div className="px-6 bg-slate-50 border-b border-slate-100 flex items-center gap-2 overflow-x-auto text-xs font-bold text-slate-600">
+                <div className="px-6 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-100 dark:border-slate-800 flex items-center gap-2 overflow-x-auto text-xs font-bold text-slate-600 dark:text-slate-400">
                   <button
                     onClick={() => setUnitTab(unit.id, "sections")}
                     className={`py-3 px-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
                       activeTab === "sections"
-                        ? "border-sky-600 text-sky-700 font-extrabold"
-                        : "border-transparent hover:text-slate-900"
+                        ? "border-teal-600 text-teal-700 dark:text-teal-400 font-extrabold"
+                        : "border-transparent hover:text-slate-900 dark:hover:text-slate-200"
                     }`}
                   >
                     <Layers className="w-3.5 h-3.5" />
@@ -336,8 +394,8 @@ export const PhysiologySyllabus = () => {
                     onClick={() => setUnitTab(unit.id, "objectives")}
                     className={`py-3 px-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
                       activeTab === "objectives"
-                        ? "border-sky-600 text-sky-700 font-extrabold"
-                        : "border-transparent hover:text-slate-900"
+                        ? "border-teal-600 text-teal-700 dark:text-teal-400 font-extrabold"
+                        : "border-transparent hover:text-slate-900 dark:hover:text-slate-200"
                     }`}
                   >
                     <Award className="w-3.5 h-3.5" />
@@ -348,8 +406,8 @@ export const PhysiologySyllabus = () => {
                     onClick={() => setUnitTab(unit.id, "questions")}
                     className={`py-3 px-3 border-b-2 transition-all cursor-pointer flex items-center gap-1.5 ${
                       activeTab === "questions"
-                        ? "border-sky-600 text-sky-700 font-extrabold"
-                        : "border-transparent hover:text-slate-900"
+                        ? "border-teal-600 text-teal-700 dark:text-teal-400 font-extrabold"
+                        : "border-transparent hover:text-slate-900 dark:hover:text-slate-200"
                     }`}
                   >
                     <HelpCircle className="w-3.5 h-3.5" />
@@ -361,7 +419,7 @@ export const PhysiologySyllabus = () => {
                 <div className="p-6">
                   {activeTab === "sections" && (
                     <div>
-                      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">
+                      <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-3">
                         Mechanisms, Flowcharts & Core Modules
                       </h4>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -369,40 +427,29 @@ export const PhysiologySyllabus = () => {
                           <Link
                             key={idx}
                             to={t.route}
-                            className="p-3.5 rounded-xl border border-slate-200/80 hover:border-sky-400 bg-slate-50/50 hover:bg-sky-50/30 transition-all group flex items-center justify-between"
+                            className="p-3.5 rounded-xl border border-slate-200/80 dark:border-slate-800 hover:border-teal-400 dark:hover:border-teal-600 bg-slate-50/50 dark:bg-slate-800/40 hover:bg-teal-50/30 dark:hover:bg-teal-950/20 transition-all group flex items-center justify-between"
                           >
-                            <span className="text-xs font-bold text-slate-800 group-hover:text-sky-800">
+                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 group-hover:text-teal-800 dark:group-hover:text-teal-300">
                               {t.label}
                             </span>
-                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-sky-600 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
+                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-teal-600 group-hover:translate-x-0.5 transition-all shrink-0 ml-2" />
                           </Link>
                         ))}
-                      </div>
-
-                      <div className="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                        <span className="flex items-center gap-1.5">
-                          <ImageIcon className="w-4 h-4 text-sky-600" />
-                          <span>Includes <strong>{unit.totalImages}</strong> functional diagrams & physiological mechanisms</span>
-                        </span>
-                        <Link
-                          to={`/physiology/lesson/${unit.id}`}
-                          className="font-bold text-sky-700 hover:text-sky-800 flex items-center gap-1"
-                        >
-                          <span>Open full chapter reader</span>
-                          <ArrowRight className="w-3.5 h-3.5" />
-                        </Link>
                       </div>
                     </div>
                   )}
 
                   {activeTab === "objectives" && (
                     <div className="space-y-2.5">
-                      <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">
-                        Official INC Competencies & Specific Learning Objectives
+                      <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
+                        INC Competencies & Clinical Learning Objectives
                       </h4>
-                      {unit.objectives.map((obj, i) => (
-                        <div key={i} className="flex items-start gap-2.5 text-xs text-slate-700">
-                          <CheckCircle2 className="w-4 h-4 text-sky-600 shrink-0 mt-0.5" />
+                      {unit.objectives.map((obj, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-teal-600 dark:text-teal-400 shrink-0 mt-0.5" />
                           <span className="leading-relaxed">{obj}</span>
                         </div>
                       ))}
@@ -410,48 +457,50 @@ export const PhysiologySyllabus = () => {
                   )}
 
                   {activeTab === "questions" && (
-                    <div>
-                      <div className="flex items-center justify-between mb-3">
-                        <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider">
-                          Official University Examination Questions Bank
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider">
+                          Official University Question Bank
                         </h4>
                         <Link
-                          to={`/physiology/lesson/${unit.id}?tab=quiz`}
-                          className="text-xs font-extrabold text-sky-600 hover:text-sky-700 underline"
+                          to="/question-bank"
+                          className="text-xs font-bold text-teal-700 dark:text-teal-400 hover:underline flex items-center gap-1"
                         >
-                          Launch Unit Quiz ({unit.totalMcqs} Questions) →
+                          <span>Open Complete Question Bank</span>
+                          <ArrowRight className="w-3.5 h-3.5" />
                         </Link>
                       </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                        <div className="p-4 rounded-xl bg-sky-50/50 border border-sky-200">
-                          <span className="font-extrabold text-sky-900 block mb-1">
-                            CBME Multiple Choice Questions (MCQs)
-                          </span>
-                          <p className="text-slate-600 text-[11px] mb-3">
-                            {unit.totalMcqs} verified physiological MCQs aligned with INC Semester I guidelines.
-                          </p>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="p-4 rounded-xl border border-teal-200/80 dark:border-teal-800/80 bg-teal-50/40 dark:bg-teal-950/20 flex items-center justify-between">
+                          <div>
+                            <div className="text-xl font-black text-teal-900 dark:text-teal-200">{unit.totalMcqs}</div>
+                            <div className="text-xs font-semibold text-teal-700 dark:text-teal-300">
+                              CBME Multiple Choice Questions
+                            </div>
+                          </div>
                           <Link
-                            to={`/physiology/lesson/${unit.id}?tab=quiz`}
-                            className="inline-flex items-center gap-1.5 font-bold text-sky-700 hover:text-sky-800"
+                            to={`/quiz/${unit.id}`}
+                            className="px-3.5 py-2 rounded-lg bg-teal-600 hover:bg-teal-700 text-white font-bold text-xs"
                           >
-                            <span>Practice MCQs</span>
-                            <ArrowRight className="w-3 h-3" />
+                            Take Quiz
                           </Link>
                         </div>
 
-                        <div className="p-4 rounded-xl bg-purple-50/50 border border-purple-200">
-                          <span className="font-extrabold text-purple-900 block mb-1">
-                            University Exam Subjective Questions
-                          </span>
-                          <p className="text-slate-600 text-[11px] mb-3">
-                            {unit.totalSubjective} questions with mark weightage (2 Marks Very Short, 5 Marks Short Notes, 10 Marks Long Essay).
-                          </p>
+                        <div className="p-4 rounded-xl border border-purple-200/80 dark:border-purple-800/80 bg-purple-50/40 dark:bg-purple-950/20 flex items-center justify-between">
+                          <div>
+                            <div className="text-xl font-black text-purple-900 dark:text-purple-200">
+                              {unit.totalSubjective}
+                            </div>
+                            <div className="text-xs font-semibold text-purple-700 dark:text-purple-300">
+                              University Exam Questions
+                            </div>
+                          </div>
                           <Link
-                            to={`/physiology/lesson/${unit.id}?tab=subjective`}
-                            className="inline-flex items-center gap-1.5 font-bold text-purple-700 hover:text-purple-800"
+                            to="/question-bank"
+                            className="px-3.5 py-2 rounded-lg bg-purple-600 hover:bg-purple-700 text-white font-bold text-xs"
                           >
-                            <span>View University Questions</span>
-                            <ArrowRight className="w-3 h-3" />
+                            View Bank
                           </Link>
                         </div>
                       </div>

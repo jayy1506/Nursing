@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { Lock, Mail, Sparkles, ArrowRight, ShieldCheck } from 'lucide-react';
+import { MedPulseLogo } from '../../components/brand/MedPulseLogo';
+import { Button } from '../../components/ui/Button';
+import { Input } from '../../components/ui/Input';
+import ThemeToggle from '../../components/layout/ThemeToggle';
+import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -16,7 +20,7 @@ export const LoginPage = () => {
   const from = location.state?.from?.pathname;
   const redirectPath = (from && from !== '/login' && from !== '/signup') ? from : '/';
 
-  // If already logged in, redirect immediately to dashboard
+  // Redirect if user is already authenticated
   useEffect(() => {
     if (currentUser) {
       navigate(redirectPath, { replace: true });
@@ -44,13 +48,13 @@ export const LoginPage = () => {
       ) {
         setError('Invalid email or password.');
       } else if (err.code === 'auth/too-many-requests') {
-        setError('Too many failed attempts. Please try again later.');
+        setError('Too many failed attempts. Please wait a moment and try again.');
       } else if (err.code === 'auth/unauthorized-domain') {
         setError(
-          `Unauthorized domain (${window.location.hostname}). Please add this domain to Firebase Console: Authentication → Settings → Authorized domains.`
+          `Unauthorized domain (${window.location.hostname}). Please authorize this domain in Firebase Console.`
         );
       } else {
-        setError(err.message || 'Failed to sign in. Please try again.');
+        setError(err.message || 'Failed to sign in. Please check credentials.');
       }
     } finally {
       setLoading(false);
@@ -67,7 +71,7 @@ export const LoginPage = () => {
       console.error(err);
       if (err.code === 'auth/unauthorized-domain') {
         setError(
-          `Unauthorized domain (${window.location.hostname}). Please add this domain to Firebase Console: Authentication → Settings → Authorized domains.`
+          `Unauthorized domain (${window.location.hostname}). Please add this domain to Firebase Console.`
         );
       } else if (err.code !== 'auth/popup-closed-by-user') {
         setError(err.message || 'Failed to sign in with Google.');
@@ -78,57 +82,49 @@ export const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-emerald-50 text-slate-900 flex items-center justify-center p-4 relative overflow-hidden font-sans">
-      {/* Soft background accents matching frontend */}
-      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-32 -left-16 h-80 w-80 rounded-full bg-sky-200/60 blur-3xl" />
-        <div className="absolute -bottom-40 right-0 h-96 w-96 rounded-full bg-emerald-200/70 blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-72 w-72 rounded-full bg-emerald-100/40 blur-3xl" />
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col justify-between p-4 sm:p-6 relative overflow-hidden transition-colors">
+      {/* Top Bar with Brand & Theme Toggle */}
+      <header className="flex items-center justify-between max-w-5xl mx-auto w-full pt-2">
+        <MedPulseLogo size="md" showTagline={true} />
+        <ThemeToggle />
+      </header>
+
+      {/* Background radial gradient glow */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden opacity-60 dark:opacity-20">
+        <div className="absolute top-1/4 -left-20 h-96 w-96 rounded-full bg-teal-300 blur-3xl" />
+        <div className="absolute bottom-1/4 -right-20 h-96 w-96 rounded-full bg-sky-300 blur-3xl" />
       </div>
 
-      <div className="w-full max-w-md relative z-10">
-        {/* Brand Header */}
-        <div className="text-center mb-8">
-          <Link to="/" className="inline-flex items-center gap-2.5 mb-3 group">
-            <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-500 to-sky-500 p-[1px] shadow-lg shadow-emerald-400/30 group-hover:scale-105 transition-transform duration-300">
-              <div className="w-full h-full bg-white rounded-[15px] flex items-center justify-center shadow-inner">
-                <Sparkles className="w-6 h-6 text-emerald-500" />
-              </div>
-            </div>
-            <div className="text-left">
-              <span className="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-600 via-teal-600 to-sky-600 bg-clip-text text-transparent">
-                MedPulse
-              </span>
-              <span className="block text-[11px] font-medium text-slate-500">
-                Medical & Nursing LMS
-              </span>
-            </div>
-          </Link>
-          <div className="mt-2">
-            <span className="inline-block px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-full bg-emerald-100 text-emerald-700">
-              Welcome Back
+      {/* Main Login Card */}
+      <div className="w-full max-w-md mx-auto my-auto relative z-10 py-6">
+        <div className="bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-800 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50 dark:shadow-none">
+          <div className="text-center mb-6">
+            <span className="inline-block px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider rounded-full bg-teal-50 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 border border-teal-200 dark:border-teal-800">
+              Institutional Clinical Access
             </span>
+            <h1 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 mt-2 tracking-tight">
+              Sign In to MedPulse
+            </h1>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+              Foundational medical sciences, mastered.
+            </p>
           </div>
-          <p className="text-sm text-slate-600 mt-2">Sign in to your guided clinical learning portal</p>
-        </div>
 
-        {/* Card */}
-        <div className="bg-white/90 border border-slate-200/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl shadow-slate-200/60">
           {error && (
-            <div className="mb-6 p-3.5 rounded-2xl bg-rose-50 border border-rose-200 text-rose-700 text-xs flex items-center gap-2.5">
-              <span className="text-base">⚠️</span>
+            <div className="mb-5 p-3 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2.5">
+              <AlertCircle className="w-4 h-4 shrink-0 text-rose-500" />
               <p className="flex-1 font-medium">{error}</p>
             </div>
           )}
 
-          {/* Google Sign-in Button */}
+          {/* Google Sign-in */}
           <button
             type="button"
             onClick={handleGoogleLogin}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-2xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-sm font-semibold transition-all duration-200 hover:border-slate-300 disabled:opacity-50 shadow-sm hover:shadow mb-5 cursor-pointer"
+            className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-750 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 text-sm font-semibold transition-all duration-150 disabled:opacity-50 shadow-xs mb-4 cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-500"
           >
-            <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" viewBox="0 0 24 24">
               <path
                 fill="#EA4335"
                 d="M12 5c1.6 0 3 .6 4.1 1.7l3.1-3.1C17.3 1.8 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"
@@ -146,77 +142,70 @@ export const LoginPage = () => {
                 d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 17c1.8 3.7 5.6 6.5 10.1 6.5z"
               />
             </svg>
-            Continue with Google
+            Continue with Institutional Google ID
           </button>
 
-          <div className="flex items-center gap-3 mb-5">
-            <div className="flex-1 h-[1px] bg-slate-200" />
-            <span className="text-[11px] font-semibold tracking-wider text-slate-400 uppercase">Or with email</span>
-            <div className="flex-1 h-[1px] bg-slate-200" />
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex-1 h-[1px] bg-slate-200 dark:bg-slate-800" />
+            <span className="text-[10px] font-bold tracking-wider text-slate-400 dark:text-slate-500 uppercase">
+              Or with credentials
+            </span>
+            <div className="flex-1 h-[1px] bg-slate-200 dark:bg-slate-800" />
           </div>
 
           <form onSubmit={handleEmailLogin} className="space-y-4">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1.5">Email Address</label>
-              <div className="relative">
-                <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="nurse@hospital.edu"
-                  className="w-full bg-slate-50/70 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-400/20 transition-all font-medium"
-                />
-              </div>
-            </div>
+            <Input
+              label="Institutional Email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="nurse@hospital.edu"
+              leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
+            />
 
-            <div>
-              <div className="flex justify-between items-center mb-1.5">
-                <label className="block text-xs font-bold text-slate-700">Password</label>
-              </div>
-              <div className="relative">
-                <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
-                  className="w-full bg-slate-50/70 border border-slate-200 rounded-xl py-2.5 pl-10 pr-4 text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-400/20 transition-all font-medium"
-                />
-              </div>
-            </div>
+            <Input
+              label="Password"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
+            />
 
-            <button
+            <Button
               type="submit"
-              disabled={loading}
-              className="w-full mt-3 py-3 px-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold rounded-full text-sm shadow-lg shadow-emerald-400/30 hover:shadow-emerald-400/40 transition-all duration-200 flex items-center justify-center gap-2 disabled:opacity-50 cursor-pointer"
+              variant="primary"
+              size="md"
+              isLoading={loading}
+              rightIcon={<ArrowRight className="w-4 h-4" />}
+              className="w-full mt-2"
             >
-              {loading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-              ) : (
-                <>
-                  <span>Sign In</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              )}
-            </button>
+              Sign In
+            </Button>
           </form>
 
-          <div className="mt-6 pt-5 border-t border-slate-100 text-center">
-            <p className="text-xs text-slate-500 font-medium">
-              Student and Faculty accounts are created and managed by the <span className="text-slate-800 font-bold">Nursing Administrator</span>.
+          {/* Closed Access Notice */}
+          <div className="mt-6 pt-5 border-t border-slate-100 dark:border-slate-800 text-center">
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
+              Closed institutional platform. Student and Faculty accounts are provisioned and authorized by the{' '}
+              <span className="font-semibold text-slate-800 dark:text-slate-200">Department Administrator</span>.
             </p>
           </div>
         </div>
 
-        {/* Footer Security Badge */}
-        <div className="flex items-center justify-center gap-2 mt-6 text-slate-500 text-[11px] font-medium">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>Secured with Firebase Auth & Role-Based Access Control</span>
+        {/* Security Footer Note */}
+        <div className="flex items-center justify-center gap-2 mt-5 text-slate-400 dark:text-slate-500 text-[11px]">
+          <ShieldCheck className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+          <span>INC CBME Standards &bull; Encrypted Session Authentication</span>
         </div>
       </div>
+
+      {/* Footer copyright */}
+      <footer className="text-center text-[11px] text-slate-400 dark:text-slate-600 pb-2">
+        MedPulse &copy; {new Date().getFullYear()} &bull; Foundational Medical Sciences & Clinical Nursing LMS
+      </footer>
     </div>
   );
 };

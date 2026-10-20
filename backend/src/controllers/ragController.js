@@ -7,8 +7,8 @@ import { User } from '../models/User.js';
 // Student endpoint: Ask a question scoped strictly to current chapter
 export const chatWithChapterTutor = async (req, res) => {
   try {
-    const { chapterId, query } = req.body;
-    const studentId = req.user.uid;
+    const { chapterId, query, mode = 'default' } = req.body;
+    const studentId = req.user?.uid || req.user?._id || 'student_user';
 
     if (!chapterId || !query) {
       return res.status(400).json({
@@ -17,7 +17,7 @@ export const chatWithChapterTutor = async (req, res) => {
       });
     }
 
-    const result = await queryChapterRAG({ studentId, chapterId, query });
+    const result = await queryChapterRAG({ studentId, chapterId, query, mode });
 
     return res.status(200).json({
       success: true,

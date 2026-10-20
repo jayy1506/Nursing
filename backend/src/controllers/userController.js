@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import admin, { isFirebaseReady } from '../config/firebase.js';
 import { User } from '../models/User.js';
 import { Progress } from '../models/Progress.js';
@@ -269,6 +270,207 @@ export const deleteUser = async (req, res) => {
     return res.status(500).json({
       success: false,
       error: 'Failed to delete user',
+      details: error.message
+    });
+  }
+};
+
+// Admin: Bulk import students & faculty from CSV with row-level validation & error reporting
+export const bulkImportUsers = async (req, res) => {
+  try {
+    const { csvContent, users: userList } = req.body;
+    let parsedRows = [];
+
+    if (userList && Array.isArray(userList)) {
+      parsedRows = userList;
+    } else if (csvContent && typeof csvContent === 'string') {
+      const lines = csvContent
+        .split(/\r?\n/)
+        .map((l) => l.trim())
+        .filter((l) => l.length > 0);
+
+      if (lines.length === 0) {
+        return res.status(400).json({ success: false, error: 'CSV content is empty.' });
+      }
+
+      // Check for header
+      const firstLine = lines[0].toLowerCase();
+      let startIndex = 0;
+      let headerMap = { name: 0, email: 1, role: 2, password: 3, collegeid: 4 };
+
+      if (firstLine.includes('email') || firstLine.includes('name')) {
+        startIndex = 1;
+        const headers = lines[0].split(',').map((h) => h.trim().toLowerCase().replace(/[^a-z0-9]/g, ''));
+        headerMap = {
+          name: headers.indexOf('name') !== -1 ? headers.indexOf('name') : 0,
+          email: headers.indexOf('email') !== -1 ? headers.indexOf('email') : 1,
+          role: headers.indexOf('role') !== -1 ? headers.indexOf('role') : 2,
+          password: headers.indexOf('password') !== -1 ? headers.indexOf('password') : 3,
+          collegeid: headers.indexOf('collegeid') !== -1 ? headers.indexOf('collegeid') : 4
+        };
+      }
+
+      for (let i = startIndex; i < lines.length; i++) {
+        const cols = lines[i].split(',').map((c) => c.trim().replace(/^["']|["']$/g, ''));
+        if (cols.length >= 2) {
+          parsedRows.push({
+            rowNumber: i + 1,
+            name: cols[headerMap.name] || '',
+            email: cols[headerMap.email] || '',
+            role: cols[headerMap.role] || 'student',
+            password: cols[headerMap.password] || 'NursingPass@2026',
+            collegeId: cols[headerMap.collegeid] || 'COLLEGE_001'
+          });
+        }
+      }
+    } else {
+      return res.status(400).json({
+        success: false,
+        error: 'Either csvContent (CSV string) or users (array of objects) must be provided in request body.'
+      });
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const errors = [];
+    const importedUsers = [];
+
+    for (let idx = 0; idx < parsedRows.length; idx++) {
+      const row = parsedRows[idx];
+      const rowNum = row.rowNumber || idx + 1;
+
+      // Validation 1: Required Name & Email
+      if (!row.name || !row.email) {
+        errors.push({
+          row: rowNum,
+          email: row.email || 'N/A',
+          reason: 'Missing required field: name and email are mandatory.'
+        });
+        continue;
+      }
+
+      const normalizedEmail = row.email.toLowerCase().trim();
+
+      // Validation 2: Email format
+      if (!emailRegex.test(normalizedEmail)) {
+        errors.push({
+          row: rowNum,
+          email: normalizedEmail,
+          reason: `Invalid email address format: "${row.email}"`
+        });
+        continue;
+      }
+
+      // Validation 3: Role validity
+      const normalizedRole = (row.role || 'student').toLowerCase().trim();
+      if (!['student', 'faculty', 'admin'].includes(normalizedRole)) {
+        errors.push({
+          row: rowNum,
+          email: normalizedEmail,
+          reason: `Invalid role "${row.role}". Must be one of: student, faculty, admin.`
+        });
+        continue;
+      }
+
+      // Validation 4: Password length
+      const password = row.password || 'NursingPass@2026';
+      if (password.length < 6) {
+        errors.push({
+          row: rowNum,
+          email: normalizedEmail,
+          reason: 'Password must be at least 6 characters long.'
+        });
+        continue;
+      }
+
+      // Validation 5: Existing User in Database (if DB connected)
+      const isDbConnected = mongoose.connection && mongoose.connection.readyState === 1;
+      if (isDbConnected) {
+        const existingUser = await User.findOne({ email: normalizedEmail });
+        if (existingUser) {
+          errors.push({
+            row: rowNum,
+            email: normalizedEmail,
+            reason: `User with email "${normalizedEmail}" already exists in database.`
+          });
+          continue;
+        }
+      }
+
+      // Create in Firebase Admin if configured
+      let firebaseUid = `uid_import_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+      if (isFirebaseReady() && process.env.FIREBASE_SERVICE_ACCOUNT) {
+        try {
+          const fbUser = await admin.auth().createUser({
+            email: normalizedEmail,
+            password,
+            displayName: row.name.trim()
+          });
+          firebaseUid = fbUser.uid;
+          await admin.auth().setCustomUserClaims(firebaseUid, { role: normalizedRole });
+        } catch (fbErr) {
+          errors.push({
+            row: rowNum,
+            email: normalizedEmail,
+            reason: `Firebase account creation failed: ${fbErr.message}`
+          });
+          continue;
+        }
+      }
+
+      // Create User in MongoDB
+      if (isDbConnected) {
+        try {
+          const newUser = await User.create({
+            firebaseUid,
+            name: row.name.trim(),
+            email: normalizedEmail,
+            role: normalizedRole,
+            collegeId: row.collegeId || 'COLLEGE_001',
+            status: 'active',
+            isActive: true,
+            createdBy: req.user?.uid || 'admin_csv_import'
+          });
+
+          importedUsers.push({
+            _id: newUser._id,
+            name: newUser.name,
+            email: newUser.email,
+            role: newUser.role,
+            collegeId: newUser.collegeId,
+            status: newUser.status
+          });
+        } catch (dbErr) {
+          errors.push({
+            row: rowNum,
+            email: normalizedEmail,
+            reason: `Database insert failed: ${dbErr.message}`
+          });
+        }
+      } else {
+        importedUsers.push({
+          _id: `mock_${Date.now()}_${rowNum}`,
+          name: row.name.trim(),
+          email: normalizedEmail,
+          role: normalizedRole,
+          collegeId: row.collegeId || 'COLLEGE_001',
+          status: 'active'
+        });
+      }
+    }
+
+    return res.status(200).json({
+      success: true,
+      totalRows: parsedRows.length,
+      importedCount: importedUsers.length,
+      failedCount: errors.length,
+      errors,
+      importedUsers
+    });
+  } catch (error) {
+    console.error('[Bulk Import Error]:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to process bulk user import',
       details: error.message
     });
   }

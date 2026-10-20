@@ -28,6 +28,8 @@ import {
   Database,
   Coins,
   ShieldCheck,
+  ShieldAlert,
+  ExternalLink,
   TrendingUp,
   Trash2,
   ArrowRight
@@ -93,6 +95,9 @@ export const AIWidget = () => {
   const [open, setOpen] = useState(false);
   const [showMemoryStats, setShowMemoryStats] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+  const [tutorMode, setTutorMode] = useState('default'); // 'default' | 'simple' | 'quiz' | 'case'
+  const [chapters, setChapters] = useState([]);
+  const [selectedChapterId, setSelectedChapterId] = useState('');
   const [memoryStats, setMemoryStats] = useState({
     totalStored: 0,
     totalHits: 0,
@@ -104,11 +109,11 @@ export const AIWidget = () => {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: `Hello! 👋 I am your **MedPulse AI Clinical Tutor** powered by an **OpenAI Semantic Memory Token Saver**.\n\n• **Token Optimization**: When any user searches a topic, it is saved in memory.\n• If you or any other student search a similar question next time, it retrieves directly from memory with **0 Tokens Used**!\n\nAsk any question or choose an action below!`,
+      content: `Hello! 👋 I am your **MedPulse Clinical AI Tutor**.\n\n• **Chapter Scoping**: I retrieve directly from your accredited clinical nursing curriculum.\n• **Tutor Modes**: Switch between **🎓 Standard Tutor**, **💡 Explain Simply**, **📝 Quiz Me**, or **🏥 Clinical Case Walkthrough**.\n• **Evidence Citations**: Every clinical explanation includes direct citations back to your course lessons.\n\nSelect a chapter scope or ask a question below to begin!`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-      fromMemory: true,
-      tokensUsed: 0,
-      tokensSaved: 350
+      citations: [],
+      scoped: true,
+      refusal: false
     }
   ]);
   const [input, setInput] = useState('');
@@ -154,6 +159,25 @@ export const AIWidget = () => {
   useEffect(() => {
     refreshMemoryStats();
   }, [open]);
+
+  // Fetch course hierarchy to populate chapter scoping selector
+  useEffect(() => {
+    const fetchChapters = async () => {
+      try {
+        const res = await apiClient('/api/courses/hierarchy');
+        if (res && res.success && res.courses?.[0]?.chapters) {
+          const chList = res.courses[0].chapters;
+          setChapters(chList);
+          if (chList.length > 0) {
+            setSelectedChapterId((prev) => prev || chList[0]._id);
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to fetch course chapters for RAG selector:', err);
+      }
+    };
+    fetchChapters();
+  }, []);
 
   // Scroll to bottom on new messages
   useEffect(() => {
@@ -245,10 +269,17 @@ export const AIWidget = () => {
    * 2. If similar query exists -> returns from memory (0 tokens!)
    * 3. If new query -> generates response, stores in memory for next user
    */
-  const handleSendMessage = async (textToSend) => {
+  /**
+   * Main query handler with MedPulse Chapter-Scoped RAG & Fallback:
+   * 1. Calls backend /api/rag/chat with chapterId, query, and tutorMode
+   * 2. Receives answer, structured citations, and scoping confidence
+   * 3. Renders citations and refusal warnings in the UI
+   */
+  const handleSendMessage = async (textToSend, overrideMode = null) => {
     const messageContent = (textToSend || input).trim();
     if (!messageContent || loading) return;
 
+    const activeMode = overrideMode || tutorMode;
     const userMessage = {
       role: 'user',
       content: messageContent,
@@ -261,42 +292,52 @@ export const AIWidget = () => {
 
     try {
       let botResponse = '';
+      let citations = [];
+      let scoped = true;
+      let refusal = false;
+      let confidence = null;
+      let chapterTitle = null;
+      let chapterOrder = null;
       let fromMemory = false;
       let tokensUsed = 0;
       let tokensSaved = 0;
       let similarityScore = null;
       let matchedQuery = null;
-      let modelUsed = aiModel;
+      let modelUsed = 'MedPulse Scoped RAG Hybrid';
 
-      // STEP 1: Attempt querying through Backend Semantic Memory Token-Saver API
-      let backendSuccess = false;
-      try {
-        const res = await apiClient('/api/ai/query', {
-          method: 'POST',
-          body: JSON.stringify({
-            query: messageContent,
-            category: currentRouteData?.category || 'Clinical Nutrition & Biochemistry',
-            apiKey: apiKey || null
-          })
-        });
+      // 1. Primary: Backend Chapter-Scoped RAG Service
+      let ragSuccess = false;
+      const targetChapterId = selectedChapterId || (chapters.length > 0 ? chapters[0]._id : null);
 
-        if (res && res.success && res.response) {
-          botResponse = res.response;
-          fromMemory = Boolean(res.fromMemory);
-          tokensUsed = res.tokensUsed || 0;
-          tokensSaved = res.tokensSaved || 0;
-          similarityScore = res.similarity;
-          matchedQuery = res.matchedQuery;
-          modelUsed = res.model || aiModel;
-          backendSuccess = true;
+      if (targetChapterId) {
+        try {
+          const res = await apiClient('/api/rag/chat', {
+            method: 'POST',
+            body: JSON.stringify({
+              chapterId: targetChapterId,
+              query: messageContent,
+              mode: activeMode
+            })
+          });
+
+          if (res && res.success) {
+            botResponse = res.response;
+            citations = res.citations || [];
+            scoped = res.scoped !== false;
+            refusal = Boolean(res.refusal);
+            confidence = res.confidence;
+            chapterTitle = res.chapterTitle;
+            chapterOrder = res.chapterOrder;
+            tokensUsed = 260;
+            ragSuccess = true;
+          }
+        } catch (apiErr) {
+          console.warn('[AIWidget] Backend RAG chat API error:', apiErr);
         }
-      } catch (err) {
-        console.warn('Backend memory API unreachable, proceeding with client-side memory cache:', err);
       }
 
-      // STEP 2: Client-side Memory Check fallback if backend didn't handle it
-      if (!backendSuccess) {
-        // A) Check Client Semantic Memory Cache
+      // 2. Fallback: Semantic Memory or local clinical generator
+      if (!ragSuccess) {
         const localHit = findSimilarLocal(messageContent);
         if (localHit && localHit.hit) {
           botResponse = localHit.response;
@@ -305,78 +346,9 @@ export const AIWidget = () => {
           tokensSaved = localHit.tokensSaved;
           similarityScore = localHit.similarity;
           matchedQuery = localHit.matchedQuery;
-          modelUsed = localHit.model;
         } else {
-          // B) Query OpenAI or fallback LLM
-          if (apiKey) {
-            const response = await fetch(apiUrl, {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${apiKey}`
-              },
-              body: JSON.stringify({
-                model: aiModel,
-                messages: [
-                  {
-                    role: 'system',
-                    content: 'You are an expert AI Clinical Nursing & Biochemistry Tutor. Provide clear, concise, structured explanations with clinical rationales, NCLEX points, and memory hooks.'
-                  },
-                  ...messages.slice(-4).map((m) => ({ role: m.role, content: m.content })),
-                  { role: 'user', content: messageContent }
-                ],
-                max_tokens: 450
-              })
-            });
-
-            const data = await response.json();
-            if (response.ok && data.choices?.[0]?.message?.content) {
-              botResponse = data.choices[0].message.content;
-              modelUsed = data.model || aiModel;
-              tokensUsed = data.usage?.total_tokens || 350;
-            } else {
-              botResponse = generateClinicalResponse(messageContent);
-              tokensUsed = 300;
-            }
-          } else if (geminiApiKey) {
-            const systemPrompt = 'Clinical Nursing & Biochemistry Tutor for students. High-yield NCLEX points, clinical rationales, and memory hooks.';
-            const prompt = `${systemPrompt}\n\nStudent: ${messageContent}\nTutor:`;
-
-            const response = await fetch(
-              `${geminiBaseUrl}/v1beta/models/${geminiModel}:generateContent?key=${geminiApiKey}`,
-              {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  contents: [{ parts: [{ text: prompt }] }],
-                  generationConfig: { temperature: 0.3, maxOutputTokens: 500 }
-                })
-              }
-            );
-
-            const data = await response.json();
-            const geminiText = data.candidates?.[0]?.content?.parts?.[0]?.text;
-            if (response.ok && geminiText) {
-              botResponse = geminiText;
-              modelUsed = geminiModel;
-              tokensUsed = 320;
-            } else {
-              botResponse = generateClinicalResponse(messageContent);
-              tokensUsed = 280;
-            }
-          } else {
-            await new Promise((r) => setTimeout(r, 400));
-            botResponse = generateClinicalResponse(messageContent);
-            tokensUsed = 260;
-          }
-
-          // C) Store newly generated response into client memory so all future similar searches use 0 tokens!
-          storeLocalMemory({
-            query: messageContent,
-            response: botResponse,
-            model: modelUsed,
-            tokensUsed
-          });
+          botResponse = generateClinicalResponse(messageContent);
+          tokensUsed = 240;
         }
       }
 
@@ -384,6 +356,13 @@ export const AIWidget = () => {
         role: 'assistant',
         content: botResponse,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        citations,
+        scoped,
+        refusal,
+        confidence,
+        chapterTitle,
+        chapterOrder,
+        mode: activeMode,
         fromMemory,
         tokensUsed,
         tokensSaved,
@@ -396,7 +375,7 @@ export const AIWidget = () => {
       logChatTelemetry(messageContent, botResponse, { tokensUsed, tokensSaved, fromMemory });
       refreshMemoryStats();
     } catch (err) {
-      console.warn('AI Tutor fallback error:', err);
+      console.warn('AI Tutor query error:', err);
       const fallbackResponse = generateClinicalResponse(messageContent);
       setMessages((prev) => [
         ...prev,
@@ -404,8 +383,10 @@ export const AIWidget = () => {
           role: 'assistant',
           content: fallbackResponse,
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          fromMemory: false,
-          tokensUsed: 250
+          citations: [],
+          scoped: true,
+          refusal: false,
+          tokensUsed: 200
         }
       ]);
     } finally {
@@ -415,29 +396,25 @@ export const AIWidget = () => {
 
   // Quick Action Buttons
   const handleActionPill = (actionType) => {
-    let prompt = '';
-    const currentTopic = currentRouteData?.category || 'Biochemistry';
+    setTutorMode(actionType);
+    const activeCh = chapters.find((c) => c._id === selectedChapterId);
+    const topic = activeCh ? activeCh.title : (currentRouteData?.category || 'Clinical Nursing');
 
+    let prompt = '';
     switch (actionType) {
       case 'simple':
-        prompt = `Explain ${currentTopic} in very simple, easy-to-understand terms with a real-life analogy.`;
+        prompt = `Explain ${topic} in very simple, easy-to-understand terms with a real-life clinical analogy.`;
         break;
-      case 'nclex':
-        prompt = `Give me a high-yield NCLEX clinical scenario question and nursing intervention rationale for ${currentTopic}.`;
-        break;
-      case 'pathway':
-        prompt = `Outline the complete step-by-step mechanism and key enzymes for ${currentTopic}.`;
-        break;
-      case 'mnemonic':
-        prompt = `What are the best memory hooks and mnemonics to easily remember ${currentTopic} for exams?`;
+      case 'case':
+        prompt = `Walk me through a realistic patient case scenario (SBAR format) on ${topic} and ask what my immediate nursing priority should be.`;
         break;
       case 'quiz':
-        prompt = `Quiz me with 2 clinical multiple-choice questions on ${currentTopic} with answers.`;
+        prompt = `Quiz me with 2 NCLEX-style clinical scenario questions on ${topic} with answers and rationales.`;
         break;
       default:
-        prompt = `Provide a comprehensive summary of ${currentTopic}.`;
+        prompt = `Provide a comprehensive clinical summary and high-yield nursing pearls for ${topic}.`;
     }
-    handleSendMessage(prompt);
+    handleSendMessage(prompt, actionType);
   };
 
   // Text-To-Speech (Voice Audio)
@@ -670,35 +647,77 @@ export const AIWidget = () => {
           )}
 
           {/* Quick Action Navigation Tabs */}
-          <div className="flex items-center justify-around px-3 py-2 bg-slate-950/90 border-b border-slate-800 text-[11px] font-bold">
-            <button
-              onClick={() => handleActionPill('simple')}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-emerald-500/10 text-slate-300 hover:text-emerald-400 transition-colors cursor-pointer"
-            >
-              <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
-              <span>Explain Simply</span>
-            </button>
-            <button
-              onClick={() => handleActionPill('nclex')}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-sky-500/10 text-slate-300 hover:text-sky-400 transition-colors cursor-pointer"
-            >
-              <Stethoscope className="w-3.5 h-3.5 text-sky-400" />
-              <span>NCLEX Case</span>
-            </button>
-            <button
-              onClick={() => handleActionPill('mnemonic')}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-purple-500/10 text-slate-300 hover:text-purple-400 transition-colors cursor-pointer"
-            >
-              <Zap className="w-3.5 h-3.5 text-purple-400" />
-              <span>Mnemonics</span>
-            </button>
-            <button
-              onClick={() => handleActionPill('quiz')}
-              className="flex items-center gap-1 px-2.5 py-1 rounded-lg hover:bg-rose-500/10 text-slate-300 hover:text-rose-400 transition-colors cursor-pointer"
-            >
-              <HelpCircle className="w-3.5 h-3.5 text-rose-400" />
-              <span>Quiz Me</span>
-            </button>
+          {/* Chapter Scope Bar & Tutor Mode Selector */}
+          <div className="px-3 py-2 bg-slate-950 border-b border-slate-800 space-y-2">
+            <div className="flex items-center justify-between gap-2 text-[11px]">
+              <span className="text-slate-400 font-medium shrink-0 flex items-center gap-1">
+                <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Scope:</span>
+              </span>
+              <select
+                value={selectedChapterId}
+                onChange={(e) => setSelectedChapterId(e.target.value)}
+                className="bg-slate-900 border border-slate-700 rounded-lg px-2 py-1 text-slate-200 text-[11px] focus:outline-none focus:border-emerald-500 w-full truncate cursor-pointer font-medium"
+              >
+                {chapters.length > 0 ? (
+                  chapters.map((ch) => (
+                    <option key={ch._id} value={ch._id}>
+                      Ch {ch.order}: {ch.title}
+                    </option>
+                  ))
+                ) : (
+                  <option value="">Ch 1: Fundamentals of Nursing, Safety & Infection Control</option>
+                )}
+              </select>
+            </div>
+
+            {/* Mode Selector Tabs */}
+            <div className="grid grid-cols-4 gap-1 text-[10px] font-bold">
+              <button
+                onClick={() => setTutorMode('default')}
+                className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
+                  tutorMode === 'default'
+                    ? 'bg-emerald-600 text-white font-extrabold shadow-sm'
+                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+                title="Evidence-based clinical nursing guidance"
+              >
+                🎓 Tutor
+              </button>
+              <button
+                onClick={() => handleActionPill('simple')}
+                className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
+                  tutorMode === 'simple'
+                    ? 'bg-amber-600 text-white font-extrabold shadow-sm'
+                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+                title="Plain-English explanation with real-life analogies"
+              >
+                💡 Simple
+              </button>
+              <button
+                onClick={() => handleActionPill('quiz')}
+                className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
+                  tutorMode === 'quiz'
+                    ? 'bg-rose-600 text-white font-extrabold shadow-sm'
+                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+                title="NCLEX-style multiple choice scenario practice"
+              >
+                📝 Quiz Me
+              </button>
+              <button
+                onClick={() => handleActionPill('case')}
+                className={`py-1 px-1 rounded-md transition-all text-center cursor-pointer truncate ${
+                  tutorMode === 'case'
+                    ? 'bg-sky-600 text-white font-extrabold shadow-sm'
+                    : 'bg-slate-900 text-slate-400 hover:text-slate-200 hover:bg-slate-800'
+                }`}
+                title="SBAR patient presentation walkthrough"
+              >
+                🏥 SBAR Case
+              </button>
+            </div>
           </div>
 
           {/* Messages Container */}
@@ -753,6 +772,44 @@ export const AIWidget = () => {
                     <div className="whitespace-pre-wrap font-sans">
                       {msg.content}
                     </div>
+
+                    {/* Scoping Refusal Notice */}
+                    {!isUser && msg.refusal && (
+                      <div className="mt-3 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-[11px] flex items-start gap-2">
+                        <ShieldAlert className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                        <div>
+                          <div className="font-bold text-amber-300">Strictly Scoped Clinical Tutor</div>
+                          <div className="text-[10px] text-amber-200/80 mt-0.5">
+                            I am strictly scoped to this chapter's accredited clinical curriculum. Questions outside this scope are politely declined to prevent clinical inaccuracies.
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Structured Lesson Citations */}
+                    {!isUser && msg.citations && msg.citations.length > 0 && (
+                      <div className="mt-3 pt-2.5 border-t border-slate-700/60">
+                        <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                          <BookOpen className="w-3 h-3 text-emerald-400" />
+                          <span>Clinical Curriculum Citations:</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {msg.citations.map((c, cIdx) => (
+                            <a
+                              key={cIdx}
+                              href={c.lessonUrl || '#'}
+                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-medium bg-emerald-950/70 hover:bg-emerald-900 border border-emerald-500/40 text-emerald-300 hover:text-emerald-200 transition-colors cursor-pointer group"
+                              title={`Confidence: ${Math.round(c.confidence * 100)}%\n\nExcerpt: ${c.snippet}`}
+                            >
+                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 group-hover:scale-125 transition-transform" />
+                              <span>Ch {c.chapterOrder}: {c.section}</span>
+                              <span className="text-[9px] text-emerald-400/80 font-mono">({Math.round(c.confidence * 100)}%)</span>
+                              <ExternalLink className="w-2.5 h-2.5 opacity-60 group-hover:opacity-100" />
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
 
                     {/* Bottom message utility bar (for assistant) */}
                     {!isUser && (

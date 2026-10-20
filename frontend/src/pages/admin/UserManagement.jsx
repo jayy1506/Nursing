@@ -18,7 +18,10 @@ import {
   EyeOff,
   Lock,
   KeyRound,
-  ShieldCheck
+  ShieldCheck,
+  UploadCloud,
+  FileText,
+  Download
 } from 'lucide-react';
 
 const PRIMARY_ADMIN_NAME = 'Aachal Karande';
@@ -106,6 +109,10 @@ export const UserManagement = () => {
   const [search, setSearch] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showBulkImportModal, setShowBulkImportModal] = useState(false);
+  const [csvInput, setCsvInput] = useState('');
+  const [bulkLoading, setBulkLoading] = useState(false);
+  const [importResult, setImportResult] = useState(null);
   const [visiblePasswords, setVisiblePasswords] = useState({});
 
   // Form for adding user with default password Srm123
@@ -118,6 +125,60 @@ export const UserManagement = () => {
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
+
+  const handleBulkImport = async (e) => {
+    e.preventDefault();
+    if (!csvInput.trim()) return;
+
+    setBulkLoading(true);
+    setImportResult(null);
+
+    try {
+      const res = await apiClient('/api/users/bulk-import', {
+        method: 'POST',
+        body: JSON.stringify({ csvContent: csvInput })
+      });
+
+      if (res && res.success) {
+        setImportResult(res);
+        if (res.importedUsers && res.importedUsers.length > 0) {
+          setUsers((prev) => [...res.importedUsers, ...prev]);
+        }
+        setMessage({
+          type: res.importedCount > 0 ? 'success' : 'error',
+          text: `Bulk Import Result: ${res.importedCount} user(s) imported successfully. ${res.failedCount > 0 ? `${res.failedCount} row(s) had errors.` : ''}`
+        });
+      } else {
+        setMessage({
+          type: 'error',
+          text: res.error || 'Failed to process bulk import.'
+        });
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: err.message || 'Error processing bulk import' });
+    } finally {
+      setBulkLoading(false);
+    }
+  };
+
+  const handleCsvFileUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setCsvInput(event.target?.result || '');
+    };
+    reader.readAsText(file);
+  };
+
+  const loadSampleCsv = () => {
+    const sample = `name,email,role,password,collegeId
+Elena Rostova,elena.rostova@nursing-lms.edu,student,StudentPass@2026,COLLEGE_001
+Prof. Marcus Vance,marcus.vance@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001
+Sarah Connor,sarah.connor@nursing-lms.edu,student,StudentPass@2026,COLLEGE_001
+Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
+    setCsvInput(sample);
+  };
 
   const togglePasswordVisibility = (userId) => {
     setVisiblePasswords((prev) => ({
@@ -272,13 +333,49 @@ export const UserManagement = () => {
             </p>
           </div>
 
-          <button
-            onClick={() => setShowAddModal(true)}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-full text-xs font-bold shadow-md shadow-emerald-400/20 transition-all cursor-pointer self-start sm:self-auto"
-          >
-            <UserPlus className="w-4 h-4" />
-            <span>Add Student / Faculty</span>
-          </button>
+          <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
+            <button
+              onClick={() => {
+                const headers = ['Name', 'Email', 'Role', 'Status', 'CreatedAt'];
+                const rows = filteredUsers.map(u => [
+                  `"${u.name || ''}"`,
+                  `"${u.email || ''}"`,
+                  `"${u.role || ''}"`,
+                  `"${u.status || 'active'}"`,
+                  `"${u.createdAt || ''}"`
+                ]);
+                const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+                const encodedUri = encodeURI(csvContent);
+                const link = document.createElement('a');
+                link.setAttribute('href', encodedUri);
+                link.setAttribute('download', `medpulse_users_${new Date().toISOString().slice(0, 10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 rounded-xl text-xs font-bold border border-slate-300 dark:border-slate-700 shadow-xs transition-all cursor-pointer"
+            >
+              <Download className="w-4 h-4 text-slate-500" />
+              <span>Export CSV</span>
+            </button>
+            <button
+              onClick={() => {
+                setImportResult(null);
+                setShowBulkImportModal(true);
+              }}
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer border border-slate-700"
+            >
+              <UploadCloud className="w-4 h-4 text-teal-400" />
+              <span>Bulk CSV Import</span>
+            </button>
+            <button
+              onClick={() => setShowAddModal(true)}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-teal-600 hover:bg-teal-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
+            >
+              <UserPlus className="w-4 h-4" />
+              <span>Add Student / Faculty</span>
+            </button>
+          </div>
         </div>
 
         {/* Feedback Messages */}
@@ -564,6 +661,128 @@ export const UserManagement = () => {
                     className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 cursor-pointer disabled:opacity-50"
                   >
                     {loading ? 'Creating...' : 'Provision User'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {/* Bulk CSV Import Modal with Row Error Breakdown */}
+        {showBulkImportModal && (
+          <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+            <div className="bg-white rounded-3xl max-w-2xl w-full p-6 shadow-2xl border border-slate-100 animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between pb-4 border-b border-slate-100 mb-4">
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-700">
+                    <UploadCloud className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h2 className="text-base font-extrabold text-slate-900">Bulk Import Students & Faculty</h2>
+                    <p className="text-[11px] text-slate-500">Upload or paste CSV with row-level validation & error reporting</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowBulkImportModal(false)}
+                  className="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 cursor-pointer"
+                >
+                  <XCircle className="w-5 h-5" />
+                </button>
+              </div>
+
+              <form onSubmit={handleBulkImport} className="space-y-4">
+                {/* CSV File Upload / Paste Toggle */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-xs font-bold text-slate-700">CSV Data Source</label>
+                    <button
+                      type="button"
+                      onClick={loadSampleCsv}
+                      className="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 flex items-center gap-1 cursor-pointer"
+                    >
+                      <Download className="w-3.5 h-3.5" />
+                      <span>Load Sample Template</span>
+                    </button>
+                  </div>
+
+                  <div className="mb-2.5 p-3 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <span className="text-[11px] text-slate-600 font-medium flex items-center gap-1.5">
+                      <FileText className="w-4 h-4 text-emerald-600" />
+                      <span>Select .csv file from your computer:</span>
+                    </span>
+                    <input
+                      type="file"
+                      accept=".csv,text/csv"
+                      onChange={handleCsvFileUpload}
+                      className="text-xs text-slate-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"
+                    />
+                  </div>
+
+                  <textarea
+                    rows={6}
+                    value={csvInput}
+                    onChange={(e) => setCsvInput(e.target.value)}
+                    placeholder="name,email,role,password,collegeId&#10;Elena Rostova,elena@medpulse.edu,student,Pass@2026,COLLEGE_001&#10;Prof. Marcus Vance,marcus@medpulse.edu,faculty,Pass@2026,COLLEGE_001"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs font-mono text-slate-800 focus:outline-none focus:border-emerald-500 font-medium leading-relaxed"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Columns: <code className="bg-slate-100 px-1 py-0.5 rounded font-bold text-slate-600">name, email, role, password, collegeId</code> (password & collegeId optional)
+                  </p>
+                </div>
+
+                {/* Import Results Box */}
+                {importResult && (
+                  <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                    <div className="flex items-center gap-4 text-xs font-bold">
+                      <span className="flex items-center gap-1.5 text-emerald-700 bg-emerald-100/80 px-2.5 py-1 rounded-full">
+                        <CheckCircle className="w-3.5 h-3.5" />
+                        <span>Successfully Imported: {importResult.importedCount}</span>
+                      </span>
+                      {importResult.failedCount > 0 && (
+                        <span className="flex items-center gap-1.5 text-rose-700 bg-rose-100/80 px-2.5 py-1 rounded-full">
+                          <AlertCircle className="w-3.5 h-3.5" />
+                          <span>Failed Rows: {importResult.failedCount}</span>
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Detailed Row-Level Errors */}
+                    {importResult.errors && importResult.errors.length > 0 && (
+                      <div className="space-y-1.5 max-h-36 overflow-y-auto pr-1">
+                        <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider block">
+                          Row-Level Error Details:
+                        </span>
+                        {importResult.errors.map((err, errIdx) => (
+                          <div
+                            key={errIdx}
+                            className="p-2 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-[11px] flex items-start gap-2"
+                          >
+                            <AlertCircle className="w-3.5 h-3.5 text-rose-600 shrink-0 mt-0.5" />
+                            <div>
+                              <strong className="font-bold">Row {err.row}</strong> ({err.email}): {err.reason}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                <div className="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                  <button
+                    type="button"
+                    onClick={() => setShowBulkImportModal(false)}
+                    className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-100 cursor-pointer"
+                  >
+                    Close
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={bulkLoading || !csvInput.trim()}
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-500 hover:bg-emerald-600 text-white shadow-md shadow-emerald-400/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                  >
+                    <UploadCloud className="w-4 h-4" />
+                    <span>{bulkLoading ? 'Processing Import...' : 'Import CSV Users'}</span>
                   </button>
                 </div>
               </form>

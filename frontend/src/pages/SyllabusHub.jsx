@@ -53,11 +53,9 @@ const SyllabusHub = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-white to-emerald-50/40 text-slate-900 pb-20">
-      <Navbar />
-
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 pb-20 transition-colors">
       {/* Hero Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8 shadow-xl">
+      <div className="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white py-10 px-4 sm:px-6 lg:px-8 shadow-xl">
         <div className="max-w-7xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-xs font-extrabold border border-teal-500/30 mb-3">
             <Sparkles className="w-3.5 h-3.5 text-teal-400" />

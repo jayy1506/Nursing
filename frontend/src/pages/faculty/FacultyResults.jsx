@@ -18,7 +18,8 @@ import {
   X,
   FileText,
   Calendar,
-  Layers
+  Layers,
+  Download
 } from 'lucide-react';
 
 export const FacultyResults = () => {
@@ -126,6 +127,34 @@ export const FacultyResults = () => {
               All Test Attempts ({attempts.length})
             </button>
           </div>
+
+          <button
+            onClick={() => {
+              const headers = ['Student Name', 'Email', 'Topic', 'Score', 'Total Questions', 'Percentage', 'Passed', 'Completed At'];
+              const rows = attempts.map(a => [
+                `"${a.studentName || ''}"`,
+                `"${a.studentEmail || ''}"`,
+                `"${a.topicTitle || ''}"`,
+                a.score || 0,
+                a.totalQuestions || 0,
+                a.percentage || 0,
+                a.passed ? 'PASS' : 'FAIL',
+                `"${a.completedAt || ''}"`
+              ]);
+              const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(e => e.join(','))].join('\n');
+              const encodedUri = encodeURI(csvContent);
+              const link = document.createElement('a');
+              link.setAttribute('href', encodedUri);
+              link.setAttribute('download', `cohort_assessment_results_${new Date().toISOString().slice(0, 10)}.csv`);
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+            }}
+            className="inline-flex items-center gap-1.5 px-4 py-2 bg-white dark:bg-slate-800 hover:bg-slate-50 text-slate-700 dark:text-slate-200 border border-slate-300 dark:border-slate-700 rounded-xl text-xs font-bold shadow-xs cursor-pointer"
+          >
+            <Download className="w-4 h-4 text-slate-500" />
+            <span>Export Cohort CSV</span>
+          </button>
         </div>
 
         {/* Telemetry Summary Cards */}
