@@ -400,7 +400,7 @@ const NutritionLessonView = () => {
           ) : lesson.isUnitFinal ? (
             <Link
               to={`/student/quiz/${lesson.quizSlug}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-xs font-extrabold text-white transition-all shadow-md shadow-emerald-500/25 group cursor-pointer"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-700 hover:to-emerald-600 text-xs font-extrabold text-white transition-all shadow-md shadow-emerald-500/25 group cursor-pointer"
             >
               <ClipboardList className="w-4 h-4" />
               <span>Complete Unit: Take Assessment (15 Qs)</span>

@@ -50,7 +50,7 @@ export const StudentResults = () => {
         {/* Top Header Card */}
         <div className={`rounded-3xl border p-6 sm:p-8 shadow-sm mb-6 ${
           passed
-            ? 'bg-gradient-to-br from-emerald-500/10 via-teal-50 to-white border-emerald-200'
+            ? 'bg-gradient-to-br from-emerald-500/10 via-emerald-50/50 to-white border-emerald-200'
             : 'bg-gradient-to-br from-amber-500/10 via-rose-50 to-white border-amber-200'
         }`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -286,16 +286,28 @@ export const StudentResults = () => {
             className="px-5 py-2.5 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-100 font-bold text-xs inline-flex items-center gap-2 cursor-pointer transition-colors"
           >
             <RotateCcw className="w-4 h-4" />
-            <span>Retake Assessment</span>
+            <span>Retake This Chapter Quiz</span>
           </button>
 
-          <Link
-            to={subject === 'physiology' ? '/physiology-syllabus' : '/anatomy-syllabus'}
-            className="px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs shadow-md inline-flex items-center gap-2 transition-all cursor-pointer"
-          >
-            <span>Return to Syllabus</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <div className="flex items-center gap-3 flex-wrap">
+            {gating.isFinalUnlocked ? (
+              <Link
+                to={`/quiz/${subject === 'physiology' ? 'physiology-grand-final' : (subject === 'anatomy' ? 'anatomy-grand-final' : (subject === 'biochemistry' ? 'biochem-grand-final' : 'nutrition-grand-final'))}`}
+                className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md inline-flex items-center gap-2 transition-all"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>Take Grand Final Examination (All Chapters) →</span>
+              </Link>
+            ) : (
+              <Link
+                to={subject === 'physiology' ? '/physiology-syllabus' : (subject === 'anatomy' ? '/anatomy-syllabus' : (subject === 'biochemistry' ? '/bio-chem-syllabus' : '/nutrition-syllabus'))}
+                className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md inline-flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <span>Continue Syllabus ({gating.completedCount}/{gating.totalUnits} Done)</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>

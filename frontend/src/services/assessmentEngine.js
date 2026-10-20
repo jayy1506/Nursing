@@ -523,6 +523,11 @@ export async function recordAssessmentAttempt(attemptData) {
         completed.push(topicId);
         localStorage.setItem(COMPLETED_UNITS_KEY, JSON.stringify(completed));
       }
+      try {
+        window.dispatchEvent(new CustomEvent('nursing_lms_completion_updated', { detail: { unitId: topicId, completed: true } }));
+      } catch (e) {
+        // window undefined in non-browser env
+      }
     }
   } catch (err) {
     console.warn('[AssessmentEngine] localStorage error:', err);

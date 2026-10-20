@@ -2,7 +2,7 @@
 
 @layer base {
   :root {
-    --color-bg-base: #f8fafc;
+    --color-bg-base: #e8ecf1;
     --color-bg-surface: #ffffff;
     --color-bg-muted: #f1f5f9;
     --color-border: #e2e8f0;
@@ -31,34 +31,33 @@
     --color-info-subtle: #f0f9ff;
   }
 
+  /* All themes unified to crisp white and green clinical aesthetic */
   .dark {
-    --color-bg-base: #090d16;
-    --color-bg-surface: #111827;
-    --color-bg-muted: #1f2937;
-    --color-border: #374151;
-    --color-border-subtle: #4b5563;
-    --color-text-main: #f8fafc;
-    --color-text-muted: #94a3b8;
+    --color-bg-base: #ffffff;
+    --color-bg-surface: #ffffff;
+    --color-bg-muted: #f8fafc;
+    --color-border: #e2e8f0;
+    --color-border-subtle: #cbd5e1;
+    --color-text-main: #0f172a;
+    --color-text-muted: #475569;
     --color-text-subtle: #64748b;
 
-    /* Dark Mode Brand Tokens */
-    --color-primary: #14b8a6;
-    --color-primary-hover: #2dd4bf;
-    --color-primary-subtle: rgba(20, 184, 166, 0.15);
-    --color-primary-border: #134e4a;
+    --color-primary: #059669;
+    --color-primary-hover: #047857;
+    --color-primary-subtle: #ecfdf5;
+    --color-primary-border: #a7f3d0;
 
-    --color-accent: #fbbf24;
-    --color-accent-subtle: rgba(251, 191, 36, 0.15);
+    --color-accent: #f59e0b;
+    --color-accent-subtle: #fffbeb;
 
-    /* Semantic Status Tokens Dark */
-    --color-success: #34d399;
-    --color-success-subtle: rgba(52, 211, 153, 0.15);
-    --color-danger: #f87171;
-    --color-danger-subtle: rgba(248, 113, 113, 0.15);
-    --color-warning: #fbbf24;
-    --color-warning-subtle: rgba(251, 191, 36, 0.15);
-    --color-info: #38bdf8;
-    --color-info-subtle: rgba(56, 189, 248, 0.15);
+    --color-success: #10b981;
+    --color-success-subtle: #ecfdf5;
+    --color-danger: #ef4444;
+    --color-danger-subtle: #fef2f2;
+    --color-warning: #f59e0b;
+    --color-warning-subtle: #fffbeb;
+    --color-info: #0284c7;
+    --color-info-subtle: #f0f9ff;
   }
 
   /* Default body styles */
@@ -87,6 +86,7 @@
 
 /* Reduced motion accessibility support */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {

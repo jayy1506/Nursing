@@ -11,11 +11,11 @@ export const MedPulseIcon = ({ className = 'w-8 h-8', showCross = true }) => (
   >
     <defs>
       <linearGradient id="medpulse-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#0d9488" />
-        <stop offset="100%" stopColor="#0284c7" />
+        <stop offset="0%" stopColor="#059669" />
+        <stop offset="100%" stopColor="#10b981" />
       </linearGradient>
       <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-        <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#0d9488" floodOpacity="0.3" />
+        <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#059669" floodOpacity="0.3" />
       </filter>
     </defs>
 

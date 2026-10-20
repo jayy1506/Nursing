@@ -54,7 +54,7 @@ export const NutritionSyllabus = () => {
   }, [searchQuery, selectedUnitId]);
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-teal-500 selection:text-white pb-24 transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white pb-24 transition-colors">
       <Navbar />
 
       {/* Top Breadcrumb & Switcher Bar in Calm Clinical Nursing Scrub Palette */}
@@ -63,13 +63,13 @@ export const NutritionSyllabus = () => {
           <div className="flex items-center gap-2">
             <Link
               to="/syllabus"
-              className="text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 font-medium inline-flex items-center gap-1 transition-colors"
+              className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium inline-flex items-center gap-1 transition-colors"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
               <span>Syllabus Hub</span>
             </Link>
             <span className="text-slate-300 dark:text-slate-700">/</span>
-            <span className="text-teal-700 dark:text-teal-400 font-bold">Nutrition & Clinical Dietetics (10 Units)</span>
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold">Nutrition & Clinical Dietetics (10 Units)</span>
           </div>
 
           <div className="flex items-center gap-1.5 flex-wrap">
@@ -92,7 +92,7 @@ export const NutritionSyllabus = () => {
             >
               🧬 Biochemistry
             </Link>
-            <span className="px-2.5 py-1 rounded-lg bg-teal-50 dark:bg-teal-950/60 text-teal-800 dark:text-teal-200 font-extrabold text-[11px] border border-teal-200 dark:border-teal-800">
+            <span className="px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 font-extrabold text-[11px] border border-emerald-200 dark:border-emerald-800">
               🥗 Nutrition (10 Units)
             </span>
           </div>
@@ -163,8 +163,8 @@ export const NutritionSyllabus = () => {
         <div
           className={`p-6 sm:p-7 rounded-3xl border mb-6 transition-all ${
             gating.isFinalUnlocked
-              ? "bg-gradient-to-r from-teal-500/10 via-amber-50 to-white dark:from-teal-950/30 dark:to-slate-900 border-teal-300 dark:border-teal-800 shadow-sm"
-              : "bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white border-teal-500/30 shadow-xl"
+              ? "bg-gradient-to-r from-emerald-50 via-white to-emerald-50 border-2 border-emerald-400 text-slate-900 shadow-sm"
+              : "bg-white border border-slate-200 text-slate-900 shadow-xs"
           }`}
         >
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -173,14 +173,14 @@ export const NutritionSyllabus = () => {
                 <span
                   className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
                     gating.isFinalUnlocked
-                      ? "bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300 border border-teal-300"
-                      : "bg-teal-900/80 text-teal-300 border border-teal-500/40"
+                      ? "bg-emerald-100 text-emerald-800 border border-emerald-300"
+                      : "bg-amber-50 text-amber-800 border border-amber-200"
                   }`}
                 >
                   {gating.isFinalUnlocked ? (
                     <Unlock className="w-3.5 h-3.5" />
                   ) : (
-                    <Lock className="w-3.5 h-3.5 text-amber-400" />
+                    <Lock className="w-3.5 h-3.5 text-amber-600" />
                   )}
                   <span>
                     {gating.isFinalUnlocked
@@ -190,38 +190,30 @@ export const NutritionSyllabus = () => {
                 </span>
                 <span
                   className={`text-xs font-bold ${
-                    gating.isFinalUnlocked ? "text-slate-600 dark:text-slate-400" : "text-teal-200"
+                    gating.isFinalUnlocked ? "text-emerald-700" : "text-slate-500"
                   }`}
                 >
                   {gating.completedCount} of 10 Modules Mastered ({gating.completionPercent}%)
                 </span>
               </div>
 
-              <h3
-                className={`text-xl sm:text-2xl font-black tracking-tight ${
-                  gating.isFinalUnlocked ? "text-slate-900 dark:text-slate-100" : "text-white"
-                }`}
-              >
+              <h3 className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
                 Comprehensive Nutrition & Dietetics Grand Final Examination
               </h3>
 
-              <p
-                className={`text-xs sm:text-sm max-w-2xl leading-relaxed ${
-                  gating.isFinalUnlocked ? "text-slate-600 dark:text-slate-400" : "text-slate-300"
-                }`}
-              >
+              <p className="text-xs sm:text-sm max-w-2xl leading-relaxed text-slate-600">
                 {gating.isFinalUnlocked
                   ? "Congratulations! You have mastered all 10 Nutrition units. Take the 40-question comprehensive grand final exam."
                   : `Gated under INC competency standards. Complete each of the 10 individual unit assessments or mark chapters studied to unlock this final examination. Remaining: ${gating.remainingCount} modules.`}
               </p>
 
               {/* Live Animated Progress Meter */}
-              <div className="w-full max-w-md bg-white/20 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden pt-0.5">
+              <div className="w-full max-w-md bg-slate-100 rounded-full h-2.5 overflow-hidden pt-0.5">
                 <div
                   className={`h-2.5 rounded-full transition-all duration-500 ${
                     gating.isFinalUnlocked
-                      ? "bg-gradient-to-r from-teal-500 to-amber-500"
-                      : "bg-gradient-to-r from-teal-400 to-amber-400"
+                      ? "bg-gradient-to-r from-emerald-500 to-amber-500"
+                      : "bg-gradient-to-r from-emerald-400 to-amber-400"
                   }`}
                   style={{ width: `${Math.max(5, gating.completionPercent)}%` }}
                 />
@@ -239,11 +231,11 @@ export const NutritionSyllabus = () => {
                 }}
                 className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-black text-xs transition-all shadow-md ${
                   gating.isFinalUnlocked
-                    ? "bg-teal-600 hover:bg-teal-700 text-white shadow-teal-600/30 cursor-pointer hover:scale-105"
-                    : "bg-slate-800 text-slate-400 border border-slate-700 cursor-not-allowed opacity-90"
+                    ? "bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/30 cursor-pointer hover:scale-105"
+                    : "bg-slate-100 text-slate-500 border border-slate-200 cursor-not-allowed opacity-90"
                 }`}
               >
-                {gating.isFinalUnlocked ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4 text-amber-400" />}
+                {gating.isFinalUnlocked ? <Unlock className="w-4 h-4" /> : <Lock className="w-4 h-4 text-amber-600" />}
                 <span>{gating.isFinalUnlocked ? "Take Grand Final Exam (40 Qs)" : `Locked (${gating.completedCount}/10 Units)`}</span>
               </Link>
             </div>
@@ -337,13 +329,13 @@ export const NutritionSyllabus = () => {
                 <div
                   key={unit.id}
                   id={unit.id}
-                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs hover:border-teal-300 dark:hover:border-teal-700 transition-all overflow-hidden"
+                  className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs hover:border-emerald-300 dark:hover:border-emerald-700 transition-all overflow-hidden"
                 >
                   {/* Unit Top Header */}
                   <div className="p-5 sm:p-6 border-b border-slate-100 dark:border-slate-800 bg-gradient-to-r from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-850">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                       <div className="flex items-start sm:items-center gap-3.5">
-                        <div className="w-11 h-11 rounded-xl bg-teal-50 dark:bg-teal-950/60 border border-teal-200 dark:border-teal-800 text-teal-750 dark:text-teal-300 flex items-center justify-center text-xl shadow-2xs shrink-0">
+                        <div className="w-11 h-11 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-750 dark:text-emerald-300 flex items-center justify-center text-xl shadow-2xs shrink-0">
                           {unit.icon}
                         </div>
                         <div>
@@ -385,7 +377,7 @@ export const NutritionSyllabus = () => {
                           className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                             unitDone
                               ? "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700"
-                              : "bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/60 dark:hover:bg-teal-900/60 text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800 shadow-xs"
+                              : "bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 border border-emerald-200 dark:border-emerald-800 shadow-xs"
                           }`}
                           title="Click to toggle chapter completion and update Grand Final standing"
                         >
@@ -400,11 +392,11 @@ export const NutritionSyllabus = () => {
                         {/* Quick Quiz Shortcut Button */}
                         <Link
                           to={`/quiz/${unitKey}`}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/50 dark:hover:bg-teal-900/50 text-teal-800 dark:text-teal-200 border border-teal-200/80 dark:border-teal-800 font-bold text-xs transition-colors shrink-0"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200 border border-emerald-200/80 dark:border-emerald-800 font-bold text-xs transition-colors shrink-0"
                         >
-                          <ClipboardList className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400" />
+                          <ClipboardList className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
                           <span>Take Unit Quiz</span>
-                          <ArrowRight className="w-3 h-3 text-teal-500" />
+                          <ArrowRight className="w-3 h-3 text-emerald-500" />
                         </Link>
                       </div>
                     </div>

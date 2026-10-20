@@ -159,23 +159,23 @@ export const Home = () => {
 
   return (
     <div className="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
-      {/* 1. Header Banner: Greeting & Academic Progress Overview */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-teal-950 to-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl">
-        <div className="pointer-events-none absolute -top-24 -left-20 h-80 w-80 rounded-full bg-teal-500/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-sky-500/20 blur-3xl" />
+      {/* 1. Header Banner: Greeting & Academic Progress Overview (White & Emerald Green) */}
+      <section className="relative overflow-hidden bg-white border border-emerald-200/80 rounded-3xl p-6 sm:p-8 shadow-xs">
+        <div className="pointer-events-none absolute -top-24 -left-20 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-24 right-0 h-80 w-80 rounded-full bg-emerald-500/10 blur-3xl" />
 
         <div className="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           <div className="max-w-xl space-y-2">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/20 text-teal-300 text-[11px] font-bold border border-teal-500/30">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-[11px] font-bold border border-emerald-200">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
               <span>INC CBME Standardized Curriculum &bull; Semester I</span>
             </div>
 
-            <h1 className="text-2xl sm:text-4xl font-black tracking-tight">
-              Welcome back, <span className="bg-gradient-to-r from-teal-300 via-emerald-300 to-sky-300 bg-clip-text text-transparent">{nickname}</span>
+            <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight">
+              Welcome back, <span className="text-emerald-700">{nickname}</span>
             </h1>
 
-            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
               Master human anatomy, physiological mechanisms, clinical biochemistry, and therapeutic nutrition with bedside case rationales and your chapter-scoped AI tutor.
             </p>
 
@@ -193,7 +193,7 @@ export const Home = () => {
                 size="sm"
                 onClick={() => navigate('/question-bank')}
                 leftIcon={<ClipboardList className="w-4 h-4" />}
-                className="text-white border-white/20 hover:bg-white/10 dark:text-white"
+                className="text-slate-700 bg-white border-slate-200 hover:bg-slate-50"
               >
                 Question Bank
               </Button>
@@ -201,30 +201,30 @@ export const Home = () => {
           </div>
 
           {/* Academic Standing & Overall Circular Progress Ring */}
-          <div className="flex items-center gap-5 bg-white/10 dark:bg-slate-900/60 backdrop-blur-md p-5 rounded-2xl border border-white/15 shrink-0 w-full sm:w-auto justify-between sm:justify-start">
+          <div className="flex items-center gap-5 bg-emerald-50/70 p-5 rounded-2xl border border-emerald-200/80 shrink-0 w-full sm:w-auto justify-between sm:justify-start shadow-2xs">
             <ProgressRing
               value={overallPercentage}
               max={100}
               size={84}
               strokeWidth={7}
-              color="#2dd4bf"
-              trackColor="rgba(255,255,255,0.15)"
+              color="#059669"
+              trackColor="#d1fae5"
             >
               <div className="text-center">
-                <span className="text-base font-black text-white">{overallPercentage}%</span>
-                <span className="block text-[8px] uppercase tracking-wider text-teal-200 font-bold">Overall</span>
+                <span className="text-base font-black text-emerald-800">{overallPercentage}%</span>
+                <span className="block text-[8px] uppercase tracking-wider text-emerald-700 font-bold">Overall</span>
               </div>
             </ProgressRing>
 
             <div className="space-y-1">
               <div className="flex items-center gap-2">
-                <GraduationCap className="w-4 h-4 text-teal-300" />
-                <h4 className="text-xs font-bold text-white">Competency Progress</h4>
+                <GraduationCap className="w-4 h-4 text-emerald-700" />
+                <h4 className="text-xs font-bold text-slate-900">Competency Progress</h4>
               </div>
-              <p className="text-xs text-slate-300 font-semibold">
+              <p className="text-xs text-slate-700 font-semibold">
                 {totalCompletedUnits} of 41 Units Passed
               </p>
-              <span className="inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 uppercase">
+              <span className="inline-block text-[10px] font-extrabold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 border border-emerald-300 uppercase">
                 Pass Criterion &ge; 75%
               </span>
             </div>
@@ -235,7 +235,7 @@ export const Home = () => {
       {/* 2. Top Action Row: "Continue Where You Left Off" & "Weak Topics" */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Continue Where You Left Off Card */}
-        <Card className="lg:col-span-2 border-teal-200/60 dark:border-teal-900/40 bg-gradient-to-r from-teal-50/50 via-white to-sky-50/30 dark:from-slate-900 dark:to-slate-800/80">
+        <Card className="lg:col-span-2 border-emerald-200/70 bg-white shadow-xs">
           <CardContent className="p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div className="space-y-1">
               <div className="flex items-center gap-2">
@@ -306,7 +306,7 @@ export const Home = () => {
           </div>
           <Link
             to="/syllabus"
-            className="text-xs font-bold text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
           >
             <span>View All</span>
             <ArrowRight className="w-3 h-3" />
@@ -350,7 +350,7 @@ export const Home = () => {
                     <span>Course Progress</span>
                     <span>{track.percent}%</span>
                   </div>
-                  <ProgressBar value={track.percent} max={100} color={track.id === 'nutrition' ? 'amber' : 'teal'} />
+                  <ProgressBar value={track.percent} max={100} color={track.id === 'nutrition' ? 'amber' : 'emerald'} />
                 </div>
               </CardContent>
 
@@ -368,7 +368,7 @@ export const Home = () => {
                     </>
                   )}
                 </span>
-                <span className="text-teal-600 dark:text-teal-400 font-bold flex items-center gap-1">
+                <span className="text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1">
                   Open Syllabus <ArrowRight className="w-3 h-3" />
                 </span>
               </div>
@@ -390,7 +390,7 @@ export const Home = () => {
           </div>
           <Link
             to="/student/results"
-            className="text-xs font-bold text-teal-600 dark:text-teal-400 hover:underline flex items-center gap-1"
+            className="text-xs font-bold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
           >
             <span>Full History</span>
             <ArrowRight className="w-3 h-3" />

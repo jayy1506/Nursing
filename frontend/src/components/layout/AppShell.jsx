@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { MedPulseLogo, MedPulseIcon } from '../brand/MedPulseLogo';
@@ -106,15 +106,15 @@ export const AppShell = ({ children }) => {
   );
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 flex flex-col selection:bg-teal-500 selection:text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col selection:bg-emerald-500 selection:text-white">
       {/* Top Header Bar */}
-      <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
           {/* Mobile hamburger */}
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden focus-visible:ring-2 focus-visible:ring-teal-500"
+            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 lg:hidden focus-visible:ring-2 focus-visible:ring-emerald-500"
             aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -124,11 +124,11 @@ export const AppShell = ({ children }) => {
           <button
             type="button"
             onClick={() => setCollapsed(!collapsed)}
-            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/60 dark:hover:bg-teal-900/60 text-teal-800 dark:text-teal-200 border border-teal-200/80 dark:border-teal-800 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-teal-500"
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 text-emerald-800 dark:text-emerald-200 border border-emerald-200/80 dark:border-emerald-800 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-emerald-500"
             aria-label={collapsed ? 'Open Navigation Menu (One Click)' : 'Collapse Navigation Sidebar'}
             title={collapsed ? 'Open Navigation Menu (One Click)' : 'Collapse Sidebar for Full Width'}
           >
-            <Menu className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+            <Menu className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
             <span>{collapsed ? 'Menu' : 'Close'}</span>
           </button>
 
@@ -159,11 +159,11 @@ export const AppShell = ({ children }) => {
             <button
               type="button"
               onClick={() => setNotificationsOpen(!notificationsOpen)}
-              className="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative focus-visible:ring-2 focus-visible:ring-teal-500 cursor-pointer"
+              className="p-2 rounded-xl text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors relative focus-visible:ring-2 focus-visible:ring-emerald-500 cursor-pointer"
               aria-label="Notifications"
             >
               <Bell className="w-4 h-4" />
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-teal-500 rounded-full ring-2 ring-white dark:ring-slate-900" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-emerald-500 rounded-full ring-2 ring-white dark:ring-slate-900" />
             </button>
 
             {notificationsOpen && (
@@ -178,8 +178,8 @@ export const AppShell = ({ children }) => {
                   <Badge variant="primary" size="sm">New</Badge>
                 </div>
                 <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-teal-50/60 dark:bg-teal-950/30 border border-teal-100 dark:border-teal-900/50">
-                    <p className="font-bold text-teal-800 dark:text-teal-300">Welcome to MedPulse</p>
+                  <div className="p-2.5 rounded-xl bg-emerald-50/60 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50">
+                    <p className="font-bold text-emerald-800 dark:text-emerald-300">Welcome to MedPulse</p>
                     <p className="text-slate-600 dark:text-slate-400 text-[11px] mt-0.5">
                       Explore all 4 foundational tracks with chapter-scoped AI tutoring.
                     </p>
@@ -201,7 +201,7 @@ export const AppShell = ({ children }) => {
               <button
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:border-teal-400 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-teal-500"
+                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 hover:border-emerald-400 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-emerald-500"
                 aria-label="User navigation menu"
               >
                 <Avatar name={nickname} size="sm" />
@@ -209,7 +209,7 @@ export const AppShell = ({ children }) => {
                   <span className="text-xs font-bold text-slate-800 dark:text-slate-100">
                     {nickname}
                   </span>
-                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-teal-600 dark:text-teal-400 mt-0.5">
+                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-emerald-600 dark:text-emerald-400 mt-0.5">
                     {role}
                   </span>
                 </div>
@@ -268,7 +268,7 @@ export const AppShell = ({ children }) => {
           ) : (
             <Link
               to="/login"
-              className="px-4 py-1.5 text-xs font-bold text-white bg-teal-600 hover:bg-teal-700 rounded-xl shadow-xs transition-colors"
+              className="px-4 py-1.5 text-xs font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl shadow-xs transition-colors"
             >
               Sign In
             </Link>
@@ -283,10 +283,10 @@ export const AppShell = ({ children }) => {
           <button
             type="button"
             onClick={() => setCollapsed(false)}
-            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-teal-700 hover:bg-teal-800 text-white rounded-r-xl shadow-lg text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-teal-600 border-l-0"
+            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-emerald-700 hover:bg-emerald-800 text-white rounded-r-xl shadow-lg text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-emerald-600 border-l-0"
             title="Open Navigation Menu"
           >
-            <ChevronRight className="w-3.5 h-3.5 text-teal-200" />
+            <ChevronRight className="w-3.5 h-3.5 text-emerald-200" />
             <span className="text-[11px] uppercase tracking-wider font-extrabold">Menu</span>
           </button>
         )}
@@ -315,7 +315,7 @@ export const AppShell = ({ children }) => {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                       isActive
-                        ? 'bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 font-bold border border-teal-200/60 dark:border-teal-800/60'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold border border-emerald-200/60 dark:border-emerald-800/60'
                         : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 hover:bg-slate-100/70 dark:hover:bg-slate-800/70'
                     } ${collapsed ? 'justify-center' : ''}`
                   }
@@ -337,7 +337,7 @@ export const AppShell = ({ children }) => {
                   <Link
                     key={track.to}
                     to={track.to}
-                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-teal-700 dark:hover:text-teal-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors"
+                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors"
                   >
                     <span className="flex items-center gap-2">
                       <span>{track.emoji}</span>
@@ -398,7 +398,7 @@ export const AppShell = ({ children }) => {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
                       isActive
-                        ? 'bg-teal-50 dark:bg-teal-950/50 text-teal-700 dark:text-teal-300 font-bold'
+                        ? 'bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-bold'
                         : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
                     }`
                   }
@@ -448,7 +448,7 @@ export const AppShell = ({ children }) => {
           to="/"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+              isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
             }`
           }
         >
@@ -460,7 +460,7 @@ export const AppShell = ({ children }) => {
           to="/syllabus"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+              isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
             }`
           }
         >
@@ -472,7 +472,7 @@ export const AppShell = ({ children }) => {
           to="/question-bank"
           className={({ isActive }) =>
             `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+              isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
             }`
           }
         >
@@ -485,7 +485,7 @@ export const AppShell = ({ children }) => {
             to="/student/quiz/comprehensive"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
               }`
             }
           >
@@ -499,7 +499,7 @@ export const AppShell = ({ children }) => {
             to="/faculty/dashboard"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
               }`
             }
           >
@@ -513,7 +513,7 @@ export const AppShell = ({ children }) => {
             to="/admin/dashboard"
             className={({ isActive }) =>
               `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-teal-600 dark:text-teal-400' : 'text-slate-500 dark:text-slate-400'
+                isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-500 dark:text-slate-400'
               }`
             }
           >
@@ -562,13 +562,13 @@ export const AppShell = ({ children }) => {
                   key={track.to}
                   to={track.to}
                   onClick={() => setSearchOpen(false)}
-                  className="flex items-center justify-between p-2 rounded-xl hover:bg-teal-50 dark:hover:bg-slate-800 text-xs text-slate-800 dark:text-slate-200 transition-colors"
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-emerald-50 dark:hover:bg-slate-800 text-xs text-slate-800 dark:text-slate-200 transition-colors"
                 >
                   <span className="flex items-center gap-2 font-medium">
                     <span>{track.emoji}</span>
                     <span>{track.label}</span>
                   </span>
-                  <span className="text-[10px] text-teal-600 dark:text-teal-400 font-semibold">{track.units}</span>
+                  <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-semibold">{track.units}</span>
                 </Link>
               ))}
 

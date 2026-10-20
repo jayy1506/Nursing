@@ -137,37 +137,37 @@ const QuestionBankView = () => {
   // GATING BARRIER: If student has not completed required modules, show clear guidance message
   if (!isModulesCompleted) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-950 to-slate-900 text-white flex flex-col">
+      <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col">
         <Navbar />
 
         {/* Top Navigation Bar with Back & Home */}
-        <div className="bg-slate-900/95 border-b border-slate-800 py-3 px-4 sm:px-6 lg:px-8">
+        <div className="bg-white border-b border-slate-200 py-3 px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto flex items-center justify-between">
             <div className="flex items-center gap-2">
               <button
                 onClick={() => navigate(-1)}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer"
               >
                 <ArrowLeft className="w-3.5 h-3.5" />
                 <span>Back</span>
               </button>
               <button
                 onClick={() => navigate('/')}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer"
               >
-                <HomeIcon className="w-3.5 h-3.5 text-emerald-400" />
+                <HomeIcon className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Home</span>
               </button>
               <Link
                 to="/syllabus"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer ml-1"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer ml-1"
               >
-                <BookOpen className="w-3.5 h-3.5 text-sky-400" />
+                <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Syllabus Hub</span>
               </Link>
             </div>
 
-            <div className="text-[11px] font-semibold text-slate-400">
+            <div className="text-[11px] font-semibold text-slate-500">
               Curriculum Competency Gating
             </div>
           </div>
@@ -175,38 +175,38 @@ const QuestionBankView = () => {
 
         {/* Informative Locked Message Card */}
         <div className="flex-1 flex items-center justify-center p-4 sm:p-6 my-auto">
-          <div className="max-w-xl w-full bg-slate-900/80 backdrop-blur-xl border border-white/10 rounded-3xl p-6 sm:p-8 text-center shadow-2xl relative overflow-hidden">
-            <div className="pointer-events-none absolute -top-24 -left-20 h-56 w-56 rounded-full bg-amber-500/20 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-24 -right-20 h-56 w-56 rounded-full bg-emerald-500/20 blur-3xl" />
+          <div className="max-w-xl w-full bg-white border border-slate-200/80 rounded-3xl p-6 sm:p-8 text-center shadow-lg relative overflow-hidden">
+            <div className="pointer-events-none absolute -top-24 -left-20 h-56 w-56 rounded-full bg-amber-500/10 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-24 -right-20 h-56 w-56 rounded-full bg-emerald-500/10 blur-3xl" />
 
             <div className="relative z-10">
-              <div className="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/30 text-amber-400 mx-auto flex items-center justify-center mb-5 shadow-lg shadow-amber-500/20">
+              <div className="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 mx-auto flex items-center justify-center mb-5 shadow-xs">
                 <Lock className="w-8 h-8" />
               </div>
 
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 text-xs font-extrabold border border-amber-500/20 mb-3">
-                <AlertCircle className="w-3.5 h-3.5" />
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-extrabold border border-amber-200 mb-3">
+                <AlertCircle className="w-3.5 h-3.5 text-amber-600" />
                 <span>Module Completion Required</span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                 Complete Curriculum Modules First
               </h2>
 
-              <p className="mt-3 text-slate-300 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
+              <p className="mt-3 text-slate-600 text-xs sm:text-sm leading-relaxed max-w-md mx-auto">
                 Access to the Official University Question Bank (1,500+ MCQs & 5-mark subjective answers) is gated. You must complete and pass your chapter assessment quizzes (≥ 75%) before accessing this repository.
               </p>
 
               {/* Progress Tracker */}
-              <div className="mt-6 p-4 rounded-2xl bg-white/5 border border-white/10 text-left space-y-3">
+              <div className="mt-6 p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left space-y-3">
                 <div>
                   <div className="flex justify-between text-xs font-bold mb-1">
-                    <span className="text-slate-300">🦴 Applied Anatomy Progress</span>
-                    <span className="text-teal-400">{anatStatus?.completedCount || 0} / 12 Units Passed</span>
+                    <span className="text-slate-700">🦴 Applied Anatomy Progress</span>
+                    <span className="text-emerald-700">{anatStatus?.completedCount || 0} / 12 Units Passed</span>
                   </div>
-                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-teal-500 rounded-full"
+                      className="h-full bg-emerald-500 rounded-full"
                       style={{ width: `${Math.max(5, anatStatus?.completionPercent || 0)}%` }}
                     />
                   </div>
@@ -214,12 +214,12 @@ const QuestionBankView = () => {
 
                 <div>
                   <div className="flex justify-between text-xs font-bold mb-1">
-                    <span className="text-slate-300">⚡ Applied Physiology Progress</span>
-                    <span className="text-sky-400">{physStatus?.completedCount || 0} / 12 Units Passed</span>
+                    <span className="text-slate-700">⚡ Applied Physiology Progress</span>
+                    <span className="text-emerald-700">{physStatus?.completedCount || 0} / 12 Units Passed</span>
                   </div>
-                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-sky-500 rounded-full"
+                      className="h-full bg-emerald-500 rounded-full"
                       style={{ width: `${Math.max(5, physStatus?.completionPercent || 0)}%` }}
                     />
                   </div>
@@ -227,10 +227,10 @@ const QuestionBankView = () => {
 
                 <div>
                   <div className="flex justify-between text-xs font-bold mb-1">
-                    <span className="text-slate-300">🧬 Applied Biochemistry Progress</span>
-                    <span className="text-emerald-400">{biochemStatus?.completedCount || 0} / 7 Units Passed</span>
+                    <span className="text-slate-700">🧬 Applied Biochemistry Progress</span>
+                    <span className="text-emerald-700">{biochemStatus?.completedCount || 0} / 7 Units Passed</span>
                   </div>
-                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-emerald-500 rounded-full"
                       style={{ width: `${Math.max(5, biochemStatus?.completionPercent || 0)}%` }}
@@ -240,12 +240,12 @@ const QuestionBankView = () => {
 
                 <div>
                   <div className="flex justify-between text-xs font-bold mb-1">
-                    <span className="text-slate-300">🥗 Applied Nutrition & Dietetics Progress</span>
-                    <span className="text-amber-400">{nutStatus?.completedCount || 0} / 10 Units Passed</span>
+                    <span className="text-slate-700">🥗 Applied Nutrition & Dietetics Progress</span>
+                    <span className="text-emerald-700">{nutStatus?.completedCount || 0} / 10 Units Passed</span>
                   </div>
-                  <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                  <div className="w-full h-2 bg-slate-200 rounded-full overflow-hidden">
                     <div
-                      className="h-full bg-amber-500 rounded-full"
+                      className="h-full bg-emerald-500 rounded-full"
                       style={{ width: `${Math.max(5, nutStatus?.completionPercent || 0)}%` }}
                     />
                   </div>
@@ -256,15 +256,15 @@ const QuestionBankView = () => {
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
                 <button
                   onClick={() => navigate('/')}
-                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
                 >
-                  <HomeIcon className="w-3.5 h-3.5 text-emerald-400" />
+                  <HomeIcon className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Home</span>
                 </button>
 
                 <button
                   onClick={() => navigate(-1)}
-                  className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />
                   <span>Back</span>
@@ -272,7 +272,7 @@ const QuestionBankView = () => {
 
                 <button
                   onClick={() => navigate('/syllabus')}
-                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-extrabold text-xs shadow-md shadow-emerald-500/25 transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs shadow-xs transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <BookOpen className="w-3.5 h-3.5" />
                   <span>Go to Syllabus Modules</span>
@@ -280,7 +280,7 @@ const QuestionBankView = () => {
 
                 <button
                   onClick={() => navigate('/quiz/phys-unit-1')}
-                  className="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
+                  className="px-4 py-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 font-extrabold text-xs transition-all flex items-center gap-2 cursor-pointer"
                 >
                   <span>Take Unit 1 Quiz</span>
                   <ArrowRight className="w-3.5 h-3.5" />
@@ -288,10 +288,10 @@ const QuestionBankView = () => {
               </div>
 
               {/* Instant Evaluation / Preview Bypass */}
-              <div className="mt-6 pt-4 border-t border-white/10 text-center">
+              <div className="mt-6 pt-4 border-t border-slate-200 text-center">
                 <button
                   onClick={() => setPreviewOverride(true)}
-                  className="text-[11px] text-slate-400 hover:text-emerald-400 underline transition-colors cursor-pointer"
+                  className="text-[11px] text-slate-500 hover:text-emerald-700 underline transition-colors cursor-pointer"
                 >
                   Examiner / Demo Evaluation: Unlock Question Bank Preview
                 </button>
@@ -305,56 +305,56 @@ const QuestionBankView = () => {
 
   // UNLOCKED VIEW: Display Question Bank Repository
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-50 via-white to-emerald-50 text-slate-900 pb-20">
+    <div className="min-h-screen bg-slate-50 text-slate-900 pb-20">
       <Navbar />
 
       {/* Top Breadcrumb & Action Bar with Back & Home */}
-      <div className="bg-slate-900/95 border-b border-slate-800 py-2.5 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white border-b border-slate-200/80 py-2.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
             <button
               onClick={() => navigate(-1)}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5" />
               <span>Back</span>
             </button>
             <button
               onClick={() => navigate('/')}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer"
             >
-              <HomeIcon className="w-3.5 h-3.5 text-emerald-400" />
+              <HomeIcon className="w-3.5 h-3.5 text-emerald-600" />
               <span>Home</span>
             </button>
             <Link
               to="/syllabus"
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-xs font-bold text-white transition-all cursor-pointer ml-1"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer ml-1"
             >
-              <BookOpen className="w-3.5 h-3.5 text-sky-400" />
+              <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
               <span>Syllabus Hub</span>
             </Link>
           </div>
 
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-400">
+          <div className="flex items-center gap-2 text-[11px] font-semibold text-slate-500">
             <span>Nursing & Clinical Hub</span>
             <span>/</span>
-            <span className="text-emerald-400 font-bold">Official Question Bank</span>
+            <span className="text-emerald-700 font-bold">Official Question Bank</span>
           </div>
         </div>
       </div>
 
-      {/* Header Banner */}
-      <div className="bg-gradient-to-r from-emerald-900 via-teal-900 to-slate-900 text-white py-10 px-4 sm:px-6 lg:px-8 shadow-xl">
+      {/* Header Banner - Clean White & Emerald Green */}
+      <section className="bg-white border-b border-slate-200/80 text-slate-900 py-10 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-extrabold border border-emerald-500/30 mb-2">
-              <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-extrabold border border-emerald-200 mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
               <span>Official University & NCLEX Question Repository</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Nursing Comprehensive Question Bank
             </h1>
-            <p className="text-slate-300 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
+            <p className="text-slate-600 text-xs sm:text-sm mt-1 max-w-2xl leading-relaxed">
               Curated repository of Short Answer Questions (5 Marks), Very Short / Viva Voce Questions (2 Marks), and Multiple Choice Practice Questions with model key points.
             </p>
           </div>
@@ -362,21 +362,21 @@ const QuestionBankView = () => {
           <div className="flex items-center gap-3">
             <button
               onClick={revealAll}
-              className="px-3.5 py-2 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold text-white transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <Eye className="w-3.5 h-3.5 text-emerald-400" />
+              <Eye className="w-3.5 h-3.5 text-emerald-600" />
               <span>Reveal All Answers</span>
             </button>
             <button
               onClick={hideAll}
-              className="px-3.5 py-2 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-bold text-white transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-3.5 py-2 rounded-2xl bg-slate-100 hover:bg-slate-200 border border-slate-200 text-xs font-bold text-slate-700 transition-all cursor-pointer flex items-center gap-1.5"
             >
-              <EyeOff className="w-3.5 h-3.5 text-rose-400" />
+              <EyeOff className="w-3.5 h-3.5 text-rose-600" />
               <span>Hide All Answers</span>
             </button>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Main Filter & Search Controls */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-6">
@@ -462,8 +462,8 @@ const QuestionBankView = () => {
               onClick={() => setSelectedUnit("curriculum-anatomy")}
               className={`px-3 py-1 rounded-full text-xs font-bold transition-all shrink-0 cursor-pointer ${
                 selectedUnit === "curriculum-anatomy"
-                  ? "bg-teal-600 text-white"
-                  : "bg-teal-50 text-teal-700 hover:bg-teal-100"
+                  ? "bg-emerald-600 text-white"
+                  : "bg-emerald-50 text-emerald-700 hover:bg-emerald-100"
               }`}
             >
               🦴 Applied Anatomy (12 Units)

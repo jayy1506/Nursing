@@ -62,7 +62,7 @@ export const AnatomyLessonView = () => {
   const [showAnswers, setShowAnswers] = useState({});
 
   // Real-time automatic curriculum progress
-  const { isCompleted, toggleCompletion } = useCurriculumProgress('anatomy');
+  const { isCompleted, toggleCompletion, gating } = useCurriculumProgress('anatomy');
   const completed = isCompleted(chapter.id);
 
   const toggleSubjective = (id) => {
@@ -97,7 +97,7 @@ export const AnatomyLessonView = () => {
   const nextChapter = currentIndex < ANATOMY_UNITS.length - 1 ? ANATOMY_UNITS[currentIndex + 1] : null;
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased selection:bg-teal-500 selection:text-white pb-24 font-sans transition-colors">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased selection:bg-emerald-500 selection:text-white pb-24 font-sans transition-colors">
       <Navbar />
 
       {/* Top Breadcrumb Navigation in Calm Clinical Nursing Scrub Palette */}
@@ -106,13 +106,13 @@ export const AnatomyLessonView = () => {
           <div className="flex items-center gap-2 flex-wrap">
             <Link
               to="/anatomy-syllabus"
-              className="text-slate-500 dark:text-slate-400 hover:text-teal-600 dark:hover:text-teal-400 font-medium inline-flex items-center gap-1.5 transition-colors"
+              className="text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-medium inline-flex items-center gap-1.5 transition-colors"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
               <span>Anatomy Syllabus</span>
             </Link>
             <span className="text-slate-300 dark:text-slate-700">/</span>
-            <span className="text-teal-700 dark:text-teal-400 font-bold truncate max-w-[280px] sm:max-w-md">
+            <span className="text-emerald-700 dark:text-emerald-400 font-bold truncate max-w-[280px] sm:max-w-md">
               Unit {chapter.unitNumber}: {chapter.title}
             </span>
 
@@ -137,7 +137,7 @@ export const AnatomyLessonView = () => {
               className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer inline-flex items-center gap-1 ${
                 completed
                   ? "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 border border-slate-200"
-                  : "bg-teal-50 dark:bg-teal-950 text-teal-800 dark:text-teal-200 hover:bg-teal-100 border border-teal-200 dark:border-teal-800"
+                  : "bg-emerald-50 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-200 hover:bg-emerald-100 border border-emerald-200 dark:border-emerald-800"
               }`}
             >
               <CheckCircle2 className={`w-3 h-3 ${completed ? "text-emerald-600" : "text-slate-400"}`} />
@@ -155,7 +155,7 @@ export const AnatomyLessonView = () => {
             {nextChapter && (
               <Link
                 to={`/anatomy/lesson/${nextChapter.id}`}
-                className="px-2.5 py-1 rounded-lg bg-teal-600 hover:bg-teal-500 text-white transition-colors"
+                className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition-colors"
               >
                 Next Unit →
               </Link>
@@ -165,47 +165,46 @@ export const AnatomyLessonView = () => {
       </div>
 
       {/* Hero Header */}
-      <div className="bg-gradient-to-r from-slate-900 via-teal-950 to-slate-900 text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-slate-800 shadow-xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none" />
-
+      {/* Hero Header - Crisp White & Emerald Green */}
+      <div className="bg-white text-slate-900 py-10 px-4 sm:px-6 lg:px-8 border-b border-slate-200/80 shadow-xs relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-wrap items-center gap-2.5 mb-3">
-            <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-teal-500/20 text-teal-300 border border-teal-500/30 flex items-center gap-1.5">
+            <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-emerald-50 text-emerald-800 border border-emerald-200 flex items-center gap-1.5">
               <span>{chapter.icon || "🧬"}</span>
               <span>Unit {chapter.unitNumber} INC CBME Syllabus</span>
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-800/80 text-slate-300 border border-slate-700/60">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-700 border border-slate-200">
               {chapter.category}
             </span>
-            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
               {chapter.teachingHours}
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white max-w-4xl leading-tight">
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-slate-900 max-w-4xl leading-tight">
             {chapter.title}
           </h1>
 
-          <p className="mt-3 text-slate-300 text-xs sm:text-sm max-w-3xl leading-relaxed">
+          <p className="mt-3 text-slate-600 text-xs sm:text-sm max-w-3xl leading-relaxed">
             {chapter.summary}
           </p>
 
           {/* Quick Metrics Bar */}
-          <div className="mt-6 flex flex-wrap items-center gap-4 text-xs font-semibold text-slate-300">
-            <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/60">
-              <BookOpen className="w-4 h-4 text-teal-400" />
+          <div className="mt-6 flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-600">
+            <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+              <BookOpen className="w-4 h-4 text-emerald-600" />
               <span>{chapter.sections?.length || 0} Core Topics</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/60">
-              <Layers className="w-4 h-4 text-teal-400" />
+            <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+              <Layers className="w-4 h-4 text-emerald-600" />
               <span>{chapter.totalImages || 0} Illustrated Plates</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/60">
-              <HelpCircle className="w-4 h-4 text-teal-400" />
+            <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+              <HelpCircle className="w-4 h-4 text-emerald-600" />
               <span>{chapter.mcqs?.length || 0} Objective MCQs</span>
             </div>
-            <div className="flex items-center gap-1.5 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/60">
-              <FileText className="w-4 h-4 text-teal-400" />
+            <div className="flex items-center gap-1.5 bg-slate-100 px-3 py-1.5 rounded-xl border border-slate-200">
+              <FileText className="w-4 h-4 text-emerald-600" />
               <span>{chapter.subjectiveQuestions?.length || 0} University Exam Questions</span>
             </div>
           </div>
@@ -220,7 +219,7 @@ export const AnatomyLessonView = () => {
               onClick={() => handleTabChange("reading")}
               className={`py-3.5 px-4 font-extrabold text-xs sm:text-sm border-b-2 flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === "reading"
-                  ? "border-teal-600 text-teal-700 bg-teal-50/50"
+                  ? "border-emerald-600 text-emerald-700 bg-emerald-50/50"
                   : "border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               }`}
             >
@@ -232,7 +231,7 @@ export const AnatomyLessonView = () => {
               onClick={() => handleTabChange("quiz")}
               className={`py-3.5 px-4 font-extrabold text-xs sm:text-sm border-b-2 flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === "quiz"
-                  ? "border-teal-600 text-teal-700 bg-teal-50/50"
+                  ? "border-emerald-600 text-emerald-700 bg-emerald-50/50"
                   : "border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               }`}
             >
@@ -244,7 +243,7 @@ export const AnatomyLessonView = () => {
               onClick={() => handleTabChange("university-questions")}
               className={`py-3.5 px-4 font-extrabold text-xs sm:text-sm border-b-2 flex items-center gap-2 transition-all cursor-pointer ${
                 activeTab === "university-questions"
-                  ? "border-teal-600 text-teal-700 bg-teal-50/50"
+                  ? "border-emerald-600 text-emerald-700 bg-emerald-50/50"
                   : "border-transparent text-slate-600 hover:text-slate-900 hover:bg-slate-50"
               }`}
             >
@@ -270,7 +269,7 @@ export const AnatomyLessonView = () => {
                     <a
                       key={sec.id}
                       href={`#${sec.id}`}
-                      className="block px-3 py-2.5 rounded-xl text-slate-700 hover:bg-teal-50 hover:text-teal-900 font-semibold transition-all border border-transparent hover:border-teal-200/60"
+                      className="block px-3 py-2.5 rounded-xl text-slate-700 hover:bg-emerald-50 hover:text-emerald-900 font-semibold transition-all border border-transparent hover:border-emerald-200/60"
                     >
                       <div className="flex items-center gap-2">
                         <span className="w-5 h-5 rounded-full bg-slate-100 text-slate-700 flex items-center justify-center text-[10px] font-black shrink-0">
@@ -286,28 +285,28 @@ export const AnatomyLessonView = () => {
               <div className="pt-3 border-t border-slate-100 text-[11px] space-y-2">
                 <div className="flex items-center justify-between text-slate-600 font-medium">
                   <span>Sections Count:</span>
-                  <span className="font-bold text-teal-700">{chapter.sections?.length || 0}</span>
+                  <span className="font-bold text-emerald-700">{chapter.sections?.length || 0}</span>
                 </div>
                 <div className="flex items-center justify-between text-slate-600 font-medium">
                   <span>Plates & Figures:</span>
-                  <span className="font-bold text-teal-700">{chapter.totalImages || 0}</span>
+                  <span className="font-bold text-emerald-700">{chapter.totalImages || 0}</span>
                 </div>
                 <div className="flex items-center justify-between text-slate-600 font-medium">
                   <span>MCQ Practice Bank:</span>
-                  <span className="font-bold text-teal-700">{chapter.mcqs?.length || 0}</span>
+                  <span className="font-bold text-emerald-700">{chapter.mcqs?.length || 0}</span>
                 </div>
                 <div className="flex items-center justify-between text-slate-600 font-medium">
                   <span>University Questions:</span>
-                  <span className="font-bold text-teal-700">{chapter.subjectiveQuestions?.length || 0}</span>
+                  <span className="font-bold text-emerald-700">{chapter.subjectiveQuestions?.length || 0}</span>
                 </div>
               </div>
 
               <div className="pt-2">
                 <button
                   onClick={() => handleTabChange("quiz")}
-                  className="w-full py-2.5 px-3 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 text-xs font-bold border border-teal-200/80 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-bold border border-emerald-200/80 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
                 >
-                  <HelpCircle className="w-3.5 h-3.5 text-teal-600" />
+                  <HelpCircle className="w-3.5 h-3.5 text-emerald-600" />
                   <span>Practice Unit MCQs</span>
                 </button>
               </div>
@@ -320,15 +319,15 @@ export const AnatomyLessonView = () => {
               <div className="space-y-8">
                 {/* Specific Learning Objectives Card */}
                 {chapter.objectives && chapter.objectives.length > 0 && (
-                  <div className="bg-gradient-to-br from-teal-50/70 via-emerald-50/40 to-white rounded-2xl border border-teal-200/90 p-5 sm:p-6 shadow-xs">
-                    <h3 className="text-xs font-black text-teal-900 uppercase tracking-wider flex items-center gap-2 mb-3">
-                      <Award className="w-4 h-4 text-teal-600" />
+                  <div className="bg-gradient-to-br from-emerald-50/70 via-white to-emerald-50/40 rounded-2xl border border-emerald-200/90 p-5 sm:p-6 shadow-xs">
+                    <h3 className="text-xs font-black text-emerald-900 uppercase tracking-wider flex items-center gap-2 mb-3">
+                      <Award className="w-4 h-4 text-emerald-600" />
                       <span>INC CBME Specific Learning Objectives</span>
                     </h3>
                     <ul className="space-y-2.5 text-xs sm:text-sm text-slate-700">
                       {chapter.objectives.map((obj, i) => (
                         <li key={i} className="flex items-start gap-2.5">
-                          <CheckCircle2 className="w-4 h-4 text-teal-600 shrink-0 mt-0.5" />
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                           <span className="leading-relaxed font-medium">{renderFormattedText(obj)}</span>
                         </li>
                       ))}
@@ -345,7 +344,7 @@ export const AnatomyLessonView = () => {
                   >
                     {/* Section Title Header */}
                     <div className="border-b border-slate-100 pb-4">
-                      <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-700 text-[10px] font-extrabold uppercase tracking-wider mb-1">
+                      <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[10px] font-extrabold uppercase tracking-wider mb-1">
                         Section {sIdx + 1} of {chapter.sections.length}
                       </div>
                       <h2 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight mt-1">
@@ -366,13 +365,13 @@ export const AnatomyLessonView = () => {
 
                     {/* Detailed Points with Clean Structured Layout Card */}
                     {section.points && section.points.length > 0 && (
-                      <div className="bg-gradient-to-br from-slate-50 via-teal-50/20 to-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 space-y-4 shadow-xs">
+                      <div className="bg-gradient-to-br from-slate-50 via-emerald-50/20 to-white rounded-2xl p-5 sm:p-6 border border-slate-200/90 space-y-4 shadow-xs">
                         <div className="flex items-center justify-between border-b border-slate-200/60 pb-3">
-                          <div className="flex items-center gap-2 text-teal-900 font-black text-xs uppercase tracking-wider">
-                            <Sparkles className="w-4 h-4 text-teal-600" />
+                          <div className="flex items-center gap-2 text-emerald-900 font-black text-xs uppercase tracking-wider">
+                            <Sparkles className="w-4 h-4 text-emerald-600" />
                             <span>Key Anatomical Concepts, Landmarks & Terminology</span>
                           </div>
-                          <span className="text-[11px] font-extrabold text-teal-700 bg-teal-100/80 px-2.5 py-0.5 rounded-full">
+                          <span className="text-[11px] font-extrabold text-emerald-700 bg-emerald-100/80 px-2.5 py-0.5 rounded-full">
                             {section.points.length} Core Principles
                           </span>
                         </div>
@@ -662,7 +661,7 @@ export const AnatomyLessonView = () => {
                   {nextChapter ? (
                     <Link
                       to={`/anatomy/lesson/${nextChapter.id}`}
-                      className="px-6 py-3 rounded-2xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-teal-600/20"
+                      className="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all flex items-center gap-2 shadow-md shadow-emerald-600/20"
                     >
                       <span>Next: Unit {nextChapter.unitNumber} ({nextChapter.title})</span>
                       <ArrowRight className="w-4 h-4" />
@@ -676,8 +675,8 @@ export const AnatomyLessonView = () => {
             {activeTab === "quiz" && (
               <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm space-y-6">
                 <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 text-teal-800 text-xs font-bold border border-teal-200 mb-2">
-                    <Sparkles className="w-3.5 h-3.5 text-teal-600" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200 mb-2">
+                    <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
                     <span>Official CBME Objective Questions • Unit {chapter.unitNumber}</span>
                   </div>
                   <h2 className="text-xl sm:text-2xl font-black text-slate-900">
@@ -705,7 +704,7 @@ export const AnatomyLessonView = () => {
                         className="p-5 rounded-2xl border border-slate-200 bg-slate-50/50 space-y-3"
                       >
                         <div className="flex items-start justify-between gap-3">
-                          <span className="font-extrabold text-teal-700 text-xs shrink-0">
+                          <span className="font-extrabold text-emerald-700 text-xs shrink-0">
                             Q{idx + 1}.
                           </span>
                           <p className="text-xs sm:text-sm font-bold text-slate-800 flex-1 leading-snug">
@@ -789,14 +788,14 @@ export const AnatomyLessonView = () => {
                   <div className="space-y-4">
                     <div className="flex items-center justify-between border-b border-slate-200 pb-2">
                       <div className="flex items-center gap-2">
-                        <span className="px-2.5 py-0.5 rounded-md bg-teal-600 text-white text-xs font-black">
+                        <span className="px-2.5 py-0.5 rounded-md bg-emerald-600 text-white text-xs font-black">
                           Section A
                         </span>
                         <h3 className="text-sm sm:text-base font-black text-slate-900">
                           Short Answer Questions ({chapter.shortAnswerQuestions.length} Questions • 5 Marks Each)
                         </h3>
                       </div>
-                      <span className="text-[11px] text-teal-700 font-bold bg-teal-50 px-2 py-0.5 rounded border border-teal-200">
+                      <span className="text-[11px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                         High-Yield Exam Focus
                       </span>
                     </div>
@@ -810,7 +809,7 @@ export const AnatomyLessonView = () => {
                             className="p-4 sm:p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3"
                           >
                             <div className="flex items-start justify-between gap-3">
-                              <span className="w-6 h-6 rounded-full bg-teal-100 text-teal-800 text-xs font-black flex items-center justify-center shrink-0">
+                              <span className="w-6 h-6 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black flex items-center justify-center shrink-0">
                                 {idx + 1}
                               </span>
                               <p className="text-xs sm:text-sm font-extrabold text-slate-800 flex-1 leading-snug">
@@ -819,15 +818,15 @@ export const AnatomyLessonView = () => {
                               <button
                                 type="button"
                                 onClick={() => toggleSubjective(saq.id)}
-                                className="px-3 py-1 rounded-xl bg-white hover:bg-teal-50 text-teal-700 hover:text-teal-800 text-xs font-bold border border-slate-200 transition-colors shrink-0 cursor-pointer"
+                                className="px-3 py-1 rounded-xl bg-white hover:bg-emerald-50 text-emerald-700 hover:text-emerald-800 text-xs font-bold border border-slate-200 transition-colors shrink-0 cursor-pointer"
                               >
                                 {isOpen ? "Hide Model Answer" : "View Model Answer"}
                               </button>
                             </div>
 
                             {isOpen && saq.modelAnswer && (
-                              <div className="p-4 rounded-xl bg-white border border-teal-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-1 animate-in fade-in duration-200">
-                                <span className="text-[11px] font-black text-teal-800 uppercase tracking-wider block mb-1">
+                              <div className="p-4 rounded-xl bg-white border border-emerald-200 text-xs sm:text-sm text-slate-700 leading-relaxed space-y-1 animate-in fade-in duration-200">
+                                <span className="text-[11px] font-black text-emerald-800 uppercase tracking-wider block mb-1">
                                   Model Examination Answer & Marking Scheme:
                                 </span>
                                 <div className="whitespace-pre-line font-medium text-slate-700">
@@ -925,7 +924,7 @@ export const AnatomyLessonView = () => {
                             key={idx}
                             className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/90 flex items-start gap-2.5"
                           >
-                            <span className="w-5 h-5 rounded-full bg-teal-100 text-teal-800 text-[11px] font-black flex items-center justify-center shrink-0 mt-0.5">
+                            <span className="w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-black flex items-center justify-center shrink-0 mt-0.5">
                               {idx + 1}
                             </span>
                             <p className="text-xs font-bold text-slate-800 leading-relaxed flex-1">
@@ -940,62 +939,69 @@ export const AnatomyLessonView = () => {
               </div>
             )}
 
-            {/* Bottom Chapter Completion & Advancement Banner */}
-            <div className="mt-12 p-6 sm:p-8 rounded-3xl border bg-gradient-to-r from-teal-50 via-emerald-50 to-white dark:from-slate-900 dark:via-teal-950/40 dark:to-slate-900 border-teal-200 dark:border-teal-800 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
+            {/* Bottom Chapter Test & Cumulative Grand Final Roadmap Callout */}
+            <div className="mt-12 p-6 sm:p-8 rounded-3xl border bg-gradient-to-r from-emerald-50 via-white to-emerald-50/30 border-emerald-200 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xs">
+              <div className="space-y-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   {completed ? (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300">
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
-                      Unit {chapter.unitNumber} Completed & Mastered!
+                      Unit {chapter.unitNumber} Assessment Passed & Mastered
                     </span>
                   ) : (
-                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300">
-                      Reading in Progress
+                    <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-black bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300">
+                      Chapter Test Required
                     </span>
                   )}
+                  <span className="text-xs font-bold text-slate-500 dark:text-slate-400">
+                    Curriculum Standing: {gating.completedCount} of 12 Units Mastered ({gating.completionPercent}%)
+                  </span>
                 </div>
-                <h3 className="text-lg font-black text-slate-900 dark:text-slate-100">
-                  {completed ? "You've finished this unit!" : "Finished studying this unit?"}
-                </h3>
-                <p className="text-xs text-slate-600 dark:text-slate-400 max-w-xl">
+
+                <h3 className="text-lg sm:text-xl font-black text-slate-900 dark:text-slate-100">
                   {completed
-                    ? "Your completion has been automatically updated in your curriculum profile and counts toward unlocking the Grand Final examination."
-                    : "Marking this unit completed will update your curriculum progress in real-time and advance your Grand Final unlocking standing."}
+                    ? `Unit ${chapter.unitNumber} Mastery Complete! Next Step:`
+                    : `Next Step: Take Unit ${chapter.unitNumber} Assessment Test`}
+                </h3>
+
+                <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-2xl leading-relaxed">
+                  {completed
+                    ? (gating.isFinalUnlocked
+                        ? "🎉 Congratulations! You have mastered all 12 units. The Comprehensive Anatomy Grand Final Examination (48 questions across all chapters) is unlocked and ready!"
+                        : `Unit ${chapter.unitNumber} is certified. You have completed ${gating.completedCount} of 12 chapters. Complete the remaining ${gating.remainingCount} chapters to unlock the Grand Final Exam.`)
+                    : `Under INC standards, take the 15-question test for Unit ${chapter.unitNumber}. Passing with ≥ 75% marks validates competency and counts toward unlocking the cumulative Grand Final Examination.`
+                  }
                 </p>
               </div>
 
               <div className="flex items-center gap-3 shrink-0 flex-wrap">
-                <button
-                  type="button"
-                  onClick={() => toggleCompletion(chapter.id)}
-                  className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                    completed
-                      ? "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 border border-slate-300 dark:border-slate-700"
-                      : "bg-teal-600 hover:bg-teal-700 text-white shadow-md shadow-teal-600/20"
-                  }`}
-                >
-                  {completed ? "Mark Incomplete" : "Mark as Completed ✓"}
-                </button>
-
+                {/* Primary Chapter Test CTA */}
                 <Link
                   to={`/quiz/${chapter.id}`}
-                  className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
+                  className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md shadow-emerald-600/25 transition-all flex items-center gap-2 cursor-pointer hover:scale-102"
                 >
-                  <ClipboardList className="w-3.5 h-3.5" />
-                  <span>Take Unit Quiz</span>
+                  <ClipboardList className="w-4 h-4" />
+                  <span>{completed ? "Retake Chapter Test" : `Take Unit ${chapter.unitNumber} Test (15 MCQs) →`}</span>
                 </Link>
 
-                {nextChapter && (
+                {/* If all 12 units mastered, show Grand Final CTA */}
+                {gating.isFinalUnlocked ? (
                   <Link
-                    to={`/anatomy/lesson/${nextChapter.id}`}
-                    onClick={() => {
-                      if (!completed) toggleCompletion(chapter.id);
-                    }}
-                    className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
+                    to="/quiz/anatomy-grand-final"
+                    className="px-5 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm shadow-md transition-all flex items-center gap-2 cursor-pointer hover:scale-102"
                   >
-                    <span>Next Unit →</span>
+                    <Sparkles className="w-4 h-4" />
+                    <span>Take Grand Final Exam (All 12 Chapters) →</span>
                   </Link>
+                ) : (
+                  nextChapter && (
+                    <Link
+                      to={`/anatomy/lesson/${nextChapter.id}`}
+                      className="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-1.5"
+                    >
+                      <span>Next Unit ({nextChapter.unitNumber}) →</span>
+                    </Link>
+                  )
                 )}
               </div>
             </div>
@@ -1049,7 +1055,7 @@ export const AnatomyLessonView = () => {
               {/* Right Column: Full Diagram Explanations & Landmarks */}
               <div className="lg:col-span-5 p-6 space-y-5 overflow-y-auto max-h-[75vh] bg-white text-xs sm:text-sm">
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-wider text-teal-700 block mb-1">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 block mb-1">
                     Anatomical Plate & Theory Overview
                   </span>
                   <p className="text-slate-700 leading-relaxed font-medium">
@@ -1060,7 +1066,7 @@ export const AnatomyLessonView = () => {
                 {/* Views & Landmarks */}
                 {zoomImage.explanation?.views && (
                   <div className="space-y-3 pt-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-teal-700 block">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 block">
                       Region Landmarks Labeled
                     </span>
                     {zoomImage.explanation.views.map((v, idx) => (
@@ -1069,7 +1075,7 @@ export const AnatomyLessonView = () => {
                         <div className="space-y-1.5">
                           {v.landmarks.map((lm, lIdx) => (
                             <div key={lIdx} className="bg-white p-2 rounded-xl border border-slate-200/80 text-xs">
-                              <strong className="text-teal-900 block">• {lm.name}</strong>
+                              <strong className="text-emerald-900 block">• {lm.name}</strong>
                               <span className="text-slate-600 block">{lm.details}</span>
                             </div>
                           ))}
@@ -1082,14 +1088,14 @@ export const AnatomyLessonView = () => {
                 {/* Directional Vectors */}
                 {zoomImage.explanation?.directionalPairs && (
                   <div className="space-y-2 pt-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-teal-700 block">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 block">
                       Directional Pairs Breakdown
                     </span>
                     {zoomImage.explanation.directionalPairs.map((pair, idx) => (
                       <div key={idx} className="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs space-y-0.5">
-                        <strong className="text-teal-950 block">{pair.pair}</strong>
+                        <strong className="text-emerald-950 block">{pair.pair}</strong>
                         <p className="text-slate-600 font-medium">{pair.definition}</p>
-                        <span className="text-teal-700 font-bold text-[11px] block">{pair.example}</span>
+                        <span className="text-emerald-700 font-bold text-[11px] block">{pair.example}</span>
                       </div>
                     ))}
                   </div>
@@ -1098,13 +1104,13 @@ export const AnatomyLessonView = () => {
                 {/* Points / Landmark Bullets */}
                 {(zoomImage.explanation?.points || zoomImage.explanation?.highlights) && (
                   <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-2 pt-2">
-                    <span className="text-[10px] font-black uppercase tracking-wider text-teal-700 block">
+                    <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 block">
                       Anatomical Landmarks & Structural Points
                     </span>
                     <ul className="space-y-1.5 text-xs text-slate-700">
                       {(zoomImage.explanation.points || zoomImage.explanation.highlights).map((pt, idx) => (
                         <li key={idx} className="flex items-start gap-2">
-                          <span className="text-teal-600 font-bold">•</span>
+                          <span className="text-emerald-600 font-bold">•</span>
                           <span className="font-medium leading-relaxed">{renderFormattedText(pt)}</span>
                         </li>
                       ))}

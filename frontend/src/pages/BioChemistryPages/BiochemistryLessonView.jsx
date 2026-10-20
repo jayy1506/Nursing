@@ -175,19 +175,19 @@ export const BiochemistryLessonView = () => {
           </div>
         </div>
 
-        {/* Hero Concept Card with Visual Indicator */}
-        <div className="p-6 rounded-3xl bg-gradient-to-r from-emerald-950 via-teal-900 to-slate-900 text-white shadow-xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* Hero Concept Card with Visual Indicator - White & Emerald Green */}
+        <div className="p-6 rounded-3xl bg-white border border-emerald-200 text-slate-900 shadow-xs mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-2xl">
-            <div className="text-xs font-extrabold uppercase tracking-wider text-emerald-400 mb-1 flex items-center gap-1.5">
-              <BookOpen className="w-4 h-4" />
+            <div className="text-xs font-extrabold uppercase tracking-wider text-emerald-700 mb-1 flex items-center gap-1.5">
+              <BookOpen className="w-4 h-4 text-emerald-600" />
               <span>Core Biochemical Principle</span>
             </div>
-            <p className="text-sm sm:text-base leading-relaxed text-slate-200 font-medium">
+            <p className="text-sm sm:text-base leading-relaxed text-slate-700 font-medium">
               {lesson.overview}
             </p>
           </div>
 
-          <div className="w-20 h-20 rounded-3xl bg-white/10 border border-white/20 flex items-center justify-center text-4xl shadow-inner shrink-0">
+          <div className="w-20 h-20 rounded-3xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-4xl shadow-xs shrink-0">
             {lesson.icon}
           </div>
         </div>
@@ -234,7 +234,7 @@ export const BiochemistryLessonView = () => {
                 className={`p-6 rounded-3xl border shadow-xs ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}
               >
                 <h2 className="text-base font-extrabold mb-4 flex items-center gap-2 text-slate-900">
-                  <Dna className="w-4 h-4 text-teal-600" />
+                  <Dna className="w-4 h-4 text-emerald-600" />
                   <span>Enzymatic Pathways & Mechanisms</span>
                 </h2>
                 <div className="space-y-4">
@@ -269,7 +269,7 @@ export const BiochemistryLessonView = () => {
                 variants={cardVariants}
                 initial="hidden"
                 animate="visible"
-                className="p-6 rounded-3xl bg-gradient-to-br from-emerald-50/70 via-teal-50/40 to-white border border-emerald-200/80 shadow-xs"
+                className="p-6 rounded-3xl bg-gradient-to-br from-emerald-50/70 via-white to-emerald-50/30 border border-emerald-200/80 shadow-xs"
               >
                 <h2 className="text-base font-extrabold text-slate-900 mb-4 flex items-center gap-2">
                   <Stethoscope className="w-4 h-4 text-emerald-700" />
