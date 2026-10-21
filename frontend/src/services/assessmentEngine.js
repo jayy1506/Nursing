@@ -535,7 +535,7 @@ export async function recordAssessmentAttempt(attemptData) {
 
   // 3. Sync to MongoDB Atlas API if server reachable
   try {
-    const token = localStorage.getItem('token') || localStorage.getItem('firebase_token');
+    const token = localStorage.getItem('nursing_token') || localStorage.getItem('token') || localStorage.getItem('firebase_token');
     await fetch('/api/assessments/submit', {
       method: 'POST',
       headers: {
@@ -545,6 +545,9 @@ export async function recordAssessmentAttempt(attemptData) {
       body: JSON.stringify({
         scopeType: topicId.includes('grand-final') ? 'course' : 'chapter',
         scopeId: topicId,
+        topicTitle: topicTitle || topicId,
+        studentName,
+        studentEmail,
         score,
         totalQuestions,
         percentage,
@@ -552,7 +555,7 @@ export async function recordAssessmentAttempt(attemptData) {
         timeSpentSeconds,
         answers: reviewData.map((r, i) => ({
           questionId: r.id || `q-${i}`,
-          selectedOption: r.studentAnswer,
+          selectedOption: typeof r.studentAnswer === 'number' ? r.studentAnswer : 0,
           correctOption: r.correctAnswer,
           isCorrect: r.isCorrect
         }))

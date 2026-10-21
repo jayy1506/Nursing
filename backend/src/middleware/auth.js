@@ -111,17 +111,34 @@ export const authenticateUser = async (req, res, next) => {
       ]
     });
 
-    if (!dbUser && decodedFirebaseToken.email) {
-      // Auto-create profile in MongoDB for new authenticated Firebase user
-      dbUser = await User.create({
-        name: decodedFirebaseToken.name || decodedFirebaseToken.email.split('@')[0],
-        email: decodedFirebaseToken.email.toLowerCase(),
-        firebaseUid: decodedFirebaseToken.uid,
-        role: decodedRole || 'student',
-        isActive: true,
-        status: 'active'
-      });
-    } else if (dbUser && !dbUser.firebaseUid && decodedFirebaseToken.uid) {
+    const adminEmails = [
+      process.env.ADMIN_EMAIL,
+      process.env.SECONDARY_ADMIN_EMAIL,
+      'karandeaachal@gmail.com',
+      'jthakre62@gmail.com'
+    ].filter(Boolean).map((e) => e.toLowerCase().trim());
+
+    const isSystemAdminEmail = decodedFirebaseToken.email && adminEmails.includes(decodedFirebaseToken.email.toLowerCase().trim());
+
+    if (!dbUser) {
+      if (isSystemAdminEmail) {
+        // Auto-initialize system administrator account in MongoDB
+        dbUser = await User.create({
+          name: decodedFirebaseToken.name || (decodedFirebaseToken.email.includes('aachal') ? 'Aachal Karande' : 'Jay Thakre'),
+          email: decodedFirebaseToken.email.toLowerCase().trim(),
+          firebaseUid: decodedFirebaseToken.uid,
+          role: 'admin',
+          isActive: true,
+          status: 'active'
+        });
+      } else {
+        // Strictly reject any unregistered user
+        return res.status(403).json({
+          success: false,
+          error: 'Access denied: Your account is not registered by an administrator. Please contact your department admin.'
+        });
+      }
+    } else if (!dbUser.firebaseUid && decodedFirebaseToken.uid) {
       dbUser.firebaseUid = decodedFirebaseToken.uid;
       await dbUser.save();
     }
@@ -129,7 +146,7 @@ export const authenticateUser = async (req, res, next) => {
     if (dbUser && (!dbUser.isActive || dbUser.status === 'disabled')) {
       return res.status(403).json({
         success: false,
-        error: 'Forbidden: Your account has been disabled.'
+        error: 'Access denied: Your account has been disabled by an administrator.'
       });
     }
 

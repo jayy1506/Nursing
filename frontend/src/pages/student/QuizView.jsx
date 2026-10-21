@@ -103,10 +103,10 @@ export const QuizView = () => {
     const passed = percentage >= 75;
 
     // Get current user details from localStorage
-    const savedUser = JSON.parse(localStorage.getItem('user') || '{}');
-    const studentName = savedUser.name || 'Nursing Student';
+    const savedUser = JSON.parse(localStorage.getItem('nursing_user') || localStorage.getItem('user') || '{}');
+    const studentName = savedUser.displayName || savedUser.name || 'Nursing Student';
     const studentEmail = savedUser.email || 'student@nursing-lms.edu';
-    const studentId = savedUser.uid || savedUser.firebaseUid || 'student-local';
+    const studentId = savedUser.uid || savedUser.firebaseUid || savedUser.id || 'student-local';
 
     // Record attempt locally and sync to MongoDB Atlas
     await recordAssessmentAttempt({

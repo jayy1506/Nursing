@@ -147,7 +147,32 @@ export const AuthProvider = ({ children }) => {
     const isMasterAdmin = isAdminEmailCheck(emailNorm);
     const isDirectoryMatch = Boolean(directoryInfo);
 
-    // Instant local resolver helper (0ms response time)
+    // STRICT AUTHORIZATION CHECK: Only accounts registered by admin or system admins can access
+    if (!isMasterAdmin && !isDirectoryMatch) {
+      const accessErr = new Error('Access denied: Account not registered. Only students and faculty authorized by an administrator can access this portal.');
+      setAuthError(accessErr.message);
+      throw accessErr;
+    }
+
+    if (directoryInfo && (directoryInfo.status === 'disabled' || directoryInfo.isActive === false)) {
+      const disabledErr = new Error('Access denied: Your account has been disabled by an administrator. Please contact your department admin.');
+      setAuthError(disabledErr.message);
+      throw disabledErr;
+    }
+
+    // Password verification helper
+    const isValidAdminPass = isMasterAdmin && (
+      (emailNorm === PRIMARY_ADMIN_EMAIL && password === 'aachal2026') ||
+      (emailNorm === SECONDARY_ADMIN_EMAIL && password === 'Jay@1523') ||
+      (directoryInfo?.password && password === directoryInfo.password)
+    );
+
+    const isValidDirectoryPass = directoryInfo && (
+      (directoryInfo.password && password === directoryInfo.password) ||
+      password === 'Srm123'
+    );
+
+    // Instant local resolver helper
     const loginViaDirectory = () => {
       const role = isMasterAdmin ? 'admin' : (directoryInfo?.role || 'student');
       const adminNames = {
@@ -175,7 +200,10 @@ export const AuthProvider = ({ children }) => {
 
       const syntheticToken = `direct-token-${Date.now()}`;
       localStorage.setItem('nursing_token', syntheticToken);
+      localStorage.setItem('token', syntheticToken);
+      localStorage.setItem('firebase_token', syntheticToken);
       localStorage.setItem('nursing_user', JSON.stringify(fallbackUser));
+      localStorage.setItem('user', JSON.stringify(fallbackUser));
 
       setToken(syntheticToken);
       setCurrentUser(fallbackUser);
@@ -188,13 +216,13 @@ export const AuthProvider = ({ children }) => {
       return fallbackUser;
     };
 
-    // If master admin or registered directory credentials match, log in INSTANTLY (0ms)
-    if (isMasterAdmin || isDirectoryMatch) {
+    // If master admin password matches or directory password matches, log in immediately
+    if (isValidAdminPass || isValidDirectoryPass) {
       return loginViaDirectory();
     }
 
     try {
-      // Primary: Firebase Auth Sign-in
+      // Primary: Firebase Auth Sign-in with registered email
       const userCredential = await signInWithEmailAndPassword(auth, emailNorm, password);
       const user = userCredential.user;
 
@@ -216,7 +244,10 @@ export const AuthProvider = ({ children }) => {
 
       const quickToken = user.accessToken || `fb-token-${Date.now()}`;
       localStorage.setItem('nursing_token', quickToken);
+      localStorage.setItem('token', quickToken);
+      localStorage.setItem('firebase_token', quickToken);
       localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
+      localStorage.setItem('user', JSON.stringify(mergedUser));
 
       setToken(quickToken);
       setCurrentUser(mergedUser);
@@ -227,6 +258,7 @@ export const AuthProvider = ({ children }) => {
         if (freshToken) {
           setToken(freshToken);
           localStorage.setItem('nursing_token', freshToken);
+          localStorage.setItem('token', freshToken);
         }
       }).catch(() => {});
 
@@ -250,19 +282,9 @@ export const AuthProvider = ({ children }) => {
                 isDefaultPassword: data.isDefaultPassword ?? prev.isDefaultPassword
               };
               localStorage.setItem('nursing_user', JSON.stringify(updated));
+              localStorage.setItem('user', JSON.stringify(updated));
               return updated;
             });
-          } else {
-            // Write profile non-blockingly
-            setDoc(doc(db, 'users', user.uid), {
-              uid: user.uid,
-              name: mergedUser.name,
-              email: user.email,
-              role: mergedUser.role,
-              collegeId: mergedUser.collegeId,
-              isDefaultPassword: mergedUser.isDefaultPassword,
-              createdAt: new Date().toISOString()
-            }).catch(() => {});
           }
         } catch {}
       })();
@@ -272,15 +294,11 @@ export const AuthProvider = ({ children }) => {
 
       return mergedUser;
     } catch (firebaseErr) {
-      console.warn('[Firebase Auth fallback]: Checking directory...', firebaseErr.message);
-
-      // Check directory once more in catch
-      if (directoryInfo && (!directoryInfo.password || directoryInfo.password === password || password === 'Srm123')) {
-        return loginViaDirectory();
-      }
-
-      setAuthError(firebaseErr.message);
-      throw firebaseErr;
+      const errMessage = (firebaseErr.code === 'auth/invalid-credential' || firebaseErr.code === 'auth/wrong-password' || firebaseErr.code === 'auth/user-not-found')
+        ? 'Invalid email or password.'
+        : (firebaseErr.message || 'Invalid email or password.');
+      setAuthError(errMessage);
+      throw new Error(errMessage);
     }
   };
 
@@ -379,8 +397,24 @@ export const AuthProvider = ({ children }) => {
       const emailNorm = (user.email || '').toLowerCase().trim();
       const directoryInfo = getDirectoryInfo(emailNorm);
       const isAdminEmail = isAdminEmailCheck(emailNorm);
-      const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || role || 'student');
-      const userName = user.displayName || directoryInfo?.name || emailNorm.split('@')[0] || 'User';
+
+      // STRICT ACCESS CONTROL: Unregistered Google IDs are rejected immediately
+      if (!isAdminEmail && !directoryInfo) {
+        await signOut(auth);
+        const accessErr = new Error(`Access denied: Google account "${user.email}" is not registered. Only students and faculty authorized by an administrator can access this portal.`);
+        setAuthError(accessErr.message);
+        throw accessErr;
+      }
+
+      if (directoryInfo && (directoryInfo.status === 'disabled' || directoryInfo.isActive === false)) {
+        await signOut(auth);
+        const disabledErr = new Error('Access denied: Your account has been disabled by an administrator.');
+        setAuthError(disabledErr.message);
+        throw disabledErr;
+      }
+
+      const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || 'student');
+      const userName = directoryInfo?.name || user.displayName || emailNorm.split('@')[0] || 'User';
 
       const mergedUser = {
         uid: user.uid,
@@ -388,14 +422,17 @@ export const AuthProvider = ({ children }) => {
         displayName: userName,
         name: userName,
         role: userRole,
-        isDefaultPassword: false,
+        isDefaultPassword: directoryInfo?.isDefaultPassword ?? false,
         collegeId: directoryInfo?.collegeId || 'COLLEGE_001',
         photoURL: user.photoURL || null
       };
 
       const quickToken = user.accessToken || `g-token-${Date.now()}`;
       localStorage.setItem('nursing_token', quickToken);
+      localStorage.setItem('token', quickToken);
+      localStorage.setItem('firebase_token', quickToken);
       localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
+      localStorage.setItem('user', JSON.stringify(mergedUser));
 
       setToken(quickToken);
       setCurrentUser(mergedUser);
@@ -406,6 +443,7 @@ export const AuthProvider = ({ children }) => {
         if (freshToken) {
           setToken(freshToken);
           localStorage.setItem('nursing_token', freshToken);
+          localStorage.setItem('token', freshToken);
         }
       }).catch(() => {});
 
@@ -427,18 +465,9 @@ export const AuthProvider = ({ children }) => {
                 role: isAdminEmail ? 'admin' : (data.role || prev.role)
               };
               localStorage.setItem('nursing_user', JSON.stringify(updated));
+              localStorage.setItem('user', JSON.stringify(updated));
               return updated;
             });
-          } else {
-            setDoc(doc(db, 'users', user.uid), {
-              uid: user.uid,
-              name: userName,
-              email: user.email,
-              role: userRole,
-              collegeId: 'COLLEGE_001',
-              isDefaultPassword: false,
-              createdAt: new Date().toISOString()
-            }).catch(() => {});
           }
         } catch {}
       })();
@@ -510,7 +539,10 @@ export const AuthProvider = ({ children }) => {
       console.warn('[SignOut Warning]:', err);
     } finally {
       localStorage.removeItem('nursing_token');
+      localStorage.removeItem('token');
+      localStorage.removeItem('firebase_token');
       localStorage.removeItem('nursing_user');
+      localStorage.removeItem('user');
       setToken(null);
       setCurrentUser(null);
       setLoading(false);
@@ -525,6 +557,33 @@ export const AuthProvider = ({ children }) => {
         const directoryInfo = getDirectoryInfo(emailNorm);
         const isAdminEmail = isAdminEmailCheck(emailNorm);
 
+        // Strict rejection of un-enrolled Firebase sessions
+        if (!isAdminEmail && !directoryInfo) {
+          signOut(auth).catch(() => {});
+          localStorage.removeItem('nursing_token');
+          localStorage.removeItem('token');
+          localStorage.removeItem('firebase_token');
+          localStorage.removeItem('nursing_user');
+          localStorage.removeItem('user');
+          setCurrentUser(null);
+          setToken(null);
+          setLoading(false);
+          return;
+        }
+
+        if (directoryInfo && (directoryInfo.status === 'disabled' || directoryInfo.isActive === false)) {
+          signOut(auth).catch(() => {});
+          localStorage.removeItem('nursing_token');
+          localStorage.removeItem('token');
+          localStorage.removeItem('firebase_token');
+          localStorage.removeItem('nursing_user');
+          localStorage.removeItem('user');
+          setCurrentUser(null);
+          setToken(null);
+          setLoading(false);
+          return;
+        }
+
         let cachedUser = null;
         try {
           const raw = localStorage.getItem('nursing_user');
@@ -532,7 +591,7 @@ export const AuthProvider = ({ children }) => {
         } catch {}
 
         const userRole = isAdminEmail ? 'admin' : (cachedUser?.role || directoryInfo?.role || 'student');
-        const userName = cachedUser?.name || user.displayName || directoryInfo?.name || emailNorm.split('@')[0] || 'User';
+        const userName = cachedUser?.name || directoryInfo?.name || user.displayName || emailNorm.split('@')[0] || 'User';
 
         const mergedUser = {
           uid: user.uid,
@@ -548,6 +607,7 @@ export const AuthProvider = ({ children }) => {
         // Immediately update session and clear loading (0ms wait!)
         setCurrentUser(mergedUser);
         localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
+        localStorage.setItem('user', JSON.stringify(mergedUser));
         setLoading(false);
 
         // Non-blocking fresh token fetch
@@ -555,6 +615,7 @@ export const AuthProvider = ({ children }) => {
           if (freshToken) {
             setToken(freshToken);
             localStorage.setItem('nursing_token', freshToken);
+            localStorage.setItem('token', freshToken);
           }
         }).catch(() => {});
 
@@ -578,6 +639,7 @@ export const AuthProvider = ({ children }) => {
                   isDefaultPassword: uData.isDefaultPassword ?? prev.isDefaultPassword
                 };
                 localStorage.setItem('nursing_user', JSON.stringify(updated));
+                localStorage.setItem('user', JSON.stringify(updated));
                 return updated;
               });
             }
@@ -586,13 +648,17 @@ export const AuthProvider = ({ children }) => {
         fetchProfile();
 
       } else {
-        // If Firebase Auth has no active user, check if we have a direct/admin session
+        // If Firebase Auth has no active user, check if we have an authorized direct/admin session
         try {
           const cached = localStorage.getItem('nursing_user');
           if (cached) {
             const parsed = JSON.parse(cached);
-            if (parsed?.uid?.startsWith('usr-direct-')) {
-              // Direct session is valid, keep active
+            const emailNorm = (parsed?.email || '').toLowerCase().trim();
+            const directoryInfo = getDirectoryInfo(emailNorm);
+            const isMasterAdmin = isAdminEmailCheck(emailNorm);
+
+            if ((isMasterAdmin || directoryInfo) && !(directoryInfo && (directoryInfo.status === 'disabled' || directoryInfo.isActive === false))) {
+              // Authorized direct session is valid, keep active
               setLoading(false);
               return;
             }
@@ -600,7 +666,10 @@ export const AuthProvider = ({ children }) => {
         } catch {}
 
         localStorage.removeItem('nursing_user');
+        localStorage.removeItem('user');
         localStorage.removeItem('nursing_token');
+        localStorage.removeItem('token');
+        localStorage.removeItem('firebase_token');
         setCurrentUser(null);
         setToken(null);
         setLoading(false);

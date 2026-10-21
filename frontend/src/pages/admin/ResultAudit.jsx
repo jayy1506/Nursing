@@ -32,7 +32,7 @@ export const ResultAudit = () => {
     const localAttempts = getAllRecordedAttempts();
     const roster = getStudentRosterHistory();
 
-    const token = localStorage.getItem('token') || localStorage.getItem('firebase_token');
+    const token = localStorage.getItem('nursing_token') || localStorage.getItem('token') || localStorage.getItem('firebase_token');
     fetch('/api/assessments/attempts', {
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     })

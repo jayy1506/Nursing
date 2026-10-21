@@ -7,6 +7,14 @@ const attemptSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    studentName: {
+      type: String,
+      default: 'Nursing Student'
+    },
+    studentEmail: {
+      type: String,
+      default: ''
+    },
     scopeType: {
       type: String,
       enum: ['subtopic', 'chapter', 'course'],
@@ -14,9 +22,13 @@ const attemptSchema = new mongoose.Schema(
       index: true
     },
     scopeId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String, // String topicId (e.g. phys-unit-1) or ObjectId
       required: true,
       index: true
+    },
+    topicTitle: {
+      type: String,
+      default: ''
     },
     score: {
       type: Number,
@@ -34,11 +46,14 @@ const attemptSchema = new mongoose.Schema(
       type: Boolean,
       required: true
     },
+    timeSpentSeconds: {
+      type: Number,
+      default: 0
+    },
     answers: [
       {
         questionId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Question',
+          type: String,
           required: true
         },
         selectedOption: {

@@ -36,19 +36,18 @@ export const FacultyResults = () => {
     const roster = getStudentRosterHistory();
 
     // 2. Fetch from backend API
-    const token = localStorage.getItem('token') || localStorage.getItem('firebase_token');
+    const token = localStorage.getItem('nursing_token') || localStorage.getItem('token') || localStorage.getItem('firebase_token');
     fetch('/api/assessments/attempts', {
       headers: token ? { Authorization: `Bearer ${token}` } : {}
     })
       .then(res => res.json())
       .then(data => {
         if (data.success && data.attempts && data.attempts.length > 0) {
-          // Merge server attempts with local
           const serverFormatted = data.attempts.map(a => ({
             id: a._id,
             studentName: a.studentName || 'Nursing Student',
             studentEmail: a.studentEmail || a.studentId,
-            topicTitle: a.scopeName || 'Clinical Assessment',
+            topicTitle: a.scopeName || a.topicTitle || 'Clinical Assessment',
             score: a.score,
             totalQuestions: a.totalQuestions,
             percentage: a.percentage,
@@ -57,7 +56,9 @@ export const FacultyResults = () => {
             completedAt: a.timestamp ? new Date(a.timestamp).toLocaleString() : 'Recent',
             reviewData: a.answers || []
           }));
-          setAttempts(serverFormatted);
+          const idSet = new Set(serverFormatted.map(s => s.id));
+          const uniqueLocal = localAttempts.filter(l => !idSet.has(l.id));
+          setAttempts([...serverFormatted, ...uniqueLocal]);
         } else {
           setAttempts(localAttempts);
         }

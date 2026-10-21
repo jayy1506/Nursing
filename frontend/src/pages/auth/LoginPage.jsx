@@ -111,9 +111,15 @@ export const LoginPage = () => {
           </div>
 
           {error && (
-            <div className="mb-5 p-3 rounded-2xl bg-neutral-100 border border-neutral-300 text-neutral-900 text-xs flex items-center gap-2.5">
-              <AlertCircle className="w-4 h-4 shrink-0 text-neutral-900" />
-              <p className="flex-1 font-medium">{error}</p>
+            <div className={`mb-5 p-3.5 rounded-2xl text-xs flex items-center gap-2.5 ${
+              error.includes('Access denied') || error.includes('disabled')
+                ? 'bg-rose-50 border border-rose-200 text-rose-800'
+                : 'bg-neutral-100 border border-neutral-300 text-neutral-900'
+            }`}>
+              <AlertCircle className={`w-4 h-4 shrink-0 ${
+                error.includes('Access denied') || error.includes('disabled') ? 'text-rose-600' : 'text-neutral-900'
+              }`} />
+              <p className="flex-1 font-semibold leading-relaxed">{error}</p>
             </div>
           )}
 

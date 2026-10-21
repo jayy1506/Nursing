@@ -32,7 +32,14 @@ export const login = async (req, res) => {
 
     // Find user and explicitly include password field
     const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
-    if (!user || !(await user.matchPassword(password))) {
+    if (!user) {
+      return res.status(403).json({ 
+        success: false, 
+        error: 'Access denied: Account not registered. Only students and faculty authorized by an administrator can access this portal.' 
+      });
+    }
+
+    if (!(await user.matchPassword(password))) {
       return res.status(401).json({ 
         success: false, 
         error: 'Invalid email or password.' 
@@ -98,6 +105,26 @@ export const signup = async (req, res) => {
         success: true,
         token,
         user: existingUser.toJSON()
+      });
+    }
+
+    // Only administrators are permitted to add new student and faculty accounts
+    let isAdminCaller = false;
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      const authHeaderToken = req.headers.authorization.split(' ')[1].trim();
+      try {
+        const decoded = jwt.verify(authHeaderToken, process.env.JWT_SECRET || 'nursing_ai_jwt_dev_fallback_secret');
+        if (decoded.role === 'admin') isAdminCaller = true;
+      } catch (e) {}
+    }
+    if (req.user && req.user.role === 'admin') {
+      isAdminCaller = true;
+    }
+
+    if (!isAdminCaller) {
+      return res.status(403).json({
+        success: false,
+        error: 'Access denied: Public registration is closed. Only an administrator can provision student and faculty accounts.'
       });
     }
 
