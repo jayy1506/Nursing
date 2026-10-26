@@ -11,7 +11,7 @@
     "check:colors": "node scripts/check-colors.js"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.1.17",
+    "@tailwindcss/vite": "^4.3.3",
     "firebase": "^12.19.0",
     "framer-motion": "^12.23.25",
     "gsap": "^3.14.1",
