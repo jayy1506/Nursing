@@ -559,7 +559,7 @@ export const AppShell = ({ children }) => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search curriculum tracks, chapters, or topics..."
-                className="w-full bg-transparent text-sm text-black focus:outline-none placeholder:text-neutral-400 font-medium"
+                className="w-full bg-transparent text-sm focus:outline-none placeholder-neutral-400 font-medium"
                 autoFocus
               />
               <button

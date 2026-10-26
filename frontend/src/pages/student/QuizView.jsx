@@ -196,11 +196,11 @@ export const QuizView = () => {
       <div className="min-h-screen bg-neutral-50 text-neutral-900 pb-16 font-sans">
         <Navbar />
         <div className="max-w-2xl mx-auto px-4 py-16 text-center">
-          <div className="w-20 h-20 bg-neutral-100 text-black dark:text-white rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner ring-8 ring-neutral-400">
+          <div className="w-20 h-20 bg-neutral-100 text-neutral-900 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner ring-8 ring-neutral-400">
             <Lock className="w-10 h-10" />
           </div>
 
-          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-400 text-black dark:text-white text-xs font-black uppercase tracking-wider mb-3">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-400 text-neutral-900 text-xs font-black uppercase tracking-wider mb-3">
             <ShieldAlert className="w-3.5 h-3.5" />
             <span>Grand Final Assessment Locked</span>
           </span>
@@ -216,11 +216,11 @@ export const QuizView = () => {
           <div className="bg-white rounded-2xl border border-neutral-200 p-6 shadow-sm mb-8 text-left space-y-4">
             <div className="flex items-center justify-between text-xs font-bold">
               <span className="text-neutral-500">Your Current Progress</span>
-              <span className="text-black dark:text-white font-extrabold">{gating.completedCount} / {gating.totalUnits} Units Mastered ({gating.completionPercent}%)</span>
+              <span className="text-neutral-900 font-extrabold">{gating.completedCount} / {gating.totalUnits} Units Mastered ({gating.completionPercent}%)</span>
             </div>
             <div className="w-full bg-neutral-100 rounded-full h-3 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-black dark:from-white to-neutral-800 h-3 rounded-full transition-all duration-500"
+                className="bg-linear-to-r from-neutral-900 to-neutral-800 h-3 rounded-full transition-all duration-500"
                 style={{ width: `${gating.completionPercent}%` }}
               />
             </div>
@@ -262,7 +262,7 @@ export const QuizView = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b bg-neutral-100/50 via-white to-neutral-50 text-neutral-900 pb-16 font-sans">
+    <div className="min-h-screen bg-linear-to-b bg-neutral-100/50 via-white to-neutral-50 text-neutral-900 pb-16 font-sans">
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
@@ -342,7 +342,7 @@ export const QuizView = () => {
         {/* Progress Bar */}
         <div className="w-full bg-neutral-200/80 rounded-full h-2.5 mb-6 overflow-hidden">
           <div
-            className="bg-gradient-to-r from-green-500 to-green-600 h-2.5 rounded-full transition-all duration-300"
+            className="bg-linear-to-r from-green-500 to-green-600 h-2.5 rounded-full transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>

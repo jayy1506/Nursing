@@ -67,7 +67,7 @@ export const StudentResults = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-neutral-50 via-white bg-neutral-100/30 text-neutral-900 pb-20 font-sans">
+    <div className="min-h-screen bg-linear-to-b from-neutral-50 via-white bg-neutral-100/30 text-neutral-900 pb-20 font-sans">
       <div className="print:hidden">
         <Navbar />
       </div>
@@ -76,8 +76,8 @@ export const StudentResults = () => {
         {/* Top Header Card */}
         <div className={`rounded-3xl border p-6 sm:p-8 shadow-sm mb-6 ${
           passed
-            ? 'bg-gradient-to-br from-green-500/10 via-green-50/50 to-white border-green-100'
-            : 'bg-gradient-to-br from-neutral-800/10 bg-neutral-100 to-white border-neutral-300'
+            ? 'bg-linear-to-br from-green-500/10 via-green-50/50 to-white border-green-100'
+            : 'bg-linear-to-br from-neutral-800/10 bg-neutral-100 to-white border-neutral-300'
         }`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
@@ -139,7 +139,7 @@ export const StudentResults = () => {
 
             <div className="bg-white/80 rounded-2xl p-3 border border-neutral-200/80 shadow-xs">
               <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider block">Incorrect Answers</span>
-              <p className="text-sm font-black text-black dark:text-white flex items-center gap-1.5 mt-0.5">
+              <p className="text-sm font-black text-neutral-900 flex items-center gap-1.5 mt-0.5">
                 <XCircle className="w-3.5 h-3.5" />
                 <span>{incorrectCount} Incorrect</span>
               </p>
@@ -235,7 +235,7 @@ export const StudentResults = () => {
 
               <div className="w-full bg-neutral-100 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-green-500 to-green-500 h-3 rounded-full transition-all duration-500"
+                  className="bg-linear-to-r from-green-500 to-green-500 h-3 rounded-full transition-all duration-500"
                   style={{ width: `${gating.completionPercent}%` }}
                 />
               </div>
@@ -362,7 +362,7 @@ export const StudentResults = () => {
                   <div className="flex items-start justify-between gap-3">
                     <div className="flex items-center gap-2">
                       <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
-                        isCorrect ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-black dark:text-white'
+                        isCorrect ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-900'
                       }`}>
                         {questionNumber}
                       </span>
@@ -372,7 +372,7 @@ export const StudentResults = () => {
                     </div>
 
                     <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-                      isCorrect ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-neutral-100 text-black dark:text-white border border-neutral-400'
+                      isCorrect ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-neutral-100 text-neutral-900 border border-neutral-400'
                     }`}>
                       {isCorrect ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
                       <span>{isCorrect ? 'Correct' : 'Incorrect'}</span>

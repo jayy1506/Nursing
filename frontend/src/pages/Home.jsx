@@ -281,7 +281,7 @@ export const Home = () => {
                 </div>
               </ProgressRing>
 
-              <div className="space-y-1.5 max-w-[210px]">
+              <div className="space-y-1.5 max-w-52.5">
                 <div className="flex items-center gap-1.5">
                   <GraduationCap className="w-4 h-4 text-green-700" />
                   <h4 className="text-xs font-bold text-black">Competency Progress</h4>
@@ -360,7 +360,7 @@ export const Home = () => {
 
       {/* Smart Performance Alert Banner (appears if latest attempt is < 75%) */}
       {latestAttempt && !latestAttempt.passed && (
-        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+        <div className="bg-linear-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 border border-amber-300">
               <AlertTriangle className="w-5 h-5 text-amber-700" />

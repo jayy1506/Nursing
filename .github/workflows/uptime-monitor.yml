@@ -2,7 +2,7 @@ name: Scheduled Uptime & Health Monitor
 
 on:
   schedule:
-    # Runs every 30 minutes (well within GitHub Actions free limits; won't prematurely exhaust Render hours)
+    # Runs every 30 minutes
     - cron: '*/30 * * * *'
   workflow_dispatch: # Allows manual one-click testing from Actions tab
 
@@ -10,21 +10,26 @@ jobs:
   check-health:
     name: Probe Production Health Endpoints
     runs-on: ubuntu-latest
+    env:
+      FAIL_SITE_1: 'false'
+      FAIL_SITE_2: 'false'
+      STATUS_1: '200'
+      STATUS_2: '200'
 
     steps:
       - name: Check Primary Service Health (Site 1)
         id: probe_site_1
+        env:
+          TARGET_URL_1: ${{ secrets.SITE_1_HEALTH_URL }}
         run: |
-          TARGET_URL="${{ secrets.SITE_1_HEALTH_URL }}"
-          if [ -z "$TARGET_URL" ]; then
+          if [ -z "$TARGET_URL_1" ]; then
             echo "::warning::SITE_1_HEALTH_URL secret is not configured in GitHub repository secrets. Skipping probe."
             echo "FAIL_SITE_1=false" >> $GITHUB_ENV
             exit 0
           fi
 
-          echo "Probing $TARGET_URL (Timeout: 100s to allow cold-start spin-up on Render free tier)..."
-          # 100s timeout accounts for Render free tier 50-90s cold start
-          HTTP_STATUS=$(curl -s -o /tmp/health_1.json -w "%{http_code}" --max-time 100 "$TARGET_URL") || HTTP_STATUS="000"
+          echo "Probing $TARGET_URL_1 (Timeout: 100s to allow cold-start spin-up on Render free tier)..."
+          HTTP_STATUS=$(curl -s -o /tmp/health_1.json -w "%{http_code}" --max-time 100 "$TARGET_URL_1") || HTTP_STATUS="000"
           
           echo "HTTP Status Code: $HTTP_STATUS"
           echo "Response Body:"
@@ -41,11 +46,17 @@ jobs:
 
       - name: Check Secondary Service Health (Site 2 - Optional)
         id: probe_site_2
-        if: "${{ secrets.SITE_2_HEALTH_URL != '' }}"
+        env:
+          TARGET_URL_2: ${{ secrets.SITE_2_HEALTH_URL }}
         run: |
-          TARGET_URL="${{ secrets.SITE_2_HEALTH_URL }}"
-          echo "Probing Site 2: $TARGET_URL..."
-          HTTP_STATUS=$(curl -s -o /tmp/health_2.json -w "%{http_code}" --max-time 100 "$TARGET_URL") || HTTP_STATUS="000"
+          if [ -z "$TARGET_URL_2" ]; then
+            echo "SITE_2_HEALTH_URL not configured. Skipping Site 2 probe."
+            echo "FAIL_SITE_2=false" >> $GITHUB_ENV
+            exit 0
+          fi
+
+          echo "Probing Site 2: $TARGET_URL_2..."
+          HTTP_STATUS=$(curl -s -o /tmp/health_2.json -w "%{http_code}" --max-time 100 "$TARGET_URL_2") || HTTP_STATUS="000"
           
           echo "Site 2 Status: $HTTP_STATUS"
           cat /tmp/health_2.json || true
@@ -61,17 +72,20 @@ jobs:
 
       - name: Dispatch Alert Webhook on Outage
         if: env.FAIL_SITE_1 == 'true' || env.FAIL_SITE_2 == 'true'
+        env:
+          WEBHOOK_URL: ${{ secrets.ALERT_WEBHOOK_URL }}
+          CURRENT_STATUS_1: ${{ env.STATUS_1 }}
+          CURRENT_STATUS_2: ${{ env.STATUS_2 }}
         run: |
-          WEBHOOK_URL="${{ secrets.ALERT_WEBHOOK_URL }}"
           if [ -z "$WEBHOOK_URL" ]; then
-            echo "::error::Health check failure detected (Site 1: ${{ env.STATUS_1 }}, Site 2: ${{ env.STATUS_2 }}), but ALERT_WEBHOOK_URL secret is not set!"
+            echo "::error::Health check failure detected (Site 1: $CURRENT_STATUS_1, Site 2: $CURRENT_STATUS_2), but ALERT_WEBHOOK_URL secret is not set!"
             exit 1
           fi
 
           ALERT_PAYLOAD=$(cat <<EOF
           {
-            "content": "🚨 **MedPulse Uptime Alert**: One or more Render services are currently unavailable or degraded!\n- **Site 1 Status:** ${{ env.STATUS_1 }}\n- **Site 2 Status:** ${{ env.STATUS_2 }}\n- **Checked At:** $(date -u)\n- **Investigate:** Check Render Dashboard -> Service -> Logs.",
-            "text": "🚨 MedPulse Alert: Render service health check failed with status ${{ env.STATUS_1 }}"
+            "content": "🚨 **MedPulse Uptime Alert**: One or more Render services are currently unavailable or degraded!\n- **Site 1 Status:** $CURRENT_STATUS_1\n- **Site 2 Status:** $CURRENT_STATUS_2\n- **Checked At:** $(date -u)\n- **Investigate:** Check Render Dashboard -> Service -> Logs.",
+            "text": "🚨 MedPulse Alert: Render service health check failed with status $CURRENT_STATUS_1"
           }
           EOF
           )

@@ -19,20 +19,17 @@ export const seedDatabase = async () => {
   try {
     console.log(`[Seed] Connecting to MongoDB: ${mongoUri}...`);
     await mongoose.connect(mongoUri);
-    console.log('[Seed] Connected to MongoDB. Clearing existing collections...');
+    console.log('[Seed] Connected to MongoDB. Synchronizing curriculum content while protecting user accounts...');
 
-    // Clear collections
-    await User.deleteMany({});
+    // Clear and refresh curriculum content, but PRESERVE user accounts, progress, and student attempts
     await Course.deleteMany({});
     await Chapter.deleteMany({});
     await Subtopic.deleteMany({});
     await Question.deleteMany({});
-    await Progress.deleteMany({});
-    await Attempt.deleteMany({});
     await ContentEmbedding.deleteMany({});
     await ChatLog.deleteMany({});
 
-    console.log('[Seed] Seeding Default Users...');
+    console.log('[Seed] Synchronizing Default Core Users...');
     // 1. Seed Core Users - Admin credentials MUST come from environment variables
     const adminEmail = process.env.ADMIN_EMAIL;
     const adminPassword = process.env.ADMIN_PASSWORD;
@@ -43,55 +40,75 @@ export const seedDatabase = async () => {
       );
     }
 
-    const adminUser = await User.create({
-      firebaseUid: 'admin-firebase-uid-primary',
-      name: process.env.ADMIN_NAME || 'System Administrator',
-      email: adminEmail.toLowerCase().trim(),
-      password: adminPassword,
-      role: 'admin',
-      status: 'active',
-      isActive: true,
-      createdBy: 'system'
-    });
+    const adminUser = await User.findOneAndUpdate(
+      { email: adminEmail.toLowerCase().trim() },
+      {
+        $setOnInsert: {
+          firebaseUid: 'admin-firebase-uid-primary',
+          name: process.env.ADMIN_NAME || 'System Administrator',
+          role: 'admin',
+          status: 'active',
+          isActive: true,
+          createdBy: 'system'
+        },
+        $set: { password: adminPassword }
+      },
+      { upsert: true, new: true }
+    );
 
     let adminUser2 = null;
     if (process.env.SECONDARY_ADMIN_EMAIL && process.env.SECONDARY_ADMIN_PASSWORD) {
-      adminUser2 = await User.create({
-        firebaseUid: 'admin-firebase-uid-secondary',
-        name: process.env.SECONDARY_ADMIN_NAME || 'Secondary Administrator',
-        email: process.env.SECONDARY_ADMIN_EMAIL.toLowerCase().trim(),
-        password: process.env.SECONDARY_ADMIN_PASSWORD,
-        role: 'admin',
-        status: 'active',
-        isActive: true,
-        createdBy: 'system'
-      });
+      adminUser2 = await User.findOneAndUpdate(
+        { email: process.env.SECONDARY_ADMIN_EMAIL.toLowerCase().trim() },
+        {
+          $setOnInsert: {
+            firebaseUid: 'admin-firebase-uid-secondary',
+            name: process.env.SECONDARY_ADMIN_NAME || 'Secondary Administrator',
+            role: 'admin',
+            status: 'active',
+            isActive: true,
+            createdBy: 'system'
+          },
+          $set: { password: process.env.SECONDARY_ADMIN_PASSWORD }
+        },
+        { upsert: true, new: true }
+      );
     }
 
     const facultyPassword = process.env.SEED_FACULTY_PASSWORD || 'FacultySecurePass!2026';
     const studentPassword = process.env.SEED_STUDENT_PASSWORD || 'StudentSecurePass!2026';
 
-    const facultyUser = await User.create({
-      firebaseUid: 'faculty-firebase-uid-002',
-      name: process.env.FACULTY_NAME || 'Prof. Marcus Vance, MSN, CCRN',
-      email: (process.env.FACULTY_EMAIL || 'faculty@nursing-lms.edu').toLowerCase().trim(),
-      password: facultyPassword,
-      role: 'faculty',
-      status: 'active',
-      isActive: true,
-      createdBy: adminUser.firebaseUid
-    });
+    const facultyUser = await User.findOneAndUpdate(
+      { email: (process.env.FACULTY_EMAIL || 'faculty@nursing-lms.edu').toLowerCase().trim() },
+      {
+        $setOnInsert: {
+          firebaseUid: 'faculty-firebase-uid-002',
+          name: process.env.FACULTY_NAME || 'Prof. Marcus Vance, MSN, CCRN',
+          role: 'faculty',
+          status: 'active',
+          isActive: true,
+          createdBy: adminUser.firebaseUid
+        },
+        $set: { password: facultyPassword }
+      },
+      { upsert: true, new: true }
+    );
 
-    const studentUser = await User.create({
-      firebaseUid: 'student-firebase-uid-003',
-      name: process.env.STUDENT_NAME || 'Elena Rostova (Student RN)',
-      email: (process.env.STUDENT_EMAIL || 'student@nursing-lms.edu').toLowerCase().trim(),
-      password: studentPassword,
-      role: 'student',
-      status: 'active',
-      isActive: true,
-      createdBy: adminUser.firebaseUid
-    });
+    const studentUser = await User.findOneAndUpdate(
+      { email: (process.env.STUDENT_EMAIL || 'student@nursing-lms.edu').toLowerCase().trim() },
+      {
+        $setOnInsert: {
+          firebaseUid: 'student-firebase-uid-003',
+          name: process.env.STUDENT_NAME || 'Elena Rostova (Student RN)',
+          role: 'student',
+          status: 'active',
+          isActive: true,
+          createdBy: adminUser.firebaseUid
+        },
+        $set: { password: studentPassword }
+      },
+      { upsert: true, new: true }
+    );
 
     console.log('[Seed] Seeding Nursing Course & 10 Chapters...');
     // 2. Create Master Course

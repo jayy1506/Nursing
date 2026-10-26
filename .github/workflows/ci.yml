@@ -76,14 +76,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy Primary Render Service (Site 1)
+        env:
+          HOOK_URL_1: ${{ secrets.RENDER_DEPLOY_HOOK_SITE_1 }}
         run: |
-          if [ -z "${{ secrets.RENDER_DEPLOY_HOOK_SITE_1 }}" ]; then
+          if [ -z "$HOOK_URL_1" ]; then
             echo "::warning::RENDER_DEPLOY_HOOK_SITE_1 secret is not set in GitHub repository settings. Skipping Render deploy trigger."
             exit 0
           fi
 
           echo "Triggering Render Production Deployment for Site 1..."
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK_SITE_1 }}")
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$HOOK_URL_1")
           
           if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
             echo "Deployment successfully triggered on Render (HTTP $HTTP_CODE)."
@@ -93,14 +95,21 @@ jobs:
           fi
 
       - name: Deploy Secondary Render Service (Site 2 - Optional)
-        if: "${{ secrets.RENDER_DEPLOY_HOOK_SITE_2 != '' }}"
+        env:
+          HOOK_URL_2: ${{ secrets.RENDER_DEPLOY_HOOK_SITE_2 }}
         run: |
+          if [ -z "$HOOK_URL_2" ]; then
+            echo "RENDER_DEPLOY_HOOK_SITE_2 not configured. Skipping Site 2 deployment."
+            exit 0
+          fi
+
           echo "Triggering Render Production Deployment for Site 2..."
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK_SITE_2 }}")
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "$HOOK_URL_2")
           
           if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
             echo "Site 2 deployment successfully triggered on Render (HTTP $HTTP_CODE)."
           else
             echo "::warning::Render Deploy Hook for Site 2 returned HTTP status $HTTP_CODE"
           fi
+
 

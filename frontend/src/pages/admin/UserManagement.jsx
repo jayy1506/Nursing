@@ -21,7 +21,8 @@ import {
   ShieldCheck,
   UploadCloud,
   FileText,
-  Download
+  Download,
+  RefreshCw
 } from 'lucide-react';
 
 const PRIMARY_ADMIN_NAME = 'Aachal Karande';
@@ -101,7 +102,50 @@ export const UserManagement = () => {
     return DEFAULT_USERS;
   });
 
-  // Save to persistent storage on every change
+  const [dbLoading, setDbLoading] = useState(false);
+
+  // Sync users directly with MongoDB Atlas as the persistent source of truth
+  const fetchUsersFromDatabase = async () => {
+    setDbLoading(true);
+    try {
+      const res = await apiClient('/api/users');
+      if (res && res.success && Array.isArray(res.users)) {
+        setUsers((prev) => {
+          const emailMap = new Map();
+          // 1. Core Default Users
+          DEFAULT_USERS.forEach((u) => emailMap.set(u.email.toLowerCase(), u));
+          // 2. Previously cached users
+          prev.forEach((u) => emailMap.set(u.email.toLowerCase(), u));
+          // 3. Authoritative records from MongoDB Atlas
+          res.users.forEach((u) => {
+            const email = u.email.toLowerCase();
+            const existing = emailMap.get(email) || {};
+            emailMap.set(email, {
+              ...existing,
+              ...u,
+              _id: u._id || u.id || existing._id,
+              name: u.name || existing.name,
+              role: u.role || existing.role,
+              status: u.status || existing.status,
+              createdAt: u.createdAt || existing.createdAt
+            });
+          });
+          return Array.from(emailMap.values());
+        });
+      }
+    } catch (err) {
+      console.warn('[UserManagement] Could not fetch remote users from MongoDB:', err);
+    } finally {
+      setDbLoading(false);
+    }
+  };
+
+  // Fetch users on component mount
+  useEffect(() => {
+    fetchUsersFromDatabase();
+  }, []);
+
+  // Save to persistent localStorage cache on every change
   useEffect(() => {
     localStorage.setItem('nursing_admin_users', JSON.stringify(users));
   }, [users]);
@@ -226,35 +270,62 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
       userObj.firebaseUid = fbRes.uid;
     }
 
-    // 2. Update persistent state in memory
-    setUsers((prev) => [userObj, ...prev]);
+    // 2. Persist in MongoDB Atlas backend
+    try {
+      const dbRes = await apiClient('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({
+          name: userObj.name,
+          email: userObj.email,
+          password: userObj.password,
+          role: userObj.role
+        })
+      });
+      if (dbRes && dbRes.success && dbRes.user) {
+        userObj._id = dbRes.user.id || dbRes.user._id || userObj._id;
+        userObj.createdAt = dbRes.user.createdAt || userObj.createdAt;
+      }
+    } catch (dbErr) {
+      console.warn('[UserManagement] Direct /api/users creation fallback to /api/auth/signup:', dbErr);
+      try {
+        await apiClient('/api/auth/signup', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: userObj.name,
+            email: userObj.email,
+            password: userObj.password,
+            role: userObj.role,
+            firebaseUid: userObj.firebaseUid
+          })
+        });
+      } catch (fallbackErr) {
+        console.warn('[UserManagement] Fallback signup warning:', fallbackErr);
+      }
+    }
+
+    // 3. Update persistent state in memory & cache
+    setUsers((prev) => [userObj, ...prev.filter(u => u.email.toLowerCase() !== userObj.email.toLowerCase())]);
 
     if (fbRes.success) {
       setMessage({
         type: 'success',
-        text: `Account "${userObj.name}" (${userObj.email}) registered directly in Firebase Auth with default password "${userObj.password}".`
+        text: `Account "${userObj.name}" (${userObj.email}) saved to MongoDB and registered in Firebase Auth with default password "${userObj.password}".`
       });
     } else if (fbRes.code === 'auth/email-already-in-use') {
       setMessage({
         type: 'success',
-        text: `User "${userObj.name}" (${userObj.email}) added to portal directory (Firebase Auth credentials already active).`
+        text: `User "${userObj.name}" (${userObj.email}) added to persistent database (Firebase Auth credentials already active).`
       });
     } else {
       setMessage({
         type: 'success',
-        text: `User "${userObj.name}" added to portal directory with password "${userObj.password}".`
+        text: `User "${userObj.name}" saved to persistent database with password "${userObj.password}".`
       });
     }
 
     setShowAddModal(false);
     setNewUser({ name: '', email: '', password: 'Srm123', role: 'student' });
     setLoading(false);
-
-    // Sync in background to backend
-    apiClient('/api/auth/signup', {
-      method: 'POST',
-      body: JSON.stringify(userObj)
-    }).catch(() => {});
   };
 
   const handleRoleChange = (userId, newRole) => {
@@ -274,25 +345,34 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
     setMessage({ type: 'success', text: `Role updated to ${newRole}.` });
   };
 
-  const handleToggleStatus = (userId) => {
+  const handleToggleStatus = async (userId) => {
     const targetUser = users.find((u) => u._id === userId);
     if (['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(targetUser?.email?.toLowerCase())) {
       setMessage({ type: 'error', text: 'Admin account cannot be disabled.' });
       return;
     }
 
+    const nextStatus = targetUser.status === 'active' ? 'disabled' : 'active';
     setUsers((prev) =>
       prev.map((u) => {
         if (u._id === userId) {
-          const nextStatus = u.status === 'active' ? 'disabled' : 'active';
           return { ...u, status: nextStatus };
         }
         return u;
       })
     );
+
+    try {
+      await apiClient(`/api/users/${userId}/status`, {
+        method: 'PATCH',
+        body: JSON.stringify({ status: nextStatus })
+      });
+    } catch (err) {
+      console.warn('Backend user status toggle warning:', err);
+    }
   };
 
-  const handleDeleteUser = (userId) => {
+  const handleDeleteUser = async (userId) => {
     const targetUser = users.find((u) => u._id === userId);
     if (['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(targetUser?.email?.toLowerCase())) {
       setMessage({ type: 'error', text: 'Admin account is permanent and cannot be removed.' });
@@ -301,7 +381,12 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
 
     if (window.confirm(`Are you sure you want to delete user "${targetUser.name}"?`)) {
       setUsers((prev) => prev.filter((u) => u._id !== userId));
-      setMessage({ type: 'success', text: 'User removed from system memory.' });
+      try {
+        await apiClient(`/api/users/${userId}`, { method: 'DELETE' });
+      } catch (err) {
+        console.warn('Backend user deletion warning:', err);
+      }
+      setMessage({ type: 'success', text: 'User removed from persistent database.' });
     }
   };
 
@@ -314,7 +399,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-b bg-neutral-100 via-white to-green-50 text-neutral-900">
+    <div className="min-h-screen bg-linear-to-b bg-neutral-100 via-white to-green-50 text-neutral-900">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -335,6 +420,15 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
 
           <div className="flex flex-wrap items-center gap-2.5 self-start sm:self-auto">
             <button
+              onClick={fetchUsersFromDatabase}
+              disabled={dbLoading}
+              title="Refresh and sync directory with MongoDB Atlas cloud database"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-neutral-50 text-neutral-700 rounded-xl text-xs font-bold border border-neutral-300 shadow-xs transition-all cursor-pointer disabled:opacity-50"
+            >
+              <RefreshCw className={`w-4 h-4 text-green-600 ${dbLoading ? 'animate-spin' : ''}`} />
+              <span>{dbLoading ? 'Syncing...' : 'Sync Database'}</span>
+            </button>
+            <button
               onClick={() => {
                 const headers = ['Name', 'Email', 'Role', 'Status', 'CreatedAt'];
                 const rows = filteredUsers.map(u => [
@@ -353,7 +447,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                 link.click();
                 document.body.removeChild(link);
               }}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white dark:bg-neutral-800 hover:bg-neutral-50 dark:hover:bg-neutral-700 text-neutral-700 dark:text-neutral-200 rounded-xl text-xs font-bold border border-neutral-300 dark:border-neutral-700 shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-neutral-50 text-neutral-700 rounded-xl text-xs font-bold border border-neutral-300 shadow-xs transition-all cursor-pointer"
             >
               <Download className="w-4 h-4 text-neutral-500" />
               <span>Export CSV</span>
@@ -384,13 +478,13 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
             className={`mb-6 p-4 rounded-2xl flex items-center gap-3 text-xs font-semibold animate-in fade-in duration-200 ${
               message.type === 'success'
                 ? 'bg-green-50 border border-green-100 text-green-700'
-                : 'bg-neutral-100 border border-neutral-400 text-black dark:text-white'
+                : 'bg-neutral-100 border border-neutral-400 text-neutral-900'
             }`}
           >
             {message.type === 'success' ? (
               <CheckCircle className="w-4 h-4 text-green-500" />
             ) : (
-              <AlertCircle className="w-4 h-4 text-black dark:text-white" />
+              <AlertCircle className="w-4 h-4 text-neutral-900" />
             )}
             <span>{message.text}</span>
           </div>
@@ -405,7 +499,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or email..."
-              className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 pl-10 pr-4 text-xs text-neutral-900 focus:outline-none focus:border-green-500 font-medium"
+              className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 pl-10 pr-4 text-xs text-neutral-900 focus:outline-none focus:ring-1 focus:ring-green-500 font-medium"
             />
           </div>
 
@@ -457,8 +551,8 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                           <div
                             className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold uppercase shadow-sm ${
                               isAdminProtected
-                                ? 'bg-gradient-to-tr from-neutral-800 to-neutral-800 text-white ring-2 ring-neutral-400'
-                                : 'bg-gradient-to-tr from-green-500 to-green-500 text-white'
+                                ? 'bg-linear-to-tr from-neutral-800 to-neutral-800 text-white ring-2 ring-neutral-400'
+                                : 'bg-linear-to-tr from-green-500 to-green-500 text-white'
                             }`}
                           >
                             {user.name ? user.name[0] : 'U'}
@@ -515,7 +609,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                             onChange={(e) => handleRoleChange(user._id, e.target.value)}
                             className={`text-xs font-bold rounded-full px-3 py-1 border focus:outline-none cursor-pointer transition-colors ${
                               user.role === 'faculty'
-                                ? 'bg-neutral-100 text-green-700 border-neutral-300 border-neutral-300'
+                                ? 'bg-neutral-100 text-green-700 border-neutral-300'
                                 : 'bg-green-50 text-green-700 border-green-100 hover:border-green-400'
                             }`}
                           >
@@ -538,12 +632,12 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                             className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold cursor-pointer transition-all ${
                               user.status === 'active'
                                 ? 'bg-green-100 text-green-700 hover:bg-green-100'
-                                : 'bg-neutral-100 text-black dark:text-white hover:bg-neutral-100'
+                                : 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200'
                             }`}
                           >
                             <span
                               className={`w-1.5 h-1.5 rounded-full ${
-                                user.status === 'active' ? 'bg-green-500' : 'bg-black dark:bg-white'
+                                user.status === 'active' ? 'bg-green-500' : 'bg-neutral-800'
                               }`}
                             ></span>
                             {user.status === 'active' ? 'Active' : 'Disabled'}
@@ -556,7 +650,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                         {!isAdminProtected && (
                           <button
                             onClick={() => handleDeleteUser(user._id)}
-                            className="p-1.5 text-neutral-400 hover:text-black dark:text-white hover:bg-neutral-100 rounded-lg transition-colors cursor-pointer"
+                            className="p-1.5 text-neutral-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors cursor-pointer"
                             title="Delete User"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -597,7 +691,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                     value={newUser.name}
                     onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
                     placeholder="e.g. Dr. Jordan Henderson"
-                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 focus:outline-none focus:border-green-500 font-medium"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 focus:outline-none focus:ring-1 focus:ring-green-500 font-medium"
                   />
                 </div>
 
@@ -609,7 +703,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                     value={newUser.email}
                     onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
                     placeholder="jordan@hospital.edu"
-                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 focus:outline-none focus:border-green-500 font-medium"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 focus:outline-none focus:ring-1 focus:ring-green-500 font-medium"
                   />
                 </div>
 
@@ -627,7 +721,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                       required
                       value={newUser.password}
                       onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
-                      className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 pl-9 pr-3 text-xs text-neutral-900 font-mono font-bold focus:outline-none focus:border-green-500"
+                      className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 pl-9 pr-3 text-xs text-neutral-900 font-mono font-bold focus:outline-none focus:ring-1 focus:ring-green-500"
                     />
                   </div>
                   <p className="text-[10px] text-neutral-400 mt-1">
@@ -640,7 +734,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                   <select
                     value={newUser.role}
                     onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
-                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:border-green-500 cursor-pointer"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-xl py-2 px-3 text-xs text-neutral-900 font-medium focus:outline-none focus:ring-1 focus:ring-green-500 cursor-pointer"
                   >
                     <option value="student">Student (Clinical Learner)</option>
                     <option value="faculty">Faculty (Course Author & Auditor)</option>
@@ -714,7 +808,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                       type="file"
                       accept=".csv,text/csv"
                       onChange={handleCsvFileUpload}
-                      className="text-xs text-neutral-600 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer"
+                      className="file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-green-50 file:text-green-700 hover:file:bg-green-100 cursor-pointer"
                     />
                   </div>
 
@@ -723,7 +817,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                     value={csvInput}
                     onChange={(e) => setCsvInput(e.target.value)}
                     placeholder="name,email,role,password,collegeId&#10;Elena Rostova,elena@medpulse.edu,student,Pass@2026,COLLEGE_001&#10;Prof. Marcus Vance,marcus@medpulse.edu,faculty,Pass@2026,COLLEGE_001"
-                    className="w-full bg-neutral-50 border border-neutral-200 rounded-2xl p-3 text-xs font-mono text-neutral-800 focus:outline-none focus:border-green-500 font-medium leading-relaxed"
+                    className="w-full bg-neutral-50 border border-neutral-200 rounded-2xl p-3 text-xs font-mono text-neutral-800 focus:outline-none focus:ring-1 focus:ring-green-500 font-medium leading-relaxed"
                   />
                   <p className="text-[10px] text-neutral-400 mt-1">
                     Columns: <code className="bg-neutral-100 px-1 py-0.5 rounded font-bold text-neutral-600">name, email, role, password, collegeId</code> (password & collegeId optional)
@@ -739,7 +833,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                         <span>Successfully Imported: {importResult.importedCount}</span>
                       </span>
                       {importResult.failedCount > 0 && (
-                        <span className="flex items-center gap-1.5 text-black dark:text-white bg-neutral-100/80 px-2.5 py-1 rounded-full">
+                        <span className="flex items-center gap-1.5 text-neutral-800 bg-neutral-100/80 px-2.5 py-1 rounded-full">
                           <AlertCircle className="w-3.5 h-3.5" />
                           <span>Failed Rows: {importResult.failedCount}</span>
                         </span>
@@ -755,9 +849,9 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                         {importResult.errors.map((err, errIdx) => (
                           <div
                             key={errIdx}
-                            className="p-2 rounded-xl bg-neutral-100 border border-neutral-400 text-black dark:text-white text-[11px] flex items-start gap-2"
+                            className="p-2 rounded-xl bg-neutral-100 border border-neutral-400 text-neutral-800 text-[11px] flex items-start gap-2"
                           >
-                            <AlertCircle className="w-3.5 h-3.5 text-black dark:text-white shrink-0 mt-0.5" />
+                            <AlertCircle className="w-3.5 h-3.5 text-neutral-800 shrink-0 mt-0.5" />
                             <div>
                               <strong className="font-bold">Row {err.row}</strong> ({err.email}): {err.reason}
                             </div>

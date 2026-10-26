@@ -49,7 +49,7 @@ export const AdminDashboard = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b bg-neutral-100 via-white to-green-50 text-neutral-900">
+    <div className="min-h-screen bg-linear-to-b bg-neutral-100 via-white to-green-50 text-neutral-900">
       <Navbar />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -166,7 +166,7 @@ export const AdminDashboard = () => {
             className="group bg-white/90 hover:bg-white border border-neutral-200 hover:border-green-400 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-green-500 text-white flex items-center justify-center mb-4 shadow-md shadow-md group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-green-500 text-white flex items-center justify-center mb-4 shadow-md group-hover:scale-105 transition-transform">
                 <BookOpen className="w-6 h-6" />
               </div>
               <h3 className="text-base font-bold text-neutral-900 group-hover:text-green-700 transition-colors">
@@ -187,7 +187,7 @@ export const AdminDashboard = () => {
             className="group bg-white/90 hover:bg-white border border-neutral-200 hover:border-green-400 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-green-500 text-white flex items-center justify-center mb-4 shadow-md shadow-md group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-green-500 text-white flex items-center justify-center mb-4 shadow-md group-hover:scale-105 transition-transform">
                 <ClipboardList className="w-6 h-6" />
               </div>
               <h3 className="text-base font-bold text-neutral-900 group-hover:text-green-700 transition-colors">
@@ -208,7 +208,7 @@ export const AdminDashboard = () => {
             className="group bg-white/90 hover:bg-white border border-neutral-200 hover:border-green-400 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between"
           >
             <div>
-              <div className="w-12 h-12 rounded-2xl bg-neutral-800 text-white flex items-center justify-center mb-4 shadow-md shadow-md group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-neutral-800 text-white flex items-center justify-center mb-4 shadow-md group-hover:scale-105 transition-transform">
                 <Bot className="w-6 h-6" />
               </div>
               <h3 className="text-base font-bold text-neutral-900 group-hover:text-neutral-800 transition-colors">
