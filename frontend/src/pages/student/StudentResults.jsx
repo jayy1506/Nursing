@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { getStudentGatingStatus } from '../../services/assessmentEngine';
@@ -17,12 +17,15 @@ import {
   Unlock,
   ChevronRight,
   ShieldCheck,
-  TrendingUp
+  TrendingUp,
+  Printer,
+  Filter
 } from 'lucide-react';
 
 export const StudentResults = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [filterMode, setFilterMode] = useState('all'); // 'all' | 'incorrect' | 'correct'
 
   const {
     score = 0,
@@ -42,9 +45,32 @@ export const StudentResults = () => {
   const gating = getStudentGatingStatus(subject);
   const isGrandFinal = assessmentKey?.includes('grand-final');
 
+  // Compute subtopic accuracy metrics
+  const subtopicStats = {};
+  reviewData.forEach(q => {
+    const sub = q.subtopic || 'General Competencies';
+    if (!subtopicStats[sub]) subtopicStats[sub] = { total: 0, correct: 0 };
+    subtopicStats[sub].total += 1;
+    if (q.isCorrect) subtopicStats[sub].correct += 1;
+  });
+  const subtopicList = Object.entries(subtopicStats).map(([name, data]) => ({
+    name,
+    total: data.total,
+    correct: data.correct,
+    percentage: Math.round((data.correct / data.total) * 100)
+  }));
+
+  const filteredReviewData = reviewData.filter(q => {
+    if (filterMode === 'incorrect') return !q.isCorrect;
+    if (filterMode === 'correct') return q.isCorrect;
+    return true;
+  });
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-neutral-50 via-white bg-neutral-100/30 text-neutral-900 pb-20 font-sans">
-      <Navbar />
+      <div className="print:hidden">
+        <Navbar />
+      </div>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Top Header Card */}
@@ -55,12 +81,24 @@ export const StudentResults = () => {
         }`}>
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider mb-2.5 shadow-xs ${
-                passed ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-800'
-              }">
-                {passed ? <ShieldCheck className="w-3.5 h-3.5 text-green-500" /> : <AlertTriangle className="w-3.5 h-3.5 text-neutral-800" />}
-                <span>{passed ? 'Assessment Passed (Competency Mastered)' : 'Needs Improvement (Score Below 75%)'}</span>
+              <div className="flex items-center gap-2 mb-2.5">
+                <div className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black uppercase tracking-wider shadow-xs ${
+                  passed ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-neutral-800'
+                }`}>
+                  {passed ? <ShieldCheck className="w-3.5 h-3.5 text-green-500" /> : <AlertTriangle className="w-3.5 h-3.5 text-neutral-800" />}
+                  <span>{passed ? 'Assessment Passed (Competency Mastered)' : 'Needs Improvement (Score Below 75%)'}</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => window.print()}
+                  className="print:hidden px-3 py-1 rounded-full border border-neutral-300 hover:bg-white text-[11px] font-bold text-neutral-700 inline-flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
+                  title="Print official INC results summary or save as PDF"
+                >
+                  <Printer className="w-3 h-3 text-neutral-600" />
+                  <span>Print Report</span>
+                </button>
               </div>
+
               <h1 className="text-xl sm:text-3xl font-black text-neutral-900 tracking-tight">
                 {moduleName}
               </h1>
@@ -111,11 +149,57 @@ export const StudentResults = () => {
               <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider block">INC Status</span>
               <p className="text-sm font-black text-neutral-800 flex items-center gap-1.5 mt-0.5">
                 <Award className="w-3.5 h-3.5 text-green-700" />
-                <span>{passed ? 'Certified' : 'Retake'}</span>
+                <span>{passed ? 'Certified' : 'Retake Required'}</span>
               </p>
             </div>
           </div>
         </div>
+
+        {/* Subtopic Performance Breakdown */}
+        {subtopicList.length > 0 && (
+          <div className="bg-white rounded-3xl border border-neutral-200 p-6 shadow-sm mb-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-4 h-4 text-green-700" />
+                <h3 className="text-xs font-black text-neutral-900 uppercase tracking-wider">
+                  Competency Mastery by Subtopic
+                </h3>
+              </div>
+              <span className="text-[11px] text-neutral-500 font-bold">
+                Pass Benchmark: 75%
+              </span>
+            </div>
+
+            <div className="space-y-3 pt-1">
+              {subtopicList.map((st, i) => {
+                const isProficient = st.percentage >= 75;
+                const isModerate = st.percentage >= 50 && st.percentage < 75;
+                return (
+                  <div key={i} className="space-y-1">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-neutral-800">{st.name}</span>
+                      <span className="font-mono font-extrabold text-[11px] text-neutral-700">
+                        {st.correct}/{st.total} ({st.percentage}%)
+                      </span>
+                    </div>
+                    <div className="w-full bg-neutral-100 rounded-full h-2 overflow-hidden">
+                      <div
+                        className={`h-2 rounded-full transition-all duration-300 ${
+                          isProficient
+                            ? 'bg-green-600'
+                            : isModerate
+                            ? 'bg-amber-500'
+                            : 'bg-rose-500'
+                        }`}
+                        style={{ width: `${st.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Course Completion & Grand Final Unlocking Card */}
         {(() => {
@@ -199,95 +283,155 @@ export const StudentResults = () => {
           );
         })()}
 
-        {/* Question by Question Review Header */}
-        <div className="flex items-center justify-between mb-4">
+        {/* Question by Question Review Header & Filter Controls */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4 text-neutral-600" />
             <h3 className="text-sm font-black text-neutral-900 uppercase tracking-wider">
-              Detailed Clinical Question Review ({reviewData.length})
+              Detailed Question Review ({reviewData.length})
             </h3>
           </div>
-          <span className="text-xs text-neutral-500 font-semibold">
-            Color-coded with Verified INC Answers
-          </span>
+
+          {/* Filter Pills */}
+          <div className="flex items-center gap-1.5 p-1 bg-neutral-100 rounded-xl border border-neutral-200 self-start sm:self-auto print:hidden">
+            <button
+              type="button"
+              onClick={() => setFilterMode('all')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                filterMode === 'all'
+                  ? 'bg-white text-neutral-900 shadow-xs'
+                  : 'text-neutral-500 hover:text-neutral-900'
+              }`}
+            >
+              All ({reviewData.length})
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterMode('incorrect')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                filterMode === 'incorrect'
+                  ? 'bg-white text-rose-700 shadow-xs'
+                  : 'text-neutral-500 hover:text-rose-600'
+              }`}
+            >
+              Missed ({incorrectCount})
+            </button>
+            <button
+              type="button"
+              onClick={() => setFilterMode('correct')}
+              className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                filterMode === 'correct'
+                  ? 'bg-white text-green-700 shadow-xs'
+                  : 'text-neutral-500 hover:text-green-600'
+              }`}
+            >
+              Correct ({correctCount})
+            </button>
+          </div>
         </div>
 
         {/* Questions Breakdown List */}
         <div className="space-y-4">
-          {reviewData.map((q, idx) => {
-            const isCorrect = q.isCorrect;
-            const studentChoice = q.options ? q.options[q.studentAnswer] : 'Not answered';
-            const correctChoice = q.options ? q.options[q.correctAnswer] : 'N/A';
-
-            return (
-              <div
-                key={idx}
-                className={`bg-white rounded-2xl border p-5 sm:p-6 shadow-xs space-y-3.5 transition-all ${
-                  isCorrect ? 'border-green-100' : 'border-neutral-400'
-                }`}
+          {filteredReviewData.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-neutral-200 p-8 text-center text-neutral-500 space-y-2">
+              <CheckCircle2 className="w-8 h-8 text-green-500 mx-auto" />
+              <p className="text-sm font-bold text-neutral-800">No questions match this filter.</p>
+              <button
+                type="button"
+                onClick={() => setFilterMode('all')}
+                className="text-xs text-green-700 font-bold hover:underline cursor-pointer"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex items-center gap-2">
-                    <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
-                      isCorrect ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-black dark:text-white'
+                Reset to show all questions
+              </button>
+            </div>
+          ) : (
+            filteredReviewData.map((q, idx) => {
+              const isCorrect = q.isCorrect;
+              const studentChoice = q.options ? q.options[q.studentAnswer] : 'Not answered';
+              const correctChoice = q.options ? q.options[q.correctAnswer] : 'N/A';
+              const originalIndex = reviewData.findIndex(item => item.id === q.id || item.text === q.text);
+              const questionNumber = originalIndex >= 0 ? originalIndex + 1 : idx + 1;
+
+              return (
+                <div
+                  key={q.id || idx}
+                  className={`bg-white rounded-2xl border p-5 sm:p-6 shadow-xs space-y-3.5 transition-all ${
+                    isCorrect ? 'border-green-100' : 'border-neutral-400'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-2">
+                      <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
+                        isCorrect ? 'bg-green-100 text-green-700' : 'bg-neutral-100 text-black dark:text-white'
+                      }`}>
+                        {questionNumber}
+                      </span>
+                      <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
+                        {q.subtopic || 'INC Core Competency'}
+                      </span>
+                    </div>
+
+                    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${
+                      isCorrect ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-neutral-100 text-black dark:text-white border border-neutral-400'
                     }`}>
-                      {idx + 1}
-                    </span>
-                    <span className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">
-                      {q.subtopic || 'INC Core Competency'}
+                      {isCorrect ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
+                      <span>{isCorrect ? 'Correct' : 'Incorrect'}</span>
                     </span>
                   </div>
 
-                  <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-extrabold ${
-                    isCorrect ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-neutral-100 text-black dark:text-white border border-neutral-400'
-                  }`}>
-                    {isCorrect ? <CheckCircle2 className="w-3 h-3" /> : <XCircle className="w-3 h-3" />}
-                    <span>{isCorrect ? 'Correct' : 'Incorrect'}</span>
-                  </span>
-                </div>
+                  <h4 className="text-sm font-bold text-neutral-900 leading-relaxed">
+                    {q.text}
+                  </h4>
 
-                <h4 className="text-sm font-bold text-neutral-900 leading-relaxed">
-                  {q.text}
-                </h4>
+                  {/* Options Comparison */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+                    <div className={`p-3 rounded-xl border ${
+                      isCorrect ? 'bg-green-50/60 border-green-100 text-green-900 font-semibold' : 'bg-neutral-100/60 border-neutral-400 text-neutral-800'
+                    }`}>
+                      <span className="text-[10px] font-bold text-neutral-400 block mb-0.5">Your Selected Answer:</span>
+                      <p className="font-bold">{studentChoice || 'None selected'}</p>
+                    </div>
 
-                {/* Options Comparison */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                  <div className={`p-3 rounded-xl border ${
-                    isCorrect ? 'bg-green-50/60 border-green-100 text-green-900 font-semibold' : 'bg-neutral-100/60 border-neutral-400 text-neutral-800'
-                  }`}>
-                    <span className="text-[10px] font-bold text-neutral-400 block mb-0.5">Your Selected Answer:</span>
-                    <p className="font-bold">{studentChoice || 'None selected'}</p>
+                    {!isCorrect && (
+                      <div className="p-3 rounded-xl border bg-green-50/60 border-green-100 text-green-900">
+                        <span className="text-[10px] font-bold text-green-700 block mb-0.5">Correct Answer:</span>
+                        <p className="font-bold">{correctChoice}</p>
+                      </div>
+                    )}
                   </div>
 
-                  {!isCorrect && (
-                    <div className="p-3 rounded-xl border bg-green-50/60 border-green-100 text-green-900">
-                      <span className="text-[10px] font-bold text-green-700 block mb-0.5">Correct Answer:</span>
-                      <p className="font-bold">{correctChoice}</p>
+                  {/* Clinical Rationale */}
+                  {q.rationale && (
+                    <div className="bg-neutral-50 border border-neutral-200/80 rounded-xl p-3 text-xs text-neutral-700 leading-relaxed">
+                      <span className="font-extrabold text-neutral-900">Clinical Explanation: </span>
+                      {q.rationale}
                     </div>
                   )}
                 </div>
-
-                {/* Clinical Rationale */}
-                {q.rationale && (
-                  <div className="bg-neutral-50 border border-neutral-200/80 rounded-xl p-3 text-xs text-neutral-700 leading-relaxed">
-                    <span className="font-extrabold text-neutral-900">Clinical Explanation: </span>
-                    {q.rationale}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+              );
+            })
+          )}
         </div>
 
         {/* Footer Navigation Actions */}
-        <div className="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-neutral-200">
-          <button
-            onClick={() => navigate(`/quiz/${assessmentKey}`)}
-            className="px-5 py-2.5 rounded-xl border border-neutral-300 text-neutral-700 hover:bg-neutral-100 font-bold text-xs inline-flex items-center gap-2 cursor-pointer transition-colors"
-          >
-            <RotateCcw className="w-4 h-4" />
-            <span>Retake This Chapter Quiz</span>
-          </button>
+        <div className="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-neutral-200 print:hidden">
+          <div className="flex items-center gap-2 flex-wrap">
+            <button
+              onClick={() => navigate(`/quiz/${assessmentKey}`)}
+              className="px-5 py-2.5 rounded-xl border border-neutral-300 text-neutral-700 hover:bg-neutral-100 font-bold text-xs inline-flex items-center gap-2 cursor-pointer transition-colors"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>Retake Entire Chapter Quiz</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => window.print()}
+              className="px-4 py-2.5 rounded-xl border border-neutral-300 hover:bg-neutral-100 text-xs font-bold text-neutral-700 inline-flex items-center gap-2 cursor-pointer transition-colors"
+            >
+              <Printer className="w-4 h-4 text-neutral-500" />
+              <span>Print Results</span>
+            </button>
+          </div>
 
           <div className="flex items-center gap-3 flex-wrap">
             {gating.isFinalUnlocked ? (

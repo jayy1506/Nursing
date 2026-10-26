@@ -1,4 +1,4 @@
-name: MedPulse CI Pipeline
+name: MedPulse CI Pipeline & Production Deploy
 
 on:
   push:
@@ -6,9 +6,13 @@ on:
   pull_request:
     branches: [main]
 
+concurrency:
+  group: ci-production-deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   backend-test:
-    name: Backend Lint & Tests
+    name: Backend Lint, Audit & Tests
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
@@ -24,6 +28,10 @@ jobs:
         run: |
           npm ci --ignore-scripts
           cd backend && npm ci
+
+      - name: Security Vulnerability Audit
+        run: |
+          cd backend && npm audit --audit-level=high || echo "::warning::High or critical vulnerabilities detected in backend dependencies"
 
       - name: Run Backend Security, RAG & Admin Tooling Tests
         run: |
@@ -60,3 +68,39 @@ jobs:
           cd frontend && npm run build
         env:
           VITE_API_BASE_URL: http://localhost:5000
+
+  deploy:
+    name: Safe Production Deploy to Render
+    needs: [backend-test, frontend-build]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy Primary Render Service (Site 1)
+        run: |
+          if [ -z "${{ secrets.RENDER_DEPLOY_HOOK_SITE_1 }}" ]; then
+            echo "::warning::RENDER_DEPLOY_HOOK_SITE_1 secret is not set in GitHub repository settings. Skipping Render deploy trigger."
+            exit 0
+          fi
+
+          echo "Triggering Render Production Deployment for Site 1..."
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK_SITE_1 }}")
+          
+          if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
+            echo "Deployment successfully triggered on Render (HTTP $HTTP_CODE)."
+          else
+            echo "::error::Render Deploy Hook returned failure HTTP status $HTTP_CODE"
+            exit 1
+          fi
+
+      - name: Deploy Secondary Render Service (Site 2 - Optional)
+        if: "${{ secrets.RENDER_DEPLOY_HOOK_SITE_2 != '' }}"
+        run: |
+          echo "Triggering Render Production Deployment for Site 2..."
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK_SITE_2 }}")
+          
+          if [ "$HTTP_CODE" -eq 200 ] || [ "$HTTP_CODE" -eq 201 ]; then
+            echo "Site 2 deployment successfully triggered on Render (HTTP $HTTP_CODE)."
+          else
+            echo "::warning::Render Deploy Hook for Site 2 returned HTTP status $HTTP_CODE"
+          fi
+

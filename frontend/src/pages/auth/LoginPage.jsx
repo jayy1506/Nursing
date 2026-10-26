@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -6,6 +7,38 @@ import { Button } from '../../components/ui/Button';
 import { Input } from '../../components/ui/Input';
 import ThemeToggle from '../../components/layout/ThemeToggle';
 import { Lock, Mail, ArrowRight, ShieldCheck, AlertCircle } from 'lucide-react';
+
+// Helper to resolve appropriate dashboard and prevent cross-role redirect leaks
+// (e.g., student logging in when previous admin session was on /admin/*)
+export const getDestinationForRole = (userRole, requestedPath) => {
+  const role = userRole || 'student';
+  const defaultDashboard =
+    role === 'admin'
+      ? '/admin/dashboard'
+      : role === 'faculty'
+        ? '/faculty/dashboard'
+        : '/';
+
+  // If no path requested, or requested path is an auth page or root '/'
+  if (!requestedPath || requestedPath === '/login' || requestedPath === '/signup' || requestedPath === '/') {
+    return defaultDashboard;
+  }
+
+  const isAdminPath = requestedPath.startsWith('/admin');
+  const isFacultyPath = requestedPath.startsWith('/faculty');
+
+  // Prevent cross-role redirect leak
+  if (isAdminPath) {
+    return role === 'admin' ? requestedPath : defaultDashboard;
+  }
+
+  if (isFacultyPath) {
+    return (role === 'faculty' || role === 'admin') ? requestedPath : defaultDashboard;
+  }
+
+  // Any other learning/syllabus/quiz path is accessible by all roles
+  return requestedPath;
+};
 
 export const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -18,14 +51,14 @@ export const LoginPage = () => {
   const location = useLocation();
 
   const from = location.state?.from?.pathname;
-  const redirectPath = (from && from !== '/login' && from !== '/signup') ? from : '/';
 
   // Redirect if user is already authenticated
   useEffect(() => {
     if (currentUser) {
-      navigate(redirectPath, { replace: true });
+      const destination = getDestinationForRole(currentUser.role, from);
+      navigate(destination, { replace: true });
     }
-  }, [currentUser, navigate, redirectPath]);
+  }, [currentUser, navigate, from]);
 
   const handleEmailLogin = async (e) => {
     e.preventDefault();
@@ -37,8 +70,9 @@ export const LoginPage = () => {
     setLoading(true);
 
     try {
-      await login(email, password);
-      navigate(redirectPath, { replace: true });
+      const loggedInUser = await login(email, password);
+      const destination = getDestinationForRole(loggedInUser?.role, from);
+      navigate(destination, { replace: true });
     } catch (err) {
       console.error(err);
       if (
@@ -65,8 +99,9 @@ export const LoginPage = () => {
     setError('');
     setLoading(true);
     try {
-      await loginWithGoogle();
-      navigate(redirectPath, { replace: true });
+      const loggedInUser = await loginWithGoogle();
+      const destination = getDestinationForRole(loggedInUser?.role, from);
+      navigate(destination, { replace: true });
     } catch (err) {
       console.error(err);
       if (err.code === 'auth/unauthorized-domain') {
@@ -111,14 +146,12 @@ export const LoginPage = () => {
           </div>
 
           {error && (
-            <div className={`mb-5 p-3.5 rounded-2xl text-xs flex items-center gap-2.5 ${
-              error.includes('Access denied') || error.includes('disabled')
+            <div className={`mb-5 p-3.5 rounded-2xl text-xs flex items-center gap-2.5 ${error.includes('Access denied') || error.includes('disabled')
                 ? 'bg-rose-50 border border-rose-200 text-rose-800'
                 : 'bg-neutral-100 border border-neutral-300 text-neutral-900'
-            }`}>
-              <AlertCircle className={`w-4 h-4 shrink-0 ${
-                error.includes('Access denied') || error.includes('disabled') ? 'text-rose-600' : 'text-neutral-900'
-              }`} />
+              }`}>
+              <AlertCircle className={`w-4 h-4 shrink-0 ${error.includes('Access denied') || error.includes('disabled') ? 'text-rose-600' : 'text-neutral-900'
+                }`} />
               <p className="flex-1 font-semibold leading-relaxed">{error}</p>
             </div>
           )}

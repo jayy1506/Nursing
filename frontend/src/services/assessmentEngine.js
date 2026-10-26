@@ -12,6 +12,36 @@ const ATTEMPTS_STORAGE_KEY = 'nursing_lms_all_attempts';
 const COMPLETED_UNITS_KEY = 'nursing_lms_completed_units';
 
 /**
+ * Deterministic PRNG seeded by string to produce stable, constant option orders
+ * that never change or flicker during timer ticks and re-renders.
+ */
+function pseudoRandomSeed(seedStr) {
+  let h = 0x811c9dc5;
+  const str = String(seedStr || 'medpulse_seed');
+  for (let i = 0; i < str.length; i++) {
+    h ^= str.charCodeAt(i);
+    h = Math.imul(h, 0x01000193);
+  }
+  return function () {
+    h = Math.imul(h ^ (h >>> 16), 2246822507);
+    h = Math.imul(h ^ (h >>> 13), 3266489909);
+    return ((h ^= h >>> 16) >>> 0) / 4294967296;
+  };
+}
+
+function deterministicShuffle(array, seedStr) {
+  const rng = pseudoRandomSeed(seedStr);
+  const arr = array.slice();
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+  }
+  return arr;
+}
+
+/**
  * Returns formatted 4-choice questions for any Physiology chapter.
  */
 function buildPhysiologyChapterQuiz(unitId, questionCount = 15) {
@@ -23,20 +53,21 @@ function buildPhysiologyChapterQuiz(unitId, questionCount = 15) {
   const selected = allMcqs.slice(0, questionCount);
 
   const formattedQuestions = selected.map((q, idx) => {
+    const seed = q.id || `phys-${unitId}-${idx + 1}`;
     const correct = q.correctAnswer;
     const distractors = allAnswers.filter(a => a !== correct);
-    const shuffledDistractors = distractors.sort(() => 0.5 - Math.random()).slice(0, 3);
-    const options = [correct, ...shuffledDistractors];
+    const constantDistractors = deterministicShuffle(distractors, seed + '_dist').slice(0, 3);
+    const options = [correct, ...constantDistractors];
     while (options.length < 4) {
       options.push(`Alternative physiological variant ${options.length}`);
     }
-    const shuffledOptions = options.sort(() => 0.5 - Math.random());
-    const correctIdx = shuffledOptions.indexOf(correct);
+    const constantOptions = deterministicShuffle(options, seed + '_opts');
+    const correctIdx = constantOptions.indexOf(correct);
 
     return {
-      id: q.id || `phys-${unitId}-${idx + 1}`,
+      id: seed,
       text: q.question,
-      options: shuffledOptions,
+      options: constantOptions,
       correctAnswer: correctIdx,
       rationale: `According to INC syllabus competencies: ${correct} is the verified physiological answer for ${q.subtopic || chapter.title}.`,
       subtopic: q.subtopic || chapter.title,
@@ -55,6 +86,154 @@ function buildPhysiologyChapterQuiz(unitId, questionCount = 15) {
   };
 }
 
+// Domain-categorized anatomical distractor pools for questions without pre-set options
+const ANATOMY_DIRECTIONAL_TERMS = [
+  'Above another structure',
+  'Below another structure',
+  'Nearer to the midline of the body',
+  'Farther from the midline of the body',
+  'Toward the front of the body',
+  'Toward the back of the body',
+  'Nearer to the attachment of a limb',
+  'Farther from the attachment of a limb',
+  'Toward or at the body surface',
+  'Away from the body surface'
+];
+
+const ANATOMY_PLANES = [
+  'Left and right',
+  'Superior and inferior',
+  'Anterior and posterior',
+  'Upper and lower halves'
+];
+
+const ANATOMY_CAVITIES = [
+  'Thoracic cavity',
+  'Abdominal cavity',
+  'Pelvic cavity',
+  'Cranial cavity',
+  'Pericardial cavity',
+  'Pleural cavity',
+  'Vertebral cavity'
+];
+
+const ANATOMY_TISSUES = [
+  'Simple squamous epithelium',
+  'Simple cuboidal epithelium',
+  'Simple columnar epithelium',
+  'Stratified squamous epithelium',
+  'Dense regular connective tissue',
+  'Hyaline cartilage',
+  'Elastic cartilage',
+  'Adipose tissue'
+];
+
+const ANATOMY_ORGANELLES = [
+  'Mitochondria',
+  'Rough endoplasmic reticulum',
+  'Smooth endoplasmic reticulum',
+  'Golgi apparatus',
+  'Ribosomes',
+  'Lysosomes',
+  'Peroxisomes',
+  'Nucleus'
+];
+
+let cachedAllAnatomyAnswers = null;
+function getAllAnatomyAnswers() {
+  if (cachedAllAnatomyAnswers) return cachedAllAnatomyAnswers;
+  const list = [];
+  for (const k in ANATOMY_CHAPTERS) {
+    (ANATOMY_CHAPTERS[k].mcqs || []).forEach(m => {
+      const a = m.correctAnswer || m.answer;
+      if (a && typeof a === 'string') list.push(a.trim());
+    });
+  }
+  cachedAllAnatomyAnswers = Array.from(new Set(list));
+  return cachedAllAnatomyAnswers;
+}
+
+function resolveAnatomyOptions(q, chapterMcqs) {
+  if (q.options && q.options.length >= 2) {
+    const correctVal = (q.correctAnswer || q.answer || q.options[0]).trim();
+    let correctIdx = q.options.findIndex(
+      opt => opt.trim().toLowerCase() === correctVal.toLowerCase()
+    );
+    if (correctIdx === -1) correctIdx = 0;
+    return { options: q.options, correctIdx, correctVal };
+  }
+
+  const correct = (q.correctAnswer || q.answer || '').trim();
+  const qText = (q.question || '').toLowerCase();
+
+  let matchedCategoryPool = null;
+  if (
+    ANATOMY_DIRECTIONAL_TERMS.some(t => t.toLowerCase() === correct.toLowerCase()) ||
+    qText.includes('superior') || qText.includes('inferior') ||
+    qText.includes('distal') || qText.includes('proximal') ||
+    qText.includes('medial') || qText.includes('lateral')
+  ) {
+    matchedCategoryPool = ANATOMY_DIRECTIONAL_TERMS;
+  } else if (
+    ANATOMY_PLANES.some(t => t.toLowerCase() === correct.toLowerCase()) ||
+    qText.includes('plane') || qText.includes('sagittal') ||
+    qText.includes('transverse') || qText.includes('coronal')
+  ) {
+    matchedCategoryPool = ANATOMY_PLANES;
+  } else if (
+    ANATOMY_CAVITIES.some(t => t.toLowerCase() === correct.toLowerCase()) ||
+    qText.includes('cavity')
+  ) {
+    matchedCategoryPool = ANATOMY_CAVITIES;
+  } else if (
+    ANATOMY_ORGANELLES.some(t => t.toLowerCase() === correct.toLowerCase()) ||
+    qText.includes('organelle') || qText.includes('reticulum')
+  ) {
+    matchedCategoryPool = ANATOMY_ORGANELLES;
+  } else if (
+    ANATOMY_TISSUES.some(t => t.toLowerCase() === correct.toLowerCase()) ||
+    qText.includes('epithelial') || qText.includes('tissue') || qText.includes('cartilage')
+  ) {
+    matchedCategoryPool = ANATOMY_TISSUES;
+  }
+
+  const chapterAnswers = Array.from(
+    new Set((chapterMcqs || []).map(m => (m.correctAnswer || m.answer || '').trim()).filter(Boolean))
+  );
+
+  const pool = matchedCategoryPool
+    ? matchedCategoryPool.filter(item => item.toLowerCase() !== correct.toLowerCase())
+    : chapterAnswers.filter(item => item.toLowerCase() !== correct.toLowerCase());
+
+  const sortedDistractors = pool.slice().sort((a, b) => {
+    return Math.abs(a.length - correct.length) - Math.abs(b.length - correct.length);
+  });
+
+  const selectedDistractors = sortedDistractors.slice(0, 3);
+
+  if (selectedDistractors.length < 3) {
+    const allAnswers = getAllAnatomyAnswers();
+    const backupPool = allAnswers
+      .filter(
+        a =>
+          a.toLowerCase() !== correct.toLowerCase() &&
+          !selectedDistractors.some(d => d.toLowerCase() === a.toLowerCase())
+      )
+      .sort((a, b) => Math.abs(a.length - correct.length) - Math.abs(b.length - correct.length));
+
+    for (const b of backupPool) {
+      if (selectedDistractors.length >= 3) break;
+      selectedDistractors.push(b);
+    }
+  }
+
+  const rawList = [correct, ...selectedDistractors].slice(0, 4);
+  const options = deterministicShuffle(rawList, q.id || q.question || 'anat_q');
+  const correctIdx = options.indexOf(correct);
+
+  return { options, correctIdx, correctVal: correct };
+}
+
 /**
  * Returns formatted 4-choice questions for any Anatomy chapter.
  */
@@ -66,15 +245,12 @@ function buildAnatomyChapterQuiz(unitId, questionCount = 15) {
   const selected = allMcqs.slice(0, questionCount);
 
   const formattedQuestions = selected.map((q, idx) => {
-    const rawOptions = q.options && q.options.length >= 2 ? q.options : ['Option A', 'Option B', 'Option C', 'Option D'];
-    const correctVal = q.correctAnswer || q.answer || rawOptions[0];
-    let correctIdx = rawOptions.indexOf(correctVal);
-    if (correctIdx === -1) correctIdx = 0;
+    const { options, correctIdx, correctVal } = resolveAnatomyOptions(q, allMcqs);
 
     return {
       id: q.id || `anat-${unitId}-${idx + 1}`,
       text: q.question,
-      options: rawOptions,
+      options,
       correctAnswer: correctIdx,
       rationale: `INC Anatomy standard: ${correctVal} is the verified anatomical landmark and structure.`,
       subtopic: q.subtopic || chapter.title,
@@ -130,15 +306,24 @@ export function buildNutritionChapterQuiz(rawUnitId, questionCount = 15) {
   const unitNum = parseInt(normalizedId.replace(/\D/g, '')) || 1;
 
   const formattedQuestions = selected.map((q, idx) => {
-    const rawOptions = q.options && q.options.length >= 2 ? q.options : ['Option A', 'Option B', 'Option C', 'Option D'];
-    const correctVal = q.correctOption || rawOptions[0];
-    let correctIdx = rawOptions.indexOf(correctVal);
+    let options = q.options && q.options.length >= 2 ? q.options : null;
+    const correctVal = q.correctOption || q.correctAnswer || (options ? options[0] : '');
+
+    if (!options) {
+      const seed = q.id || `nut-${normalizedId}-${idx + 1}`;
+      const allNutAnswers = Array.from(new Set(pool.map(p => p.correctOption).filter(Boolean)));
+      const distractors = allNutAnswers.filter(a => a !== correctVal);
+      const constantDistractors = deterministicShuffle(distractors, seed + '_dist').slice(0, 3);
+      options = deterministicShuffle([correctVal, ...constantDistractors], seed + '_opts');
+    }
+
+    let correctIdx = options.indexOf(correctVal);
     if (correctIdx === -1) correctIdx = 0;
 
     return {
       id: q.id || `nut-${normalizedId}-${idx + 1}`,
       text: q.question,
-      options: rawOptions,
+      options,
       correctAnswer: correctIdx,
       rationale: `INC Nutrition standard: ${correctVal} is the verified clinical and dietetic outcome.`,
       subtopic: q.topic || `Nutrition Unit ${unitNum}`,

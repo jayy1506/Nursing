@@ -47,6 +47,7 @@ import assessmentRoutes from './routes/assessmentRoutes.js';
 import progressRoutes from './routes/progressRoutes.js';
 import ragRoutes from './routes/ragRoutes.js';
 import aiMemoryRoutes from './routes/aiMemoryRoutes.js';
+import healthRoutes from './routes/healthRoutes.js';
 import { preloadMemoryCache } from './services/semanticMemoryService.js';
 
 const app = express();
@@ -102,6 +103,10 @@ app.use(cors({
 app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 
+// Lightweight Health Check Probes (Mounted before rate limiting for Render & monitors)
+app.use(healthRoutes);
+app.use('/api', healthRoutes);
+
 // Global Express Rate Limit for all API endpoints
 const globalApiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
@@ -120,20 +125,6 @@ if (swaggerDocument && Object.keys(swaggerDocument).length > 0) {
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   logger.info(`[Swagger Docs] Available at http://127.0.0.1:${PORT}/api/docs`);
 }
-
-// Healthcheck Route
-app.get('/api/health', (req, res) => {
-  res.status(200).json({
-    status: 'online',
-    system: 'MedPulse Nursing AI & LMS Backend API',
-    timestamp: new Date(),
-    auth: 'Firebase Auth + MongoDB Role-Based Access Control',
-    rag: 'Chapter-Scoped Hybrid Vector Search',
-    memoryCache: 'Active',
-    rateLimiter: 'Active (Sliding Window & Daily Quota Shield)',
-    docs: '/api/docs'
-  });
-});
 
 // Mount API Routes
 app.use('/api/auth', authRoutes);

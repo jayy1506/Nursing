@@ -54,9 +54,9 @@ export const AppShell = ({ children }) => {
   }, [location.pathname]);
 
   const handleLogout = async () => {
-    await logout();
     setUserMenuOpen(false);
-    navigate('/login');
+    await logout();
+    navigate('/login', { replace: true, state: {} });
   };
 
   const getNickname = () => {
@@ -236,8 +236,13 @@ export const AppShell = ({ children }) => {
                     <p className="text-[11px] text-neutral-600 truncate">
                       {currentUser.email}
                     </p>
-                    <div className="mt-1.5">
+                    <div className="mt-1.5 flex items-center gap-1.5">
                       <Badge variant="medium" size="sm">{role}</Badge>
+                      {role === 'student' && (
+                        <span className="text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
+                          B.Sc Nursing • Year 1
+                        </span>
+                      )}
                     </div>
                   </div>
 

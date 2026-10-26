@@ -102,6 +102,13 @@ export const Home = () => {
     nutrStatus.completedCount;
   const overallPercentage = Math.round((totalCompletedUnits / 41) * 100);
 
+  // Today's attempts & latest score
+  const todayAttempts = recentAttempts.filter(att => {
+    if (!att.completedAt) return false;
+    return new Date(att.completedAt).toDateString() === new Date().toDateString();
+  });
+  const latestAttempt = recentAttempts[0] || null;
+
   // Determine last active lesson / continue card
   const lastLesson = localStorage.getItem('medpulse_last_lesson') || '/biochemistry/lesson/classification-of-carb';
   const lastLessonTitle = localStorage.getItem('medpulse_last_lesson_title') || 'Carbohydrate Metabolism & Clinical Correlates';
@@ -195,17 +202,43 @@ export const Home = () => {
               Master human anatomy, physiological mechanisms, clinical biochemistry, and therapeutic nutrition with bedside case rationales and your chapter-scoped AI tutor.
             </p>
 
-            {/* Zero-progress state streak indicator */}
-            <div className="flex items-center gap-3 text-xs text-neutral-700 pt-1">
-              <span className="flex items-center gap-1 font-semibold">
-                <Flame className="w-4 h-4 text-green-700" />
-                <span>0 Day Streak</span>
-              </span>
-              <span>&bull;</span>
-              <span className="flex items-center gap-1 font-semibold">
-                <Target className="w-3.5 h-3.5 text-green-700" />
-                <span>Daily Goal: 0/1 Completed</span>
-              </span>
+            {/* Streak & 7-day activity micro-heatmap */}
+            <div className="flex flex-wrap items-center gap-4 text-xs text-neutral-700 pt-1">
+              <div className="flex items-center gap-1.5">
+                <span className="flex items-center gap-1 font-bold text-black">
+                  <Flame className={`w-4 h-4 ${todayAttempts.length > 0 ? 'text-amber-500 fill-amber-500' : 'text-neutral-400'}`} />
+                  <span>{todayAttempts.length > 0 ? '1 Day Streak' : '0 Day Streak'}</span>
+                </span>
+                <span>&bull;</span>
+                <span className="flex items-center gap-1 font-semibold text-neutral-600">
+                  <Target className={`w-3.5 h-3.5 ${todayAttempts.length > 0 ? 'text-green-700' : 'text-neutral-400'}`} />
+                  <span>Goal: {todayAttempts.length > 0 ? '1/1 Done' : '0/1'}</span>
+                </span>
+              </div>
+
+              {/* 7-Day Activity tracker dots */}
+              <div className="flex items-center gap-1">
+                {['M', 'T', 'W', 'T', 'F', 'S', 'S'].map((day, idx) => {
+                  const currentDayIdx = (new Date().getDay() + 6) % 7;
+                  const isToday = idx === currentDayIdx;
+                  const isDone = isToday && todayAttempts.length > 0;
+                  return (
+                    <span
+                      key={idx}
+                      title={`${day} - ${isDone ? 'Assessment Completed' : isToday ? 'Today' : 'No attempt'}`}
+                      className={`w-5 h-5 rounded-md flex items-center justify-center text-[9px] font-black transition-all ${
+                        isDone
+                          ? 'bg-green-600 text-white shadow-xs'
+                          : isToday
+                          ? 'border border-green-600 text-green-700 bg-green-50'
+                          : 'bg-neutral-100 text-neutral-400'
+                      }`}
+                    >
+                      {day}
+                    </span>
+                  );
+                })}
+              </div>
             </div>
 
             <div className="pt-2 flex flex-wrap items-center gap-2 sm:gap-3">
@@ -231,53 +264,139 @@ export const Home = () => {
             </div>
           </div>
 
-          {/* Academic Standing & Progress Ring with Animated Load Fill */}
-          <div className="flex items-center gap-5 bg-white p-5 rounded-2xl border border-neutral-200 shrink-0 w-full sm:w-auto justify-between sm:justify-start shadow-xs">
-            <ProgressRing
-              value={overallPercentage}
-              max={100}
-              size={84}
-              strokeWidth={7}
-              color="#15803D"
-              trackColor="#E5E5E5"
-            >
-              <div className="text-center">
-                <span className="text-base font-black text-black">{overallPercentage}%</span>
-                <span className="block text-[8px] uppercase tracking-wider text-green-700 font-extrabold">Overall</span>
-              </div>
-            </ProgressRing>
-
-            <div className="space-y-1.5 max-w-[210px]">
-              <div className="flex items-center gap-1.5">
-                <GraduationCap className="w-4 h-4 text-green-700" />
-                <h4 className="text-xs font-bold text-black">Competency Progress</h4>
-              </div>
-              <p className="text-xs text-neutral-800 font-bold">
-                {totalCompletedUnits} of 41 Units Passed
-              </p>
-              {overallPercentage === 0 ? (
-                <div className="space-y-1">
-                  <p className="text-[11px] text-green-700 font-semibold leading-tight">
-                    Pass your first unit to start your progress
-                  </p>
-                  <button
-                    type="button"
-                    onClick={() => navigate('/anatomy-syllabus')}
-                    className="inline-flex items-center gap-1 text-[11px] font-bold text-green-700 hover:text-green-800 underline cursor-pointer"
-                  >
-                    <span>Start with Anatomy Unit 1</span>
-                    <ArrowRight className="w-3 h-3" />
-                  </button>
+          {/* Academic Standing & 4-Subject Cluster */}
+          <div className="bg-white p-5 rounded-2xl border border-neutral-200 shrink-0 w-full sm:w-auto shadow-xs space-y-3">
+            <div className="flex items-center gap-5 justify-between sm:justify-start">
+              <ProgressRing
+                value={overallPercentage}
+                max={100}
+                size={80}
+                strokeWidth={7}
+                color="#15803D"
+                trackColor="#E5E5E5"
+              >
+                <div className="text-center">
+                  <span className="text-base font-black text-black">{overallPercentage}%</span>
+                  <span className="block text-[8px] uppercase tracking-wider text-green-700 font-extrabold">Overall</span>
                 </div>
-              ) : (
-                <Badge variant="medium" size="sm">
-                  Pass Criterion &ge; 75%
-                </Badge>
-              )}
+              </ProgressRing>
+
+              <div className="space-y-1.5 max-w-[210px]">
+                <div className="flex items-center gap-1.5">
+                  <GraduationCap className="w-4 h-4 text-green-700" />
+                  <h4 className="text-xs font-bold text-black">Competency Progress</h4>
+                </div>
+                <p className="text-xs text-neutral-800 font-bold">
+                  {totalCompletedUnits} of 41 Units Passed
+                </p>
+                {totalCompletedUnits > 0 ? (
+                  <div className="space-y-1">
+                    <Badge variant="medium" size="sm">
+                      Pass Criterion &ge; 75%
+                    </Badge>
+                    {latestAttempt && (
+                      <p className="text-[11px] text-neutral-600 font-semibold leading-tight">
+                        Latest: <span className="font-extrabold text-black">{latestAttempt.percentage}%</span>
+                      </p>
+                    )}
+                  </div>
+                ) : latestAttempt ? (
+                  <div className="space-y-1">
+                    <p className="text-[11px] text-amber-700 font-bold leading-tight">
+                      Latest Score: {latestAttempt.percentage}%
+                    </p>
+                    <p className="text-[10px] text-neutral-600 font-medium">
+                      Minimum 75% required to pass unit
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => navigate(`/student/quiz/${latestAttempt.topicId || 'anatomy-unit-1'}`)}
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-green-700 hover:text-green-800 underline cursor-pointer pt-0.5"
+                    >
+                      <span>Retake Quiz to Pass</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <p className="text-[11px] text-green-700 font-semibold leading-tight">
+                      Pass your first unit to start your progress
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => navigate('/anatomy-syllabus')}
+                      className="inline-flex items-center gap-1 text-[11px] font-bold text-green-700 hover:text-green-800 underline cursor-pointer"
+                    >
+                      <span>Start with Anatomy Unit 1</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* 4-Subject Mini Competency Cluster */}
+            <div className="grid grid-cols-4 gap-1.5 pt-2 border-t border-neutral-100">
+              {[
+                { label: 'Anatomy', short: 'Anat', count: `${anatStatus.completedCount}/12`, icon: Bone },
+                { label: 'Physiology', short: 'Phys', count: `${physStatus.completedCount}/12`, icon: Activity },
+                { label: 'Biochemistry', short: 'Bioc', count: `${biocStatus.completedCount}/7`, icon: Dna },
+                { label: 'Nutrition', short: 'Nutr', count: `${nutrStatus.completedCount}/10`, icon: Utensils }
+              ].map((sub, i) => (
+                <div
+                  key={i}
+                  title={`${sub.label}: ${sub.count} units passed`}
+                  className="flex flex-col items-center p-1.5 rounded-xl bg-neutral-50 border border-neutral-200/80 text-center"
+                >
+                  <sub.icon className="w-3.5 h-3.5 text-green-700 mb-0.5" />
+                  <span className="text-[9px] font-bold text-neutral-500 uppercase">{sub.short}</span>
+                  <span className="text-[10px] font-mono font-black text-black">{sub.count}</span>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
+
+      {/* Smart Performance Alert Banner (appears if latest attempt is < 75%) */}
+      {latestAttempt && !latestAttempt.passed && (
+        <div className="bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center shrink-0 border border-amber-300">
+              <AlertTriangle className="w-5 h-5 text-amber-700" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h4 className="text-xs font-black text-amber-950">
+                  Review &amp; Retake Recommended: {latestAttempt.topicTitle || 'Assessment Exam'}
+                </h4>
+                <span className="px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 font-mono font-extrabold text-[10px]">
+                  Score: {latestAttempt.percentage}%
+                </span>
+              </div>
+              <p className="text-[11px] text-amber-800 mt-0.5">
+                Competency criterion is 75% for curriculum certification. Review high-yield rationale gaps and retake when ready.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 self-end sm:self-auto shrink-0">
+            <button
+              type="button"
+              onClick={() => navigate('/question-bank')}
+              className="px-3 py-1.5 rounded-xl border border-amber-300 text-amber-900 bg-white hover:bg-amber-100 text-xs font-bold transition-all cursor-pointer"
+            >
+              Question Bank
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(`/student/quiz/${latestAttempt.topicId || 'comprehensive'}`)}
+              className="px-3.5 py-1.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white text-xs font-bold transition-all cursor-pointer shadow-xs"
+            >
+              Retake Quiz
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* 2. Top Action Row: "Resume Learning" (White card, Black text, Green button with White text) & "Focus Revision Areas" */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

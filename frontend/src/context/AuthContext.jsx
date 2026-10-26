@@ -587,11 +587,16 @@ export const AuthProvider = ({ children }) => {
         let cachedUser = null;
         try {
           const raw = localStorage.getItem('nursing_user');
-          if (raw) cachedUser = JSON.parse(raw);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (parsed?.email?.toLowerCase().trim() === emailNorm) {
+              cachedUser = parsed;
+            }
+          }
         } catch {}
 
-        const userRole = isAdminEmail ? 'admin' : (cachedUser?.role || directoryInfo?.role || 'student');
-        const userName = cachedUser?.name || directoryInfo?.name || user.displayName || emailNorm.split('@')[0] || 'User';
+        const userRole = isAdminEmail ? 'admin' : (directoryInfo?.role || cachedUser?.role || 'student');
+        const userName = directoryInfo?.name || cachedUser?.name || user.displayName || emailNorm.split('@')[0] || 'User';
 
         const mergedUser = {
           uid: user.uid,
