@@ -246,87 +246,69 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
 
     setLoading(true);
 
-    const userObj = {
-      _id: `usr-${Date.now()}`,
-      name: newUser.name.trim(),
-      email: emailNorm,
-      password: newUser.password || 'Srm123',
-      role: newUser.role,
-      status: 'active',
-      isDefaultPassword: true, // Requires password change on first login
-      isProtected: ['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(emailNorm),
-      createdAt: new Date().toISOString()
-    };
-
-    // 1. Directly register account into Firebase Auth & Firestore
-    const fbRes = await provisionFirebaseUser(
-      userObj.email,
-      userObj.password,
-      userObj.name,
-      userObj.role
-    );
-
-    if (fbRes.uid) {
-      userObj.firebaseUid = fbRes.uid;
-    }
-
-    // 2. Persist in MongoDB Atlas backend
     try {
-      const dbRes = await apiClient('/api/users', {
-        method: 'POST',
-        body: JSON.stringify({
-          name: userObj.name,
-          email: userObj.email,
-          password: userObj.password,
-          role: userObj.role,
-          firebaseUid: userObj.firebaseUid
-        })
-      });
-      if (dbRes && dbRes.success && dbRes.user) {
-        userObj._id = dbRes.user.id || dbRes.user._id || userObj._id;
-        userObj.createdAt = dbRes.user.createdAt || userObj.createdAt;
-      }
-    } catch (dbErr) {
-      console.warn('[UserManagement] Direct /api/users creation fallback to /api/auth/signup:', dbErr);
-      try {
-        await apiClient('/api/auth/signup', {
+      const userObj = {
+        _id: `usr-${Date.now()}`,
+        name: newUser.name.trim(),
+        email: emailNorm,
+        password: newUser.password || 'Srm123',
+        role: newUser.role,
+        status: 'active',
+        isDefaultPassword: true, // Requires password change on first login
+        isProtected: ['jthakre62@gmail.com', 'karandeaachal@gmail.com'].includes(emailNorm),
+        createdAt: new Date().toISOString()
+      };
+
+      // Execute Firebase Provisioning (with 4s timeout) & MongoDB creation concurrently in parallel
+      const [fbResult, dbResult] = await Promise.allSettled([
+        provisionFirebaseUser(
+          userObj.email,
+          userObj.password,
+          userObj.name,
+          userObj.role
+        ),
+        apiClient('/api/users', {
           method: 'POST',
           body: JSON.stringify({
             name: userObj.name,
             email: userObj.email,
             password: userObj.password,
-            role: userObj.role,
-            firebaseUid: userObj.firebaseUid
+            role: userObj.role
           })
-        });
-      } catch (fallbackErr) {
-        console.warn('[UserManagement] Fallback signup warning:', fallbackErr);
+        })
+      ]);
+
+      const fbRes = fbResult.status === 'fulfilled' ? fbResult.value : { success: false };
+      const dbRes = dbResult.status === 'fulfilled' ? dbResult.value : null;
+
+      if (fbRes?.uid) {
+        userObj.firebaseUid = fbRes.uid;
       }
+
+      if (dbRes && dbRes.success && dbRes.user) {
+        userObj._id = dbRes.user.id || dbRes.user._id || userObj._id;
+        userObj.createdAt = dbRes.user.createdAt || userObj.createdAt;
+        if (dbRes.user.firebaseUid && !userObj.firebaseUid) {
+          userObj.firebaseUid = dbRes.user.firebaseUid;
+        }
+      }
+
+      // Update persistent state in memory & cache immediately
+      setUsers((prev) => [userObj, ...prev.filter((u) => u.email?.toLowerCase() !== emailNorm)]);
+
+      setMessage({
+        type: 'success',
+        text: `Account "${userObj.name}" (${userObj.email}) successfully created with password "${userObj.password}".`
+      });
+
+      setShowAddModal(false);
+      setNewUser({ name: '', email: '', password: 'Srm123', role: 'student' });
+    } catch (err) {
+      console.error('[User Provisioning Error]:', err);
+      setMessage({ type: 'error', text: err.message || 'Failed to create user.' });
+    } finally {
+      setLoading(false);
     }
-
-    // 3. Update persistent state in memory & cache
-    setUsers((prev) => [userObj, ...prev.filter(u => u.email.toLowerCase() !== userObj.email.toLowerCase())]);
-
-    if (fbRes.success) {
-      setMessage({
-        type: 'success',
-        text: `Account "${userObj.name}" (${userObj.email}) saved to MongoDB and registered in Firebase Auth with default password "${userObj.password}".`
-      });
-    } else if (fbRes.code === 'auth/email-already-in-use') {
-      setMessage({
-        type: 'success',
-        text: `User "${userObj.name}" (${userObj.email}) added to persistent database (Firebase Auth credentials already active).`
-      });
-    } else {
-      setMessage({
-        type: 'success',
-        text: `User "${userObj.name}" saved to persistent database with password "${userObj.password}".`
-      });
-    }
-
-    setShowAddModal(false);
-    setNewUser({ name: '', email: '', password: 'Srm123', role: 'student' });
-    setLoading(false);
   };
 
   const handleRoleChange = (userId, newRole) => {

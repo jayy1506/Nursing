@@ -27,7 +27,14 @@ export const provisionFirebaseUser = async (email, password, name, role = 'stude
       initializeApp(firebaseConfig, 'SecondaryAdminProvisioner');
 
     const secondaryAuth = getAuth(secondaryApp);
-    const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, password);
+
+    // Timeout after 4s so UI never freezes if Firebase network hangs
+    const createPromise = createUserWithEmailAndPassword(secondaryAuth, email.trim(), password);
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Firebase provision timeout (4s)')), 4000)
+    );
+
+    const userCredential = await Promise.race([createPromise, timeoutPromise]);
     const uid = userCredential.user.uid;
 
     // Create user profile in Firestore concurrently without blocking
@@ -48,11 +55,14 @@ export const provisionFirebaseUser = async (email, password, name, role = 'stude
       setDoc(doc(db, 'users_by_email', email.toLowerCase().trim()), userProfile)
     ]).catch(() => {});
 
-    // Sign out secondary session immediately
-    await signOut(secondaryAuth);
+    // Sign out secondary session safely
+    try {
+      await signOut(secondaryAuth);
+    } catch (e) {}
+
     return { success: true, uid };
   } catch (err) {
-    console.warn('[Direct Firebase Provision Warning]:', err);
+    console.warn('[Direct Firebase Provision Warning]:', err.message || err);
     return { success: false, error: err.message, code: err.code };
   }
 };
