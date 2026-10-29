@@ -30,18 +30,20 @@ export const provisionFirebaseUser = async (email, password, name, role = 'stude
     const userCredential = await createUserWithEmailAndPassword(secondaryAuth, email, password);
     const uid = userCredential.user.uid;
 
-    // Create user profile in Firestore
+    // Create user profile in Firestore (by UID and by email for cross-device authorization)
     try {
-      const userDocRef = doc(db, 'users', uid);
-      await setDoc(userDocRef, {
+      const userProfile = {
         uid,
         name: name.trim(),
         email: email.toLowerCase().trim(),
         role: role || 'student',
         collegeId: 'COLLEGE_001',
         isDefaultPassword: true,
+        status: 'active',
         createdAt: new Date().toISOString()
-      });
+      };
+      await setDoc(doc(db, 'users', uid), userProfile);
+      await setDoc(doc(db, 'users_by_email', email.toLowerCase().trim()), userProfile).catch(() => {});
     } catch (firestoreErr) {
       console.warn('[Firestore Doc Creation Warning]:', firestoreErr);
     }

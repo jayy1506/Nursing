@@ -7,7 +7,7 @@ import {
   onAuthStateChanged,
   updateProfile 
 } from 'firebase/auth';
-import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { auth, db, googleProvider } from '../config/firebase';
 import { getApiUrl } from '../api/client';
 
@@ -143,58 +143,32 @@ export const AuthProvider = ({ children }) => {
     const emailNorm = email.toLowerCase().trim();
 
     // Check directory and master admin credentials
-    const directoryInfo = getDirectoryInfo(emailNorm);
+    let directoryInfo = getDirectoryInfo(emailNorm);
     const isMasterAdmin = isAdminEmailCheck(emailNorm);
-    const isDirectoryMatch = Boolean(directoryInfo);
-
-    // STRICT AUTHORIZATION CHECK: Only accounts registered by admin or system admins can access
-    if (!isMasterAdmin && !isDirectoryMatch) {
-      const accessErr = new Error('Access denied: Account not registered. Only students and faculty authorized by an administrator can access this portal.');
-      setAuthError(accessErr.message);
-      throw accessErr;
-    }
-
-    if (directoryInfo && (directoryInfo.status === 'disabled' || directoryInfo.isActive === false)) {
-      const disabledErr = new Error('Access denied: Your account has been disabled by an administrator. Please contact your department admin.');
-      setAuthError(disabledErr.message);
-      throw disabledErr;
-    }
-
-    // Password verification helper
-    const isValidAdminPass = isMasterAdmin && (
-      (emailNorm === PRIMARY_ADMIN_EMAIL && password === 'aachal2026') ||
-      (emailNorm === SECONDARY_ADMIN_EMAIL && password === 'Jay@1523') ||
-      (directoryInfo?.password && password === directoryInfo.password)
-    );
-
-    const isValidDirectoryPass = directoryInfo && (
-      (directoryInfo.password && password === directoryInfo.password) ||
-      password === 'Srm123'
-    );
 
     // Instant local resolver helper
-    const loginViaDirectory = () => {
-      const role = isMasterAdmin ? 'admin' : (directoryInfo?.role || 'student');
+    const loginViaDirectory = (info = directoryInfo) => {
+      const role = isMasterAdmin ? 'admin' : (info?.role || 'student');
       const adminNames = {
         [PRIMARY_ADMIN_EMAIL]: PRIMARY_ADMIN_NAME,
         [SECONDARY_ADMIN_EMAIL]: SECONDARY_ADMIN_NAME
       };
       const defaultAdminName = adminNames[emailNorm] || 'Administrator';
       const name = isMasterAdmin 
-        ? (directoryInfo?.name || defaultAdminName) 
-        : (directoryInfo?.name || emailNorm.split('@')[0]);
+        ? (info?.name || defaultAdminName) 
+        : (info?.name || emailNorm.split('@')[0]);
       const isDefaultPassword = isMasterAdmin 
         ? false 
-        : (directoryInfo?.isDefaultPassword ?? (password === 'Srm123'));
+        : (info?.isDefaultPassword ?? (password === 'Srm123'));
 
       const fallbackUser = {
-        uid: directoryInfo?.firebaseUid || `usr-direct-${Date.now()}`,
+        uid: info?.firebaseUid || info?.uid || `usr-direct-${Date.now()}`,
         email: emailNorm,
         displayName: name,
         name: name,
         role: role,
         isDefaultPassword,
-        collegeId: directoryInfo?.collegeId || 'COLLEGE_001',
+        collegeId: info?.collegeId || 'COLLEGE_001',
         photoURL: null
       };
 
@@ -216,20 +190,61 @@ export const AuthProvider = ({ children }) => {
       return fallbackUser;
     };
 
-    // If master admin password matches or directory password matches, log in immediately
+    // Password verification helper for cached/master admin logins
+    const isValidAdminPass = isMasterAdmin && (
+      (emailNorm === PRIMARY_ADMIN_EMAIL && password === 'aachal2026') ||
+      (emailNorm === SECONDARY_ADMIN_EMAIL && password === 'Jay@1523') ||
+      (directoryInfo?.password && password === directoryInfo.password)
+    );
+
+    const isValidDirectoryPass = directoryInfo && (
+      (directoryInfo.password && password === directoryInfo.password) ||
+      password === 'Srm123'
+    );
+
+    // If master admin password matches or directory password matches in cache, log in immediately
     if (isValidAdminPass || isValidDirectoryPass) {
+      if (directoryInfo && (directoryInfo.status === 'disabled' || directoryInfo.isActive === false)) {
+        const disabledErr = new Error('Access denied: Your account has been disabled by an administrator. Please contact your department admin.');
+        setAuthError(disabledErr.message);
+        throw disabledErr;
+      }
       return loginViaDirectory();
     }
 
+    // Remote authentication path (for accounts created on other browsers, by admin, or in Firebase/MongoDB)
     try {
       // Primary: Firebase Auth Sign-in with registered email
       const userCredential = await signInWithEmailAndPassword(auth, emailNorm, password);
       const user = userCredential.user;
 
+      // Check Firestore profile for role, status, and department
+      let remoteProfile = directoryInfo;
+      try {
+        const userDoc = await getDoc(doc(db, 'users', user.uid));
+        if (userDoc?.exists && userDoc.exists()) {
+          remoteProfile = userDoc.data();
+        } else {
+          const emailDoc = await getDoc(doc(db, 'users_by_email', emailNorm));
+          if (emailDoc?.exists && emailDoc.exists()) {
+            remoteProfile = emailDoc.data();
+          }
+        }
+      } catch (firestoreErr) {
+        console.warn('[Firestore lookup during login]:', firestoreErr);
+      }
+
+      if (remoteProfile && (remoteProfile.status === 'disabled' || remoteProfile.isActive === false)) {
+        await signOut(auth);
+        const disabledErr = new Error('Access denied: Your account has been disabled by an administrator. Please contact your department admin.');
+        setAuthError(disabledErr.message);
+        throw disabledErr;
+      }
+
       const isAdminEmail = isAdminEmailCheck(user.email);
-      const initialRole = isAdminEmail ? 'admin' : (directoryInfo?.role || 'student');
-      const initialName = user.displayName || directoryInfo?.name || emailNorm.split('@')[0];
-      const isDefault = isAdminEmail ? false : (directoryInfo ? directoryInfo.isDefaultPassword : (password === 'Srm123'));
+      const initialRole = isAdminEmail ? 'admin' : (remoteProfile?.role || 'student');
+      const initialName = user.displayName || remoteProfile?.name || emailNorm.split('@')[0];
+      const isDefault = isAdminEmail ? false : (remoteProfile?.isDefaultPassword ?? (password === 'Srm123'));
 
       const mergedUser = {
         uid: user.uid,
@@ -238,7 +253,7 @@ export const AuthProvider = ({ children }) => {
         name: initialName,
         role: initialRole,
         isDefaultPassword: isDefault,
-        collegeId: directoryInfo?.collegeId || 'COLLEGE_001',
+        collegeId: remoteProfile?.collegeId || 'COLLEGE_001',
         photoURL: user.photoURL || null
       };
 
@@ -248,6 +263,26 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('firebase_token', quickToken);
       localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
       localStorage.setItem('user', JSON.stringify(mergedUser));
+
+      // Cache into local directory so subsequent logins on this device are instant
+      try {
+        const saved = localStorage.getItem('nursing_admin_users');
+        let list = saved ? JSON.parse(saved) : [];
+        if (!list.some((u) => u.email?.toLowerCase().trim() === emailNorm)) {
+          list.push({
+            _id: user.uid,
+            name: initialName,
+            email: emailNorm,
+            password: password,
+            role: initialRole,
+            status: 'active',
+            isDefaultPassword: isDefault,
+            firebaseUid: user.uid,
+            collegeId: mergedUser.collegeId
+          });
+          localStorage.setItem('nursing_admin_users', JSON.stringify(list));
+        }
+      } catch {}
 
       setToken(quickToken);
       setCurrentUser(mergedUser);
@@ -262,39 +297,70 @@ export const AuthProvider = ({ children }) => {
         }
       }).catch(() => {});
 
-      // Non-blocking background Firestore sync with 1.2s timeout
-      (async () => {
-        try {
-          const docPromise = getDoc(doc(db, 'users', user.uid));
-          const timeoutPromise = new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 1200));
-          const userDoc = await Promise.race([docPromise, timeoutPromise]);
-
-          if (userDoc?.exists && userDoc.exists()) {
-            const data = userDoc.data();
-            setCurrentUser((prev) => {
-              if (!prev) return prev;
-              const updated = {
-                ...prev,
-                name: data.name || prev.name,
-                displayName: data.name || prev.displayName,
-                role: isAdminEmail ? 'admin' : (data.role || prev.role),
-                collegeId: data.collegeId || prev.collegeId,
-                isDefaultPassword: data.isDefaultPassword ?? prev.isDefaultPassword
-              };
-              localStorage.setItem('nursing_user', JSON.stringify(updated));
-              localStorage.setItem('user', JSON.stringify(updated));
-              return updated;
-            });
-          }
-        } catch {}
-      })();
-
       // Background sync to backend
       syncWithBackend(mergedUser, quickToken);
 
       return mergedUser;
     } catch (firebaseErr) {
-      const errMessage = (firebaseErr.code === 'auth/invalid-credential' || firebaseErr.code === 'auth/wrong-password' || firebaseErr.code === 'auth/user-not-found')
+      // If Firebase failed, attempt backend login fallback (e.g. if user was provisioned via MongoDB)
+      try {
+        const beRes = await fetch(getApiUrl('/api/auth/login'), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: emailNorm, password })
+        });
+        const beData = await beRes.json();
+        if (beData && beData.success && beData.user) {
+          const beUser = beData.user;
+          const mergedUser = {
+            uid: beUser.id || beUser._id || `usr-${Date.now()}`,
+            email: beUser.email,
+            displayName: beUser.name,
+            name: beUser.name,
+            role: beUser.role || 'student',
+            isDefaultPassword: beUser.isDefaultPassword ?? (password === 'Srm123'),
+            collegeId: beUser.collegeId || 'COLLEGE_001',
+            photoURL: null
+          };
+
+          const jwtToken = beData.token || `jwt-${Date.now()}`;
+          localStorage.setItem('nursing_token', jwtToken);
+          localStorage.setItem('token', jwtToken);
+          localStorage.setItem('nursing_user', JSON.stringify(mergedUser));
+          localStorage.setItem('user', JSON.stringify(mergedUser));
+
+          try {
+            const saved = localStorage.getItem('nursing_admin_users');
+            let list = saved ? JSON.parse(saved) : [];
+            if (!list.some((u) => u.email?.toLowerCase().trim() === emailNorm)) {
+              list.push({ ...mergedUser, status: 'active' });
+              localStorage.setItem('nursing_admin_users', JSON.stringify(list));
+            }
+          } catch {}
+
+          setToken(jwtToken);
+          setCurrentUser(mergedUser);
+          setLoading(false);
+          return mergedUser;
+        } else if (beData && beData.error) {
+          setAuthError(beData.error);
+          throw new Error(beData.error);
+        }
+      } catch (beFallbackErr) {
+        if (beFallbackErr.message && beFallbackErr.message.includes('Access denied')) {
+          setAuthError(beFallbackErr.message);
+          throw beFallbackErr;
+        }
+      }
+
+      // If user was not found anywhere
+      if (firebaseErr.code === 'auth/user-not-found') {
+        const notFoundErr = new Error('Access denied: Account not registered. Only students and faculty authorized by an administrator can access this portal.');
+        setAuthError(notFoundErr.message);
+        throw notFoundErr;
+      }
+
+      const errMessage = (firebaseErr.code === 'auth/invalid-credential' || firebaseErr.code === 'auth/wrong-password')
         ? 'Invalid email or password.'
         : (firebaseErr.message || 'Invalid email or password.');
       setAuthError(errMessage);
@@ -395,8 +461,31 @@ export const AuthProvider = ({ children }) => {
       const user = result.user;
 
       const emailNorm = (user.email || '').toLowerCase().trim();
-      const directoryInfo = getDirectoryInfo(emailNorm);
+      let directoryInfo = getDirectoryInfo(emailNorm);
       const isAdminEmail = isAdminEmailCheck(emailNorm);
+
+      // Check Firestore if not already in local browser storage
+      if (!isAdminEmail && !directoryInfo) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          if (userDoc?.exists && userDoc.exists()) {
+            directoryInfo = userDoc.data();
+          } else {
+            const emailDoc = await getDoc(doc(db, 'users_by_email', emailNorm));
+            if (emailDoc?.exists && emailDoc.exists()) {
+              directoryInfo = emailDoc.data();
+            } else {
+              const q = query(collection(db, 'users'), where('email', '==', emailNorm));
+              const snap = await getDocs(q);
+              if (!snap.empty) {
+                directoryInfo = snap.docs[0].data();
+              }
+            }
+          }
+        } catch (e) {
+          console.warn('[Firestore lookup during Google sign-in]:', e);
+        }
+      }
 
       // STRICT ACCESS CONTROL: Unregistered Google IDs are rejected immediately
       if (!isAdminEmail && !directoryInfo) {
@@ -551,11 +640,34 @@ export const AuthProvider = ({ children }) => {
 
   // Listen to Firebase Auth state changes (Non-blocking & Zero-stall)
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
         const emailNorm = (user.email || '').toLowerCase().trim();
-        const directoryInfo = getDirectoryInfo(emailNorm);
+        let directoryInfo = getDirectoryInfo(emailNorm);
         const isAdminEmail = isAdminEmailCheck(emailNorm);
+
+        // If not in local directory, check Firestore before rejecting
+        if (!isAdminEmail && !directoryInfo) {
+          try {
+            const userDoc = await getDoc(doc(db, 'users', user.uid));
+            if (userDoc?.exists && userDoc.exists()) {
+              directoryInfo = userDoc.data();
+            } else {
+              const emailDoc = await getDoc(doc(db, 'users_by_email', emailNorm));
+              if (emailDoc?.exists && emailDoc.exists()) {
+                directoryInfo = emailDoc.data();
+              } else {
+                const q = query(collection(db, 'users'), where('email', '==', emailNorm));
+                const snap = await getDocs(q);
+                if (!snap.empty) {
+                  directoryInfo = snap.docs[0].data();
+                }
+              }
+            }
+          } catch (e) {
+            console.warn('[Firestore lookup during auth state change]:', e);
+          }
+        }
 
         // Strict rejection of un-enrolled Firebase sessions
         if (!isAdminEmail && !directoryInfo) {

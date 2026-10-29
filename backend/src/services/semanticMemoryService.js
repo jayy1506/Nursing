@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import SemanticMemory from '../models/SemanticMemory.js';
 import { generateLocalEmbedding, cosineSimilarity } from './embeddingService.js';
+import { generateGeminiContent } from './geminiClient.js';
 import { getCached, setCached, deleteCached, clearLocalCache } from './redisCacheService.js';
 
 // Cache threshold: queries with >= 78% semantic/keyword match are considered hits
@@ -369,25 +370,16 @@ Format responses with clean Markdown, bullet points, and key takeaways.`;
   }
 
   // Fallback to Gemini if OpenAI was not available
-  if (!generatedResponse && process.env.GEMINI_API_KEY) {
+  if (!generatedResponse) {
     try {
-      const baseUrl = process.env.GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com';
-      const geminiModel = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
-      const res = await fetch(
-        `${baseUrl}/v1beta/models/${geminiModel}:generateContent?key=${process.env.GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: `Clinical Nursing & Medical Tutor: Answer this question thoroughly for nursing students: "${query}"` }] }],
-            generationConfig: { temperature: 0.3, maxOutputTokens: 600 }
-          })
-        }
-      );
-      if (res.ok) {
-        const data = await res.json();
-        generatedResponse = data.candidates?.[0]?.content?.parts?.[0]?.text;
-        modelUsed = geminiModel;
+      const geminiResult = await generateGeminiContent({
+        prompt: `Clinical Nursing & Medical Tutor: Answer this question thoroughly for nursing students: "${query}"`,
+        temperature: 0.3,
+        maxOutputTokens: 600
+      });
+      if (geminiResult && geminiResult.text) {
+        generatedResponse = geminiResult.text;
+        modelUsed = geminiResult.model;
         promptTokens = Math.ceil(query.length / 4);
         completionTokens = Math.ceil((generatedResponse || '').length / 4);
         totalTokens = promptTokens + completionTokens;

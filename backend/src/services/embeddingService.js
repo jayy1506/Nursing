@@ -75,36 +75,19 @@ export const cosineSimilarity = (vecA, vecB) => {
   return dotProduct / (Math.sqrt(normA) * Math.sqrt(normB));
 };
 
+import { generateGeminiEmbedding } from './geminiClient.js';
+
 /**
- * Generate embedding for text (Gemini API if key provided, fallback to local vectorizer)
+ * Generate embedding for text (Gemini API with multi-key rotation, fallback to local vectorizer)
  */
 export const generateEmbedding = async (text) => {
-  // If GEMINI_API_KEY is available and configured
-  if (process.env.GEMINI_API_KEY) {
-    try {
-      const baseUrl = process.env.GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com';
-      const embeddingModel = process.env.GEMINI_EMBEDDING_MODEL || 'text-embedding-004';
-
-      const response = await fetch(
-        `${baseUrl}/v1beta/models/${embeddingModel}:embedContent?key=${process.env.GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            content: { parts: [{ text: text.substring(0, 2048) }] }
-          })
-        }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        if (data.embedding && data.embedding.values) {
-          return data.embedding.values;
-        }
-      }
-    } catch (err) {
-      console.warn(`[EmbeddingService] Gemini API embedding fallback: ${err.message}`);
+  try {
+    const geminiVector = await generateGeminiEmbedding(text);
+    if (geminiVector && Array.isArray(geminiVector) && geminiVector.length > 0) {
+      return geminiVector;
     }
+  } catch (err) {
+    console.warn(`[EmbeddingService] Gemini embedding error, falling back to local: ${err.message}`);
   }
 
   // Robust native embedding vector

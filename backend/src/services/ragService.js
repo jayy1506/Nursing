@@ -3,6 +3,7 @@ import { Chapter } from '../models/Chapter.js';
 import { Subtopic } from '../models/Subtopic.js';
 import { ChatLog } from '../models/ChatLog.js';
 import { generateEmbedding, cosineSimilarity } from './embeddingService.js';
+import { generateGeminiContent } from './geminiClient.js';
 
 // Configurable confidence threshold for chapter-scoping refusal
 const DEFAULT_CONFIDENCE_THRESHOLD = 0.20;
@@ -297,11 +298,10 @@ export const queryChapterRAG = async ({ studentId, chapterId, query, mode = 'def
 
   let generatedAnswer = '';
 
-  // 7. Invoke Gemini LLM if API Key is configured
-  if (process.env.GEMINI_API_KEY) {
-    try {
-      const modeInstructions = getModeInstructions(mode, chapter);
-      const systemPrompt = `You are the MedPulse Clinical Nursing AI Tutor.
+  // 7. Invoke Gemini LLM if API Key(s) configured
+  try {
+    const modeInstructions = getModeInstructions(mode, chapter);
+    const systemPrompt = `You are the MedPulse Clinical Nursing AI Tutor.
 You are strictly scoped to Chapter ${chapter.order}: "${chapter.title}".
 
 RULES:
@@ -318,31 +318,17 @@ ${contextText}
 STUDENT QUESTION:
 ${query}`;
 
-      const baseUrl = process.env.GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com';
-      const model = process.env.GEMINI_MODEL || 'gemini-1.5-flash';
+    const geminiResult = await generateGeminiContent({
+      prompt: systemPrompt,
+      temperature: mode === 'simple' ? 0.3 : 0.2,
+      maxOutputTokens: 750
+    });
 
-      const res = await fetch(
-        `${baseUrl}/v1beta/models/${model}:generateContent?key=${process.env.GEMINI_API_KEY}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{ parts: [{ text: systemPrompt }] }],
-            generationConfig: {
-              temperature: mode === 'simple' ? 0.3 : 0.2,
-              maxOutputTokens: 750
-            }
-          })
-        }
-      );
-
-      if (res.ok) {
-        const json = await res.json();
-        generatedAnswer = json.candidates?.[0]?.content?.parts?.[0]?.text;
-      }
-    } catch (apiErr) {
-      console.warn(`[RAG Service] Gemini API call error: ${apiErr.message}`);
+    if (geminiResult && geminiResult.text) {
+      generatedAnswer = geminiResult.text;
     }
+  } catch (apiErr) {
+    console.warn(`[RAG Service] Gemini API call error: ${apiErr.message}`);
   }
 
   // 8. High-fidelity clinical synthesis fallback if Gemini is offline
