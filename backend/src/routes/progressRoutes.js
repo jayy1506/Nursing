@@ -1,3 +1,4 @@
+import express from 'express';
 import { getMyProgress, syncProgress, getCompletedUnits } from '../controllers/progressController.js';
 import { verifyFirebaseToken } from '../middleware/auth.js';
 
