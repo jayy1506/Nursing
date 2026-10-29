@@ -4,9 +4,9 @@
 [![Node.js Version](https://img.shields.io/badge/node-%3E%3D20.0.0-brightgreen.svg)](https://nodejs.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![OpenAPI 3.0](https://img.shields.io/badge/OpenAPI-3.0-blue.svg)](http://localhost:5000/api/docs)
-[![WCAG 2.1 AA](https://img.shields.io/badge/Accessibility-WCAG%202.1%20AA-teal.svg)](#accessibility)
+[![Developed by Jay](https://img.shields.io/badge/Developed%20by-Jay-10b981.svg?style=flat&logo=codeforces)](https://github.com/jayy1506)
 
-**MedPulse** is an enterprise-grade clinical education and Learning Management System (LMS) purpose-built for nursing and foundational medical sciences under **Indian Nursing Council (INC) Competency-Based Medical Education (CBME)** standards.
+**MedPulse** is an enterprise-grade clinical education and Learning Management System (LMS) developed by **Jay**, purpose-built for nursing and foundational medical sciences under **Indian Nursing Council (INC) Competency-Based Medical Education (CBME)** standards.
 
 MedPulse pairs interactive multi-track curriculum visualizers (Applied Anatomy, Applied Physiology, Applied Biochemistry, and Clinical Nutrition & Dietetics) with a **chapter-scoped, grounded AI clinical tutor** powered by Google Gemini and hybrid vector-keyword retrieval.
 

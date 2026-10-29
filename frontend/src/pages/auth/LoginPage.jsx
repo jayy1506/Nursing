@@ -242,8 +242,11 @@ export const LoginPage = () => {
       </div>
 
       {/* Footer copyright */}
-      <footer className="text-center text-[11px] text-neutral-400 pb-2">
-        MedPulse &copy; {new Date().getFullYear()} &bull; Foundational Medical Sciences & Clinical Nursing LMS
+      <footer className="text-center text-[11px] text-neutral-400 pb-3 flex flex-col items-center gap-1">
+        <div>MedPulse &copy; {new Date().getFullYear()} &bull; Foundational Medical Sciences & Clinical Nursing LMS</div>
+        <div className="font-medium text-neutral-500">
+          Developed by <span className="text-neutral-800 font-bold">Jay</span>
+        </div>
       </footer>
     </div>
   );

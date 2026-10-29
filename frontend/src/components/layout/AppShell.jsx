@@ -381,21 +381,43 @@ export const AppShell = ({ children }) => {
           {/* Sidebar Footer info */}
           <div className="p-4 border-t border-neutral-200 text-[11px] text-neutral-500">
             {!collapsed ? (
-              <div className="flex items-center justify-between">
-                <span>INC CBME v2026</span>
-                <span className="w-2 h-2 rounded-full bg-green-600" title="System Operational" />
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span>INC CBME v2026</span>
+                  <span className="w-2 h-2 rounded-full bg-green-600" title="System Operational" />
+                </div>
+                <div className="text-[10px] text-neutral-500 font-medium flex items-center justify-between pt-1 border-t border-neutral-100">
+                  <span>Developed by</span>
+                  <span className="font-bold text-black bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-200">
+                    Jay
+                  </span>
+                </div>
               </div>
             ) : (
-              <div className="flex justify-center">
+              <div className="flex flex-col items-center gap-1">
                 <span className="w-2 h-2 rounded-full bg-green-600" title="Online" />
+                <span className="text-[8px] font-bold text-neutral-400">JAY</span>
               </div>
             )}
           </div>
         </aside>
 
         {/* Content Outlet Container */}
-        <div className="flex-1 overflow-y-auto pb-28 lg:pb-24 bg-white text-black">
-          {children}
+        <div className="flex-1 flex flex-col overflow-y-auto bg-white text-black min-h-screen">
+          <main className="flex-1 pb-16 lg:pb-8">
+            {children}
+          </main>
+          <footer className="mt-auto border-t border-neutral-200 py-3.5 px-6 text-xs text-neutral-500 bg-neutral-50/80 mb-14 lg:mb-0">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto">
+              <span>MedPulse &copy; {new Date().getFullYear()} &bull; Foundational Medical Sciences & Clinical Nursing LMS</span>
+              <span className="font-medium text-neutral-600 flex items-center gap-1.5">
+                <span>Developed by</span>
+                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200 shadow-xs">
+                  Jay
+                </span>
+              </span>
+            </div>
+          </footer>
         </div>
       </div>
 
@@ -458,8 +480,11 @@ export const AppShell = ({ children }) => {
               </div>
             </div>
 
-            {currentUser && (
-              <div className="pt-3 border-t border-neutral-200">
+            <div className="pt-3 border-t border-neutral-200 space-y-2">
+              <div className="text-center text-[11px] text-neutral-500 font-medium">
+                Developed by <span className="font-bold text-black">Jay</span>
+              </div>
+              {currentUser && (
                 <button
                   type="button"
                   onClick={handleLogout}
@@ -468,8 +493,8 @@ export const AppShell = ({ children }) => {
                   <LogOut className="w-4 h-4" />
                   <span>Sign Out</span>
                 </button>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       )}

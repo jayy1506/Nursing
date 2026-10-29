@@ -154,6 +154,7 @@ if (fs.existsSync(frontendDistPath)) {
     res.status(200).json({
       success: true,
       message: 'MedPulse Medical & Nursing LMS Backend API is running.',
+      developer: 'Developed by Jay',
       frontendUrl: process.env.CLIENT_URL || 'http://localhost:5173',
       health: '/api/health',
       docs: '/api/docs'

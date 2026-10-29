@@ -258,9 +258,14 @@ export const SignupPage = () => {
         </div>
 
         {/* Footer Security Badge */}
-        <div className="flex items-center justify-center gap-2 mt-6 text-neutral-500 text-[11px] font-medium">
-          <ShieldCheck className="w-4 h-4 text-green-500" />
-          <span>Synced with Firebase Firestore & Node.js API</span>
+        <div className="flex flex-col items-center justify-center gap-1.5 mt-6 text-neutral-500 text-[11px] font-medium">
+          <div className="flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-green-500" />
+            <span>Synced with Firebase Firestore & Node.js API</span>
+          </div>
+          <div>
+            Developed by <span className="text-neutral-800 font-bold">Jay</span>
+          </div>
         </div>
       </div>
     </div>

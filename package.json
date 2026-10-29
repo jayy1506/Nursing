@@ -2,6 +2,7 @@
   "name": "medpulse-workspace",
   "version": "1.0.0",
   "description": "MedPulse — Foundational Medical Sciences & Clinical Nursing LMS (Fullstack Monorepo)",
+  "author": "Jay",
   "private": true,
   "type": "module",
   "workspaces": [
