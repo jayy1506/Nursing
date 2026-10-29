@@ -59,6 +59,10 @@ const userSchema = new mongoose.Schema(
   }
 );
 
+// Fast compound indexes for admin user listing and filtering
+userSchema.index({ role: 1, status: 1 });
+userSchema.index({ createdAt: -1 });
+
 // Auto-hash password before saving if modified
 userSchema.pre('save', async function () {
   if (!this.isModified('password') || !this.password) return;

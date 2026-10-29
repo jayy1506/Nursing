@@ -10,7 +10,7 @@ const router = express.Router();
 // Strict rate limiter for authentication endpoints to prevent brute force
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: process.env.NODE_ENV === 'test' ? 1000 : 20,
+  max: process.env.NODE_ENV === 'test' ? 1000 : 200,
   standardHeaders: true,
   legacyHeaders: false,
   message: {

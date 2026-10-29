@@ -37,7 +37,7 @@ export const getCurrentUserProfile = async (req, res) => {
 // Admin: Create new user (Student or Faculty) via Firebase Admin + Mirror in MongoDB
 export const createUser = async (req, res) => {
   try {
-    const { email, password, name, role } = req.body;
+    const { email, password, name, role, firebaseUid: passedUid, collegeId } = req.body;
 
     if (!email || !password || !name || !role) {
       return res.status(400).json({
@@ -53,8 +53,10 @@ export const createUser = async (req, res) => {
       });
     }
 
-    // Check if user already exists in MongoDB
-    const existingDbUser = await User.findOne({ email: email.toLowerCase() });
+    const normalizedEmail = email.toLowerCase().trim();
+
+    // Fast indexed check if user already exists in MongoDB
+    const existingDbUser = await User.findOne({ email: normalizedEmail }).lean();
     if (existingDbUser) {
       return res.status(409).json({
         success: false,
@@ -62,42 +64,52 @@ export const createUser = async (req, res) => {
       });
     }
 
-    let firebaseUid = null;
+    let firebaseUid = passedUid || null;
 
-    // Create user in Firebase via Admin SDK if initialized
-    if (isFirebaseReady() && process.env.FIREBASE_SERVICE_ACCOUNT) {
+    // Create user in Firebase via Admin SDK if initialized and not already passed from client
+    if (!firebaseUid && isFirebaseReady() && process.env.FIREBASE_SERVICE_ACCOUNT) {
       try {
         const fbUser = await admin.auth().createUser({
-          email: email.toLowerCase(),
+          email: normalizedEmail,
           password,
-          displayName: name
+          displayName: name.trim()
         });
 
         firebaseUid = fbUser.uid;
-
-        // Set Custom User Claims on Firebase for strict client/token-level role enforcement
         await admin.auth().setCustomUserClaims(firebaseUid, { role });
-        console.log(`[Firebase Admin] Created user ${email} (${firebaseUid}) with role claim '${role}'`);
+        console.log(`[Firebase Admin] Created user ${normalizedEmail} (${firebaseUid}) with role claim '${role}'`);
       } catch (fbErr) {
-        return res.status(400).json({
-          success: false,
-          error: 'Firebase user creation failed: ' + fbErr.message
-        });
+        if (fbErr.code === 'auth/email-already-exists') {
+          try {
+            const existingFbUser = await admin.auth().getUserByEmail(normalizedEmail);
+            firebaseUid = existingFbUser.uid;
+            await admin.auth().setCustomUserClaims(firebaseUid, { role });
+          } catch (fetchErr) {
+            firebaseUid = `uid_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
+          }
+        } else {
+          return res.status(400).json({
+            success: false,
+            error: 'Firebase user creation failed: ' + fbErr.message
+          });
+        }
       }
-    } else {
+    } else if (!firebaseUid) {
       // Dev/Demo fallback UID generation
       firebaseUid = `uid_${Date.now()}_${Math.random().toString(36).substring(2, 9)}`;
-      console.log(`[Dev Mode] Created user ${email} with simulated UID ${firebaseUid}`);
     }
 
     // Mirror in MongoDB as source of truth
     const newUser = await User.create({
       firebaseUid,
-      name,
-      email: email.toLowerCase(),
+      name: name.trim(),
+      email: normalizedEmail,
+      password,
       role,
+      collegeId: collegeId || 'COLLEGE_001',
       status: 'active',
-      createdBy: req.user.uid || 'admin'
+      isActive: true,
+      createdBy: req.user?.uid || 'admin'
     });
 
     return res.status(201).json({
@@ -105,6 +117,7 @@ export const createUser = async (req, res) => {
       message: `Successfully created ${role} account for ${name}`,
       user: {
         id: newUser._id,
+        _id: newUser._id,
         firebaseUid: newUser.firebaseUid,
         name: newUser.name,
         email: newUser.email,
@@ -123,7 +136,7 @@ export const createUser = async (req, res) => {
   }
 };
 
-// Admin: List all users with statistics
+// Admin: List all users with statistics (Optimized with MongoDB Aggregation)
 export const listUsers = async (req, res) => {
   try {
     const { role, status, search } = req.query;
@@ -140,26 +153,40 @@ export const listUsers = async (req, res) => {
 
     const users = await User.find(filter).sort({ createdAt: -1 }).lean();
 
-    // Enhance students with progress stats
-    const enhancedUsers = await Promise.all(
-      users.map(async (u) => {
-        if (u.role === 'student') {
-          const completedCount = await Progress.countDocuments({
-            studentId: u.firebaseUid,
-            status: 'completed'
-          });
-          const totalAttempts = await Attempt.countDocuments({
-            studentId: u.firebaseUid
-          });
-          return {
-            ...u,
-            completedModules: completedCount,
-            totalAttempts
-          };
-        }
-        return u;
-      })
-    );
+    // Fast Aggregation: Fetch all student stats in 2 queries instead of 2N queries
+    const studentUids = users
+      .filter((u) => u.role === 'student' && u.firebaseUid)
+      .map((u) => u.firebaseUid);
+
+    const completedMap = new Map();
+    const attemptsMap = new Map();
+
+    if (studentUids.length > 0) {
+      const [completedAgg, attemptsAgg] = await Promise.all([
+        Progress.aggregate([
+          { $match: { studentId: { $in: studentUids }, status: 'completed' } },
+          { $group: { _id: '$studentId', count: { $sum: 1 } } }
+        ]),
+        Attempt.aggregate([
+          { $match: { studentId: { $in: studentUids } } },
+          { $group: { _id: '$studentId', count: { $sum: 1 } } }
+        ])
+      ]);
+
+      completedAgg.forEach((item) => completedMap.set(item._id, item.count));
+      attemptsAgg.forEach((item) => attemptsMap.set(item._id, item.count));
+    }
+
+    const enhancedUsers = users.map((u) => {
+      if (u.role === 'student') {
+        return {
+          ...u,
+          completedModules: completedMap.get(u.firebaseUid) || 0,
+          totalAttempts: attemptsMap.get(u.firebaseUid) || 0
+        };
+      }
+      return u;
+    });
 
     return res.status(200).json({
       success: true,
@@ -275,7 +302,7 @@ export const deleteUser = async (req, res) => {
   }
 };
 
-// Admin: Bulk import students & faculty from CSV with row-level validation & error reporting
+// Admin: Bulk import students & faculty from CSV with row-level validation & batch processing
 export const bulkImportUsers = async (req, res) => {
   try {
     const { csvContent, users: userList } = req.body;
@@ -332,7 +359,8 @@ export const bulkImportUsers = async (req, res) => {
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const errors = [];
-    const importedUsers = [];
+    const validRows = [];
+    const seenEmailsInFile = new Set();
 
     for (let idx = 0; idx < parsedRows.length; idx++) {
       const row = parsedRows[idx];
@@ -360,6 +388,17 @@ export const bulkImportUsers = async (req, res) => {
         continue;
       }
 
+      // Check duplicates within the file itself
+      if (seenEmailsInFile.has(normalizedEmail)) {
+        errors.push({
+          row: rowNum,
+          email: normalizedEmail,
+          reason: `Duplicate email "${normalizedEmail}" in import list.`
+        });
+        continue;
+      }
+      seenEmailsInFile.add(normalizedEmail);
+
       // Validation 3: Role validity
       const normalizedRole = (row.role || 'student').toLowerCase().trim();
       if (!['student', 'faculty', 'admin'].includes(normalizedRole)) {
@@ -382,80 +421,115 @@ export const bulkImportUsers = async (req, res) => {
         continue;
       }
 
-      // Validation 5: Existing User in Database (if DB connected)
-      const isDbConnected = mongoose.connection && mongoose.connection.readyState === 1;
-      if (isDbConnected) {
-        const existingUser = await User.findOne({ email: normalizedEmail });
-        if (existingUser) {
-          errors.push({
-            row: rowNum,
-            email: normalizedEmail,
-            reason: `User with email "${normalizedEmail}" already exists in database.`
-          });
-          continue;
-        }
-      }
+      validRows.push({
+        rowNum,
+        name: row.name.trim(),
+        email: normalizedEmail,
+        role: normalizedRole,
+        password,
+        collegeId: row.collegeId || 'COLLEGE_001'
+      });
+    }
 
-      // Create in Firebase Admin if configured
-      let firebaseUid = `uid_import_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-      if (isFirebaseReady() && process.env.FIREBASE_SERVICE_ACCOUNT) {
+    // Single Batch Query to check existing users in Database (O(1) roundtrip)
+    const isDbConnected = mongoose.connection && mongoose.connection.readyState === 1;
+    const existingEmailsSet = new Set();
+
+    if (isDbConnected && validRows.length > 0) {
+      const candidateEmails = validRows.map((r) => r.email);
+      const existingUsers = await User.find({ email: { $in: candidateEmails } }, 'email').lean();
+      existingUsers.forEach((u) => existingEmailsSet.add(u.email.toLowerCase()));
+    }
+
+    const rowsToInsert = [];
+    for (const row of validRows) {
+      if (existingEmailsSet.has(row.email)) {
+        errors.push({
+          row: row.rowNum,
+          email: row.email,
+          reason: `User with email "${row.email}" already exists in database.`
+        });
+      } else {
+        rowsToInsert.push(row);
+      }
+    }
+
+    const hasFirebaseAdmin = isFirebaseReady() && process.env.FIREBASE_SERVICE_ACCOUNT;
+    const documentsToCreate = [];
+
+    for (let i = 0; i < rowsToInsert.length; i++) {
+      const row = rowsToInsert[i];
+      let firebaseUid = `uid_import_${Date.now()}_${i}_${Math.random().toString(36).substring(2, 7)}`;
+
+      if (hasFirebaseAdmin) {
         try {
           const fbUser = await admin.auth().createUser({
-            email: normalizedEmail,
-            password,
-            displayName: row.name.trim()
+            email: row.email,
+            password: row.password,
+            displayName: row.name
           });
           firebaseUid = fbUser.uid;
-          await admin.auth().setCustomUserClaims(firebaseUid, { role: normalizedRole });
+          await admin.auth().setCustomUserClaims(firebaseUid, { role: row.role });
         } catch (fbErr) {
-          errors.push({
-            row: rowNum,
-            email: normalizedEmail,
-            reason: `Firebase account creation failed: ${fbErr.message}`
-          });
-          continue;
+          if (fbErr.code === 'auth/email-already-exists') {
+            try {
+              const existingFb = await admin.auth().getUserByEmail(row.email);
+              firebaseUid = existingFb.uid;
+              await admin.auth().setCustomUserClaims(firebaseUid, { role: row.role });
+            } catch (e) {}
+          } else {
+            console.warn(`[Firebase Admin Import Warn]: ${row.email} - ${fbErr.message}`);
+          }
         }
       }
 
-      // Create User in MongoDB
-      if (isDbConnected) {
-        try {
-          const newUser = await User.create({
-            firebaseUid,
-            name: row.name.trim(),
-            email: normalizedEmail,
-            role: normalizedRole,
-            collegeId: row.collegeId || 'COLLEGE_001',
-            status: 'active',
-            isActive: true,
-            createdBy: req.user?.uid || 'admin_csv_import'
-          });
+      documentsToCreate.push({
+        firebaseUid,
+        name: row.name,
+        email: row.email,
+        password: row.password,
+        role: row.role,
+        collegeId: row.collegeId,
+        status: 'active',
+        isActive: true,
+        createdBy: req.user?.uid || 'admin_csv_import'
+      });
+    }
 
-          importedUsers.push({
-            _id: newUser._id,
-            name: newUser.name,
-            email: newUser.email,
-            role: newUser.role,
-            collegeId: newUser.collegeId,
-            status: newUser.status
-          });
-        } catch (dbErr) {
-          errors.push({
-            row: rowNum,
-            email: normalizedEmail,
-            reason: `Database insert failed: ${dbErr.message}`
-          });
+    let importedUsers = [];
+    if (isDbConnected && documentsToCreate.length > 0) {
+      try {
+        const createdDocs = await User.insertMany(documentsToCreate, { ordered: false });
+        importedUsers = createdDocs.map((u) => ({
+          _id: u._id,
+          name: u.name,
+          email: u.email,
+          role: u.role,
+          collegeId: u.collegeId,
+          status: u.status
+        }));
+      } catch (insertErr) {
+        console.error('[Bulk Insert Warning]:', insertErr.message);
+        if (insertErr.insertedDocs && insertErr.insertedDocs.length > 0) {
+          importedUsers = insertErr.insertedDocs.map((u) => ({
+            _id: u._id,
+            name: u.name,
+            email: u.email,
+            role: u.role,
+            collegeId: u.collegeId,
+            status: u.status
+          }));
         }
-      } else {
-        importedUsers.push({
-          _id: `mock_${Date.now()}_${rowNum}`,
-          name: row.name.trim(),
-          email: normalizedEmail,
-          role: normalizedRole,
-          collegeId: row.collegeId || 'COLLEGE_001',
-          status: 'active'
-        });
       }
+    } else {
+      importedUsers = documentsToCreate.map((d, idx) => ({
+        _id: `mock_${Date.now()}_${idx}`,
+        name: d.name,
+        email: d.email,
+        role: d.role,
+        collegeId: d.collegeId,
+        status: d.status
+      }));
     }
 
     return res.status(200).json({

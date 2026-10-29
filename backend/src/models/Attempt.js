@@ -85,4 +85,8 @@ const attemptSchema = new mongoose.Schema(
   }
 );
 
+// Fast compound indexes for student progress and attempt metrics aggregation
+attemptSchema.index({ studentId: 1, passed: 1 });
+attemptSchema.index({ studentId: 1, timestamp: -1 });
+
 export const Attempt = mongoose.model('Attempt', attemptSchema);

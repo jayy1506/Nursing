@@ -32,7 +32,9 @@ export const createUserSchema = z.object({
   name: z.string().trim().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().trim().email({ message: 'A valid email address is required.' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
-  role: z.enum(['student', 'faculty', 'admin'], { errorMap: () => ({ message: 'Role must be student, faculty, or admin.' }) })
+  role: z.enum(['student', 'faculty', 'admin'], { errorMap: () => ({ message: 'Role must be student, faculty, or admin.' }) }),
+  collegeId: z.string().trim().optional().default('COLLEGE_001'),
+  firebaseUid: z.string().trim().optional()
 });
 
 export const updateUserStatusSchema = z.object({

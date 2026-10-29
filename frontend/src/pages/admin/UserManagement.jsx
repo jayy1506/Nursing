@@ -278,7 +278,8 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
           name: userObj.name,
           email: userObj.email,
           password: userObj.password,
-          role: userObj.role
+          role: userObj.role,
+          firebaseUid: userObj.firebaseUid
         })
       });
       if (dbRes && dbRes.success && dbRes.user) {

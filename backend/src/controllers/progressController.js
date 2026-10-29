@@ -10,13 +10,17 @@ export const getMyProgress = async (req, res) => {
     const studentId = req.user.uid;
     await ensureStudentProgressInitialized(studentId);
 
-    const chapters = await Chapter.find().sort({ order: 1 }).lean();
-    const totalChapters = chapters.length;
+    // Fetch chapters, subtopics, progress, and attempts concurrently in parallel
+    const [chapters, allSubtopics, studentProgress, attempts] = await Promise.all([
+      Chapter.find().sort({ order: 1 }).lean(),
+      Subtopic.find().lean(),
+      Progress.find({ studentId }).lean(),
+      Attempt.find({ studentId }).sort({ timestamp: -1 }).lean()
+    ]);
 
-    const allSubtopics = await Subtopic.find().lean();
+    const totalChapters = chapters.length;
     const totalSubtopics = allSubtopics.length;
 
-    const studentProgress = await Progress.find({ studentId }).lean();
     const completedSubtopics = studentProgress.filter(
       (p) => p.subtopicId !== null && p.status === 'completed'
     );
@@ -24,7 +28,6 @@ export const getMyProgress = async (req, res) => {
       (p) => p.subtopicId === null && p.chapterId !== null && p.status === 'completed'
     );
 
-    const attempts = await Attempt.find({ studentId }).sort({ timestamp: -1 }).lean();
     const passedAttempts = attempts.filter((a) => a.passed);
 
     const completionPercentage = totalSubtopics > 0
@@ -59,7 +62,7 @@ export const getMyProgress = async (req, res) => {
   }
 };
 
-// Sync localStorage completed unit IDs with MongoDB
+// Sync localStorage completed unit IDs with MongoDB (Optimized BulkWrite)
 export const syncProgress = async (req, res) => {
   try {
     const studentId = req.user.uid || req.user.email;
@@ -69,44 +72,48 @@ export const syncProgress = async (req, res) => {
       return res.status(400).json({ success: false, error: 'completedUnitIds must be an array' });
     }
 
-    // Upsert each incoming unitId as completed
+    const validUnitIds = completedUnitIds.filter((id) => id && typeof id === 'string');
     const now = new Date();
-    for (const unitId of completedUnitIds) {
-      if (!unitId || typeof unitId !== 'string') continue;
-      await Progress.findOneAndUpdate(
-        { studentId, unitKey: unitId },
-        {
-          $set: {
-            status: 'completed',
-            completedAt: now
+
+    // High performance bulkWrite in 1 network roundtrip
+    if (validUnitIds.length > 0) {
+      const bulkOps = validUnitIds.map((unitId) => ({
+        updateOne: {
+          filter: { studentId, unitKey: unitId },
+          update: {
+            $set: {
+              status: 'completed',
+              completedAt: now
+            },
+            $setOnInsert: {
+              unlockedAt: now
+            }
           },
-          $setOnInsert: {
-            unlockedAt: now
-          }
-        },
-        { upsert: true, new: true }
-      );
+          upsert: true
+        }
+      }));
+      await Progress.bulkWrite(bulkOps, { ordered: false });
     }
 
     // Fetch all completed unitKeys for this student to return merged set
     const allProgress = await Progress.find({
       studentId,
       status: 'completed'
-    }).lean();
+    }, 'unitKey').lean();
 
     const mergedUnitIds = Array.from(
       new Set(
         allProgress
           .map((p) => p.unitKey)
           .filter(Boolean)
-          .concat(completedUnitIds)
+          .concat(validUnitIds)
       )
     );
 
     return res.status(200).json({
       success: true,
       message: 'Progress synchronized with MongoDB',
-      syncedCount: completedUnitIds.length,
+      syncedCount: validUnitIds.length,
       totalCompletedUnits: mergedUnitIds.length,
       completedUnitIds: mergedUnitIds
     });
