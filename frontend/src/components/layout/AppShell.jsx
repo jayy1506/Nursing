@@ -25,6 +25,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Bone,
+  Activity,
   Dna,
   Utensils
 } from 'lucide-react';
