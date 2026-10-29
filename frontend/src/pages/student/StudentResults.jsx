@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { getStudentGatingStatus } from '../../services/assessmentEngine';
+import { CloudSyncButton } from '../../components/ui/CloudSyncButton';
 import {
   Award,
   CheckCircle2,
@@ -97,6 +98,9 @@ export const StudentResults = () => {
                   <Printer className="w-3 h-3 text-neutral-600" />
                   <span>Print Report</span>
                 </button>
+                <div className="print:hidden inline-flex">
+                  <CloudSyncButton compact={true} />
+                </div>
               </div>
 
               <h1 className="text-xl sm:text-3xl font-black text-neutral-900 tracking-tight">

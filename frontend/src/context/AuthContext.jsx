@@ -10,6 +10,7 @@ import {
 import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { auth, db, googleProvider } from '../config/firebase';
 import { getApiUrl } from '../api/client';
+import { syncLocalStorageToMongoDB } from '../services/mongoSyncService';
 
 const AuthContext = createContext(null);
 
@@ -297,8 +298,9 @@ export const AuthProvider = ({ children }) => {
         }
       }).catch(() => {});
 
-      // Background sync to backend
+      // Background sync to backend and cloud database
       syncWithBackend(mergedUser, quickToken);
+      syncLocalStorageToMongoDB().catch(() => {});
 
       return mergedUser;
     } catch (firebaseErr) {
@@ -733,6 +735,7 @@ export const AuthProvider = ({ children }) => {
             setToken(freshToken);
             localStorage.setItem('nursing_token', freshToken);
             localStorage.setItem('token', freshToken);
+            syncLocalStorageToMongoDB().catch(() => {});
           }
         }).catch(() => {});
 

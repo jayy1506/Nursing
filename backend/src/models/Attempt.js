@@ -7,6 +7,11 @@ const attemptSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    localId: {
+      type: String, // Client-side attempt ID (e.g. attempt-174081...)
+      default: null,
+      index: true
+    },
     studentName: {
       type: String,
       default: 'Nursing Student'

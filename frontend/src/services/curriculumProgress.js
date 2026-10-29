@@ -46,6 +46,27 @@ export const toggleUnitCompletion = (unitId, forceState) => {
 
     localStorage.setItem(COMPLETED_UNITS_KEY, JSON.stringify(updated));
     window.dispatchEvent(new CustomEvent(COMPLETION_EVENT, { detail: { unitId, completed: shouldComplete } }));
+
+    // Non-blocking background sync with MongoDB Atlas
+    try {
+      const token =
+        localStorage.getItem('nursing_token') ||
+        localStorage.getItem('token') ||
+        localStorage.getItem('firebase_token');
+      if (token && navigator.onLine) {
+        fetch('/api/progress/sync', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ completedUnitIds: updated })
+        }).catch((e) => console.debug('[CurriculumProgress] Background sync queued:', e));
+      }
+    } catch {
+      // Ignore background sync errors
+    }
+
     return shouldComplete;
   } catch (err) {
     console.warn('[CurriculumProgress] Error saving unit completion:', err);

@@ -7,10 +7,15 @@ const progressSchema = new mongoose.Schema(
       required: true,
       index: true
     },
+    unitKey: {
+      type: String, // e.g. 'phys-unit-1', 'biochem-unit-2', 'classification-of-carb'
+      default: null,
+      index: true
+    },
     chapterId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Chapter',
-      required: true,
+      default: null,
       index: true
     },
     subtopicId: {
@@ -39,7 +44,8 @@ const progressSchema = new mongoose.Schema(
   }
 );
 
-// Compound indexes for fast lookup of a student's subtopic and chapter progress
-progressSchema.index({ studentId: 1, chapterId: 1, subtopicId: 1 }, { unique: true });
+// Indexes for fast lookup of student progress
+progressSchema.index({ studentId: 1, chapterId: 1, subtopicId: 1 }, { unique: true, sparse: true });
+progressSchema.index({ studentId: 1, unitKey: 1 }, { unique: true, sparse: true });
 
 export const Progress = mongoose.model('Progress', progressSchema);

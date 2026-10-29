@@ -721,7 +721,7 @@ export async function recordAssessmentAttempt(attemptData) {
   // 3. Sync to MongoDB Atlas API if server reachable
   try {
     const token = localStorage.getItem('nursing_token') || localStorage.getItem('token') || localStorage.getItem('firebase_token');
-    await fetch('/api/assessments/submit', {
+    const apiRes = await fetch('/api/assessments/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -746,6 +746,19 @@ export async function recordAssessmentAttempt(attemptData) {
         }))
       })
     });
+
+    if (apiRes && apiRes.ok) {
+      attemptRecord.synced = true;
+      try {
+        const stored = JSON.parse(localStorage.getItem(ATTEMPTS_STORAGE_KEY) || '[]');
+        if (stored.length > 0 && stored[0].id === attemptRecord.id) {
+          stored[0].synced = true;
+          localStorage.setItem(ATTEMPTS_STORAGE_KEY, JSON.stringify(stored));
+        }
+      } catch (storageErr) {
+        // Ignore
+      }
+    }
   } catch (apiErr) {
     console.info('[AssessmentEngine] Attempt saved locally; backend sync queued.');
   }

@@ -2,6 +2,7 @@ import express from 'express';
 import {
   getAssessmentQuestions,
   submitAssessmentAttempt,
+  syncOfflineAttempts,
   getAttemptsHistory,
   upsertQuestion,
   deleteQuestion
@@ -16,6 +17,7 @@ router.use(verifyFirebaseToken);
 // Assessment runner endpoints (gating verified server-side inside controller)
 router.get('/questions/:scopeType/:scopeId', getAssessmentQuestions);
 router.post('/submit', submitAssessmentAttempt);
+router.post('/sync-offline', syncOfflineAttempts);
 
 // Results history (students see own; admin/faculty see all)
 router.get('/attempts', getAttemptsHistory);

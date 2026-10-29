@@ -385,3 +385,90 @@ export const deleteQuestion = async (req, res) => {
     });
   }
 };
+
+// Sync offline quiz attempts from client localStorage to MongoDB
+export const syncOfflineAttempts = async (req, res) => {
+  try {
+    const { attempts = [] } = req.body;
+    const studentId = req.user.uid || req.user.email || 'student';
+
+    if (!Array.isArray(attempts) || attempts.length === 0) {
+      return res.status(200).json({
+        success: true,
+        message: 'No offline attempts provided for synchronization',
+        syncedCount: 0
+      });
+    }
+
+    let syncedCount = 0;
+    for (const att of attempts) {
+      const localId = att.id || att.localId || null;
+      const scopeId = String(att.topicId || att.scopeId || 'general');
+      const scopeType = ['subtopic', 'chapter', 'course'].includes(att.scopeType)
+        ? att.scopeType
+        : (scopeId.includes('grand-final') ? 'course' : 'chapter');
+
+      // Check if this attempt is already recorded in MongoDB
+      let existing = null;
+      if (localId) {
+        existing = await Attempt.findOne({ studentId, localId });
+      }
+      if (!existing && att.timestamp) {
+        const timeWindowStart = new Date(new Date(att.timestamp).getTime() - 2000);
+        const timeWindowEnd = new Date(new Date(att.timestamp).getTime() + 2000);
+        existing = await Attempt.findOne({
+          studentId,
+          scopeId,
+          timestamp: { $gte: timeWindowStart, $lte: timeWindowEnd }
+        });
+      }
+
+      if (existing) {
+        continue;
+      }
+
+      // Convert answers format safely
+      const answers = Array.isArray(att.answers)
+        ? att.answers.map((a, i) => ({
+            questionId: String(a.questionId || a.id || `q-${i}`),
+            selectedOption: typeof a.selectedOption === 'number' ? a.selectedOption : (typeof a.studentAnswer === 'number' ? a.studentAnswer : 0),
+            correctOption: typeof a.correctOption === 'number' ? a.correctOption : (typeof a.correctAnswer === 'number' ? a.correctAnswer : 0),
+            isCorrect: Boolean(a.isCorrect)
+          }))
+        : [];
+
+      await Attempt.create({
+        studentId: String(studentId),
+        localId,
+        studentName: att.studentName || req.user.name || 'Nursing Student',
+        studentEmail: att.studentEmail || req.user.email || '',
+        scopeType,
+        scopeId,
+        topicTitle: att.topicTitle || scopeId,
+        score: Number(att.score || 0),
+        totalQuestions: Number(att.totalQuestions || (answers.length || 1)),
+        percentage: Number(att.percentage || 0),
+        passed: Boolean(att.passed),
+        timeSpentSeconds: Number(att.timeSpentSeconds || 0),
+        answers,
+        timestamp: att.timestamp ? new Date(att.timestamp) : new Date()
+      });
+
+      syncedCount++;
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `Successfully synchronized ${syncedCount} offline quiz attempts to MongoDB`,
+      syncedCount,
+      totalSubmitted: attempts.length
+    });
+  } catch (error) {
+    console.error('[Sync Offline Attempts Error]:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Failed to synchronize offline attempts',
+      details: error.message
+    });
+  }
+};

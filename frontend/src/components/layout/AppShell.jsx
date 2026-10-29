@@ -25,10 +25,11 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Bone,
-  Activity,
   Dna,
   Utensils
 } from 'lucide-react';
+import { CloudSyncButton } from '../ui/CloudSyncButton';
+import { initAutoSync } from '../../services/mongoSyncService';
 
 export const AppShell = ({ children }) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,6 +42,11 @@ export const AppShell = ({ children }) => {
   const { currentUser, role, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // Initialize auto background sync on reconnect
+  useEffect(() => {
+    initAutoSync();
+  }, []);
 
   // Auto-collapse sidebar when student enters syllabus, lesson, or quiz views for full-screen focus
   useEffect(() => {
@@ -162,6 +168,9 @@ export const AppShell = ({ children }) => {
           {/* Theme Mode Toggle */}
           <ThemeToggle />
 
+          {/* MongoDB Cloud Sync Button */}
+          <CloudSyncButton compact={true} />
+
           {/* Notifications Placeholder */}
           <div className="relative">
             <button
@@ -263,6 +272,10 @@ export const AppShell = ({ children }) => {
                       <BookOpen className="w-3.5 h-3.5 text-neutral-500" />
                       <span>Curriculum Tracks</span>
                     </Link>
+                  </div>
+
+                  <div className="p-2 border-t border-neutral-100 bg-neutral-50/60">
+                    <CloudSyncButton compact={false} className="border-0 bg-transparent p-0" />
                   </div>
 
                   <div className="pt-1 border-t border-neutral-200">
