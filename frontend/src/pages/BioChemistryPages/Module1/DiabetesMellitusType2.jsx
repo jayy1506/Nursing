@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../../components/Navbar";
 import { ArrowRight, ClipboardList } from "lucide-react";
+import { SubtopicMedicalPlate } from "../../../components/curriculum/SubtopicMedicalPlate";
+import { SubtopicQuiz15Marks } from "../../../components/curriculum/SubtopicQuiz15Marks";
+import { SubtopicNavFooter } from "../../../components/curriculum/SubtopicNavFooter";
+import { UNIT_1_CARB_SUBTOPICS } from "../../../constants/biochemistryLessonsData";
 
 const DiabetesMellitusType2 = () => {
   const [theme, setTheme] = useState("light");
@@ -178,6 +182,13 @@ const DiabetesMellitusType2 = () => {
             </div>
           </div>
         </section>
+
+        {/* Section Medical Plate */}
+        <SubtopicMedicalPlate
+          subtopicId="diabetes-mellitus-type-2"
+          subtopicTitle="Diabetes Mellitus Type 2"
+          subject="biochemistry"
+        />
 
         {/* Content layout: main concepts + side recap */}
         <div className="mt-8 grid gap-6 lg:grid-cols-[3fr,2fr]">
@@ -473,27 +484,24 @@ const DiabetesMellitusType2 = () => {
           </motion.aside>
         </div>
 
-        {/* Bottom Lesson Navigation */}
-        <div className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 pb-20">
-          <Link
-            to="/DiabetesMellitusType1"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-xs font-bold text-neutral-700 dark:text-neutral-200 hover:text-green-500 transition-all shadow-sm group"
-          >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-green-500" />
-            <span>Previous: Diabetes Mellitus Type 1</span>
-          </Link>
-
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-            <Link
-              to="/student/quiz/unit-1-carbs"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-green-500 to-green-500 hover:from-green-500 hover:to-green-700 text-xs font-extrabold text-white transition-all shadow-md shadow-green-500/25 group cursor-pointer"
-            >
-              <ClipboardList className="w-4 h-4" />
-              <span>Complete Unit 1: Take Assessment (15 Qs)</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
+        {/* 15 Marks Subtopic Clinical Assessment */}
+        <div className="mt-10">
+          <SubtopicQuiz15Marks
+            subtopicId="diabetes-mellitus-type-2"
+            subtopicTitle="Diabetes Mellitus Type 2"
+            unitTitle="Unit 1: Carbohydrates"
+          />
         </div>
+
+        {/* Sequential Subtopic Navigation Footer */}
+        <SubtopicNavFooter
+          currentIndex={6}
+          totalCount={UNIT_1_CARB_SUBTOPICS.length}
+          prevSubtopic={{ title: "Diabetes Mellitus Type 1", path: "/DiabetesMellitusType1" }}
+          nextSubtopic={{ title: "Unit 2: Classification of Fatty Acids", path: "/FattyAcidsClassification" }}
+          subtopics={UNIT_1_CARB_SUBTOPICS}
+          syllabusPath="/bio-chem-syllabus"
+        />
       </motion.div>
     </div>
   );

@@ -1,0 +1,227 @@
+{
+  "id": "heart",
+  "name": "The Heart",
+  "latinName": "Cor",
+  "system": "Cardiovascular",
+  "tagline": "The tireless muscular pump",
+  "description": "A muscular organ that pumps blood through the vessels of the circulatory system, delivering oxygen and nutrients throughout the body.",
+  "specimenImage": "/images/explorer/heart_specimen.jpg",
+  "thumbnail": "/images/explorer/heart_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "About the size of a fist"
+    },
+    {
+      "label": "Weight",
+      "value": "250\u2013350 g"
+    },
+    {
+      "label": "Daily",
+      "value": "Beats ~100,000 times, pumping ~7,500 L"
+    },
+    {
+      "label": "Location",
+      "value": "Middle mediastinum behind sternum"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Coronary arteries (LAD, RCA, LCx)"
+    },
+    {
+      "label": "Function",
+      "value": "Generates hydraulic systemic perfusion"
+    }
+  ],
+  "medicalImportance": "Central motor of systemic perfusion. Coronary occlusion triggers acute myocardial infarction; valve failure causes congestive edema.",
+  "didYouKnow": "The heart generates its own electrical impulses via the SA node and can beat outside the body if supplied with oxygen.",
+  "conditions": [
+    "Coronary artery disease",
+    "Myocardial infarction",
+    "Congestive heart failure",
+    "Atrial fibrillation",
+    "Aortic valve stenosis",
+    "Mitral regurgitation",
+    "Pericarditis",
+    "Ventricular tachycardia"
+  ],
+  "microscopicView": {
+    "title": "Cardiac myocytes & discs",
+    "subtitle": "Myocardial striations",
+    "image": "/images/explorer/heart_microscopic.jpg",
+    "description": "Intercalated discs, branching striations, desmosomes, and gap junctions synchronizing electrical excitation."
+  },
+  "compareWith": "lungs",
+  "compareData": {
+    "subtitle": "Heart vs. lungs",
+    "image": "/images/explorer/heart_compare.jpg",
+    "description": "Systemic vascular high pressure versus pulmonary capillary low-resistance alveolar exchange."
+  },
+  "animation": {
+    "title": "Cardiac cycle & conduction",
+    "subtitle": "Systole, diastole and ECG waves",
+    "poster": "/images/explorer/heart_animation.jpg"
+  },
+  "systemView": {
+    "title": "Cardiovascular System",
+    "subtitle": "Arterial & venous systemic network",
+    "image": "/images/explorer/heart_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "left-ventricle",
+      "name": "Left Ventricle",
+      "latinName": "Ventriculus sinister cordis",
+      "color": "red",
+      "position": [
+        -0.25,
+        -0.25,
+        0.45
+      ],
+      "description": "The primary systemic pumping chamber forming the apex and diaphragmatic surface of the heart. Possesses a circular cross-section with myocardium 3\u00d7 thicker (8-12 mm) than the right ventricle to overcome systemic vascular resistance (SVR).",
+      "function": "Generates systemic systolic pressure (typically 120 mmHg) to eject stroke volume (approx. 70 mL) through the aortic valve into the systemic arterial circulation.",
+      "connections": [
+        "Receives oxygenated inflow from Left Atrium via Bicuspid (Mitral) Valve",
+        "Ejects outflow through Aortic Semilunar Valve into Ascending Aorta",
+        "Bound medially by the muscular Interventricular Septum",
+        "Anchored by Anterior and Posterior Papillary Muscles with Chordae Tendineae"
+      ],
+      "clinicalNote": "Hypertrophy occurs in chronic systemic hypertension and aortic stenosis. Critical auscultation point: 5th intercostal space, left midclavicular line (point of maximal impulse / PMI). Failure leads to acute pulmonary edema, orthopnea, and crackles.",
+      "keyFeatures": [
+        "Normal ejection fraction: 55% - 70%",
+        "Myocardial wall thickness: 8 - 12 mm",
+        "Peak systolic pressure generation: 100 - 140 mmHg",
+        "Susceptible to anterior myocardial infarction via LAD occlusion"
+      ],
+      "histology": "Thick branched cardiac myocytes with single central nuclei, dense intercalated discs with gap junctions, and extensive transverse T-tubule networks."
+    },
+    {
+      "id": "aorta",
+      "name": "Aortic Arch & Root",
+      "latinName": "Arcus aortae",
+      "color": "orange",
+      "position": [
+        0.08,
+        0.42,
+        0.1
+      ],
+      "description": "The principal elastic arterial conduit arising from the base of the left ventricle at the level of the 3rd left costal cartilage, curving posterosuperiorly over the pulmonary root and left principal bronchus before continuing as the descending thoracic aorta at T4.",
+      "function": "Functions as a high-capacitance Windkessel elastic reservoir, expanding during left ventricular systole to dampen pulse pressure and recoiling during diastole to maintain continuous peripheral and coronary perfusion.",
+      "connections": [
+        "Arises from Left Ventricular outflow tract at Aortic Valve orifice",
+        "Gives off Left and Right Coronary Arteries from Sinuses of Valsalva",
+        "Branches superiorly: Brachiocephalic trunk, Left common carotid, Left subclavian artery",
+        "Connected to left pulmonary artery via Ligamentum Arteriosum"
+      ],
+      "clinicalNote": "Type A aortic dissection (Stanford) is a surgical emergency characterized by tearing chest pain radiating to the interscapular back. Baroreceptors in the aortic arch wall (innervated by CN X) modulate blood pressure homeostasis.",
+      "keyFeatures": [
+        "Average luminal diameter: 25 - 30 mm at root",
+        "Windkessel effect drives 65% of coronary diastolic perfusion",
+        "Houses high-pressure baroreceptors tuned to mean arterial pressure (MAP)",
+        "Vulnerable to deceleration shearing injury at aortic isthmus"
+      ],
+      "histology": "Tunica media comprises 40-70 concentric fenestrated elastic laminae interspersed with vascular smooth muscle cells and type III collagen fibrils."
+    },
+    {
+      "id": "pulmonary-trunk",
+      "name": "Pulmonary Trunk & Arteries",
+      "latinName": "Truncus pulmonalis",
+      "color": "blue",
+      "position": [
+        -0.2,
+        0.15,
+        0.35
+      ],
+      "description": "A thick, short (approx. 5 cm) major vascular conduit emerging anterior to the ascending aorta from the infundibulum (conus arteriosus) of the right ventricle, ascending posterolaterally to bifurcate beneath the aortic arch at the level of T5 into right and left pulmonary arteries.",
+      "function": "Carries total deoxygenated venous return from the right ventricle into the low-resistance, high-capacitance pulmonary microvascular capillary bed for carbon dioxide elimination and blood oxygenation.",
+      "connections": [
+        "Originates at Pulmonary Orifice guarded by Pulmonary Semilunar Valve (anterior, right, left cusps)",
+        "Ascends anterior then lateral to the Ascending Aorta within fibrous pericardium",
+        "Bifurcates into Right Pulmonary Artery (courses posterior to ascending aorta/SVC) and Left Pulmonary Artery (anterior to descending aorta)",
+        "Anchored to aortic concavity by Ligamentum Arteriosum"
+      ],
+      "clinicalNote": "Saddle pulmonary embolism lodges at this bifurcation, producing acute right heart strain (cor pulmonale), obstructive shock, jugular venous distention, and sudden arrest. Mean normal pulmonary arterial pressure is 10-20 mmHg; >25 mmHg indicates pulmonary hypertension.",
+      "keyFeatures": [
+        "Normal pulmonary arterial systolic/diastolic pressure: 15-25 / 8-15 mmHg",
+        "Low vascular resistance: ~1/10th of systemic vascular resistance",
+        "Carries oxygen-depleted blood (SaO2 ~70-75%) despite being an artery",
+        "Auscultation site: 2nd intercostal space, left sternal border"
+      ],
+      "histology": "Elastic artery with thinner media than aorta; rich in compliant elastin fibers allowing accommodation of right ventricular cardiac output at lower hydrostatic pressures."
+    },
+    {
+      "id": "right-atrium",
+      "name": "Right Atrium",
+      "latinName": "Atrium dextrum cordis",
+      "color": "blue",
+      "position": [
+        0.42,
+        0.05,
+        0.15
+      ],
+      "description": "Forms the right border of the heart. Characterized internally by a smooth posterior wall (sinus venarum) derived from the embryonic sinus venosus and a ridged anterior muscular wall featuring parallel pectinate muscles separated by the crista terminalis.",
+      "function": "Receives deoxygenated systemic venous return from the SVC, IVC, and cardiac venous return from the coronary sinus, acting as a passive reservoir and active booster pump during atrial systole into the right ventricle.",
+      "connections": [
+        "Receives Superior Vena Cava (valveless, upper body return) at upper posterior border",
+        "Receives Inferior Vena Cava (guarded by Eustachian valve remnant) at lower posterior wall",
+        "Receives Coronary Sinus (Thebesian valve) between IVC orifice and AV orifice",
+        "Discharges through Tricuspid (Right AV) Valve into Right Ventricle",
+        "Interatrial septum presents Fossa Ovalis (limbus fossae ovalis) from closed foramen ovale"
+      ],
+      "clinicalNote": "Houses the Sinoatrial (SA) node near the junction of SVC and crista terminalis, and the AV node within the Triangle of Koch. Central venous pressure (CVP) monitored here (normal: 2-6 mmHg). Atrial fibrillation triggers mural thrombi in the right atrial appendage.",
+      "keyFeatures": [
+        "Normal central venous pressure (CVP): 2 - 8 mmHg",
+        "Hosts SA nodal primary pacemaker cells firing 60-100 bpm",
+        "Secretes Atrial Natriuretic Peptide (ANP) in response to atrial stretch/hypervolemia",
+        "Pectinate muscle architecture provides muscular contractility without excessive mass"
+      ],
+      "histology": "Endocardium lined with simple squamous endothelial cells; thin myocardium containing specialized P-cells (pacemaker) in the SA node."
+    },
+    {
+      "id": "apex",
+      "name": "Cardiac Apex",
+      "latinName": "Apex cordis",
+      "color": "purple",
+      "position": [
+        -0.05,
+        -0.42,
+        0.2
+      ],
+      "description": "The inferolateral blunt conical tip of the heart formed entirely by the inferolateral muscular wall of the left ventricle. Directed downwards, forwards, and to the left, resting upon the central tendon of the diaphragm.",
+      "function": "Acts as the terminal focal vector of ventricular electrical depolarization (via Purkinje network) and the fulcrum of helical myocardial wringing torsion that maximizes ejection fraction efficiency.",
+      "connections": [
+        "Continuous superiorly with the free lateral and anterior walls of Left Ventricle",
+        "Traversed by terminal anastomosis of Left Anterior Descending (LAD) and Posterior Descending (PDA) arteries",
+        "Overlayed anteriorly by Left Lung cardiac notch and thin visceral pericardium",
+        "Corresponds surface-anatomically to the 5th left intercostal space, 7-9 cm from midsternal line"
+      ],
+      "clinicalNote": "Point of maximal impulse (PMI) palpated here during cardiac exam. Lateral or inferior displacement beyond the midclavicular line signifies left ventricular cardiomegaly or volume overload. Apical ballooning syndrome (Takotsubo cardiomyopathy) selectively stuns this region.",
+      "keyFeatures": [
+        "Site of apical pulse auscultation and stethoscope bell placement for S3/S4 gallops",
+        "Undergoes 10-15 degrees of wringing torsion during systole",
+        "Focal site for pericardiocentesis subxiphoid approach targeting apical recess",
+        "Dual blood supply via apical collateral network between LAD and PDA"
+      ],
+      "histology": "Spiraling epicardial and endocardial muscular bundles forming the vortex cordis; covered by visceral serous pericardium with subepicardial adipose."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "q1",
+      "type": "mcq",
+      "prompt": "Which chamber ejects blood into the systemic aorta?",
+      "options": [
+        "Left Ventricle",
+        "Right Ventricle",
+        "Right Atrium",
+        "Left Atrium"
+      ],
+      "correctAnswer": "Left Ventricle",
+      "rationale": "The left ventricle has the thickest myocardium to overcome systemic arterial resistance."
+    }
+  ]
+}

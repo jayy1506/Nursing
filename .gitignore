@@ -28,3 +28,27 @@ yarn-error.log*
 .idea/
 .DS_Store
 Thumbs.db
+*.bak
+*.tmp
+
+# Raw Curriculum Documents & Non-Web Image Assets
+*.docx
+*.doc
+*.pdf
+*.emf
+*.wmf
+*.wdp
+Anatomy Book as per INC syllabus/
+Physiology Book as per INC syllabus/
+
+# Internal Agent Framework & Dev Harness (Not for Deployment)
+.agents/
+.agent/
+.gsd/
+.gemini/
+adapters/
+model_capabilities.yaml
+GSD-STYLE.md
+VERSION
+scripts/
+

@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Link, useParams, Navigate } from "react-router-dom";
+import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../components/Navbar";
 import { NUTRITION_SUBMODULES } from "../../constants/nutritionSubmodulesData";
+import { SubtopicMedicalPlate } from "../../components/curriculum/SubtopicMedicalPlate";
+import { SubtopicQuiz15Marks } from "../../components/curriculum/SubtopicQuiz15Marks";
+import { SubtopicNavFooter } from "../../components/curriculum/SubtopicNavFooter";
 import {
   ArrowRight,
   BookOpen,
@@ -21,6 +24,7 @@ import {
 
 const NutritionLessonView = () => {
   const { submoduleSlug } = useParams();
+  const navigate = useNavigate();
   const [theme, setTheme] = useState("light");
   const isDark = theme === "dark";
 
@@ -49,40 +53,45 @@ const NutritionLessonView = () => {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${
+      className={`min-h-screen transition-colors duration-300 font-sans ${
         isDark ? "bg-neutral-950 text-neutral-50" : "bg-neutral-50 text-neutral-900"
       }`}
     >
-      <Navbar />
-
-      {/* Top Breadcrumb Bar */}
-      <div
-        className={`border-b py-2.5 px-4 sm:px-6 lg:px-8 ${
-          isDark ? "bg-neutral-900 border-neutral-800" : "bg-white border-neutral-200"
-        }`}
-      >
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link
-            to="/nutrition-syllabus"
-            className="inline-flex items-center gap-2 text-xs font-bold text-neutral-800 hover:text-neutral-800 transition-colors cursor-pointer group"
-          >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-neutral-800" />
-            <span>Back to Nutrition Syllabus</span>
-          </Link>
-
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-neutral-400">
-            <span>{lesson.unitTitle}</span>
-            <span>/</span>
-            <span className="text-neutral-800 font-bold">
-              Lesson {lesson.lessonNumber} of {lesson.totalLessonsInUnit}
+      {/* Focused Textbook Top Bar (Replaces Navbar in Syllabus) */}
+      <header className="sticky top-0 z-40 bg-[#123B50] text-white py-3 px-4 sm:px-6 lg:px-8 shadow-md">
+        <div className="w-full flex items-center justify-between text-xs">
+          <div className="flex items-center gap-3">
+            <Link
+              to="/nutrition-syllabus"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-all border border-white/10 cursor-pointer"
+            >
+              <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+              <span>Back to Syllabus</span>
+            </Link>
+            <span className="hidden sm:inline-block w-px h-4 bg-white/20" />
+            <span className="hidden sm:inline-block font-bold text-white/90 truncate max-w-sm">
+              {lesson.unitTitle} • Lesson {lesson.lessonNumber} of {lesson.totalLessonsInUnit}
             </span>
           </div>
-        </div>
-      </div>
 
-      {/* Main Content Container */}
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-lg bg-white/10 text-white font-bold text-[11px]">
+              {lesson.category}
+            </span>
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer text-xs"
+              title="Toggle theme"
+            >
+              {isDark ? "🌙" : "☀️"}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Container - Full Page Width */}
       <motion.div
-        className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-6 lg:px-8"
+        className="w-full px-4 pb-20 pt-6 sm:px-6 lg:px-8"
         variants={pageVariants}
         initial="hidden"
         animate="visible"
@@ -120,7 +129,7 @@ const NutritionLessonView = () => {
         </div>
 
         {/* Hero Concept Card with Visual Indicator */}
-        <div className="p-6 rounded-3xl bg-gradient-to-r from-neutral-900 via-green-900 to-neutral-900 text-white shadow-xl mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 rounded-3xl bg-gradient-to-r from-neutral-900 via-green-900 to-neutral-900 text-white shadow-xl mb-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-2xl">
             <div className="text-xs font-extrabold uppercase tracking-wider text-neutral-300 mb-1 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4" />
@@ -135,6 +144,13 @@ const NutritionLessonView = () => {
             {lesson.icon}
           </div>
         </div>
+
+        {/* Section Medical Plate / Visual Schematic */}
+        <SubtopicMedicalPlate
+          subtopicId={submoduleSlug}
+          subtopicTitle={lesson.title}
+          subject="nutrition"
+        />
 
         {/* Dynamic Concept Grids */}
         <div className="grid gap-6 lg:grid-cols-[3fr,2fr]">
@@ -350,71 +366,70 @@ const NutritionLessonView = () => {
               </div>
             )}
 
-            {/* Quick Practice Prompt */}
+            {/* High-Yield Alert Box */}
             <div className="p-5 rounded-3xl bg-neutral-900 text-white shadow-md">
-              <h3 className="text-xs font-extrabold uppercase tracking-wider text-neutral-300 mb-2">
-                University Question Bank Link
+              <h3 className="text-xs font-extrabold uppercase tracking-wider text-green-400 mb-2 flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4 text-green-400" />
+                <span>INC Clinical Benchmark</span>
               </h3>
-              <p className="text-xs text-neutral-300 mb-4 leading-relaxed">
-                Test your knowledge of {lesson.title} with official 2-mark viva questions, 5-mark short answers, and MCQs.
+              <p className="text-xs text-neutral-300 mb-3 leading-relaxed">
+                Test your knowledge of {lesson.title} with the dedicated 15-mark clinical evaluation below (3 case questions × 5 marks).
               </p>
-              <Link
-                to="/question-bank"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-800 text-neutral-950 font-extrabold text-xs transition-all shadow-sm"
-              >
-                <span>Open Question Bank</span>
-                <ChevronRight className="w-3.5 h-3.5" />
-              </Link>
+              <div className="text-xs font-bold text-neutral-200">
+                Target Score: ≥ 12/15 Marks (80%)
+              </div>
             </div>
           </div>
         </div>
 
-        {/* BOTTOM LESSON NAVIGATION */}
-        <div className="mt-12 pt-6 border-t border-neutral-200 flex flex-col sm:flex-row items-center justify-between gap-4 pb-28">
-          {lesson.prevSlug ? (
-            <Link
-              to={`/nutrition/lesson/${lesson.prevSlug}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-neutral-200 text-xs font-bold text-neutral-700 hover:text-neutral-800 transition-all shadow-sm group"
-            >
-              <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-neutral-800" />
-              <span>Previous Lesson</span>
-            </Link>
-          ) : (
-            <Link
-              to="/nutrition-syllabus"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-neutral-200 text-xs font-bold text-neutral-700 hover:text-neutral-800 transition-all shadow-sm group"
-            >
-              <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-neutral-800" />
-              <span>Back to Syllabus</span>
-            </Link>
-          )}
-
-          {lesson.nextSlug ? (
-            <Link
-              to={`/nutrition/lesson/${lesson.nextSlug}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-neutral-800 to-green-500 hover:from-neutral-800 hover:to-green-700 text-xs font-extrabold text-white transition-all shadow-md shadow-md group cursor-pointer"
-            >
-              <span>Next Lesson</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          ) : lesson.isUnitFinal ? (
-            <Link
-              to={`/student/quiz/${lesson.quizSlug}`}
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-green-500 to-green-500 hover:from-green-700 hover:to-green-500 text-xs font-extrabold text-white transition-all shadow-md shadow-green-500/25 group cursor-pointer"
-            >
-              <ClipboardList className="w-4 h-4" />
-              <span>Complete Unit: Take Assessment (15 Qs)</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          ) : (
-            <Link
-              to="/nutrition-syllabus"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white border border-neutral-200 text-xs font-bold text-neutral-700 hover:text-neutral-800 transition-all shadow-sm"
-            >
-              <span>Return to Syllabus</span>
-            </Link>
-          )}
+        {/* 15 Marks Subtopic Quiz Component */}
+        <div className="mt-10">
+          <SubtopicQuiz15Marks
+            subtopicId={submoduleSlug}
+            subtopicTitle={lesson.title}
+            unitTitle={lesson.unitTitle}
+          />
         </div>
+
+        {/* Sequential Subtopic Navigation Footer */}
+        {(() => {
+          const unitKeys = Object.keys(NUTRITION_SUBMODULES).filter(
+            (key) => NUTRITION_SUBMODULES[key].unitNumber === lesson.unitNumber
+          );
+          const currentUnitSubtopics = unitKeys.map((key, idx) => ({
+            title: NUTRITION_SUBMODULES[key].title,
+            index: idx,
+            id: key,
+            path: `/nutrition/lesson/${key}`
+          }));
+          const currentSubtopicIndex = unitKeys.indexOf(submoduleSlug);
+
+          const prevTarget = lesson.prevSlug
+            ? {
+                title: NUTRITION_SUBMODULES[lesson.prevSlug]?.title || "Previous Subtopic",
+                path: `/nutrition/lesson/${lesson.prevSlug}`
+              }
+            : null;
+
+          const nextTarget = lesson.nextSlug
+            ? {
+                title: NUTRITION_SUBMODULES[lesson.nextSlug]?.title || "Next Subtopic",
+                path: `/nutrition/lesson/${lesson.nextSlug}`
+              }
+            : null;
+
+          return (
+            <SubtopicNavFooter
+              currentIndex={currentSubtopicIndex >= 0 ? currentSubtopicIndex : (lesson.lessonNumber || 1) - 1}
+              totalCount={currentUnitSubtopics.length > 0 ? currentUnitSubtopics.length : (lesson.totalLessonsInUnit || 3)}
+              prevSubtopic={prevTarget}
+              nextSubtopic={nextTarget}
+              subtopics={currentUnitSubtopics}
+              onSelectSubtopic={(sub) => navigate(sub.path)}
+              syllabusPath="/nutrition-syllabus"
+            />
+          );
+        })()}
       </motion.div>
     </div>
   );

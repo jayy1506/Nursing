@@ -87,7 +87,7 @@ export const PhysiologySyllabus = () => {
               🦴 Anatomy
             </Link>
             <span className="px-2.5 py-1 rounded-lg bg-green-50 text-green-700 font-extrabold text-[11px] border border-green-200">
-              ⚡ Physiology (12 Units)
+              ⚡ Physiology (11 Units)
             </span>
             <Link
               to="/bio-chem-syllabus"
@@ -105,62 +105,123 @@ export const PhysiologySyllabus = () => {
         </div>
       </div>
 
-      {/* Hero Header: Pure White Surface */}
-      <section className="bg-white border-b border-neutral-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-10 shadow-2xs">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        {/* Course Syllabus Hero Card (Image 6 design) */}
+        <div className="bg-[#123B50] text-white rounded-2xl p-6 sm:p-8 relative shadow-xl overflow-hidden mb-8 border border-[#1e4e66]">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#159A91]/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-bold border border-green-200 mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-green-600" />
-                <span>INC Standardized Syllabus &bull; Course Code: PHYS 110 &bull; Semester I</span>
+              {/* Badges strip */}
+              <div className="flex flex-wrap items-center gap-2.5 mb-3">
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 hover:bg-white/20 text-white rounded-md text-xs font-semibold backdrop-blur-sm transition-colors border border-white/10"
+                >
+                  ← Dashboard
+                </Link>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-[#159A91]/20 border border-[#159A91]/40 text-[#159A91] text-xs font-bold tracking-wide uppercase">
+                  ACCREDITED ACADEMIC NOTES · PHYS 110
+                </span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-[#F2B66D]/20 border border-[#F2B66D]/40 text-[#F2B66D] text-xs font-bold">
+                  ✨ Concept → Example → Application
+                </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-900 tracking-tight">
-                Applied Human Physiology
+
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                Applied Human Physiology: Complete Study Notes
               </h1>
-              <p className="text-neutral-600 text-xs sm:text-sm mt-2 leading-relaxed">
-                Explore organ systems, regulation mechanisms, negative feedback loops, action potentials, fluid balances,
-                and clinical pathology alterations with high-definition physiological flowcharts and INC question banks.
+              <p className="text-slate-300 text-sm mt-2 leading-relaxed max-w-2xl font-normal">
+                Explore organ systems, regulation mechanisms, negative feedback loops, action potentials, fluid balances, and clinical pathology alterations with high-definition physiological flowcharts.
               </p>
 
-              {/* Badges Overview */}
-              <div className="flex flex-wrap items-center gap-2 mt-4 text-xs">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-50 border border-green-200 text-green-900 font-bold">
-                  <Activity className="w-4 h-4 text-green-600" />
-                  <span>12 Core Functional Units</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-100 border border-neutral-300 text-neutral-800 font-bold">
-                  <Stethoscope className="w-4 h-4 text-green-700" />
-                  <span>{totalImages} Mechanism & Flow Diagrams</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-100 border border-neutral-300 text-neutral-800 font-bold">
-                  <HelpCircle className="w-4 h-4 text-neutral-800" />
-                  <span>{totalMcqs} CBME MCQs</span>
-                </div>
-                <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-neutral-100 border border-neutral-300 text-neutral-800 font-bold">
-                  <FileText className="w-4 h-4 text-green-700" />
-                  <span>{totalSubjective} University Exam Questions</span>
-                </div>
+              {/* Action Buttons */}
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <Link
+                  to="/physiology/lesson/phys-unit-1"
+                  className="bg-[#159A91] hover:bg-[#12837b] text-white font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm shadow-md transition-all active:scale-95"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  <span>Start Chapter 1: General Physiology →</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-nova-tutor'))}
+                  className="bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2.5 rounded-lg text-sm border border-white/20 flex items-center gap-2 backdrop-blur-sm transition-all cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#F2B66D]" />
+                  <span>Ask Nova Tutor</span>
+                </button>
               </div>
             </div>
 
-            {/* Quick Action Box */}
-            <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 shrink-0">
-              <Link
-                to="/physiology/lesson/phys-unit-1"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer"
-              >
-                <span>Start Chapter 1: General Physiology</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              <Link
-                to="/question-bank"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-white hover:bg-neutral-50 text-neutral-800 font-bold text-xs border border-neutral-300 hover:border-neutral-400 shadow-2xs transition-all active:scale-[0.98] cursor-pointer"
-              >
-                <ClipboardList className="w-4 h-4 text-neutral-600" />
-                <span>Practice Physiology Question Bank</span>
-              </Link>
+            {/* Right Circular Gauge Card (Image 6) */}
+            <div className="bg-[#0f2d3d]/90 backdrop-blur-md border border-white/10 rounded-xl p-5 flex items-center gap-5 min-w-[280px] shadow-lg shrink-0">
+              <div className="relative w-20 h-20 flex-shrink-0 flex items-center justify-center">
+                <svg className="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
+                  <path
+                    className="text-white/15"
+                    strokeWidth="3.5"
+                    stroke="currentColor"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    className="text-[#159A91] transition-all duration-700 ease-out"
+                    strokeDasharray={`${gating.completionPercent}, 100`}
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    stroke="currentColor"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center font-bold text-white text-base">
+                  {gating.completionPercent}%
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[11px] font-bold text-white/50 tracking-wider uppercase">Course Completion</span>
+                <span className="text-white font-bold text-sm mt-0.5">
+                  {gating.completedCount} of 11 Units Cleared
+                </span>
+                <span className="text-xs text-white/70 mt-0.5">
+                  {totalImages} Flow &amp; Mechanism Diagrams
+                </span>
+                <span className="text-[11px] text-[#F2B66D] font-semibold mt-1 flex items-center gap-1">
+                  ↗ &gt;75.0% Pass Rule Active
+                </span>
+              </div>
             </div>
           </div>
+        </div>
+
+        {/* Action / Quick Tab Strip below Hero (Image 6) */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#123B50] text-white shadow-xs flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>11 Curriculum Units (Applied Physiology)</span>
+            </span>
+            <Link
+              to="/question-bank"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-[#263746] hover:bg-[#E9F5F3] border border-slate-200 transition-colors flex items-center gap-1.5 shadow-2xs"
+            >
+              <FileText className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>Physiology Question Bank</span>
+            </Link>
+          </div>
+
+          <Link
+            to="/student/quiz/physiology-grand-final"
+            className="px-4 py-1.5 rounded-lg text-xs font-bold bg-[#123B50] hover:bg-[#159A91] text-white shadow-xs transition-colors flex items-center gap-1.5 border border-[#1e4e66]"
+          >
+            <Award className="w-3.5 h-3.5 text-[#F2B66D]" />
+            <span>Final Capstone Assessment (40 MCQs)</span>
+          </Link>
+        </div>
 
           {/* Search & Category Filter */}
           <div className="mt-8 pt-6 border-t border-neutral-100 flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
@@ -193,7 +254,6 @@ export const PhysiologySyllabus = () => {
             </div>
           </div>
         </div>
-      </section>
 
       {/* Main Units List */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
@@ -231,7 +291,7 @@ export const PhysiologySyllabus = () => {
                     gating.isFinalUnlocked ? "text-green-700" : "text-neutral-500"
                   }`}
                 >
-                  {gating.completedCount} of 12 Modules Mastered ({gating.completionPercent}%)
+                  {gating.completedCount} of 11 Modules Mastered ({gating.completionPercent}%)
                 </span>
               </div>
 
@@ -241,8 +301,8 @@ export const PhysiologySyllabus = () => {
 
               <p className="text-xs sm:text-sm max-w-2xl leading-relaxed text-neutral-600">
                 {gating.isFinalUnlocked
-                  ? "Congratulations! You have mastered all 12 units. Take the 48-question cumulative mixed examination covering the entire INC Semester I syllabus."
-                  : `Gated under INC competency standards. Complete each of the 12 individual unit assessment quizzes or mark chapters studied with ≥ 75% score to unlock this final examination. Remaining: ${gating.remainingCount} modules.`}
+                  ? "Congratulations! You have mastered all 11 units. Take the 44-question cumulative mixed examination covering the entire INC Semester I syllabus."
+                  : `Gated under INC competency standards. Complete each of the 11 individual unit assessment quizzes or mark chapters studied with ≥ 75% score to unlock this final examination. Remaining: ${gating.remainingCount} modules.`}
               </p>
 
               {/* Live Animated Progress Meter */}
@@ -262,7 +322,7 @@ export const PhysiologySyllabus = () => {
               {gating.isFinalUnlocked ? (
                 <Link
                   to="/quiz/physiology-grand-final"
-                  className="px-6 py-3.5 rounded-2xl bg-green-500 hover:bg-green-700 text-white font-black text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
+                  className="px-6 py-3.5 rounded-2xl bg-[#159A91] hover:bg-[#123B50] text-white font-black text-xs sm:text-sm shadow-md transition-all inline-flex items-center gap-2"
                 >
                   <Sparkles className="w-4 h-4" />
                   <span>Start Grand Final Exam →</span>
@@ -337,13 +397,13 @@ export const PhysiologySyllabus = () => {
                       className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                         completed
                           ? "bg-neutral-100 text-neutral-700 hover:bg-neutral-200 border border-neutral-300"
-                          : "bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 shadow-2xs"
+                          : "bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-[#123B50] border border-[#159A91]/30 shadow-2xs group"
                       }`}
                       title="Click to toggle chapter completion and update Grand Final standing"
                     >
                       <CheckCircle2
                         className={`w-3.5 h-3.5 ${
-                          completed ? "text-green-600" : "text-neutral-400"
+                          completed ? "text-[#159A91]" : "text-neutral-400 group-hover:text-white"
                         }`}
                       />
                       <span>{completed ? "Mark Incomplete" : "Mark as Studied"}</span>
@@ -351,16 +411,16 @@ export const PhysiologySyllabus = () => {
 
                     <Link
                       to={`/quiz/${unit.id}`}
-                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-green-50 hover:bg-green-100 text-green-700 font-extrabold text-xs border border-green-200 shadow-2xs transition-all cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-[#123B50] font-extrabold text-xs border border-[#159A91]/30 shadow-2xs transition-all cursor-pointer group"
                       title="Take Chapter Assessment Quiz (auto-completes on pass ≥ 75%)"
                     >
-                      <ClipboardList className="w-3.5 h-3.5 text-green-600" />
+                      <ClipboardList className="w-3.5 h-3.5 text-[#159A91] group-hover:text-white" />
                       <span>Take Quiz</span>
                     </Link>
 
                     <Link
                       to={`/physiology/lesson/${unit.id}`}
-                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer"
+                      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#159A91] hover:bg-[#123B50] text-white font-extrabold text-xs shadow-sm hover:shadow transition-all active:scale-[0.98] cursor-pointer"
                     >
                       <span>Study Chapter</span>
                       <ArrowRight className="w-3.5 h-3.5" />
@@ -473,7 +533,7 @@ export const PhysiologySyllabus = () => {
                           </div>
                           <Link
                             to={`/quiz/${unit.id}`}
-                            className="px-3.5 py-2 rounded-lg bg-green-600 hover:bg-green-700 text-white font-bold text-xs shadow-2xs"
+                            className="px-3.5 py-2 rounded-lg bg-[#159A91] hover:bg-[#123B50] text-white font-bold text-xs shadow-2xs transition-colors"
                           >
                             Take Quiz
                           </Link>

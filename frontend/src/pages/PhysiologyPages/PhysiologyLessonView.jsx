@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link, useSearchParams } from "react-router-dom";
-import Navbar from "../../components/Navbar";
 import { PHYSIOLOGY_CHAPTERS } from "../../constants/physiologyChaptersData";
 import { PHYSIOLOGY_UNITS } from "../../constants/physiologyData";
 import {
@@ -8,6 +7,10 @@ import {
   BookOpen,
   Sparkles,
   ChevronRight,
+  ChevronLeft,
+  ChevronDown,
+  XCircle,
+  X,
   ZoomIn,
   CheckCircle2,
   Award,
@@ -17,24 +20,224 @@ import {
   Activity,
   Stethoscope,
   Tag,
-  ClipboardList
+  ClipboardList,
+  Box
 } from "lucide-react";
 import { useCurriculumProgress } from "../../services/curriculumProgress";
+import SubtopicQuiz15Marks from "../../components/curriculum/SubtopicQuiz15Marks";
+import SubtopicNavFooter from "../../components/curriculum/SubtopicNavFooter";
+import SubtopicMedicalPlate from "../../components/curriculum/SubtopicMedicalPlate";
 
-// Formatter to render **bold text** cleanly
+// High-yield anatomical & physiological terms to auto-highlight in dark color
+const IMPORTANT_TERMS_REGEX = /\b(Anatomy|Human Physiology|Physiology|Gross Anatomy|Microscopic Anatomy|Cytology|Histology|Regional Anatomy|Systemic Anatomy|Anatomical Position|Anterior|Posterior|Ventral|Dorsal|Superior|Inferior|Cranial|Caudal|Medial|Lateral|Proximal|Distal|Superficial|Deep|Sagittal Plane|Coronal Plane|Transverse Plane|Frontal Plane|Axial Plane|Midsagittal|Parasagittal|Prone|Supine|Abduction|Adduction|Homeostasis|Mitochondria|Nucleus|Endoplasmic Reticulum|Golgi apparatus|Lysosome|Cytoplasm|Cell membrane|Plasma membrane|Epithelial|Connective tissue|Hypertension|Action potential|Refractory period|Depolarization|Repolarization|Synapse|Neurotransmitter|Cardiac output|Stroke volume|Tidal volume|Glomerular filtration|Osmosis|Diffusion|Negative feedback|Positive feedback)\b/gi;
+
+// Formatter to render text with dark colors, high-contrast, and highlighted important keywords
 const renderFormattedText = (text) => {
   if (typeof text !== "string") return text;
   const parts = text.split(/(\*\*.*?\*\*)/g);
   return parts.map((part, index) => {
     if (part.startsWith("**") && part.endsWith("**")) {
       return (
-        <strong key={index} className="font-extrabold text-neutral-900 tracking-tight">
+        <strong
+          key={index}
+          className="font-black text-[#123B50] bg-[#E9F5F3] px-1.5 py-0.5 rounded border border-[#159A91]/40 tracking-tight"
+        >
           {part.slice(2, -2)}
         </strong>
       );
     }
-    return part;
+
+    const subParts = part.split(IMPORTANT_TERMS_REGEX);
+    return subParts.map((sub, sIdx) => {
+      IMPORTANT_TERMS_REGEX.lastIndex = 0;
+      if (IMPORTANT_TERMS_REGEX.test(sub)) {
+        return (
+          <strong
+            key={`${index}-${sIdx}`}
+            className="font-black text-[#123B50] bg-[#E9F5F3]/70 px-1 py-0.5 rounded tracking-tight underline decoration-[#159A91]/50 decoration-1 underline-offset-2"
+          >
+            {sub}
+          </strong>
+        );
+      }
+
+      if (sub.includes("e.g.") || sub.includes("E.g.")) {
+        const egParts = sub.split(/(e\.g\.[^,.;]+)/gi);
+        return egParts.map((egSub, eIdx) => {
+          if (/^e\.g\./i.test(egSub)) {
+            return (
+              <span
+                key={`${index}-${sIdx}-${eIdx}`}
+                className="font-extrabold text-[#123B50] bg-[#F2B66D]/25 px-1.5 py-0.5 rounded text-xs border border-[#F2B66D]/40 mx-0.5"
+              >
+                {egSub}
+              </span>
+            );
+          }
+          return egSub;
+        });
+      }
+
+      return sub;
+    });
   });
+};
+
+// Smart Content Renderer: Formats terms into structured cards and avoids duplicate point repetition
+const renderSectionContent = (content = [], points = []) => {
+  const renderedItems = [];
+  const contentLowerSet = new Set();
+
+  content.forEach((item, idx) => {
+    const trimmed = (item || "").trim();
+    if (!trimmed) return;
+    contentLowerSet.add(trimmed.toLowerCase());
+
+    const isHeading =
+      (trimmed.length <= 35 && !trimmed.endsWith(".") && !trimmed.includes(":")) ||
+      trimmed.toLowerCase() === "definition" ||
+      trimmed.toLowerCase().startsWith("physiological principles");
+
+    if (isHeading) {
+      renderedItems.push(
+        <div
+          key={`head-${idx}`}
+          className="pt-3 pb-1.5 border-b-2 border-[#159A91]/30 flex items-center gap-2 mt-3 first:mt-0"
+        >
+          <div className="w-2.5 h-2.5 rounded-full bg-[#159A91]" />
+          <h3 className="text-sm sm:text-base font-black text-[#123B50] uppercase tracking-wide">
+            {trimmed}
+          </h3>
+        </div>
+      );
+      return;
+    }
+
+    if (/^Figure\s*\d+\.\d+:/i.test(trimmed) && trimmed.length < 80) {
+      renderedItems.push(
+        <div
+          key={`figref-${idx}`}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-100 border border-neutral-300 text-xs font-bold text-[#123B50] my-1"
+        >
+          <Layers className="w-3.5 h-3.5 text-[#159A91]" />
+          <span>{trimmed}</span>
+        </div>
+      );
+      return;
+    }
+
+    const colonMatch = trimmed.match(/^([A-Z][A-Za-z0-9\s()/-]{2,35}?)\s*:\s+(.+)$/);
+    const isMatch = trimmed.match(/^(Homeostasis|Negative feedback|Positive feedback|Action potential|Cardiac cycle|Glomerular filtration|Osmosis|Diffusion|Cellular respiration)\s+(is the|deals with|is a|is)\s+(.+)$/i);
+
+    if (colonMatch || isMatch) {
+      const termName = colonMatch ? colonMatch[1] : isMatch[1];
+      const termDefWithExample = colonMatch ? colonMatch[2] : `${isMatch[2]} ${isMatch[3]}`;
+
+      const egSplit = termDefWithExample.split(/,\s*e\.g\.|\s+e\.g\./i);
+      const mainDef = egSplit[0];
+      const exampleText = egSplit.length > 1 ? egSplit.slice(1).join(", e.g. ") : null;
+
+      renderedItems.push(
+        <div
+          key={`def-${idx}`}
+          className="bg-white rounded-2xl border-2 border-neutral-200/90 hover:border-[#159A91] p-4 sm:p-5 shadow-2xs hover:shadow-xs transition-all space-y-2.5 my-2"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="px-3 py-1 rounded-xl bg-[#E9F5F3] text-[#123B50] border border-[#159A91]/40 text-xs sm:text-sm font-black flex items-center gap-1.5 shadow-2xs">
+              <Tag className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>{termName}</span>
+            </span>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#159A91] bg-[#E9F5F3] px-2 py-0.5 rounded-md border border-[#159A91]/30">
+              Core Physiological Mechanism
+            </span>
+          </div>
+
+          <p className="text-sm sm:text-[15px] font-bold text-[#263746] leading-relaxed">
+            {renderFormattedText(mainDef)}
+          </p>
+
+          {exampleText && (
+            <div className="p-3 rounded-xl bg-[#F2B66D]/15 border border-[#F2B66D]/40 text-xs text-[#123B50] font-bold flex items-start gap-2">
+              <span className="px-2 py-0.5 rounded bg-[#F2B66D] text-[#123B50] font-black text-[10px] shrink-0 uppercase tracking-wide">
+                Clinical Example
+              </span>
+              <span className="leading-relaxed">{renderFormattedText(exampleText)}</span>
+            </div>
+          )}
+        </div>
+      );
+      return;
+    }
+
+    renderedItems.push(
+      <p
+        key={`p-${idx}`}
+        className="text-sm sm:text-base font-semibold text-[#263746] leading-relaxed"
+      >
+        {renderFormattedText(trimmed)}
+      </p>
+    );
+  });
+
+  const distinctPoints = (points || []).filter((pt) => {
+    const trimmed = (pt || "").trim().toLowerCase();
+    if (!trimmed || trimmed === "definition") return false;
+    return !contentLowerSet.has(trimmed);
+  });
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-3">{renderedItems}</div>
+
+      {distinctPoints.length > 0 && (
+        <div className="bg-gradient-to-br from-[#E9F5F3]/50 via-white to-[#E9F5F3]/20 rounded-2xl p-5 sm:p-6 border-2 border-[#159A91]/30 space-y-4 shadow-xs mt-6">
+          <div className="flex items-center justify-between border-b border-[#159A91]/30 pb-3">
+            <div className="flex items-center gap-2 text-[#123B50] font-black text-xs uppercase tracking-wider">
+              <Sparkles className="w-4 h-4 text-[#159A91]" />
+              <span>Key Physiological Concepts, Homeostatic Regulation &amp; Mechanisms</span>
+            </div>
+            <span className="text-[11px] font-extrabold text-[#123B50] bg-[#E9F5F3] border border-[#159A91]/30 px-2.5 py-0.5 rounded-full">
+              {distinctPoints.length} Core Principles
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 pt-1">
+            {distinctPoints.map((pt, ptIdx) => {
+              const match = pt.match(/^\*\*(.*?)\*\*:?\s*(.*)$/);
+              const title = match ? match[1] : null;
+              const description = match ? match[2] : pt;
+
+              return (
+                <div
+                  key={ptIdx}
+                  className="bg-white rounded-xl p-4 border border-neutral-200/90 shadow-2xs hover:border-[#159A91] transition-all space-y-1.5"
+                >
+                  {title ? (
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#E9F5F3] border border-[#159A91]/30 text-[#123B50] text-xs font-black mb-1">
+                        <Tag className="w-3 h-3 text-[#159A91]" />
+                        <span>{title}</span>
+                      </div>
+                      <p className="text-sm font-bold text-[#263746] leading-relaxed">
+                        {renderFormattedText(description)}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-3">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#159A91] mt-1.5 shrink-0 ring-4 ring-[#E9F5F3]" />
+                      <p className="text-sm font-bold text-[#263746] leading-relaxed flex-1">
+                        {renderFormattedText(pt)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export const PhysiologyLessonView = () => {
@@ -44,7 +247,21 @@ export const PhysiologyLessonView = () => {
   const chapter = PHYSIOLOGY_CHAPTERS[chapterId] || PHYSIOLOGY_CHAPTERS["phys-unit-1"];
   const activeTabParam = searchParams.get("tab") || "reading";
   const [activeTab, setActiveTab] = useState(activeTabParam);
+  const [viewMode, setViewMode] = useState("single");
   const [zoomImage, setZoomImage] = useState(null);
+  const [showSubtopicDrawer, setShowSubtopicDrawer] = useState(false);
+  const [currentUnitMcqIndex, setCurrentUnitMcqIndex] = useState(0);
+  const [selectedAnswers, setSelectedAnswers] = useState({});
+
+  // Active subtopic index
+  const [activeSectionIndex, setActiveSectionIndex] = useState(() => {
+    const secParam = searchParams.get("section");
+    if (secParam && chapter.sections) {
+      const foundIdx = chapter.sections.findIndex((s) => s.id === secParam);
+      if (foundIdx >= 0) return foundIdx;
+    }
+    return 0;
+  });
 
   // Real-time automatic curriculum progress
   const { isCompleted, toggleCompletion, gating } = useCurriculumProgress('physiology');
@@ -57,18 +274,22 @@ export const PhysiologyLessonView = () => {
     const tab = searchParams.get("tab");
     if (tab) setActiveTab(tab);
 
-    const sectionParam = searchParams.get("section");
-    if (sectionParam) {
-      setTimeout(() => {
-        const el = document.getElementById(sectionParam);
-        if (el) {
-          el.scrollIntoView({ behavior: "smooth" });
-        }
-      }, 150);
-    } else {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    const secParam = searchParams.get("section");
+    if (secParam && chapter.sections) {
+      const foundIdx = chapter.sections.findIndex((s) => s.id === secParam);
+      if (foundIdx >= 0) setActiveSectionIndex(foundIdx);
     }
-  }, [chapterId, searchParams]);
+  }, [chapterId, searchParams, chapter.sections]);
+
+  const handleSelectSection = (idx) => {
+    if (!chapter.sections || !chapter.sections[idx]) return;
+    setActiveSectionIndex(idx);
+    setSearchParams({
+      tab: activeTab,
+      section: chapter.sections[idx].id
+    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -84,97 +305,91 @@ export const PhysiologyLessonView = () => {
   const nextChapter = currentIndex < PHYSIOLOGY_UNITS.length - 1 ? PHYSIOLOGY_UNITS[currentIndex + 1] : null;
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 antialiased selection:bg-green-500 selection:text-white pb-24 transition-colors">
-      <Navbar />
-
-      {/* Top Breadcrumb Navigation in Calm Clinical Nursing Scrub Palette */}
-      <div className="bg-white dark:bg-neutral-900 border-b border-neutral-200/80 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 py-2.5 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 flex-wrap">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 antialiased selection:bg-[#159A91] selection:text-white pb-24 font-sans transition-colors">
+      {/* Focused Textbook Top Bar (Replaces Navbar in Syllabus) */}
+      <header className="sticky top-0 z-40 bg-[#123B50] text-white py-3 px-4 sm:px-6 lg:px-8 shadow-md">
+        <div className="w-full flex items-center justify-between text-xs">
+          <div className="flex items-center gap-3">
             <Link
               to="/physiology-syllabus"
-              className="text-neutral-500 dark:text-neutral-400 hover:text-green-500 dark:hover:text-green-400 font-medium inline-flex items-center gap-1 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-all border border-white/10 cursor-pointer"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
-              <span>Physiology Syllabus</span>
+              <span>Back to Syllabus</span>
             </Link>
-            <span className="text-neutral-300 dark:text-neutral-700">/</span>
-            <span className="text-green-700 dark:text-green-400 font-bold">
+            <span className="hidden sm:inline-block w-px h-4 bg-white/20" />
+            <span className="hidden sm:inline-block font-bold text-white/90 truncate max-w-sm">
               Unit {chapter.unitNumber}: {chapter.title}
             </span>
-
-            {/* Live completion indicator badge */}
-            {completed ? (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-green-50 dark:bg-green-900/60 text-green-700 dark:text-green-400 border border-green-400 dark:border-green-700 ml-2">
-                <CheckCircle2 className="w-3 h-3 text-green-500 dark:text-green-400" />
-                <span>Completed • Mastered</span>
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700 ml-2">
-                <span>In Progress</span>
-              </span>
-            )}
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-semibold">
-            {/* Quick 1-click toggle */}
+          <div className="flex items-center gap-2">
+            <Link
+              to="/explorer"
+              className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-[#159A91] text-white font-bold transition-all text-xs inline-flex items-center gap-1.5 border border-white/20 shadow-xs cursor-pointer group"
+              title="Enter 3D Anatomy Playground"
+            >
+              <Box className="w-3.5 h-3.5 text-[#159A91] group-hover:text-white transition-colors" />
+              <span className="hidden sm:inline">3D Playground</span>
+            </Link>
+
             <button
               type="button"
               onClick={() => toggleCompletion(chapter.id)}
-              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer inline-flex items-center gap-1 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 ${
                 completed
-                  ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 border border-neutral-200"
-                  : "bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-100 hover:bg-green-100 border border-green-100 dark:border-green-700"
+                  ? "bg-[#159A91] text-white shadow-xs"
+                  : "bg-white/10 hover:bg-white/20 text-white border border-white/10"
               }`}
             >
-              <CheckCircle2 className={`w-3 h-3 ${completed ? "text-green-500" : "text-neutral-400"}`} />
-              <span>{completed ? "Mark Incomplete" : "Mark Completed"}</span>
+              <CheckCircle2 className={`w-3.5 h-3.5 ${completed ? "text-[#F2B66D]" : "text-white/60"}`} />
+              <span>{completed ? "Completed ✓" : "Mark Done"}</span>
             </button>
 
             {prevChapter && (
               <Link
                 to={`/physiology/lesson/${prevChapter.id}`}
-                className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 transition-colors"
+                className="hidden md:inline-flex px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-colors"
               >
-                ← Prev Unit {prevChapter.unitNumber}
+                ← Prev
               </Link>
             )}
             {nextChapter && (
               <Link
                 to={`/physiology/lesson/${nextChapter.id}`}
-                className="px-2.5 py-1 rounded-lg bg-green-500 hover:bg-green-500 text-white font-bold transition-colors"
+                className="hidden md:inline-flex px-2.5 py-1.5 rounded-xl bg-[#159A91] hover:bg-[#159A91]/80 text-white font-bold transition-colors"
               >
-                Next Unit {nextChapter.unitNumber} →
+                Next →
               </Link>
             )}
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Header Banner */}
+      {/* Hero Unit Header Banner - Full Page Width */}
       <section className="bg-white border-b border-neutral-200 px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-        <div className="max-w-7xl mx-auto">
+        <div className="w-full">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 text-green-700 text-xs font-bold border border-neutral-300 mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-green-700" />
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E9F5F3] text-[#123B50] text-xs font-extrabold border border-[#159A91]/20 mb-2">
+                <Sparkles className="w-3.5 h-3.5 text-[#159A91]" />
                 <span>Unit {chapter.unitNumber} • {chapter.category}</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-black text-neutral-900 tracking-tight">
+              <h1 className="text-2xl sm:text-3xl font-black text-[#123B50] tracking-tight">
                 {chapter.title}
               </h1>
-              <p className="text-neutral-600 text-xs sm:text-sm mt-1 max-w-3xl leading-relaxed">
+              <p className="text-neutral-600 text-xs sm:text-sm mt-1 max-w-4xl leading-relaxed">
                 {chapter.summary}
               </p>
             </div>
 
             {/* Mode Switcher Tabs */}
-            <div className="flex items-center gap-1.5 p-1 bg-neutral-100 rounded-xl self-start lg:self-center border border-neutral-200">
+            <div className="flex items-center gap-1.5 p-1 bg-neutral-100 rounded-2xl self-start lg:self-center border border-neutral-200">
               <button
                 onClick={() => handleTabChange("reading")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === "reading"
-                    ? "bg-white text-green-700 shadow-sm"
+                    ? "bg-[#123B50] text-white shadow-xs"
                     : "text-neutral-600 hover:text-neutral-900"
                 }`}
               >
@@ -184,9 +399,9 @@ export const PhysiologyLessonView = () => {
 
               <button
                 onClick={() => handleTabChange("quiz")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === "quiz"
-                    ? "bg-white text-green-700 shadow-sm"
+                    ? "bg-[#123B50] text-white shadow-xs"
                     : "text-neutral-600 hover:text-neutral-900"
                 }`}
               >
@@ -196,9 +411,9 @@ export const PhysiologyLessonView = () => {
 
               <button
                 onClick={() => handleTabChange("subjective")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                   activeTab === "subjective"
-                    ? "bg-white text-green-700 shadow-sm"
+                    ? "bg-[#123B50] text-white shadow-xs"
                     : "text-neutral-600 hover:text-neutral-900"
                 }`}
               >
@@ -210,222 +425,183 @@ export const PhysiologyLessonView = () => {
         </div>
       </section>
 
-      {/* Main Content Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <aside className="lg:col-span-1 hidden lg:block">
-            <div className="sticky top-20 bg-white rounded-2xl border border-neutral-200 p-4 shadow-sm space-y-4">
-              <div>
-                <span className="text-[11px] font-extrabold text-neutral-400 uppercase tracking-wider block mb-2">
-                  Sections & Diagrams
-                </span>
-                <nav className="space-y-1 max-h-[60vh] overflow-y-auto pr-1 text-xs">
-                  {chapter.sections?.map((sec, idx) => (
-                    <a
-                      key={sec.id}
-                      href={`#${sec.id}`}
-                      className="block px-3 py-2 rounded-lg text-neutral-700 hover:bg-neutral-100 hover:text-green-700 font-semibold transition-colors truncate"
-                    >
-                      {idx + 1}. {sec.title}
-                    </a>
-                  ))}
-                </nav>
-              </div>
-
-              <div className="pt-3 border-t border-neutral-100 text-[11px] space-y-1.5">
-                <div className="flex items-center justify-between text-neutral-500 font-medium">
-                  <span>Diagrams:</span>
-                  <span className="font-bold text-green-700">{chapter.totalImages || 0}</span>
+      {/* Main Content Area - Full Page Width with Clean Typography */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 pt-6">
+        <main className="w-full">
+          {activeTab === "reading" && (
+            <div className="space-y-8">
+              {/* Specific Learning Objectives Card */}
+              {chapter.objectives && chapter.objectives.length > 0 && (
+                <div className="bg-gradient-to-br from-[#E9F5F3]/70 via-white to-[#E9F5F3]/40 rounded-2xl border border-[#159A91]/20 p-5 sm:p-6 shadow-xs">
+                  <h3 className="text-xs font-black text-[#123B50] uppercase tracking-wider flex items-center gap-2 mb-3">
+                    <Award className="w-4 h-4 text-[#159A91]" />
+                    <span>INC CBME Specific Learning Objectives</span>
+                  </h3>
+                  <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-700">
+                    {chapter.objectives.map((obj, i) => (
+                      <li key={i} className="flex items-start gap-2.5">
+                        <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0 mt-0.5" />
+                        <span className="leading-relaxed font-medium">{renderFormattedText(obj)}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="flex items-center justify-between text-neutral-500 font-medium">
-                  <span>MCQ Count:</span>
-                  <span className="font-bold text-green-700">{chapter.mcqs?.length || 0}</span>
-                </div>
-                <div className="flex items-center justify-between text-neutral-500 font-medium">
-                  <span>Subjective Qs:</span>
-                  <span className="font-bold text-green-700">{chapter.subjectiveQuestions?.length || 0}</span>
-                </div>
-              </div>
-            </div>
-          </aside>
+              )}
 
-          {/* Main Reading View */}
-          <main className="lg:col-span-3">
-            {activeTab === "reading" && (
-              <div className="space-y-8">
-                {/* Specific Learning Objectives Card */}
-                {chapter.objectives && chapter.objectives.length > 0 && (
-                  <div className="bg-neutral-100/60 rounded-2xl border border-neutral-300/80 p-5">
-                    <h3 className="text-xs font-black text-neutral-800 uppercase tracking-wider flex items-center gap-2 mb-3">
-                      <Award className="w-4 h-4 text-green-700" />
-                      <span>INC CBME Learning Objectives</span>
-                    </h3>
-                    <ul className="space-y-2 text-xs text-neutral-700">
-                      {chapter.objectives.map((obj, i) => (
-                        <li key={i} className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-green-700 shrink-0 mt-0.5" />
-                          <span className="leading-relaxed font-medium">{renderFormattedText(obj)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+              {/* Subtopic Top Navigation Bar with Drawer Selector */}
+              <div className="bg-white rounded-2xl border border-neutral-200/90 p-4 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-3 py-1 rounded-full bg-[#159A91] text-white text-xs font-black uppercase tracking-wider shadow-2xs">
+                    Subtopic {activeSectionIndex + 1} of {chapter.sections?.length || 1}
+                  </span>
+                  <span className="text-xs font-black text-[#123B50] line-clamp-1 max-w-md">
+                    {chapter.sections?.[activeSectionIndex]?.title}
+                  </span>
+                </div>
 
-                {/* Sections */}
-                {chapter.sections?.map((section, sIdx) => (
-                  <section
-                    key={section.id}
-                    id={section.id}
-                    className="bg-white rounded-2xl border border-neutral-200 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24"
+                <div className="flex items-center gap-2 self-end sm:self-auto text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setShowSubtopicDrawer(true)}
+                    className="px-3 py-1.5 rounded-xl border border-[#159A91]/40 bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-[#123B50] font-black transition-all shadow-2xs cursor-pointer flex items-center gap-1.5"
                   >
-                    <div className="border-b border-neutral-100 pb-3">
-                      <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-neutral-100 text-green-700 text-[10px] font-extrabold uppercase tracking-wider mb-1">
-                        Section {sIdx + 1} of {chapter.sections.length}
-                      </div>
-                      <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight mt-1">
-                        {section.title}
-                      </h2>
-                    </div>
+                    <span>Browse All Subtopics ({chapter.sections?.length || 0})</span>
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
 
-                    {/* Section Explanatory Paragraphs */}
-                    {section.content && section.content.length > 0 && (
-                      <div className="space-y-3.5 text-xs sm:text-sm text-neutral-700 leading-relaxed font-normal">
-                        {section.content.map((para, pIdx) => (
-                          <p key={pIdx} className="leading-relaxed">
-                            {renderFormattedText(para)}
-                          </p>
-                        ))}
-                      </div>
-                    )}
+                  <button
+                    type="button"
+                    onClick={() => setViewMode(viewMode === "single" ? "all" : "single")}
+                    className="px-3 py-1.5 rounded-xl border border-neutral-200 bg-white hover:bg-[#E9F5F3] text-neutral-700 hover:text-[#123B50] font-bold transition-all shadow-2xs cursor-pointer"
+                  >
+                    {viewMode === "single" ? "View All Subtopics" : "Single Subtopic Focus"}
+                  </button>
+                </div>
+              </div>
 
-                    {/* Detailed Points with Clean Structured Layout Card */}
-                    {section.points && section.points.length > 0 && (
-                      <div className="bg-gradient-to-br from-neutral-50 bg-neutral-100/20 to-white rounded-2xl p-5 sm:p-6 border border-neutral-200/90 space-y-4 shadow-xs">
-                        <div className="flex items-center justify-between border-b border-neutral-200/60 pb-3">
-                          <div className="flex items-center gap-2 text-neutral-800 font-black text-xs uppercase tracking-wider">
-                            <Sparkles className="w-4 h-4 text-green-700" />
-                            <span>Key Physiological Concepts, Homeostatic Regulation & Mechanisms</span>
+                {/* Subtopic Renderer */}
+                {(() => {
+                  const displaySections = viewMode === "single"
+                    ? [chapter.sections?.[activeSectionIndex] || chapter.sections?.[0]].filter(Boolean)
+                    : chapter.sections || [];
+
+                  return displaySections.map((section, sIdx) => {
+                    const actualIdx = viewMode === "single" ? activeSectionIndex : sIdx;
+                    const prevSection = actualIdx > 0 ? chapter.sections?.[actualIdx - 1] : null;
+                    const nextSection = actualIdx < (chapter.sections?.length || 1) - 1 ? chapter.sections?.[actualIdx + 1] : null;
+
+                    return (
+                      <section
+                        key={section.id || actualIdx}
+                        id={section.id}
+                        className="bg-white rounded-2xl border border-neutral-200 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24"
+                      >
+                        <div className="border-b border-neutral-100 pb-3">
+                          <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#E9F5F3] text-[#123B50] border border-[#159A91]/30 text-[10px] font-extrabold uppercase tracking-wider mb-1">
+                            Subtopic {actualIdx + 1} of {chapter.sections?.length || 1}
                           </div>
-                          <span className="text-[11px] font-extrabold text-green-700 bg-neutral-100/80 px-2.5 py-0.5 rounded-full">
-                            {section.points.length} Core Principles
-                          </span>
+                          <h2 className="text-xl sm:text-2xl font-black text-[#123B50] tracking-tight mt-1">
+                            {section.title}
+                          </h2>
                         </div>
 
-                        <div className="grid grid-cols-1 gap-3 pt-1">
-                          {section.points.map((pt, ptIdx) => {
-                            const match = pt.match(/^\*\*(.*?)\*\*:?\s*(.*)$/);
-                            const title = match ? match[1] : null;
-                            const description = match ? match[2] : pt;
+                        {/* Section Content & Key Principles - Formatted with Dark Color & Highlighted Terms */}
+                        {renderSectionContent(section.content, section.points)}
 
-                            return (
-                              <div
-                                key={ptIdx}
-                                className="bg-white rounded-xl p-3.5 border border-neutral-200/80 shadow-xs hover:border-neutral-300 transition-all"
-                              >
-                                {title ? (
-                                  <div>
-                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-neutral-100 border border-neutral-300 text-neutral-800 text-xs font-black mb-1.5">
-                                      <Tag className="w-3 h-3 text-green-700" />
-                                      <span>{title}</span>
-                                    </div>
-                                    <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed pl-1">
-                                      {renderFormattedText(description)}
-                                    </p>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-start gap-2.5">
-                                    <div className="w-2 h-2 rounded-full bg-green-500 mt-2 shrink-0 ring-4 ring-neutral-400" />
-                                    <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed flex-1">
-                                      {renderFormattedText(pt)}
-                                    </p>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Clinical Nursing Pearl Callout */}
-                    {section.clinicalPearl && (
-                      <div className="bg-gradient-to-r bg-neutral-100/90 bg-neutral-100/40 to-white border-l-4 border-green-500 rounded-r-2xl p-5 shadow-xs">
-                        <div className="flex items-center gap-2 font-black text-neutral-800 text-xs sm:text-sm mb-1.5">
-                          <Stethoscope className="w-4 h-4 text-green-700" />
-                          <span>Clinical Nursing Pearl & Physiological Correlation</span>
-                        </div>
-                        <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-medium">
-                          {renderFormattedText(section.clinicalPearl)}
-                        </p>
-                      </div>
-                    )}
-
-                    {/* Images */}
-                    {section.images && section.images.length > 0 && (
-                      <div className="space-y-4 pt-2">
-                        {section.images.map((img, imgIdx) => (
-                          <div
-                            key={imgIdx}
-                            className="bg-neutral-50 rounded-xl border border-neutral-200 overflow-hidden shadow-sm group hover:border-neutral-300 transition-all"
-                          >
-                            <div className="relative bg-white p-3 flex items-center justify-center min-h-[220px]">
-                              <img
-                                src={img.src}
-                                alt={img.alt || img.caption}
-                                className="max-h-[460px] w-auto object-contain rounded-md cursor-zoom-in group-hover:scale-[1.01] transition-transform"
-                                onClick={() => setZoomImage(img)}
-                                onError={(e) => {
-                                  e.target.style.display = 'none';
-                                  e.target.parentNode.innerHTML += `<div class="p-6 text-center text-xs text-neutral-400 font-semibold">Diagram: ${img.caption}</div>`;
-                                }}
-                              />
-                              <button
-                                onClick={() => setZoomImage(img)}
-                                className="absolute bottom-4 right-4 p-2 rounded-lg bg-neutral-900/70 hover:bg-green-500 text-white backdrop-blur-sm transition-all cursor-pointer shadow-md"
-                                title="Click to enlarge diagram"
-                              >
-                                <ZoomIn className="w-4 h-4" />
-                              </button>
+                        {/* Clinical Nursing Pearl Callout */}
+                        {section.clinicalPearl && (
+                          <div className="bg-gradient-to-r from-[#E9F5F3] via-white to-[#E9F5F3]/30 border-l-4 border-[#159A91] rounded-r-2xl p-5 shadow-xs">
+                            <div className="flex items-center gap-2 font-black text-[#123B50] text-xs sm:text-sm mb-1.5">
+                              <Stethoscope className="w-4 h-4 text-[#159A91]" />
+                              <span>Clinical Nursing Pearl &amp; Physiological Correlation</span>
                             </div>
-                            <div className="p-3 bg-neutral-50 border-t border-neutral-100 text-xs font-bold text-neutral-700 flex items-center justify-between">
-                              <span className="leading-snug">{img.caption}</span>
-                              <span className="text-[10px] text-green-700 font-semibold shrink-0 ml-3">
-                                Physiological Mechanism
-                              </span>
-                            </div>
+                            <p className="text-xs sm:text-sm text-[#263746] leading-relaxed font-bold">
+                              {renderFormattedText(section.clinicalPearl)}
+                            </p>
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        )}
 
-                    {/* Tables */}
-                    {section.tables && section.tables.length > 0 && (
-                      <div className="space-y-4 pt-2">
-                        {section.tables.map((table, tIdx) => (
-                          <div key={tIdx} className="overflow-x-auto rounded-xl border border-neutral-200">
-                            <table className="min-w-full divide-y divide-neutral-200 text-xs text-left">
-                              <tbody className="divide-y divide-neutral-100 bg-white">
-                                {table.map((row, rIdx) => (
-                                  <tr
-                                    key={rIdx}
-                                    className={rIdx === 0 ? "bg-neutral-100/80 font-bold text-neutral-800" : "hover:bg-neutral-50"}
-                                  >
-                                    {row.map((cell, cIdx) => (
-                                      <td key={cIdx} className="p-3 leading-snug">
-                                        {cell}
-                                      </td>
+                        {/* Dedicated Proper Medical Image / SVG Diagram for this Subtopic */}
+                        <SubtopicMedicalPlate
+                          subtopicId={section.id}
+                          subtopicTitle={section.title}
+                          subject="physiology"
+                          images={section.images}
+                        />
+
+                        {/* Tables */}
+                        {section.tables && section.tables.length > 0 && (
+                          <div className="space-y-4 pt-2">
+                            {section.tables.map((table, tIdx) => (
+                              <div key={tIdx} className="overflow-x-auto rounded-xl border border-neutral-200">
+                                <table className="min-w-full divide-y divide-neutral-200 text-xs text-left">
+                                  <tbody className="divide-y divide-neutral-100 bg-white">
+                                    {table.map((row, rIdx) => (
+                                      <tr
+                                        key={rIdx}
+                                        className={rIdx === 0 ? "bg-neutral-100/80 font-bold text-neutral-800" : "hover:bg-neutral-50"}
+                                      >
+                                        {row.map((cell, cIdx) => (
+                                          <td key={cIdx} className="p-3 leading-snug">
+                                            {cell}
+                                          </td>
+                                        ))}
+                                      </tr>
                                     ))}
-                                  </tr>
-                                ))}
-                              </tbody>
-                            </table>
+                                  </tbody>
+                                </table>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
-                    )}
-                  </section>
-                ))}
+                        )}
+
+                        {/* Small 15 Marks Subtopic Quiz */}
+                        <SubtopicQuiz15Marks
+                          subtopicId={section.id}
+                          subtopicTitle={section.title}
+                          unitTitle={chapter.title}
+                        />
+
+                        {/* Below: Next and Previous Subtopic Navigation */}
+                        <SubtopicNavFooter
+                          currentIndex={actualIdx}
+                          totalCount={chapter.sections?.length || 1}
+                          prevSubtopic={
+                            prevSection
+                              ? {
+                                  title: prevSection.title,
+                                  onClick: () => handleSelectSection(actualIdx - 1)
+                                }
+                              : prevChapter
+                              ? {
+                                  title: `Unit ${prevChapter.unitNumber}: ${prevChapter.title}`,
+                                  to: `/physiology/lesson/${prevChapter.id}`
+                                }
+                              : null
+                          }
+                          nextSubtopic={
+                            nextSection
+                              ? {
+                                  title: nextSection.title,
+                                  onClick: () => handleSelectSection(actualIdx + 1)
+                                }
+                              : nextChapter
+                              ? {
+                                  title: `Unit ${nextChapter.unitNumber}: ${nextChapter.title}`,
+                                  to: `/physiology/lesson/${nextChapter.id}`
+                                }
+                              : null
+                          }
+                          subtopicsList={chapter.sections?.map((s) => ({ id: s.id, title: s.title }))}
+                          onSelectSubtopic={handleSelectSection}
+                          syllabusPath="/physiology-syllabus"
+                          syllabusLabel="Return to Physiology Syllabus"
+                          chapterComprehensivePath={`/quiz/${chapter.id}`}
+                        />
+                      </section>
+                    );
+                  });
+                })()}
 
                 {/* Bottom Navigation */}
                 <div className="bg-white rounded-2xl border border-neutral-200 p-6 flex items-center justify-between">
@@ -452,63 +628,200 @@ export const PhysiologyLessonView = () => {
               </div>
             )}
 
-            {/* MCQs Practice */}
-            {activeTab === "quiz" && (
-              <div className="bg-white rounded-2xl border border-neutral-200 p-6 sm:p-8 shadow-sm space-y-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 text-green-700 text-xs font-bold border border-neutral-300 mb-2">
-                    <Sparkles className="w-3.5 h-3.5 text-green-700" />
-                    <span>Official CBME Objective Questions • Unit {chapter.unitNumber}</span>
+            {/* MCQs Practice Tab - Single Question Page Format */}
+            {activeTab === "quiz" && (() => {
+              const totalMcqs = chapter.mcqs?.length || 0;
+              const mcq = chapter.mcqs?.[currentUnitMcqIndex] || chapter.mcqs?.[0];
+              if (!mcq || totalMcqs === 0) {
+                return (
+                  <div className="bg-white rounded-3xl border border-neutral-200/90 p-8 text-center space-y-3">
+                    <p className="text-sm font-bold text-neutral-600">No MCQs currently available for this unit.</p>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-black text-neutral-900">
-                    Unit {chapter.unitNumber} Multiple Choice Questions ({chapter.mcqs?.length || 0})
-                  </h2>
-                  <p className="text-neutral-600 text-xs mt-1">
-                    Select your answer to test your comprehension of physiological concepts.
-                  </p>
-                </div>
+                );
+              }
 
-                <div className="space-y-4 pt-2">
-                  {chapter.mcqs?.map((mcq, idx) => {
-                    const isAnswerVisible = showAnswers[mcq.id];
-                    return (
-                      <div
-                        key={mcq.id}
-                        className="p-5 rounded-xl border border-neutral-200 bg-neutral-50/50 space-y-3"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <span className="font-extrabold text-green-700 text-xs shrink-0">
-                            Q{idx + 1}.
-                          </span>
-                          <p className="text-xs sm:text-sm font-bold text-neutral-800 flex-1 leading-snug">
-                            {mcq.question}
-                          </p>
-                          <span className="text-[10px] px-2 py-0.5 rounded bg-neutral-200 text-neutral-600 font-semibold shrink-0">
-                            {mcq.subtopic || "Physiology"}
-                          </span>
-                        </div>
+              const isAnswerVisible = showAnswers[mcq.id];
+              const correctAnswer = mcq.answer || mcq.correctAnswer;
+              const optionsList = mcq.options && mcq.options.length > 0 ? mcq.options : [
+                correctAnswer,
+                "Negative feedback loop",
+                "Positive feedback amplification",
+                "Extracellular buffering"
+              ].filter((v, i, a) => a.indexOf(v) === i);
+              const userSelected = selectedAnswers[mcq.id];
 
-                        <div className="pt-2 flex items-center justify-between border-t border-neutral-200/60">
-                          <button
-                            onClick={() => toggleShowAnswer(mcq.id)}
-                            className="text-xs font-bold text-green-700 hover:text-green-700 underline cursor-pointer"
-                          >
-                            {isAnswerVisible ? "Hide Answer" : "Show Correct Answer"}
-                          </button>
-
-                          {isAnswerVisible && (
-                            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-green-100 text-green-900 font-bold text-xs border border-green-400">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-green-700" />
-                              <span>Answer: {mcq.correctAnswer}</span>
-                            </div>
-                          )}
-                        </div>
+              return (
+                <div className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-10 shadow-sm space-y-8 animate-in fade-in duration-200">
+                  {/* Header & Question Navigation Tracker */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-200 pb-5">
+                    <div className="space-y-1">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E9F5F3] text-[#123B50] text-xs font-black uppercase tracking-wider">
+                        <Sparkles className="w-3.5 h-3.5 text-[#159A91]" />
+                        <span>Unit {chapter.unitNumber} Objective Question Bank</span>
                       </div>
-                    );
-                  })}
+                      <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
+                        Question {currentUnitMcqIndex + 1} of {totalMcqs}
+                      </h2>
+                    </div>
+
+                    {/* Quick Question Jump Pills */}
+                    <div className="flex items-center gap-1.5 flex-wrap max-w-md">
+                      {chapter.mcqs.map((qItem, qIdx) => {
+                        const isCurrent = qIdx === currentUnitMcqIndex;
+                        const isAnswered = Boolean(selectedAnswers[qItem.id]);
+                        return (
+                          <button
+                            key={qItem.id || qIdx}
+                            type="button"
+                            onClick={() => setCurrentUnitMcqIndex(qIdx)}
+                            className={`w-8 h-8 rounded-xl text-xs font-black transition-all flex items-center justify-center cursor-pointer ${
+                              isCurrent
+                                ? "bg-[#123B50] text-white shadow-sm ring-2 ring-[#159A91]"
+                                : isAnswered
+                                ? "bg-[#159A91] text-white"
+                                : "bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                            }`}
+                            title={`Jump to Question ${qIdx + 1}`}
+                          >
+                            {qIdx + 1}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Single Question Scenario Card */}
+                  <div className="space-y-6">
+                    <div className="bg-neutral-50/70 rounded-2xl border border-neutral-200/80 p-5 sm:p-6 space-y-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white border border-neutral-200 text-[#123B50]">
+                          {mcq.subtopic || "Physiology Assessment"}
+                        </span>
+                        {userSelected && (
+                          <span className="text-[11px] font-bold text-[#159A91] flex items-center gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            Option Selected
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-base sm:text-lg font-extrabold text-[#123B50] leading-relaxed">
+                        {mcq.question}
+                      </h3>
+                    </div>
+
+                    {/* Full-Width Options */}
+                    <div className="grid grid-cols-1 gap-3">
+                      {optionsList.map((opt, oIdx) => {
+                        const label = String.fromCharCode(65 + oIdx);
+                        const isSelected = userSelected === opt;
+                        const isCorrect = isAnswerVisible && opt.toLowerCase().trim() === correctAnswer?.toLowerCase().trim();
+                        const isWrongSelected = isAnswerVisible && isSelected && opt.toLowerCase().trim() !== correctAnswer?.toLowerCase().trim();
+
+                        return (
+                          <button
+                            key={oIdx}
+                            type="button"
+                            onClick={() => setSelectedAnswers((prev) => ({ ...prev, [mcq.id]: opt }))}
+                            className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-center justify-between gap-4 cursor-pointer ${
+                              isCorrect
+                                ? "bg-green-50 border-green-500 text-green-900 font-bold"
+                                : isWrongSelected
+                                ? "bg-red-50 border-red-400 text-red-900 font-bold"
+                                : isSelected
+                                ? "bg-[#E9F5F3] border-[#159A91] text-[#123B50] font-black shadow-2xs"
+                                : "bg-white border-neutral-200/90 hover:border-[#159A91]/50 hover:bg-neutral-50/60 text-neutral-800"
+                            }`}
+                          >
+                            <div className="flex items-center gap-3.5 flex-1">
+                              <span
+                                className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 transition-colors ${
+                                  isCorrect
+                                    ? "bg-green-600 text-white"
+                                    : isWrongSelected
+                                    ? "bg-red-500 text-white"
+                                    : isSelected
+                                    ? "bg-[#159A91] text-white"
+                                    : "bg-neutral-100 text-neutral-700"
+                                }`}
+                              >
+                                {label}
+                              </span>
+                              <span className="text-xs sm:text-sm font-semibold leading-relaxed">
+                                {opt}
+                              </span>
+                            </div>
+                            {isCorrect && <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />}
+                            {isWrongSelected && <XCircle className="w-5 h-5 text-red-500 shrink-0" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Answer Reveal */}
+                    <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-neutral-200">
+                      <button
+                        type="button"
+                        onClick={() => toggleShowAnswer(mcq.id)}
+                        className="px-4 py-2 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-xs font-bold text-[#123B50] transition-colors cursor-pointer"
+                      >
+                        {isAnswerVisible ? "Hide Answer & Rationale" : "Show Correct Answer & Rationale"}
+                      </button>
+
+                      {isAnswerVisible && (
+                        <div className="text-xs font-black text-[#159A91] flex items-center gap-1.5 bg-[#E9F5F3] px-3 py-1.5 rounded-xl border border-[#159A91]/30">
+                          <CheckCircle2 className="w-4 h-4 text-[#159A91]" />
+                          <span>Correct Answer: {correctAnswer}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Single Question Navigation Footer */}
+                    <div className="pt-6 border-t border-neutral-200 flex items-center justify-between gap-4">
+                      <button
+                        type="button"
+                        disabled={currentUnitMcqIndex === 0}
+                        onClick={() => setCurrentUnitMcqIndex((prev) => Math.max(0, prev - 1))}
+                        className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                          currentUnitMcqIndex === 0
+                            ? "bg-neutral-100 text-neutral-400 cursor-not-allowed"
+                            : "bg-white border border-neutral-200 hover:bg-neutral-100 text-[#123B50] shadow-2xs"
+                        }`}
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        <span>Previous Question</span>
+                      </button>
+
+                      <div className="text-xs font-bold text-neutral-500">
+                        {currentUnitMcqIndex + 1} / {totalMcqs}
+                      </div>
+
+                      {currentUnitMcqIndex < totalMcqs - 1 ? (
+                        <button
+                          type="button"
+                          onClick={() => setCurrentUnitMcqIndex((prev) => Math.min(totalMcqs - 1, prev + 1))}
+                          className="px-6 py-3 rounded-2xl bg-[#159A91] hover:bg-[#123B50] text-white text-xs sm:text-sm font-black flex items-center gap-2 transition-all shadow-sm cursor-pointer"
+                        >
+                          <span>Next Question</span>
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const answeredCount = chapter.mcqs.filter((qItem) => selectedAnswers[qItem.id]).length;
+                            alert(`Unit assessment complete! You answered ${answeredCount} of ${totalMcqs} questions.`);
+                          }}
+                          className="px-6 py-3 rounded-2xl bg-[#123B50] hover:bg-[#159A91] text-white text-xs sm:text-sm font-black flex items-center gap-2 transition-all shadow-sm cursor-pointer"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-[#F2B66D]" />
+                          <span>Review Completed Bank</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* University Subjective Questions */}
             {activeTab === "subjective" && (
@@ -628,8 +941,85 @@ export const PhysiologyLessonView = () => {
               </div>
             </div>
           </main>
-        </div>
       </div>
+
+      {/* Slide-Over Drawer for Subtopics */}
+      {showSubtopicDrawer && (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end animate-in fade-in duration-200"
+          onClick={() => setShowSubtopicDrawer(false)}
+        >
+          <div
+            className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col p-6 animate-in slide-in-from-right duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-neutral-200 pb-4 mb-4">
+              <div>
+                <span className="text-[11px] font-black text-[#159A91] uppercase tracking-wider block">
+                  Unit {chapter.unitNumber}
+                </span>
+                <h3 className="text-base font-black text-[#123B50]">
+                  Unit Subtopics & Sections ({chapter.sections?.length || 0})
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSubtopicDrawer(false)}
+                className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <XCircle className="w-5 h-5 text-neutral-500" />
+              </button>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto space-y-1.5 pr-1 text-xs">
+              {chapter.sections?.map((sec, idx) => {
+                const isSelected = idx === activeSectionIndex;
+                return (
+                  <button
+                    key={sec.id}
+                    type="button"
+                    onClick={() => {
+                      handleSelectSection(idx);
+                      setShowSubtopicDrawer(false);
+                    }}
+                    className={`w-full text-left px-3.5 py-3 rounded-2xl font-bold transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                      isSelected
+                        ? "bg-[#E9F5F3] text-[#123B50] font-black border-2 border-[#159A91]"
+                        : "text-neutral-700 hover:bg-[#E9F5F3]/50 hover:text-[#123B50] border border-neutral-100"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 truncate">
+                      <span
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black shrink-0 ${
+                          isSelected ? "bg-[#159A91] text-white" : "bg-neutral-100 text-neutral-600"
+                        }`}
+                      >
+                        {idx + 1}
+                      </span>
+                      <span className="truncate flex-1 text-xs">{sec.title}</span>
+                    </div>
+                    {isSelected && <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0" />}
+                  </button>
+                );
+              })}
+            </nav>
+
+            <div className="pt-4 border-t border-neutral-200 mt-4 space-y-2 text-xs">
+              <button
+                type="button"
+                onClick={() => {
+                  handleTabChange("quiz");
+                  setShowSubtopicDrawer(false);
+                }}
+                className="w-full py-3 px-4 rounded-xl bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-[#123B50] font-black transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <HelpCircle className="w-4 h-4 text-[#159A91]" />
+                <span>Practice Unit MCQs ({chapter.mcqs?.length || 0})</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Image Zoom Modal */}
       {zoomImage && (

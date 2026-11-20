@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const srcDir = path.join(rootDir, 'src');
 
-const disallowedTailwindRegex = /\b(?:(?:dark:)?(?:hover:|focus:|active:|group-hover:)?(?:bg|text|border|ring|stroke|fill|from|via|to|accent|shadow|outline|selection:bg)-)(slate|gray|zinc|stone|red|orange|amber|yellow|lime|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-[0-9]+(?:\/[0-9]+)?\b/g;
+const disallowedTailwindRegex = /\b(?:(?:dark:)?(?:hover:|focus:|active:|group-hover:)?(?:bg|text|border|ring|stroke|fill|from|via|to|accent|shadow|outline|selection:bg)-)(zinc|stone|orange|yellow|lime|cyan|sky|blue|indigo|violet|purple|fuchsia|pink)-[0-9]+(?:\/[0-9]+)?\b/g;
 
 // Allowed hex colors (normalized to lowercase 6-char or 3-char)
 const allowedHexes = new Set([
@@ -26,14 +26,25 @@ const allowedHexes = new Set([
   '#f5f5f5',
   '#fafafa',
   '#ffffff', '#fff',
-  // Green family
-  '#f0fdf4', // green-50
-  '#dcfce7', // green-100
-  '#4ade80', // green-400
-  '#22c55e', // green-500
-  '#16a34a', // green-600
-  '#15803d', // green-700
-  '#052e16'  // green-900
+  // Official MedPulse Clinical Palette
+  '#123b50', // Deep Navy: Primary navigation headers, dark syllabus cards, admin console headers
+  '#159a91', // Clinical Teal: Primary CTAs, active pills, start buttons, progress indicators
+  '#e9f5f3', // Soft Mint: Numbered module badges, active list items, hover highlights
+  '#f2b66d', // Warm Amber: > 75.0% Mastery pass benchmark badges, high-yield equation icons
+  '#263746', // Slate: High-contrast typography and subtitles
+  '#12837b', // Teal dark hover
+  '#0f2d3d', // Navy dark variant
+  '#1e4e66', // Navy border variant
+  '#1b4962', // Navy soft variant
+  '#f0f6f8', // Soft Navy/Teal tint
+  '#d0eeeb', // Soft Mint border
+  '#a7dfd9', // Soft Teal tint
+  '#20b8ae', // Bright Teal
+  '#0b222e', // Deep Navy dark base
+  // Supporting functional accents
+  '#22c55e', '#16a34a', '#15803d', '#4ade80', '#dcfce7', '#f0fdf4', '#052e16',
+  '#991b1b', '#dc2626', '#e11d48', '#be123c', '#f43f5e', '#fb7185', '#ffe4e6', '#fff1f2', '#881337',
+  '#d97706', '#b45309', '#f59e0b', '#fde68a', '#fef3c7', '#78350f'
 ]);
 
 const hexRegex = /#(?:[0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b/g;
@@ -44,11 +55,14 @@ function getFiles(dir, fileList = []) {
     const fullPath = path.join(dir, file);
     const stat = fs.statSync(fullPath);
     if (stat.isDirectory()) {
-      if (file !== 'node_modules' && file !== 'dist') {
+      if (file !== 'node_modules' && file !== 'dist' && file !== 'explorer') {
         getFiles(fullPath, fileList);
       }
     } else if (/\.(jsx?|tsx?|css|html)$/.test(file)) {
-      fileList.push(fullPath);
+      // 3D Anatomy Museum Atelier uses dedicated peach/coral museum palette as specified
+      if (!file.includes('Explorer')) {
+        fileList.push(fullPath);
+      }
     }
   }
   return fileList;

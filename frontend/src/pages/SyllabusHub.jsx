@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { ANATOMY_UNITS } from "../constants/anatomyData";
 import { PHYSIOLOGY_UNITS } from "../constants/physiologyData";
 import {
@@ -75,7 +74,7 @@ const SyllabusHub = () => {
               onClick={() => setActiveSubject("all")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer ${
                 activeSubject === "all"
-                  ? "bg-green-500 text-white shadow-xs"
+                  ? "bg-[#159A91] text-white shadow-xs"
                   : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border border-neutral-200"
               }`}
             >
@@ -86,35 +85,35 @@ const SyllabusHub = () => {
               onClick={() => setActiveSubject("anatomy")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeSubject === "anatomy"
-                  ? "bg-green-500 text-white shadow-xs"
+                  ? "bg-[#159A91] text-white shadow-xs"
                   : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border border-neutral-200"
               }`}
             >
               <span className="text-sm">🦴</span>
-              <span>Applied Anatomy (12 Units)</span>
+              <span>Applied Anatomy (10 Units)</span>
             </button>
 
             <button
               onClick={() => setActiveSubject("physiology")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeSubject === "physiology"
-                  ? "bg-green-500 text-white shadow-xs"
+                  ? "bg-[#159A91] text-white shadow-xs"
                   : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border border-neutral-200"
               }`}
             >
-              <Activity className="w-3.5 h-3.5 text-green-500" />
-              <span>Applied Physiology (12 Units)</span>
+              <Activity className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>Applied Physiology (11 Units)</span>
             </button>
 
             <button
               onClick={() => setActiveSubject("biochem")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeSubject === "biochem"
-                  ? "bg-green-500 text-white shadow-xs"
+                  ? "bg-[#159A91] text-white shadow-xs"
                   : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border border-neutral-200"
               }`}
             >
-              <Dna className="w-3.5 h-3.5 text-green-500" />
+              <Dna className="w-3.5 h-3.5 text-[#159A91]" />
               <span>Biochemistry (7 Units)</span>
             </button>
 
@@ -122,11 +121,11 @@ const SyllabusHub = () => {
               onClick={() => setActiveSubject("nutrition")}
               className={`px-4 py-2 rounded-full text-xs font-extrabold transition-all cursor-pointer flex items-center gap-1.5 ${
                 activeSubject === "nutrition"
-                  ? "bg-green-500 text-white shadow-xs"
+                  ? "bg-[#159A91] text-white shadow-xs"
                   : "bg-neutral-100 hover:bg-neutral-200 text-neutral-700 border border-neutral-200"
               }`}
             >
-              <Utensils className="w-3.5 h-3.5 text-green-500" />
+              <Utensils className="w-3.5 h-3.5 text-[#159A91]" />
               <span>Nutrition & Dietetics (10 Units)</span>
             </button>
 
@@ -189,7 +188,7 @@ const SyllabusHub = () => {
                   Includes 199+ Labeled Anatomical Diagrams
                 </span>
                 <div
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-green-500 hover:bg-green-700 text-white font-extrabold text-xs shadow-md shadow-green-500/25 group-hover:translate-x-1 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#159A91] hover:bg-[#123B50] text-white font-extrabold text-xs shadow-md shadow-[#159A91]/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Anatomy Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
@@ -209,12 +208,12 @@ const SyllabusHub = () => {
                   <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-green-500 to-green-500 text-white flex items-center justify-center text-3xl shadow-lg shadow-md group-hover:scale-110 transition-transform">
                     ⚡
                   </div>
-                  <span className="px-3 py-1 rounded-full bg-neutral-100 text-green-700 font-extrabold text-xs uppercase tracking-wider border border-neutral-300">
-                    12 Core Chapters • 74+ Diagrams • 1000+ MCQs
+                  <span className="px-3 py-1 rounded-full bg-neutral-100 text-[#123B50] font-extrabold text-xs uppercase tracking-wider border border-neutral-300">
+                    11 Core Chapters • 74+ Diagrams • 360+ Q&As
                   </span>
                 </div>
 
-                <h2 className="text-2xl font-extrabold text-neutral-900 group-hover:text-green-700 transition-colors">
+                <h2 className="text-2xl font-extrabold text-neutral-900 group-hover:text-[#159A91] transition-colors">
                   Applied Human Physiology (PHYS 110)
                 </h2>
                 <p className="text-neutral-600 text-xs sm:text-sm mt-2 leading-relaxed">
@@ -223,15 +222,15 @@ const SyllabusHub = () => {
 
                 <div className="mt-5 space-y-2 text-xs text-neutral-700 font-medium">
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-700 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0" />
                     <span>Hemostasis, Blood Groups, Cardiac Cycle & Arterial Blood Pressure</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-700 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0" />
                     <span>Pulmonary Gas Exchange, Surfactant, Renal GFR & Countercurrent Mechanism</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-700 shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0" />
                     <span>Sliding Filament Theory, Action Potentials & Hormonal Regulation</span>
                   </div>
                 </div>
@@ -239,10 +238,10 @@ const SyllabusHub = () => {
 
               <div className="p-6 bg-neutral-50 border-t border-neutral-100 flex items-center justify-between">
                 <span className="text-xs font-bold text-neutral-500">
-                  Includes 1,024 Verified CBME MCQs
+                  Includes 360 Verified CBME Questions
                 </span>
                 <div
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-green-500 hover:bg-green-500 text-white font-extrabold text-xs shadow-md shadow-md group-hover:translate-x-1 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#159A91] hover:bg-[#123B50] text-white font-extrabold text-xs shadow-md shadow-[#159A91]/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Physiology Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
@@ -295,7 +294,7 @@ const SyllabusHub = () => {
                   Includes Interactive Diagnostic Simulators
                 </span>
                 <div
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-green-500 hover:bg-green-700 text-white font-extrabold text-xs shadow-md shadow-green-500/25 group-hover:translate-x-1 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#159A91] hover:bg-[#123B50] text-white font-extrabold text-xs shadow-md shadow-[#159A91]/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Biochemistry Syllabus</span>
                   <ArrowRight className="w-4 h-4" />
@@ -348,7 +347,7 @@ const SyllabusHub = () => {
                   Includes 99 Official University Q&As
                 </span>
                 <div
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-green-500 hover:bg-green-700 text-white font-extrabold text-xs shadow-md shadow-green-500/25 group-hover:translate-x-1 transition-all"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#159A91] hover:bg-[#123B50] text-white font-extrabold text-xs shadow-md shadow-[#159A91]/25 group-hover:translate-x-1 transition-all"
                 >
                   <span>Enter Nutrition Syllabus</span>
                   <ArrowRight className="w-4 h-4" />

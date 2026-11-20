@@ -35,7 +35,7 @@ export const FacultyDashboard = () => {
 
           <Link
             to="/faculty/questions"
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-500 hover:bg-green-500 text-white rounded-xl text-xs font-bold shadow-md shadow-green-400/20 transition-all cursor-pointer self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#159A91] hover:bg-[#123B50] text-white rounded-xl text-xs font-bold shadow-md shadow-[#159A91]/20 transition-all cursor-pointer self-start sm:self-auto"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Manage & Add Questions</span>

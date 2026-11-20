@@ -3,6 +3,9 @@ import { Link, useParams, Navigate, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../components/Navbar";
 import { BIOCHEMISTRY_SUBMODULES } from "../../constants/biochemistryLessonsData";
+import { SubtopicMedicalPlate } from "../../components/curriculum/SubtopicMedicalPlate";
+import { SubtopicQuiz15Marks } from "../../components/curriculum/SubtopicQuiz15Marks";
+import { SubtopicNavFooter } from "../../components/curriculum/SubtopicNavFooter";
 import {
   ArrowRight,
   ArrowLeft,
@@ -94,36 +97,41 @@ export const BiochemistryLessonView = () => {
         isDark ? "bg-neutral-950 text-neutral-50" : "bg-neutral-50 text-neutral-900"
       }`}
     >
-      <Navbar />
-
-      {/* Top Breadcrumb Bar */}
-      <div
-        className={`border-b py-2.5 px-4 sm:px-6 lg:px-8 ${
-          isDark ? "bg-neutral-900 border-neutral-800" : "bg-white border-neutral-200"
-        }`}
-      >
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <Link
-            to="/bio-chem-syllabus"
-            className="inline-flex items-center gap-2 text-xs font-bold text-green-700 hover:text-green-700 transition-colors cursor-pointer group"
-          >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-green-500" />
-            <span>Back to Biochemistry Syllabus</span>
-          </Link>
-
-          <div className="flex items-center gap-2 text-[11px] font-semibold text-neutral-400">
-            <span>{lesson.unitTitle}</span>
-            <span>/</span>
-            <span className="text-green-700 font-bold">
-              Lesson {lesson.lessonNumber} of {lesson.totalLessonsInUnit}
+      {/* Focused Textbook Top Bar (Replaces Navbar in Syllabus) */}
+      <header className="sticky top-0 z-40 bg-[#123B50] text-white py-3 px-4 sm:px-6 lg:px-8 shadow-md">
+        <div className="w-full flex items-center justify-between text-xs">
+          <div className="flex items-center gap-3">
+            <Link
+              to="/bio-chem-syllabus"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-all border border-white/10 cursor-pointer"
+            >
+              <ArrowRight className="w-3.5 h-3.5 rotate-180" />
+              <span>Back to Syllabus</span>
+            </Link>
+            <span className="hidden sm:inline-block w-px h-4 bg-white/20" />
+            <span className="hidden sm:inline-block font-bold text-white/90 truncate max-w-sm">
+              {lesson.unitTitle} • Lesson {lesson.lessonNumber} of {lesson.totalLessonsInUnit}
             </span>
           </div>
-        </div>
-      </div>
 
-      {/* Main Content Container */}
+          <div className="flex items-center gap-2">
+            <span className="px-2.5 py-1 rounded-lg bg-white/10 text-white font-bold text-[11px]">
+              {lesson.category}
+            </span>
+            <button
+              onClick={toggleTheme}
+              className="p-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-colors cursor-pointer text-xs"
+              title="Toggle theme"
+            >
+              {isDark ? "🌙" : "☀️"}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Container - Full Page Width */}
       <motion.div
-        className="mx-auto max-w-6xl px-4 pb-20 pt-6 sm:px-6 lg:px-8"
+        className="w-full px-4 pb-20 pt-6 sm:px-6 lg:px-8"
         variants={pageVariants}
         initial="hidden"
         animate="visible"
@@ -176,7 +184,7 @@ export const BiochemistryLessonView = () => {
         </div>
 
         {/* Hero Concept Card with Visual Indicator - White & Emerald Green */}
-        <div className="p-6 rounded-3xl bg-white border border-green-100 text-neutral-900 shadow-xs mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="p-6 rounded-3xl bg-white border border-green-100 text-neutral-900 shadow-xs mb-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div className="max-w-2xl">
             <div className="text-xs font-extrabold uppercase tracking-wider text-green-700 mb-1 flex items-center gap-1.5">
               <BookOpen className="w-4 h-4 text-green-500" />
@@ -191,6 +199,13 @@ export const BiochemistryLessonView = () => {
             {lesson.icon}
           </div>
         </div>
+
+        {/* Section Medical Plate / Scientific Illustration */}
+        <SubtopicMedicalPlate
+          subtopicId={lessonSlug}
+          subtopicTitle={lesson.title}
+          subject="biochemistry"
+        />
 
         {/* Dynamic Concept Grids */}
         <div className="grid gap-6 lg:grid-cols-[3fr,2fr]">
@@ -316,61 +331,72 @@ export const BiochemistryLessonView = () => {
               </motion.div>
             )}
 
-            {/* Quick Chapter Quiz Card */}
+            {/* High Yield Note */}
             <div className="p-6 rounded-3xl bg-neutral-900 text-white shadow-lg">
               <div className="flex items-center gap-2 text-green-400 text-xs font-bold uppercase tracking-wider mb-2">
                 <ClipboardList className="w-4 h-4" />
-                <span>Chapter Assessment</span>
+                <span>Clinical High-Yield Alert</span>
               </div>
               <h3 className="text-base font-bold text-white">
-                Test Your Knowledge
+                CBME Nursing Mastery
               </h3>
-              <p className="text-xs text-neutral-300 mt-1 mb-4 leading-relaxed">
-                Take the official 15-question unit quiz with automated scoring and INC-certified rationale.
+              <p className="text-xs text-neutral-300 mt-1 mb-3 leading-relaxed">
+                Complete the 15-mark clinical subtopic quiz below before moving to the next biochemical concept.
               </p>
-              <Link
-                to={`/quiz/unit-${lesson.unitNumber}-${lesson.category.toLowerCase().slice(0, 5)}`}
-                className="w-full inline-flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-green-500 hover:bg-green-700 text-white font-extrabold text-xs transition-colors shadow-md"
-              >
-                <span>Launch Unit {lesson.unitNumber} Quiz (15 Qs)</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+              <div className="inline-flex items-center gap-1.5 text-xs text-green-400 font-bold">
+                <CheckCircle2 className="w-4 h-4" />
+                <span>Benchmark: 12/15 Marks (80%)</span>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* Sequential Navigation Footer */}
-        <div className="mt-12 pt-6 border-t border-neutral-200 flex items-center justify-between">
-          {lesson.prevSlug ? (
-            <Link
-              to={lesson.prevSlug.startsWith("/") ? lesson.prevSlug : `/biochemistry/lesson/${lesson.prevSlug}`}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-xs font-bold text-neutral-800 transition shadow-2xs"
-            >
-              <ArrowLeft className="w-4 h-4 text-green-500" />
-              <span>Previous Lesson</span>
-            </Link>
-          ) : (
-            <div />
-          )}
-
-          {lesson.nextSlug ? (
-            <Link
-              to={lesson.nextSlug.startsWith("/") ? lesson.nextSlug : `/biochemistry/lesson/${lesson.nextSlug}`}
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-500 hover:bg-green-700 text-white text-xs font-bold transition shadow-sm"
-            >
-              <span>Next Lesson</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          ) : (
-            <Link
-              to="/bio-chem-syllabus"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-green-500 hover:bg-green-700 text-white text-xs font-bold transition shadow-sm"
-            >
-              <span>Return to Syllabus</span>
-              <CheckCircle2 className="w-4 h-4" />
-            </Link>
-          )}
+        {/* 15 Marks Subtopic Quiz Component */}
+        <div className="mt-10">
+          <SubtopicQuiz15Marks
+            subtopicId={lessonSlug}
+            subtopicTitle={lesson.title}
+            unitTitle={lesson.unitTitle}
+          />
         </div>
+
+        {/* Sequential Subtopic Navigation Footer */}
+        {(() => {
+          const unitKeys = Object.keys(BIOCHEMISTRY_SUBMODULES).filter(
+            (key) => BIOCHEMISTRY_SUBMODULES[key].unitNumber === lesson.unitNumber
+          );
+          const currentUnitSubtopics = unitKeys.map((key, idx) => ({
+            title: BIOCHEMISTRY_SUBMODULES[key].title,
+            index: idx,
+            id: key,
+            path: `/biochemistry/lesson/${key}`
+          }));
+          const currentSubtopicIndex = unitKeys.indexOf(lessonSlug);
+
+          const prevTarget = lesson.prevSlug
+            ? lesson.prevSlug.startsWith("/")
+              ? { title: "Previous Module", path: lesson.prevSlug }
+              : { title: BIOCHEMISTRY_SUBMODULES[lesson.prevSlug]?.title || "Previous Subtopic", path: `/biochemistry/lesson/${lesson.prevSlug}` }
+            : null;
+
+          const nextTarget = lesson.nextSlug
+            ? lesson.nextSlug.startsWith("/")
+              ? { title: "Next Module", path: lesson.nextSlug }
+              : { title: BIOCHEMISTRY_SUBMODULES[lesson.nextSlug]?.title || "Next Subtopic", path: `/biochemistry/lesson/${lesson.nextSlug}` }
+            : null;
+
+          return (
+            <SubtopicNavFooter
+              currentIndex={currentSubtopicIndex >= 0 ? currentSubtopicIndex : (lesson.lessonNumber || 1) - 1}
+              totalCount={currentUnitSubtopics.length > 0 ? currentUnitSubtopics.length : (lesson.totalLessonsInUnit || 4)}
+              prevSubtopic={prevTarget}
+              nextSubtopic={nextTarget}
+              subtopics={currentUnitSubtopics}
+              onSelectSubtopic={(sub) => navigate(sub.path)}
+              syllabusPath="/bio-chem-syllabus"
+            />
+          );
+        })()}
       </motion.div>
     </div>
   );

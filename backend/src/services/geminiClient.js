@@ -47,7 +47,7 @@ export const generateGeminiContent = async ({
   }
 
   const baseUrl = process.env.GEMINI_API_BASE_URL || 'https://generativelanguage.googleapis.com';
-  const preferredModel = process.env.GEMINI_MODEL || 'gemini-3.5-flash';
+  const preferredModel = process.env.GEMINI_MODEL || 'gemini-3.8-flash';
   const fallbackModels = [preferredModel, 'gemini-3.8-flash', 'gemini-flash-latest'];
   const uniqueModels = Array.from(new Set(fallbackModels));
 

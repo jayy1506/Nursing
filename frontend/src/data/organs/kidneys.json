@@ -1,0 +1,172 @@
+{
+  "id": "kidneys",
+  "name": "Kidneys",
+  "latinName": "Renes",
+  "system": "Urinary System",
+  "tagline": "The master filters",
+  "description": "Paired filtration organs that balance fluids, electrolytes, blood pressure, and waste removal.",
+  "specimenImage": "/images/explorer/kidneys_specimen.jpg",
+  "thumbnail": "/images/explorer/kidneys_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "Each is about a computer mouse"
+    },
+    {
+      "label": "Weight",
+      "value": "120\u2013170 g each"
+    },
+    {
+      "label": "Daily",
+      "value": "Filters roughly 180 L of fluid"
+    },
+    {
+      "label": "Location",
+      "value": "Either side of the spine below the ribs"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Renal arteries"
+    },
+    {
+      "label": "Function",
+      "value": "Filters blood and forms urine"
+    }
+  ],
+  "medicalImportance": "Nephrons fine-tune the chemistry of the bloodstream.",
+  "didYouKnow": "They reclaim almost everything they filter \u2014 only about 1\u20132 L leaves the body as urine.",
+  "conditions": [
+    "Kidney stones",
+    "Chronic kidney disease",
+    "Urinary infection",
+    "Glomerulonephritis",
+    "Polycystic kidney disease",
+    "Renal hypertension",
+    "Acute kidney injury",
+    "Nephrotic syndrome"
+  ],
+  "microscopicView": {
+    "title": "Renal cortex",
+    "subtitle": "Glomerular capillary tufts",
+    "image": "/images/explorer/kidneys_microscopic.jpg",
+    "description": "Bowman capsules, podocytes, and proximal convoluted tubules executing selective reabsorption."
+  },
+  "compareWith": "liver",
+  "compareData": {
+    "subtitle": "Kidneys vs. liver",
+    "image": "/images/explorer/kidneys_compare.jpg",
+    "description": "Liquid waste ultrafiltration versus biochemical breakdown and enzymatic detoxification."
+  },
+  "animation": {
+    "title": "Filters blood and forms urine",
+    "subtitle": "Countercurrent multiplier and collecting duct osmolarity",
+    "poster": "/images/explorer/kidneys_animation.jpg"
+  },
+  "systemView": {
+    "title": "Urinary System",
+    "subtitle": "Retroperitoneal renal parenchyma and ureteric descent",
+    "image": "/images/explorer/kidneys_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "renal-cortex",
+      "name": "Renal Cortex",
+      "latinName": "Cortex renalis",
+      "color": "red",
+      "position": [
+        -0.3,
+        0.15,
+        0.3
+      ],
+      "description": "The outer reddish-brown parenchymal zone extending from the fibrous renal capsule to the base of the medullary pyramids, dipping inward between pyramids as the Renal Columns of Bertin. Contains all 1-1.2 million glomeruli and convoluted tubules.",
+      "function": "Executes initial high-pressure plasma ultrafiltration across the glomerular filtration barrier (~180 L/day GFR), reabsorbing 65-70% of filtered water, sodium, potassium, and 100% of filtered glucose and amino acids in proximal convoluted tubules.",
+      "connections": [
+        "Enclosed externally by Perirenal Fat Capsule and Renal Fascia of Gerota",
+        "Continuous internally with medullary ray projections and Columns of Bertin",
+        "Supplied by Interlobular Arteries giving rise to Afferent Arterioles",
+        "Houses the Juxtaglomerular Apparatus (macula densa + JG cells) regulating renin release"
+      ],
+      "clinicalNote": "Susceptible to immune complex deposition (Glomerulonephritis) and acute tubular necrosis (ATN) during ischemic shock or nephrotoxic drug exposure (aminoglycosides, NSAIDs, IV contrast). Loss of cortical thickness (<1 cm) on ultrasound indicates chronic kidney disease (CKD).",
+      "keyFeatures": [
+        "Glomerular Filtration Rate (GFR) benchmark: 90 - 120 mL/min/1.73 m2",
+        "Produces Erythropoietin (EPO) in response to peritubular capillary hypoxia",
+        "1-alpha-hydroxylase site activating 25-OH Vitamin D into active Calcitriol",
+        "Houses 85% Cortical Nephrons with short loops of Henle"
+      ],
+      "histology": "Bowman capsules enclosing fenestrated capillary loops, podocyte pedicels with slit diaphragms (filtration barrier), and proximal tubule cuboidal epithelium with dense microvillar brush border."
+    },
+    {
+      "id": "renal-pelvis",
+      "name": "Renal Pelvis & Calyces",
+      "latinName": "Pelvis renalis",
+      "color": "orange",
+      "position": [
+        0.0,
+        -0.05,
+        0.35
+      ],
+      "description": "The funnel-shaped proximal dilated expansion of the ureter residing within the renal sinus at the medial hilum, formed by the convergence of 2-3 major calyces, which in turn receive urine from 7-14 minor calyces capping the renal papillae.",
+      "function": "Collects processed urine excreted from the papillary ducts of Bellini, utilizing intrinsic pacemaking smooth muscle cells to generate peristaltic contractions that pump urine towards the ureter and urinary bladder.",
+      "connections": [
+        "Receives urine discharge from Minor Calyces enveloping Renal Papillae",
+        "Major Calyces unite at the Renal Hilum to form the single Renal Pelvis",
+        "Tapers posteroinferiorly at the Ureteropelvic Junction (UPJ) to become the Ureter",
+        "Lies posterior to the Renal Vein and Renal Artery within the hilar vascular pedicle"
+      ],
+      "clinicalNote": "Common site for Staghorn calculi (struvite stones secondary to Proteus mirabilis UTI) and Ureteropelvic Junction (UPJ) obstruction leading to hydronephrosis, parenchymal thinning, and renal colic with costovertebral angle (CVA) tenderness (Murphy's punch test).",
+      "keyFeatures": [
+        "Normal intrapelvic resting pressure: 0 - 5 mmHg",
+        "Peristaltic contraction frequency: 2 - 6 pulses/minute",
+        "Lined with impermeant transitional urothelium preventing solute back-diffusion",
+        "Hydronephrosis grading detects pelvic dilation on ultrasound"
+      ],
+      "histology": "Urothelium (transitional epithelium) featuring umbrella cells with apical asymmetric unit membrane plaques, overlying a lamina propria and double helical smooth muscle layers."
+    },
+    {
+      "id": "ureter",
+      "name": "Ureter",
+      "latinName": "Ureter",
+      "color": "blue",
+      "position": [
+        0.15,
+        -0.35,
+        0.25
+      ],
+      "description": "A paired muscular retroperitoneal tubular conduit (25-30 cm in length, 3-4 mm caliber) descending vertically along the anterior surface of the Psoas major muscle from the renal pelvis down across the pelvic brim into the posterior base of the bladder.",
+      "function": "Propels urine continuously from the renal pelvis into the urinary bladder via rhythmic, myogenic unidirectional peristaltic waves independent of gravity.",
+      "connections": [
+        "Begins superiorly at Ureteropelvic Junction (UPJ)",
+        "Crosses pelvic brim anterior to the bifurcation of Common Iliac Artery",
+        "Courses inferomedially in pelvis, pierced obliquely in bladder wall (Ureterovesical Junction / UVJ)",
+        "Crossed anteriorly by gonadal vessels ('water under the bridge')"
+      ],
+      "clinicalNote": "Three classic physiological constriction sites where kidney stones lodge: (1) UPJ, (2) Pelvic brim iliac crossing, and (3) UVJ (most common). Causes excruciating colicky flank pain radiating to groin/labia/scrotum with gross or microscopic hematuria.",
+      "keyFeatures": [
+        "Length: 25 - 30 cm; Luminal diameter: 3 - 4 mm",
+        "Oblique intramural tunnel in bladder acts as a physiological anti-reflux flap valve",
+        "Failure of flap mechanism causes Vesicoureteral Reflux (VUR) and recurrent pyelonephritis",
+        "Receives multi-segmental arterial supply from renal, gonadal, and vesical branches"
+      ],
+      "histology": "Transitional epithelium (urothelium) supported by inner longitudinal and outer circular smooth muscle layers (reversed relative to GI tract), surrounded by adventitia."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "kq1",
+      "type": "mcq",
+      "prompt": "What percentage of daily glomerular filtrate is reabsorbed back into circulation?",
+      "options": [
+        "Over 99%",
+        "50%",
+        "75%",
+        "25%"
+      ],
+      "correctAnswer": "Over 99%",
+      "rationale": "Of the 180 liters of daily filtrate, over 99% is reabsorbed, excreting approximately 1 to 2 liters as urine."
+    }
+  ]
+}

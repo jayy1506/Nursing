@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { NUTRITION_UNITS } from "../constants/nutritionData";
 import {
   BookOpen,
@@ -54,111 +53,166 @@ export const NutritionSyllabus = () => {
   }, [searchQuery, selectedUnitId]);
 
   return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-800 antialiased selection:bg-green-500 selection:text-white pb-24">
-      <Navbar />
-
+    <div className="min-h-screen bg-slate-50 text-[#263746] antialiased selection:bg-[#159A91] selection:text-white pb-24">
       {/* Top Breadcrumb & Switcher Bar */}
-      <div className="bg-white border-b border-neutral-200 text-neutral-700 py-2.5 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white border-b border-slate-200 text-slate-600 py-2.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             <Link
-              to="/syllabus"
-              className="text-neutral-500 hover:text-green-600 font-medium inline-flex items-center gap-1 transition-colors"
+              to="/dashboard"
+              className="text-slate-500 hover:text-[#159A91] font-medium inline-flex items-center gap-1 transition-colors"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
-              <span>Syllabus Hub</span>
+              <span>Dashboard</span>
             </Link>
-            <span className="text-neutral-300">/</span>
-            <span className="text-green-700 font-bold">Nutrition & Clinical Dietetics (10 Units)</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-[#123B50] font-bold">Nutrition & Clinical Dietetics (10 Units)</span>
           </div>
 
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-neutral-400 text-[11px] hidden sm:inline font-semibold">Tracks:</span>
+            <span className="text-slate-400 text-[11px] hidden sm:inline font-semibold">Tracks:</span>
             <Link
               to="/anatomy-syllabus"
-              className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#E9F5F3] text-slate-700 hover:text-[#123B50] font-medium text-[11px] transition-colors"
             >
               🦴 Anatomy
             </Link>
             <Link
               to="/physiology-syllabus"
-              className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#E9F5F3] text-slate-700 hover:text-[#123B50] font-medium text-[11px] transition-colors"
             >
               ⚡ Physiology
             </Link>
             <Link
               to="/bio-chem-syllabus"
-              className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#E9F5F3] text-slate-700 hover:text-[#123B50] font-medium text-[11px] transition-colors"
             >
               🧬 Biochemistry
             </Link>
-            <span className="px-2.5 py-1 rounded-lg bg-green-50 text-green-700 font-extrabold text-[11px] border border-green-200">
+            <span className="px-2.5 py-1 rounded-lg bg-[#E9F5F3] text-[#123B50] font-extrabold text-[11px] border border-[#159A91]/30">
               🥗 Nutrition (10 Units)
             </span>
           </div>
         </div>
       </div>
 
-      {/* Clean Hero Header */}
-      <section className="bg-white border-b border-neutral-200/80 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        {/* Course Syllabus Hero Card (Image 6 design) */}
+        <div className="bg-[#123B50] text-white rounded-2xl p-6 sm:p-8 relative shadow-xl overflow-hidden mb-8 border border-[#1e4e66]">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#159A91]/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 text-neutral-800 text-xs font-bold border border-neutral-300 mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-neutral-800" />
-                <span>INC Standardized Syllabus • Semester II</span>
+              {/* Badges strip */}
+              <div className="flex flex-wrap items-center gap-2.5 mb-3">
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 hover:bg-white/20 text-white rounded-md text-xs font-semibold backdrop-blur-sm transition-colors border border-white/10"
+                >
+                  ← Dashboard
+                </Link>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-[#159A91]/20 border border-[#159A91]/40 text-[#159A91] text-xs font-bold tracking-wide uppercase">
+                  ACCREDITED ACADEMIC NOTES · NUTR 120
+                </span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-[#F2B66D]/20 border border-[#F2B66D]/40 text-[#F2B66D] text-xs font-bold">
+                  ✨ Concept → Example → Application
+                </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-900 tracking-tight">
-                Nutrition & Clinical Dietetics
+
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                Nutrition & Clinical Dietetics: Complete Study Notes
               </h1>
-              <p className="text-neutral-600 text-sm mt-2 leading-relaxed max-w-2xl">
+              <p className="text-slate-300 text-sm mt-2 leading-relaxed max-w-2xl font-normal">
                 Evidence-based dietary science, therapeutic meal planning for metabolic disorders, micronutrient RDA standards, deficiency management, and community nutrition surveillance.
               </p>
 
-              {/* Minimal KPI Metric Strip */}
-              <div className="mt-5 flex flex-wrap items-center gap-2 sm:gap-4 text-xs font-semibold text-neutral-600">
-                <div className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-lg border border-neutral-200">
-                  <Layers className="w-3.5 h-3.5 text-neutral-800" />
-                  <span>10 Units</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-lg border border-neutral-200">
-                  <BookOpen className="w-3.5 h-3.5 text-green-500" />
-                  <span>Interactive Lessons</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-lg border border-neutral-200">
-                  <Apple className="w-3.5 h-3.5 text-black dark:text-white" />
-                  <span>Therapeutic Diets</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1 rounded-lg border border-neutral-200">
-                  <Award className="w-3.5 h-3.5 text-green-700" />
-                  <span>Clinical Quizzes</span>
-                </div>
+              {/* Action Buttons */}
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <Link
+                  to="/nutrition/lesson/intro-nutrition-health"
+                  className="bg-[#159A91] hover:bg-[#12837b] text-white font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm shadow-md transition-all active:scale-95"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  <span>Start Syllabus (1. Introduction to Nutrition) →</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-nova-tutor'))}
+                  className="bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2.5 rounded-lg text-sm border border-white/20 flex items-center gap-2 backdrop-blur-sm transition-all cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#F2B66D]" />
+                  <span>Ask Nova Tutor</span>
+                </button>
               </div>
             </div>
 
-            {/* Quick Action Chips */}
-            <div className="flex flex-row lg:flex-col gap-2.5 shrink-0 self-start lg:self-center">
-              <Link
-                to="/question-bank"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 font-bold text-xs shadow-2xs transition-all hover:-translate-y-0.5"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-green-600" />
-                <span>Nutrition Question Bank</span>
-              </Link>
-              <Link
-                to="/quiz/nutrition-grand-final"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs shadow-md shadow-green-600/20 transition-all hover:-translate-y-0.5"
-              >
-                <Award className="w-3.5 h-3.5 text-green-100" />
-                <span>Grand Final Assessment (40 Qs)</span>
-              </Link>
+            {/* Right Circular Gauge Card (Image 6) */}
+            <div className="bg-[#0f2d3d]/90 backdrop-blur-md border border-white/10 rounded-xl p-5 flex items-center gap-5 min-w-[280px] shadow-lg shrink-0">
+              <div className="relative w-20 h-20 flex-shrink-0 flex items-center justify-center">
+                <svg className="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
+                  <path
+                    className="text-white/15"
+                    strokeWidth="3.5"
+                    stroke="currentColor"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    className="text-[#159A91] transition-all duration-700 ease-out"
+                    strokeDasharray={`${gating.completionPercent}, 100`}
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    stroke="currentColor"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center font-bold text-white text-base">
+                  {gating.completionPercent}%
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[11px] font-bold text-white/50 tracking-wider uppercase">Course Completion</span>
+                <span className="text-white font-bold text-sm mt-0.5">
+                  {gating.completedCount} of 10 Units Cleared
+                </span>
+                <span className="text-xs text-white/70 mt-0.5">
+                  Mastery Target: 100%
+                </span>
+                <span className="text-[11px] text-[#F2B66D] font-semibold mt-1 flex items-center gap-1">
+                  ↗ &gt;75.0% Pass Rule Active
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Main Interactive Workspace */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+        {/* Action / Quick Tab Strip below Hero (Image 6) */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#123B50] text-white shadow-xs flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>10 Curriculum Units (Nutrition & Dietetics)</span>
+            </span>
+            <Link
+              to="/question-bank"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-[#263746] hover:bg-[#E9F5F3] border border-slate-200 transition-colors flex items-center gap-1.5 shadow-2xs"
+            >
+              <FileText className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>Nutrition Question Bank</span>
+            </Link>
+          </div>
+
+          <Link
+            to="/quiz/nutrition-grand-final"
+            className="px-4 py-1.5 rounded-lg text-xs font-bold bg-[#123B50] hover:bg-[#159A91] text-white shadow-xs transition-colors flex items-center gap-1.5 border border-[#1e4e66]"
+          >
+            <Award className="w-3.5 h-3.5 text-[#F2B66D]" />
+            <span>Final Capstone Assessment (40 MCQs)</span>
+          </Link>
+        </div>
         {/* Grand Final Mixed Assessment Gating Card with Live Auto-Updating Completion */}
         <div
           className={`p-6 sm:p-7 rounded-3xl border mb-6 transition-all ${
@@ -231,7 +285,7 @@ export const NutritionSyllabus = () => {
                 }}
                 className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-black text-xs transition-all shadow-md ${
                   gating.isFinalUnlocked
-                    ? "bg-green-500 hover:bg-green-700 text-white shadow-green-500/30 cursor-pointer hover:scale-105"
+                    ? "bg-[#159A91] hover:bg-[#123B50] text-white shadow-[#159A91]/30 cursor-pointer hover:scale-105"
                     : "bg-neutral-100 text-neutral-500 border border-neutral-200 cursor-not-allowed opacity-90"
                 }`}
               >
@@ -271,7 +325,7 @@ export const NutritionSyllabus = () => {
                 onClick={() => setSelectedUnitId("all")}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                   selectedUnitId === "all"
-                    ? "bg-neutral-800 text-white shadow-xs"
+                    ? "bg-[#159A91] text-white shadow-xs"
                     : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800"
                 }`}
               >
@@ -284,7 +338,7 @@ export const NutritionSyllabus = () => {
                   onClick={() => setSelectedUnitId(unit.id)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedUnitId === unit.id
-                      ? "bg-green-600 text-white shadow-xs"
+                      ? "bg-[#123B50] text-white shadow-xs"
                       : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-900"
                   }`}
                 >
@@ -306,7 +360,7 @@ export const NutritionSyllabus = () => {
             </p>
             <button
               onClick={() => { setSearchQuery(""); setSelectedUnitId("all"); }}
-              className="mt-4 px-4 py-2 rounded-xl bg-green-600 text-white text-xs font-bold hover:bg-green-700 cursor-pointer"
+              className="mt-4 px-4 py-2 rounded-xl bg-[#159A91] text-white text-xs font-bold hover:bg-[#123B50] cursor-pointer"
             >
               Reset Filters
             </button>
@@ -377,13 +431,13 @@ export const NutritionSyllabus = () => {
                           className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
                             unitDone
                               ? "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 border border-neutral-200"
-                              : "bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 shadow-xs"
+                              : "bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-[#123B50] border border-[#159A91]/30 shadow-xs group"
                           }`}
                           title="Click to toggle chapter completion and update Grand Final standing"
                         >
                           <CheckCircle2
                             className={`w-3.5 h-3.5 ${
-                              unitDone ? "text-green-600" : "text-neutral-400"
+                              unitDone ? "text-[#159A91]" : "text-neutral-400 group-hover:text-white"
                             }`}
                           />
                           <span>{unitDone ? "Mark Incomplete" : "Mark as Studied"}</span>
@@ -392,7 +446,7 @@ export const NutritionSyllabus = () => {
                         {/* Quick Quiz Shortcut Button */}
                         <Link
                           to={`/quiz/${unitKey}`}
-                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs transition-colors shrink-0 shadow-2xs"
+                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#159A91] hover:bg-[#123B50] text-white font-bold text-xs transition-colors shrink-0 shadow-2xs"
                         >
                           <ClipboardList className="w-3.5 h-3.5 text-white" />
                           <span>Take Unit Quiz</span>
@@ -407,7 +461,7 @@ export const NutritionSyllabus = () => {
                         onClick={() => setUnitTab(unit.id, "lessons")}
                         className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                           currentTab === "lessons"
-                            ? "bg-green-600 text-white shadow-2xs"
+                            ? "bg-[#123B50] text-white shadow-2xs"
                             : "text-neutral-600 hover:bg-neutral-100"
                         }`}
                       >
@@ -419,11 +473,11 @@ export const NutritionSyllabus = () => {
                         onClick={() => setUnitTab(unit.id, "objectives")}
                         className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                           currentTab === "objectives"
-                            ? "bg-green-600 text-white shadow-2xs"
+                            ? "bg-[#123B50] text-white shadow-2xs"
                             : "text-neutral-600 hover:bg-neutral-100"
                         }`}
                       >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#159A91]" />
                         <span>Competencies ({unit.objectives.length})</span>
                       </button>
 
@@ -432,11 +486,11 @@ export const NutritionSyllabus = () => {
                           onClick={() => setUnitTab(unit.id, "concepts")}
                           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                             currentTab === "concepts"
-                              ? "bg-green-600 text-white shadow-2xs"
+                              ? "bg-[#123B50] text-white shadow-2xs"
                               : "text-neutral-600 hover:bg-neutral-100"
                           }`}
                         >
-                          <FileText className="w-3.5 h-3.5 text-green-600" />
+                          <FileText className="w-3.5 h-3.5 text-[#159A91]" />
                           <span>Core Notes</span>
                         </button>
                       )}
@@ -445,11 +499,11 @@ export const NutritionSyllabus = () => {
                         onClick={() => setUnitTab(unit.id, "clinical")}
                         className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                           currentTab === "clinical"
-                            ? "bg-green-600 text-white shadow-2xs"
+                            ? "bg-[#123B50] text-white shadow-2xs"
                             : "text-neutral-600 hover:bg-neutral-100"
                         }`}
                       >
-                        <Stethoscope className="w-3.5 h-3.5 text-green-700" />
+                        <Stethoscope className="w-3.5 h-3.5 text-[#159A91]" />
                         <span>Nursing Practice</span>
                       </button>
                     </div>
@@ -582,7 +636,7 @@ export const NutritionSyllabus = () => {
             })}
           </div>
         )}
-      </main>
+      </div>
     </div>
   );
 };

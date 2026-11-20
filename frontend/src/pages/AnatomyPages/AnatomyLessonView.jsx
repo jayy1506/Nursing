@@ -10,11 +10,13 @@ import {
   Sparkles,
   ZoomIn,
   CheckCircle2,
+  XCircle,
   Award,
   FileText,
   HelpCircle,
   Stethoscope,
   ChevronRight,
+  ChevronLeft,
   ChevronDown,
   ChevronUp,
   Layers,
@@ -25,24 +27,231 @@ import {
   Compass,
   Check,
   Tag,
-  ClipboardList
+  ClipboardList,
+  Box
 } from "lucide-react";
 import { useCurriculumProgress } from "../../services/curriculumProgress";
+import SubtopicQuiz15Marks from "../../components/curriculum/SubtopicQuiz15Marks";
+import SubtopicNavFooter from "../../components/curriculum/SubtopicNavFooter";
+import SubtopicMedicalPlate from "../../components/curriculum/SubtopicMedicalPlate";
 
-// Formatter to render **bold text** cleanly
+// High-yield anatomical & physiological terms to auto-highlight in dark color
+const IMPORTANT_TERMS_REGEX = /\b(Anatomy|Human Physiology|Physiology|Gross Anatomy|Microscopic Anatomy|Cytology|Histology|Regional Anatomy|Systemic Anatomy|Anatomical Position|Anterior|Posterior|Ventral|Dorsal|Superior|Inferior|Cranial|Caudal|Medial|Lateral|Proximal|Distal|Superficial|Deep|Sagittal Plane|Coronal Plane|Transverse Plane|Frontal Plane|Axial Plane|Midsagittal|Parasagittal|Prone|Supine|Abduction|Adduction|Homeostasis|Mitochondria|Nucleus|Endoplasmic Reticulum|Golgi apparatus|Lysosome|Cytoplasm|Cell membrane|Plasma membrane|Epithelial|Connective tissue|Hypertension)\b/gi;
+
+// Formatter to render text with dark colors, high-contrast, and highlighted important keywords
 const renderFormattedText = (text) => {
   if (typeof text !== "string") return text;
   const parts = text.split(/(\*\*.*?\*\*)/g);
   return parts.map((part, index) => {
     if (part.startsWith("**") && part.endsWith("**")) {
       return (
-        <strong key={index} className="font-extrabold text-neutral-900 tracking-tight">
+        <strong
+          key={index}
+          className="font-black text-[#123B50] bg-[#E9F5F3] px-1.5 py-0.5 rounded border border-[#159A91]/40 tracking-tight"
+        >
           {part.slice(2, -2)}
         </strong>
       );
     }
-    return part;
+
+    // Split by important keywords
+    const subParts = part.split(IMPORTANT_TERMS_REGEX);
+    return subParts.map((sub, sIdx) => {
+      IMPORTANT_TERMS_REGEX.lastIndex = 0;
+      if (IMPORTANT_TERMS_REGEX.test(sub)) {
+        return (
+          <strong
+            key={`${index}-${sIdx}`}
+            className="font-black text-[#123B50] bg-[#E9F5F3]/70 px-1 py-0.5 rounded tracking-tight underline decoration-[#159A91]/50 decoration-1 underline-offset-2"
+          >
+            {sub}
+          </strong>
+        );
+      }
+
+      // Highlight clinical examples (e.g. ...)
+      if (sub.includes("e.g.") || sub.includes("E.g.")) {
+        const egParts = sub.split(/(e\.g\.[^,.;]+)/gi);
+        return egParts.map((egSub, eIdx) => {
+          if (/^e\.g\./i.test(egSub)) {
+            return (
+              <span
+                key={`${index}-${sIdx}-${eIdx}`}
+                className="font-extrabold text-[#123B50] bg-[#F2B66D]/25 px-1.5 py-0.5 rounded text-xs border border-[#F2B66D]/40 mx-0.5"
+              >
+                {egSub}
+              </span>
+            );
+          }
+          return egSub;
+        });
+      }
+
+      return sub;
+    });
   });
+};
+
+// Smart Content Renderer: Formats terms into structured cards and avoids duplicate point repetition
+const renderSectionContent = (content = [], points = []) => {
+  const renderedItems = [];
+  const contentLowerSet = new Set();
+
+  content.forEach((item, idx) => {
+    const trimmed = (item || "").trim();
+    if (!trimmed) return;
+    contentLowerSet.add(trimmed.toLowerCase());
+
+    // 1. Is this a heading like "Definition", "Anatomical position", "Directional terms (Figure 1.2)"?
+    const isHeading =
+      (trimmed.length <= 35 && !trimmed.endsWith(".") && !trimmed.includes(":")) ||
+      trimmed.toLowerCase() === "definition" ||
+      trimmed.toLowerCase().startsWith("directional terms");
+
+    if (isHeading) {
+      renderedItems.push(
+        <div
+          key={`head-${idx}`}
+          className="pt-3 pb-1.5 border-b-2 border-[#159A91]/30 flex items-center gap-2 mt-3 first:mt-0"
+        >
+          <div className="w-2.5 h-2.5 rounded-full bg-[#159A91]" />
+          <h3 className="text-sm sm:text-base font-black text-[#123B50] uppercase tracking-wide">
+            {trimmed}
+          </h3>
+        </div>
+      );
+      return;
+    }
+
+    // 2. Is this a stray figure caption in text (e.g. "Figure 1.1: ...")?
+    if (/^Figure\s*\d+\.\d+:/i.test(trimmed) && trimmed.length < 80) {
+      renderedItems.push(
+        <div
+          key={`figref-${idx}`}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-neutral-100 border border-neutral-300 text-xs font-bold text-[#123B50] my-1"
+        >
+          <Layers className="w-3.5 h-3.5 text-[#159A91]" />
+          <span>{trimmed}</span>
+        </div>
+      );
+      return;
+    }
+
+    // 3. Is this a term definition (e.g. "Term: Definition, e.g. Example" or "Gross Anatomy is ...")?
+    const colonMatch = trimmed.match(/^([A-Z][A-Za-z0-9\s()/-]{2,35}?)\s*:\s+(.+)$/);
+    const isMatch = trimmed.match(/^(Gross Anatomy|Microscopic Anatomy|Regional Anatomy|Systemic Anatomy|Anatomy|Human Physiology|Physiology)\s+(is the|deals with|is a|is)\s+(.+)$/i);
+
+    if (colonMatch || isMatch) {
+      const termName = colonMatch ? colonMatch[1] : isMatch[1];
+      const termDefWithExample = colonMatch ? colonMatch[2] : `${isMatch[2]} ${isMatch[3]}`;
+
+      const egSplit = termDefWithExample.split(/,\s*e\.g\.|\s+e\.g\./i);
+      const mainDef = egSplit[0];
+      const exampleText = egSplit.length > 1 ? egSplit.slice(1).join(", e.g. ") : null;
+
+      renderedItems.push(
+        <div
+          key={`def-${idx}`}
+          className="bg-white rounded-2xl border-2 border-neutral-200/90 hover:border-[#159A91] p-4 sm:p-5 shadow-2xs hover:shadow-xs transition-all space-y-2.5 my-2"
+        >
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <span className="px-3 py-1 rounded-xl bg-[#E9F5F3] text-[#123B50] border border-[#159A91]/40 text-xs sm:text-sm font-black flex items-center gap-1.5 shadow-2xs">
+              <Tag className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>{termName}</span>
+            </span>
+            <span className="text-[10px] font-extrabold uppercase tracking-wider text-[#159A91] bg-[#E9F5F3] px-2 py-0.5 rounded-md border border-[#159A91]/30">
+              Accredited Concept
+            </span>
+          </div>
+
+          <p className="text-sm sm:text-[15px] font-bold text-[#263746] leading-relaxed">
+            {renderFormattedText(mainDef)}
+          </p>
+
+          {exampleText && (
+            <div className="p-3 rounded-xl bg-[#F2B66D]/15 border border-[#F2B66D]/40 text-xs text-[#123B50] font-bold flex items-start gap-2">
+              <span className="px-2 py-0.5 rounded bg-[#F2B66D] text-[#123B50] font-black text-[10px] shrink-0 uppercase tracking-wide">
+                Clinical Example
+              </span>
+              <span className="leading-relaxed">{renderFormattedText(exampleText)}</span>
+            </div>
+          )}
+        </div>
+      );
+      return;
+    }
+
+    // 4. Standard explanatory paragraph with dark readable font
+    renderedItems.push(
+      <p
+        key={`p-${idx}`}
+        className="text-sm sm:text-base font-semibold text-[#263746] leading-relaxed"
+      >
+        {renderFormattedText(trimmed)}
+      </p>
+    );
+  });
+
+  // Filter distinct points (exclude points that already appear verbatim in content)
+  const distinctPoints = (points || []).filter((pt) => {
+    const trimmed = (pt || "").trim().toLowerCase();
+    if (!trimmed || trimmed === "definition") return false;
+    return !contentLowerSet.has(trimmed);
+  });
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-3">{renderedItems}</div>
+
+      {distinctPoints.length > 0 && (
+        <div className="bg-gradient-to-br from-[#E9F5F3]/50 via-white to-[#E9F5F3]/20 rounded-2xl p-5 sm:p-6 border-2 border-[#159A91]/30 space-y-4 shadow-xs mt-6">
+          <div className="flex items-center justify-between border-b border-[#159A91]/30 pb-3">
+            <div className="flex items-center gap-2 text-[#123B50] font-black text-xs uppercase tracking-wider">
+              <Sparkles className="w-4 h-4 text-[#159A91]" />
+              <span>Key Anatomical Concepts, Landmarks & Terminology</span>
+            </div>
+            <span className="text-[11px] font-extrabold text-[#123B50] bg-[#E9F5F3] px-2.5 py-0.5 rounded-full border border-[#159A91]/30">
+              {distinctPoints.length} Core Principles
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 pt-1">
+            {distinctPoints.map((pt, ptIdx) => {
+              const match = pt.match(/^\*\*(.*?)\*\*:?\s*(.*)$/);
+              const title = match ? match[1] : null;
+              const description = match ? match[2] : pt;
+
+              return (
+                <div
+                  key={ptIdx}
+                  className="bg-white rounded-xl p-4 border border-neutral-200/90 shadow-2xs hover:border-[#159A91] transition-all space-y-1.5"
+                >
+                  {title ? (
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-[#E9F5F3] border border-[#159A91]/30 text-[#123B50] text-xs font-black mb-1">
+                        <Tag className="w-3 h-3 text-[#159A91]" />
+                        <span>{title}</span>
+                      </div>
+                      <p className="text-sm font-bold text-[#263746] leading-relaxed">
+                        {renderFormattedText(description)}
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex items-start gap-3">
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#159A91] mt-1.5 shrink-0 ring-4 ring-[#E9F5F3]" />
+                      <p className="text-sm font-bold text-[#263746] leading-relaxed flex-1">
+                        {renderFormattedText(pt)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export const AnatomyLessonView = () => {
@@ -53,9 +262,22 @@ export const AnatomyLessonView = () => {
   const chapter = ANATOMY_CHAPTERS[chapterId] || ANATOMY_CHAPTERS["anatomy-unit-1"];
   const activeTabParam = searchParams.get("tab") || "reading";
   const [activeTab, setActiveTab] = useState(activeTabParam);
+  const [viewMode, setViewMode] = useState("single"); // "single" subtopic focus or "all"
   const [zoomImage, setZoomImage] = useState(null);
   const [expandedDiagrams, setExpandedDiagrams] = useState({});
   const [expandedSubjective, setExpandedSubjective] = useState({});
+  const [showSubtopicDrawer, setShowSubtopicDrawer] = useState(false);
+  const [currentUnitMcqIndex, setCurrentUnitMcqIndex] = useState(0);
+
+  // Active subtopic index
+  const [activeSectionIndex, setActiveSectionIndex] = useState(() => {
+    const secParam = searchParams.get("section");
+    if (secParam && chapter.sections) {
+      const foundIdx = chapter.sections.findIndex((s) => s.id === secParam);
+      if (foundIdx >= 0) return foundIdx;
+    }
+    return 0;
+  });
 
   // MCQ state
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -72,8 +294,23 @@ export const AnatomyLessonView = () => {
   useEffect(() => {
     const tab = searchParams.get("tab");
     if (tab) setActiveTab(tab);
+
+    const secParam = searchParams.get("section");
+    if (secParam && chapter.sections) {
+      const foundIdx = chapter.sections.findIndex((s) => s.id === secParam);
+      if (foundIdx >= 0) setActiveSectionIndex(foundIdx);
+    }
+  }, [chapterId, searchParams, chapter.sections]);
+
+  const handleSelectSection = (idx) => {
+    if (!chapter.sections || !chapter.sections[idx]) return;
+    setActiveSectionIndex(idx);
+    setSearchParams({
+      tab: activeTab,
+      section: chapter.sections[idx].id
+    });
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [chapterId, searchParams]);
+  };
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
@@ -97,77 +334,71 @@ export const AnatomyLessonView = () => {
   const nextChapter = currentIndex < ANATOMY_UNITS.length - 1 ? ANATOMY_UNITS[currentIndex + 1] : null;
 
   return (
-    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 antialiased selection:bg-green-500 selection:text-white pb-24 font-sans transition-colors">
-      <Navbar />
-
-      {/* Top Breadcrumb Navigation in Calm Clinical Nursing Scrub Palette */}
-      <div className="bg-white dark:bg-neutral-900 border-b border-neutral-200/80 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 py-2.5 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 flex-wrap">
+    <div className="min-h-screen bg-neutral-50 dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 antialiased selection:bg-[#159A91] selection:text-white pb-24 font-sans transition-colors">
+      {/* Focused Textbook Top Bar (Replaces Navbar in Syllabus) */}
+      <header className="sticky top-0 z-40 bg-[#123B50] text-white py-3 px-4 sm:px-6 lg:px-8 shadow-md">
+        <div className="w-full flex items-center justify-between text-xs">
+          <div className="flex items-center gap-3">
             <Link
               to="/anatomy-syllabus"
-              className="text-neutral-500 dark:text-neutral-400 hover:text-green-500 dark:hover:text-green-400 font-medium inline-flex items-center gap-1.5 transition-colors"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-all border border-white/10 cursor-pointer"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
-              <span>Anatomy Syllabus</span>
+              <span>Back to Syllabus</span>
             </Link>
-            <span className="text-neutral-300 dark:text-neutral-700">/</span>
-            <span className="text-green-700 dark:text-green-400 font-bold truncate max-w-[280px] sm:max-w-md">
+            <span className="hidden sm:inline-block w-px h-4 bg-white/20" />
+            <span className="hidden sm:inline-block font-bold text-white/90 truncate max-w-sm">
               Unit {chapter.unitNumber}: {chapter.title}
             </span>
-
-            {/* Live completion indicator badge */}
-            {completed ? (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-green-50 dark:bg-green-900/60 text-green-700 dark:text-green-400 border border-green-400 dark:border-green-700 ml-2">
-                <CheckCircle2 className="w-3 h-3 text-green-500 dark:text-green-400" />
-                <span>Completed • Mastered</span>
-              </span>
-            ) : (
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 border border-neutral-200 dark:border-neutral-700 ml-2">
-                <span>In Progress</span>
-              </span>
-            )}
           </div>
 
-          <div className="flex items-center gap-2 text-xs font-semibold">
-            {/* Quick 1-click toggle */}
+          <div className="flex items-center gap-2">
+            <Link
+              to="/explorer"
+              className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-[#159A91] text-white font-bold transition-all text-xs inline-flex items-center gap-1.5 border border-white/20 shadow-xs cursor-pointer group"
+              title="Enter 3D Anatomy Playground"
+            >
+              <Box className="w-3.5 h-3.5 text-[#159A91] group-hover:text-white transition-colors" />
+              <span className="hidden sm:inline">3D Playground</span>
+            </Link>
+
             <button
               type="button"
               onClick={() => toggleCompletion(chapter.id)}
-              className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all cursor-pointer inline-flex items-center gap-1 ${
+              className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer inline-flex items-center gap-1.5 border ${
                 completed
-                  ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 hover:bg-neutral-200 border border-neutral-200"
-                  : "bg-green-50 dark:bg-green-900 text-green-700 dark:text-green-100 hover:bg-green-100 border border-green-100 dark:border-green-700"
+                  ? "bg-[#159A91] text-white border-[#159A91]"
+                  : "bg-white/10 hover:bg-white/20 text-white border-white/20"
               }`}
             >
-              <CheckCircle2 className={`w-3 h-3 ${completed ? "text-green-500" : "text-neutral-400"}`} />
-              <span>{completed ? "Mark Incomplete" : "Mark Completed"}</span>
+              <CheckCircle2 className="w-3.5 h-3.5" />
+              <span>{completed ? "Completed ✓" : "Mark Done"}</span>
             </button>
-
             {prevChapter && (
               <Link
                 to={`/anatomy/lesson/${prevChapter.id}`}
-                className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 transition-colors"
+                className="px-2.5 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors"
+                title={`Unit ${prevChapter.unitNumber}`}
               >
-                ← Prev Unit
+                ← Prev
               </Link>
             )}
             {nextChapter && (
               <Link
                 to={`/anatomy/lesson/${nextChapter.id}`}
-                className="px-2.5 py-1 rounded-lg bg-green-500 hover:bg-green-500 text-white transition-colors"
+                className="px-3 py-1.5 rounded-xl bg-[#159A91] hover:bg-[#159A91]/80 text-white font-bold transition-colors shadow-xs"
+                title={`Unit ${nextChapter.unitNumber}`}
               >
-                Next Unit →
+                Next →
               </Link>
             )}
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Hero Header */}
-      {/* Hero Header - Crisp White & Emerald Green */}
-      <div className="bg-white text-neutral-900 py-10 px-4 sm:px-6 lg:px-8 border-b border-neutral-200/80 shadow-xs relative overflow-hidden">
-        <div className="max-w-7xl mx-auto relative z-10">
+      {/* Hero Header - Full Page Width */}
+      <div className="bg-white text-neutral-900 py-8 px-4 sm:px-6 lg:px-8 border-b border-neutral-200/80 shadow-xs relative overflow-hidden">
+        <div className="w-full relative z-10">
           <div className="flex flex-wrap items-center gap-2.5 mb-3">
             <span className="px-3 py-1 rounded-full text-xs font-extrabold bg-green-50 text-green-700 border border-green-100 flex items-center gap-1.5">
               <span>{chapter.icon || "🧬"}</span>
@@ -181,11 +412,11 @@ export const AnatomyLessonView = () => {
             </span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 max-w-4xl leading-tight">
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-neutral-900 leading-tight">
             {chapter.title}
           </h1>
 
-          <p className="mt-3 text-neutral-600 text-xs sm:text-sm max-w-3xl leading-relaxed">
+          <p className="mt-3 text-neutral-600 text-xs sm:text-sm max-w-4xl leading-relaxed">
             {chapter.summary}
           </p>
 
@@ -213,7 +444,7 @@ export const AnatomyLessonView = () => {
 
       {/* Sticky Tab Navigation */}
       <div className="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-neutral-200 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex space-x-1 sm:space-x-4">
             <button
               onClick={() => handleTabChange("reading")}
@@ -254,397 +485,159 @@ export const AnatomyLessonView = () => {
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Left Table of Contents Sidebar */}
-          <aside className="lg:col-span-1 hidden lg:block">
-            <div className="sticky top-20 bg-white rounded-2xl border border-neutral-200/90 p-5 shadow-sm space-y-5">
-              <div>
-                <span className="text-[11px] font-extrabold text-neutral-400 uppercase tracking-wider block mb-2.5">
-                  Unit Sections & Topics
-                </span>
-                <nav className="space-y-1 max-h-[60vh] overflow-y-auto pr-1 text-xs">
-                  {chapter.sections?.map((sec, idx) => (
-                    <a
-                      key={sec.id}
-                      href={`#${sec.id}`}
-                      className="block px-3 py-2.5 rounded-xl text-neutral-700 hover:bg-green-50 hover:text-green-900 font-semibold transition-all border border-transparent hover:border-green-100/60"
-                    >
-                      <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-neutral-100 text-neutral-700 flex items-center justify-center text-[10px] font-black shrink-0">
-                          {idx + 1}
-                        </span>
-                        <span className="truncate flex-1">{sec.title}</span>
-                      </div>
-                    </a>
-                  ))}
-                </nav>
-              </div>
-
-              <div className="pt-3 border-t border-neutral-100 text-[11px] space-y-2">
-                <div className="flex items-center justify-between text-neutral-600 font-medium">
-                  <span>Sections Count:</span>
-                  <span className="font-bold text-green-700">{chapter.sections?.length || 0}</span>
+      {/* Main Content Area - Full Page Width with Clean Typography */}
+      <div className="w-full px-4 sm:px-6 lg:px-8 pt-6">
+        <main className="w-full">
+          {activeTab === "reading" && (
+            <div className="space-y-8">
+              {/* Specific Learning Objectives Card */}
+              {chapter.objectives && chapter.objectives.length > 0 && (
+                <div className="bg-gradient-to-br from-[#E9F5F3]/70 via-white to-[#E9F5F3]/40 rounded-2xl border border-[#159A91]/20 p-5 sm:p-6 shadow-xs">
+                  <h3 className="text-xs font-black text-[#123B50] uppercase tracking-wider flex items-center gap-2 mb-3">
+                    <Award className="w-4 h-4 text-[#159A91]" />
+                    <span>INC CBME Specific Learning Objectives</span>
+                  </h3>
+                  <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-700">
+                    {chapter.objectives.map((obj, i) => (
+                      <li key={i} className="flex items-start gap-2.5">
+                        <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0 mt-0.5" />
+                        <span className="leading-relaxed font-medium">{renderFormattedText(obj)}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <div className="flex items-center justify-between text-neutral-600 font-medium">
-                  <span>Plates & Figures:</span>
-                  <span className="font-bold text-green-700">{chapter.totalImages || 0}</span>
-                </div>
-                <div className="flex items-center justify-between text-neutral-600 font-medium">
-                  <span>MCQ Practice Bank:</span>
-                  <span className="font-bold text-green-700">{chapter.mcqs?.length || 0}</span>
-                </div>
-                <div className="flex items-center justify-between text-neutral-600 font-medium">
-                  <span>University Questions:</span>
-                  <span className="font-bold text-green-700">{chapter.subjectiveQuestions?.length || 0}</span>
-                </div>
-              </div>
+              )}
 
-              <div className="pt-2">
-                <button
-                  onClick={() => handleTabChange("quiz")}
-                  className="w-full py-2.5 px-3 rounded-xl bg-green-50 hover:bg-green-100 text-green-700 text-xs font-bold border border-green-100/80 transition-colors flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <HelpCircle className="w-3.5 h-3.5 text-green-500" />
-                  <span>Practice Unit MCQs</span>
-                </button>
-              </div>
-            </div>
-          </aside>
+              {/* Subtopic Top Navigation Bar with Drawer Selector */}
+              <div className="bg-white rounded-2xl border border-neutral-200/90 p-4 shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="px-3 py-1 rounded-full bg-[#159A91] text-white text-xs font-black uppercase tracking-wider shadow-2xs">
+                    Subtopic {activeSectionIndex + 1} of {chapter.sections?.length || 1}
+                  </span>
+                  <span className="text-xs font-black text-[#123B50] line-clamp-1 max-w-md">
+                    {chapter.sections?.[activeSectionIndex]?.title}
+                  </span>
+                </div>
 
-          {/* Main Reading View */}
-          <main className="lg:col-span-3">
-            {activeTab === "reading" && (
-              <div className="space-y-8">
-                {/* Specific Learning Objectives Card */}
-                {chapter.objectives && chapter.objectives.length > 0 && (
-                  <div className="bg-gradient-to-br from-green-50/70 via-white to-green-50/40 rounded-2xl border border-green-100/90 p-5 sm:p-6 shadow-xs">
-                    <h3 className="text-xs font-black text-green-900 uppercase tracking-wider flex items-center gap-2 mb-3">
-                      <Award className="w-4 h-4 text-green-500" />
-                      <span>INC CBME Specific Learning Objectives</span>
-                    </h3>
-                    <ul className="space-y-2.5 text-xs sm:text-sm text-neutral-700">
-                      {chapter.objectives.map((obj, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
-                          <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
-                          <span className="leading-relaxed font-medium">{renderFormattedText(obj)}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
-                {/* Sections Renderer */}
-                {chapter.sections?.map((section, sIdx) => (
-                  <section
-                    key={section.id}
-                    id={section.id}
-                    className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24 transition-all"
+                <div className="flex items-center gap-2 self-end sm:self-auto text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setShowSubtopicDrawer(true)}
+                    className="px-3 py-1.5 rounded-xl border border-[#159A91]/40 bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-[#123B50] font-black transition-all shadow-2xs cursor-pointer flex items-center gap-1.5"
                   >
+                    <span>Browse All Subtopics ({chapter.sections?.length || 0})</span>
+                    <ChevronDown className="w-3.5 h-3.5" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setViewMode(viewMode === "single" ? "all" : "single")}
+                    className="px-3 py-1.5 rounded-xl border border-neutral-200 bg-white hover:bg-[#E9F5F3] text-neutral-700 hover:text-[#123B50] font-bold transition-all shadow-2xs cursor-pointer"
+                  >
+                    {viewMode === "single" ? "View All Subtopics" : "Single Subtopic Focus"}
+                  </button>
+                </div>
+              </div>
+
+                {/* Subtopic Renderer */}
+                {(() => {
+                  const displaySections = viewMode === "single"
+                    ? [chapter.sections?.[activeSectionIndex] || chapter.sections?.[0]].filter(Boolean)
+                    : chapter.sections || [];
+
+                  return displaySections.map((section, sIdx) => {
+                    const actualIdx = viewMode === "single" ? activeSectionIndex : sIdx;
+                    const prevSection = actualIdx > 0 ? chapter.sections?.[actualIdx - 1] : null;
+                    const nextSection = actualIdx < (chapter.sections?.length || 1) - 1 ? chapter.sections?.[actualIdx + 1] : null;
+
+                    return (
+                      <section
+                        key={section.id || actualIdx}
+                        id={section.id}
+                        className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-sm space-y-6 scroll-mt-24 transition-all"
+                      >
                     {/* Section Title Header */}
-                    <div className="border-b border-neutral-100 pb-4">
-                      <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-green-50 text-green-700 text-[10px] font-extrabold uppercase tracking-wider mb-1">
+                    <div className="border-b border-neutral-200 pb-4">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E9F5F3] text-[#123B50] text-xs font-black uppercase tracking-wider mb-2 border border-[#159A91]/30">
                         Section {sIdx + 1} of {chapter.sections.length}
                       </div>
-                      <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight mt-1">
+                      <h2 className="text-xl sm:text-3xl font-black text-[#123B50] tracking-tight">
                         {section.title}
                       </h2>
                     </div>
 
-                    {/* Section Explanatory Paragraphs */}
-                    {section.content && section.content.length > 0 && (
-                      <div className="space-y-3.5 text-xs sm:text-sm text-neutral-700 leading-relaxed">
-                        {section.content.map((para, pIdx) => (
-                          <p key={pIdx} className="leading-relaxed">
-                            {renderFormattedText(para)}
-                          </p>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* Detailed Points with Clean Structured Layout Card */}
-                    {section.points && section.points.length > 0 && (
-                      <div className="bg-gradient-to-br from-neutral-50 via-green-50/20 to-white rounded-2xl p-5 sm:p-6 border border-neutral-200/90 space-y-4 shadow-xs">
-                        <div className="flex items-center justify-between border-b border-neutral-200/60 pb-3">
-                          <div className="flex items-center gap-2 text-green-900 font-black text-xs uppercase tracking-wider">
-                            <Sparkles className="w-4 h-4 text-green-500" />
-                            <span>Key Anatomical Concepts, Landmarks & Terminology</span>
-                          </div>
-                          <span className="text-[11px] font-extrabold text-green-700 bg-green-100/80 px-2.5 py-0.5 rounded-full">
-                            {section.points.length} Core Principles
-                          </span>
-                        </div>
-
-                        <div className="grid grid-cols-1 gap-3 pt-1">
-                          {section.points.map((pt, ptIdx) => {
-                            // Extract title if formatted with **Title:**
-                            const match = pt.match(/^\*\*(.*?)\*\*:?\s*(.*)$/);
-                            const title = match ? match[1] : null;
-                            const description = match ? match[2] : pt;
-
-                            return (
-                              <div
-                                key={ptIdx}
-                                className="bg-white rounded-xl p-3.5 border border-neutral-200/80 shadow-xs hover:border-green-400 transition-all"
-                              >
-                                {title ? (
-                                  <div>
-                                    <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-green-50 border border-green-100 text-green-900 text-xs font-black mb-1.5">
-                                      <Tag className="w-3 h-3 text-green-500" />
-                                      <span>{title}</span>
-                                    </div>
-                                    <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed pl-1">
-                                      {renderFormattedText(description)}
-                                    </p>
-                                  </div>
-                                ) : (
-                                  <div className="flex items-start gap-2.5">
-                                    <div className="w-2 h-2 rounded-full bg-green-500 mt-2 shrink-0 ring-4 ring-green-100" />
-                                    <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed flex-1">
-                                      {renderFormattedText(pt)}
-                                    </p>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
+                    {/* Section Content & Key Principles - Formatted with Dark Color & Highlighted Terms */}
+                    {renderSectionContent(section.content, section.points)}
 
                     {/* Clinical Nursing Pearl Callout */}
                     {section.clinicalPearl && (
-                      <div className="bg-gradient-to-r from-green-50/90 via-green-50/40 to-white border-l-4 border-green-500 rounded-r-2xl p-5 shadow-xs">
-                        <div className="flex items-center gap-2 font-black text-green-900 text-xs sm:text-sm mb-1.5">
-                          <Stethoscope className="w-4 h-4 text-green-500" />
+                      <div className="bg-gradient-to-r from-[#E9F5F3] via-white to-[#E9F5F3]/30 border-l-4 border-[#159A91] rounded-r-2xl p-5 shadow-xs">
+                        <div className="flex items-center gap-2 font-black text-[#123B50] text-xs sm:text-sm mb-1.5">
+                          <Stethoscope className="w-4 h-4 text-[#159A91]" />
                           <span>Clinical Nursing Pearl & Bedside Correlation</span>
                         </div>
-                        <p className="text-xs sm:text-sm text-neutral-700 leading-relaxed font-medium">
+                        <p className="text-xs sm:text-sm text-[#263746] leading-relaxed font-bold">
                           {renderFormattedText(section.clinicalPearl)}
                         </p>
                       </div>
                     )}
 
-                    {/* Render Section Images with FULL Anatomical & Clinical Explanations */}
-                    {section.images && section.images.length > 0 && (
-                      <div className="space-y-4 pt-4 border-t border-neutral-100">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2 text-neutral-600 text-xs font-extrabold uppercase tracking-wider">
-                            <Layers className="w-4 h-4 text-green-500" />
-                            <span>Anatomical Diagrams & Clinical Plates ({section.images.length})</span>
-                          </div>
-                          <span className="text-[11px] text-green-700 font-bold bg-green-50 px-2.5 py-0.5 rounded-full border border-green-100/60">
-                            Includes Detailed Landmark Explanations
-                          </span>
-                        </div>
+                    {/* Dedicated Proper Medical Image / SVG Diagram for this Subtopic */}
+                    <SubtopicMedicalPlate
+                      subtopicId={section.id}
+                      subtopicTitle={section.title}
+                      subject="anatomy"
+                      images={section.images}
+                      diagramExplanation={getDiagramExplanation(section.images?.[0], section, chapter)}
+                    />
 
-                        <div className="space-y-6">
-                          {section.images.map((img, imgIdx) => {
-                            const exp = getDiagramExplanation(img, section, chapter);
-                            const imgKey = `${section.id}_img_${imgIdx}`;
-                            const isExpanded = expandedDiagrams[imgKey] !== false; // Default expanded for maximum learning
+                    {/* Small 15 Marks Subtopic Quiz */}
+                    <SubtopicQuiz15Marks
+                      subtopicId={section.id}
+                      subtopicTitle={section.title}
+                      unitTitle={chapter.title}
+                    />
 
-                            return (
-                              <div
-                                key={imgIdx}
-                                className="bg-white rounded-3xl border border-neutral-200/90 overflow-hidden shadow-sm hover:border-green-400 transition-all flex flex-col"
-                              >
-                                {/* Top Plate Header */}
-                                <div className="px-5 py-3.5 bg-neutral-50 border-b border-neutral-200/80 flex items-center justify-between">
-                                  <div className="flex items-center gap-2">
-                                    <span className="px-2.5 py-1 rounded-lg bg-green-500 text-white font-black text-xs">
-                                      {exp?.figure || `Figure ${imgIdx + 1}`}
-                                    </span>
-                                    <h4 className="text-xs sm:text-sm font-black text-neutral-900 truncate max-w-md">
-                                      {exp?.title || img.caption}
-                                    </h4>
-                                  </div>
-
-                                  <div className="flex items-center gap-2">
-                                    <button
-                                      type="button"
-                                      onClick={() => setZoomImage({ ...img, explanation: exp })}
-                                      className="px-3 py-1.5 rounded-xl bg-white hover:bg-neutral-100 text-neutral-700 text-xs font-bold border border-neutral-200 transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer"
-                                      title="Open Full Resolution View"
-                                    >
-                                      <Maximize2 className="w-3.5 h-3.5 text-green-500" />
-                                      <span className="hidden sm:inline">Enlarge Plate</span>
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      onClick={() => toggleDiagramExplanation(imgKey)}
-                                      className="p-1.5 rounded-xl bg-white hover:bg-neutral-100 text-neutral-600 border border-neutral-200 transition-colors cursor-pointer"
-                                      title={isExpanded ? "Collapse Notes" : "Expand Notes"}
-                                    >
-                                      {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                                    </button>
-                                  </div>
-                                </div>
-
-                                {/* Image Canvas */}
-                                <div
-                                  className="relative bg-neutral-50/40 p-4 sm:p-6 flex items-center justify-center min-h-[260px] max-h-[460px] cursor-zoom-in overflow-hidden border-b border-neutral-100 group"
-                                  onClick={() => setZoomImage({ ...img, explanation: exp })}
-                                >
-                                  <img
-                                    src={img.src}
-                                    alt={img.alt || img.caption}
-                                    className="max-h-[420px] w-auto object-contain rounded-xl group-hover:scale-[1.01] transition-transform duration-300 drop-shadow-sm"
-                                    onError={(e) => {
-                                      e.target.style.display = "none";
-                                      e.target.parentNode.innerHTML += `<div class="p-8 text-center text-xs text-neutral-500 font-semibold bg-neutral-100 rounded-2xl">Diagram Canvas: ${img.caption}</div>`;
-                                    }}
-                                  />
-                                  <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity bg-neutral-900/85 text-white text-[11px] font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg backdrop-blur-xs">
-                                    <ZoomIn className="w-3.5 h-3.5" />
-                                    <span>Click to Enlarge with Landmark Guide</span>
-                                  </div>
-                                </div>
-
-                                {/* Comprehensive Diagram Explanation Section */}
-                                {isExpanded && exp && (
-                                  <div className="p-5 sm:p-6 bg-white space-y-5 text-xs sm:text-sm animate-in fade-in duration-200">
-                                    {/* 1. Paragraph Theory & Overview */}
-                                    <div>
-                                      <span className="text-[11px] font-extrabold text-green-700 uppercase tracking-wider block mb-1">
-                                        Anatomical Architecture & Theoretical Overview
-                                      </span>
-                                      <p className="text-neutral-700 leading-relaxed font-medium">
-                                        {renderFormattedText(exp.para || exp.overview)}
-                                      </p>
-                                    </div>
-
-                                    {/* 2. Distinct Views Breakdown (Anterior vs Posterior Views) */}
-                                    {exp.views && exp.views.length > 0 && (
-                                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-1">
-                                        {exp.views.map((v, vIdx) => (
-                                          <div
-                                            key={vIdx}
-                                            className="bg-neutral-50 rounded-2xl p-4 border border-neutral-200/90 space-y-3"
-                                          >
-                                            <div className="flex items-center gap-2 border-b border-neutral-200 pb-2">
-                                              <Compass className="w-4 h-4 text-green-500" />
-                                              <span className="font-black text-xs text-neutral-900">
-                                                {v.name}
-                                              </span>
-                                            </div>
-                                            <p className="text-xs text-neutral-600 font-medium leading-relaxed">
-                                              {v.description}
-                                            </p>
-
-                                            <div className="space-y-2 pt-1">
-                                              {v.landmarks.map((lm, lmIdx) => (
-                                                <div key={lmIdx} className="bg-white p-2.5 rounded-xl border border-neutral-200/80 text-xs">
-                                                  <span className="font-extrabold text-green-900 block mb-0.5">
-                                                    • {lm.name}
-                                                  </span>
-                                                  <span className="text-neutral-600 leading-relaxed font-medium block">
-                                                    {lm.details}
-                                                  </span>
-                                                </div>
-                                              ))}
-                                            </div>
-                                          </div>
-                                        ))}
-                                      </div>
-                                    )}
-
-                                    {/* 3. Directional Pairs (if present) */}
-                                    {exp.directionalPairs && (
-                                      <div className="space-y-2.5 pt-1">
-                                        <span className="text-[11px] font-extrabold text-green-700 uppercase tracking-wider block">
-                                          Directional Vectors Illustrated
-                                        </span>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                          {exp.directionalPairs.map((pair, pIdx) => (
-                                            <div key={pIdx} className="bg-neutral-50 p-3.5 rounded-xl border border-neutral-200/80 text-xs space-y-1">
-                                              <span className="font-black text-green-900 block">
-                                                {pair.pair}
-                                              </span>
-                                              <p className="text-neutral-700 font-medium leading-relaxed">
-                                                {pair.definition}
-                                              </p>
-                                              <span className="text-[11px] text-green-700 font-bold block pt-1">
-                                                Clinical Example: {pair.example}
-                                              </span>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {/* 4. Anatomical Planes (if present) */}
-                                    {exp.planes && (
-                                      <div className="space-y-2.5 pt-1">
-                                        <span className="text-[11px] font-extrabold text-green-700 uppercase tracking-wider block">
-                                          Geometric Planes Illustrated
-                                        </span>
-                                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                          {exp.planes.map((pl, plIdx) => (
-                                            <div key={plIdx} className="bg-neutral-50 p-3.5 rounded-xl border border-neutral-200/80 text-xs space-y-1">
-                                              <span className="font-black text-green-900 block">{pl.name}</span>
-                                              <span className="text-neutral-500 text-[11px] block">{pl.orientation}</span>
-                                              <p className="text-neutral-700 font-medium leading-relaxed">{pl.effect}</p>
-                                            </div>
-                                          ))}
-                                        </div>
-                                      </div>
-                                    )}
-
-                                    {/* 5. Key Points & Labeled Landmarks */}
-                                    {(exp.points || exp.highlights) && (
-                                      <div className="bg-gradient-to-br from-green-50/60 via-neutral-50 to-white rounded-2xl p-4 sm:p-5 border border-green-100/80 space-y-2.5">
-                                        <div className="flex items-center gap-2 text-green-900 font-black text-xs uppercase tracking-wider">
-                                          <Sparkles className="w-3.5 h-3.5 text-green-500" />
-                                          <span>Anatomical Landmarks & Structural Key Points</span>
-                                        </div>
-                                        <ul className="space-y-2 text-xs text-neutral-700">
-                                          {(exp.points || exp.highlights).map((pt, ptIdx) => (
-                                            <li key={ptIdx} className="flex items-start gap-2.5">
-                                              <div className="w-2 h-2 rounded-full bg-green-500 mt-1.5 shrink-0 ring-4 ring-green-100" />
-                                              <span className="font-medium leading-relaxed">{renderFormattedText(pt)}</span>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    )}
-
-                                    {/* 6. Clinical Bedside Relevance & NCLEX Correlation */}
-                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-2">
-                                      <div className="bg-green-50/70 rounded-2xl p-4 border border-green-100/80">
-                                        <div className="flex items-center gap-1.5 text-green-900 font-black text-xs mb-1">
-                                          <Stethoscope className="w-3.5 h-3.5 text-green-500" />
-                                          <span>Clinical Bedside Relevance & Theory</span>
-                                        </div>
-                                        <p className="text-xs text-neutral-700 font-medium leading-relaxed">
-                                          {renderFormattedText(exp.theory || exp.clinicalRelevance)}
-                                        </p>
-                                      </div>
-
-                                      <div className="bg-neutral-100/70 rounded-2xl p-4 border border-neutral-300/80">
-                                        <div className="flex items-center gap-1.5 text-neutral-800 font-black text-xs mb-1">
-                                          <Award className="w-3.5 h-3.5 text-neutral-800" />
-                                          <span>NCLEX High-Yield Pearls</span>
-                                        </div>
-                                        <ul className="space-y-1 text-xs text-neutral-700 font-medium">
-                                          {exp.nclexPearls?.map((np, nIdx) => (
-                                            <li key={nIdx}>• {np}</li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                )}
-                              </div>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    )}
+                    {/* Below: Next and Previous Subtopic Navigation */}
+                    <SubtopicNavFooter
+                      currentIndex={actualIdx}
+                      totalCount={chapter.sections?.length || 1}
+                      prevSubtopic={
+                        prevSection
+                          ? {
+                              title: prevSection.title,
+                              onClick: () => handleSelectSection(actualIdx - 1)
+                            }
+                          : prevChapter
+                          ? {
+                              title: `Unit ${prevChapter.unitNumber}: ${prevChapter.title}`,
+                              to: `/anatomy/lesson/${prevChapter.id}`
+                            }
+                          : null
+                      }
+                      nextSubtopic={
+                        nextSection
+                          ? {
+                              title: nextSection.title,
+                              onClick: () => handleSelectSection(actualIdx + 1)
+                            }
+                          : nextChapter
+                          ? {
+                              title: `Unit ${nextChapter.unitNumber}: ${nextChapter.title}`,
+                              to: `/anatomy/lesson/${nextChapter.id}`
+                            }
+                          : null
+                      }
+                      subtopicsList={chapter.sections?.map((s) => ({ id: s.id, title: s.title }))}
+                      onSelectSubtopic={handleSelectSection}
+                      syllabusPath="/anatomy-syllabus"
+                      syllabusLabel="Return to Anatomy Syllabus"
+                      chapterComprehensivePath={`/quiz/${chapter.id}`}
+                    />
                   </section>
-                ))}
+                );
+              });
+            })()}
 
                 {/* Bottom Navigation between units */}
                 <div className="flex items-center justify-between pt-6 border-t border-neutral-200">
@@ -671,101 +664,200 @@ export const AnatomyLessonView = () => {
               </div>
             )}
 
-            {/* MCQs Practice Tab */}
-            {activeTab === "quiz" && (
-              <div className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-sm space-y-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-bold border border-green-100 mb-2">
-                    <Sparkles className="w-3.5 h-3.5 text-green-500" />
-                    <span>Official CBME Objective Questions • Unit {chapter.unitNumber}</span>
+            {/* MCQs Practice Tab - Single Question Page Format */}
+            {activeTab === "quiz" && (() => {
+              const totalMcqs = chapter.mcqs?.length || 0;
+              const mcq = chapter.mcqs?.[currentUnitMcqIndex] || chapter.mcqs?.[0];
+              if (!mcq || totalMcqs === 0) {
+                return (
+                  <div className="bg-white rounded-3xl border border-neutral-200/90 p-8 text-center space-y-3">
+                    <p className="text-sm font-bold text-neutral-600">No MCQs currently available for this unit.</p>
                   </div>
-                  <h2 className="text-xl sm:text-2xl font-black text-neutral-900">
-                    Unit {chapter.unitNumber} Multiple Choice Questions ({chapter.mcqs?.length || 0})
-                  </h2>
-                  <p className="text-neutral-600 text-xs mt-1">
-                    Select your answer to test your comprehension of anatomical structures and directional principles.
-                  </p>
-                </div>
+                );
+              }
 
-                <div className="space-y-4 pt-2">
-                  {chapter.mcqs?.map((mcq, idx) => {
-                    const isAnswerVisible = showAnswers[mcq.id];
-                    const correctAnswer = mcq.answer || mcq.correctAnswer;
-                    const optionsList = mcq.options && mcq.options.length > 0 ? mcq.options : [
-                      correctAnswer,
-                      "Lysosomes",
-                      "Endoplasmic Reticulum",
-                      "Golgi Complex"
-                    ].filter((v, i, a) => a.indexOf(v) === i);
+              const isAnswerVisible = showAnswers[mcq.id];
+              const correctAnswer = mcq.answer || mcq.correctAnswer;
+              const optionsList = mcq.options && mcq.options.length > 0 ? mcq.options : [
+                correctAnswer,
+                "Lysosomes",
+                "Endoplasmic Reticulum",
+                "Golgi Complex"
+              ].filter((v, i, a) => a.indexOf(v) === i);
+              const userSelected = selectedAnswers[mcq.id];
 
-                    return (
-                      <div
-                        key={mcq.id}
-                        className="p-5 rounded-2xl border border-neutral-200 bg-neutral-50/50 space-y-3"
-                      >
-                        <div className="flex items-start justify-between gap-3">
-                          <span className="font-extrabold text-green-700 text-xs shrink-0">
-                            Q{idx + 1}.
+              return (
+                <div className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-10 shadow-sm space-y-8 animate-in fade-in duration-200">
+                  {/* Header & Question Navigation Tracker */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-neutral-200 pb-5">
+                    <div className="space-y-1">
+                      <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#E9F5F3] text-[#123B50] text-xs font-black uppercase tracking-wider">
+                        <Sparkles className="w-3.5 h-3.5 text-[#159A91]" />
+                        <span>Unit {chapter.unitNumber} Objective Question Bank</span>
+                      </div>
+                      <h2 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
+                        Question {currentUnitMcqIndex + 1} of {totalMcqs}
+                      </h2>
+                    </div>
+
+                    {/* Quick Question Jump Pills */}
+                    <div className="flex items-center gap-1.5 flex-wrap max-w-md">
+                      {chapter.mcqs.map((qItem, qIdx) => {
+                        const isCurrent = qIdx === currentUnitMcqIndex;
+                        const isAnswered = Boolean(selectedAnswers[qItem.id]);
+                        return (
+                          <button
+                            key={qItem.id || qIdx}
+                            type="button"
+                            onClick={() => setCurrentUnitMcqIndex(qIdx)}
+                            className={`w-8 h-8 rounded-xl text-xs font-black transition-all flex items-center justify-center cursor-pointer ${
+                              isCurrent
+                                ? "bg-[#123B50] text-white shadow-sm ring-2 ring-[#159A91]"
+                                : isAnswered
+                                ? "bg-[#159A91] text-white"
+                                : "bg-neutral-100 hover:bg-neutral-200 text-neutral-600"
+                            }`}
+                            title={`Jump to Question ${qIdx + 1}`}
+                          >
+                            {qIdx + 1}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Single Question Scenario Card - Covers whole width */}
+                  <div className="space-y-6">
+                    <div className="bg-neutral-50/70 rounded-2xl border border-neutral-200/80 p-5 sm:p-6 space-y-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <span className="text-[11px] font-black uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-white border border-neutral-200 text-[#123B50]">
+                          {mcq.subtopic || "Anatomy Clinical Assessment"}
+                        </span>
+                        {userSelected && (
+                          <span className="text-[11px] font-bold text-[#159A91] flex items-center gap-1">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            Option Selected
                           </span>
-                          <p className="text-xs sm:text-sm font-bold text-neutral-800 flex-1 leading-snug">
-                            {mcq.question}
-                          </p>
-                          <span className="text-[10px] px-2 py-0.5 rounded bg-neutral-200 text-neutral-600 font-semibold shrink-0">
-                            {mcq.subtopic || "Anatomy"}
-                          </span>
-                        </div>
+                        )}
+                      </div>
+                      <h3 className="text-base sm:text-lg font-extrabold text-[#123B50] leading-relaxed">
+                        {mcq.question}
+                      </h3>
+                    </div>
 
-                        {/* Options */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
-                          {optionsList.map((opt, oIdx) => {
-                            const isSelected = selectedAnswers[mcq.id] === opt;
-                            const isCorrect = isAnswerVisible && opt.toLowerCase().trim() === correctAnswer?.toLowerCase().trim();
-                            const isWrongSelected = isAnswerVisible && isSelected && opt.toLowerCase().trim() !== correctAnswer?.toLowerCase().trim();
+                    {/* Full-Width Options */}
+                    <div className="grid grid-cols-1 gap-3">
+                      {optionsList.map((opt, oIdx) => {
+                        const label = String.fromCharCode(65 + oIdx);
+                        const isSelected = userSelected === opt;
+                        const isCorrect = isAnswerVisible && opt.toLowerCase().trim() === correctAnswer?.toLowerCase().trim();
+                        const isWrongSelected = isAnswerVisible && isSelected && opt.toLowerCase().trim() !== correctAnswer?.toLowerCase().trim();
 
-                            return (
-                              <button
-                                key={oIdx}
-                                type="button"
-                                onClick={() => setSelectedAnswers((prev) => ({ ...prev, [mcq.id]: opt }))}
-                                className={`text-left p-3 rounded-xl border text-xs font-semibold transition-all cursor-pointer ${
+                        return (
+                          <button
+                            key={oIdx}
+                            type="button"
+                            onClick={() => setSelectedAnswers((prev) => ({ ...prev, [mcq.id]: opt }))}
+                            className={`w-full text-left p-4 sm:p-5 rounded-2xl border-2 transition-all flex items-center justify-between gap-4 cursor-pointer ${
+                              isCorrect
+                                ? "bg-green-50 border-green-500 text-green-900 font-bold"
+                                : isWrongSelected
+                                ? "bg-red-50 border-red-400 text-red-900 font-bold"
+                                : isSelected
+                                ? "bg-[#E9F5F3] border-[#159A91] text-[#123B50] font-black shadow-2xs"
+                                : "bg-white border-neutral-200/90 hover:border-[#159A91]/50 hover:bg-neutral-50/60 text-neutral-800"
+                            }`}
+                          >
+                            <div className="flex items-center gap-3.5 flex-1">
+                              <span
+                                className={`w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs shrink-0 transition-colors ${
                                   isCorrect
-                                    ? "bg-green-50 border-green-400 text-green-900 font-bold"
+                                    ? "bg-green-600 text-white"
                                     : isWrongSelected
-                                    ? "bg-neutral-100 border-neutral-400 text-neutral-800"
+                                    ? "bg-red-500 text-white"
                                     : isSelected
-                                    ? "bg-green-50 border-green-400 text-green-900"
-                                    : "bg-white border-neutral-200 hover:bg-neutral-50 text-neutral-700"
+                                    ? "bg-[#159A91] text-white"
+                                    : "bg-neutral-100 text-neutral-700"
                                 }`}
                               >
-                                <span className="font-bold mr-1.5">{String.fromCharCode(65 + oIdx)}.</span>
-                                <span>{opt}</span>
-                              </button>
-                            );
-                          })}
-                        </div>
-
-                        {/* Answer Toggle */}
-                        <div className="pt-2 flex items-center justify-between border-t border-neutral-200/60">
-                          <button
-                            onClick={() => toggleShowAnswer(mcq.id)}
-                            className="text-xs font-bold text-green-700 hover:text-green-700 underline cursor-pointer"
-                          >
-                            {isAnswerVisible ? "Hide Answer" : "Show Correct Answer"}
-                          </button>
-
-                          {isAnswerVisible && (
-                            <div className="text-xs font-extrabold text-green-700 flex items-center gap-1.5">
-                              <CheckCircle2 className="w-4 h-4 text-green-500" />
-                              <span>Correct: {correctAnswer}</span>
+                                {label}
+                              </span>
+                              <span className="text-xs sm:text-sm font-semibold leading-relaxed">
+                                {opt}
+                              </span>
                             </div>
-                          )}
+                            {isCorrect && <CheckCircle2 className="w-5 h-5 text-green-600 shrink-0" />}
+                            {isWrongSelected && <XCircle className="w-5 h-5 text-red-500 shrink-0" />}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Answer Reveal & Bedside Clinical Rationale */}
+                    <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-t border-neutral-200">
+                      <button
+                        type="button"
+                        onClick={() => toggleShowAnswer(mcq.id)}
+                        className="px-4 py-2 rounded-xl border border-neutral-200 bg-white hover:bg-neutral-50 text-xs font-bold text-[#123B50] transition-colors cursor-pointer"
+                      >
+                        {isAnswerVisible ? "Hide Answer & Rationale" : "Show Correct Answer & Rationale"}
+                      </button>
+
+                      {isAnswerVisible && (
+                        <div className="text-xs font-black text-[#159A91] flex items-center gap-1.5 bg-[#E9F5F3] px-3 py-1.5 rounded-xl border border-[#159A91]/30">
+                          <CheckCircle2 className="w-4 h-4 text-[#159A91]" />
+                          <span>Correct Answer: {correctAnswer}</span>
                         </div>
+                      )}
+                    </div>
+
+                    {/* Single Question Navigation Footer: Previous & Next Option */}
+                    <div className="pt-6 border-t border-neutral-200 flex items-center justify-between gap-4">
+                      <button
+                        type="button"
+                        disabled={currentUnitMcqIndex === 0}
+                        onClick={() => setCurrentUnitMcqIndex((prev) => Math.max(0, prev - 1))}
+                        className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer ${
+                          currentUnitMcqIndex === 0
+                            ? "bg-neutral-100 text-neutral-400 cursor-not-allowed"
+                            : "bg-white border border-neutral-200 hover:bg-neutral-100 text-[#123B50] shadow-2xs"
+                        }`}
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        <span>Previous Question</span>
+                      </button>
+
+                      <div className="text-xs font-bold text-neutral-500">
+                        {currentUnitMcqIndex + 1} / {totalMcqs}
                       </div>
-                    );
-                  })}
+
+                      {currentUnitMcqIndex < totalMcqs - 1 ? (
+                        <button
+                          type="button"
+                          onClick={() => setCurrentUnitMcqIndex((prev) => Math.min(totalMcqs - 1, prev + 1))}
+                          className="px-6 py-3 rounded-2xl bg-[#159A91] hover:bg-[#123B50] text-white text-xs sm:text-sm font-black flex items-center gap-2 transition-all shadow-sm cursor-pointer"
+                        >
+                          <span>Next Question</span>
+                          <ChevronRight className="w-4 h-4" />
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const answeredCount = chapter.mcqs.filter((qItem) => selectedAnswers[qItem.id]).length;
+                            alert(`Unit assessment complete! You answered ${answeredCount} of ${totalMcqs} questions.`);
+                          }}
+                          className="px-6 py-3 rounded-2xl bg-[#123B50] hover:bg-[#159A91] text-white text-xs sm:text-sm font-black flex items-center gap-2 transition-all shadow-sm cursor-pointer"
+                        >
+                          <CheckCircle2 className="w-4 h-4 text-[#F2B66D]" />
+                          <span>Review Completed Bank</span>
+                        </button>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              );
+            })()}
 
             {/* University Subjective Questions Tab */}
             {activeTab === "university-questions" && (
@@ -1006,8 +1098,85 @@ export const AnatomyLessonView = () => {
               </div>
             </div>
           </main>
-        </div>
       </div>
+
+      {/* Slide-Over Drawer for Subtopics */}
+      {showSubtopicDrawer && (
+        <div
+          className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex justify-end animate-in fade-in duration-200"
+          onClick={() => setShowSubtopicDrawer(false)}
+        >
+          <div
+            className="w-full max-w-md bg-white h-full shadow-2xl flex flex-col p-6 animate-in slide-in-from-right duration-300"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between border-b border-neutral-200 pb-4 mb-4">
+              <div>
+                <span className="text-[11px] font-black text-[#159A91] uppercase tracking-wider block">
+                  Unit {chapter.unitNumber}
+                </span>
+                <h3 className="text-base font-black text-[#123B50]">
+                  Unit Subtopics & Sections ({chapter.sections?.length || 0})
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowSubtopicDrawer(false)}
+                className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 text-neutral-600 flex items-center justify-center transition-colors cursor-pointer"
+              >
+                <XCircle className="w-5 h-5 text-neutral-500" />
+              </button>
+            </div>
+
+            <nav className="flex-1 overflow-y-auto space-y-1.5 pr-1 text-xs">
+              {chapter.sections?.map((sec, idx) => {
+                const isSelected = idx === activeSectionIndex;
+                return (
+                  <button
+                    key={sec.id}
+                    type="button"
+                    onClick={() => {
+                      handleSelectSection(idx);
+                      setShowSubtopicDrawer(false);
+                    }}
+                    className={`w-full text-left px-3.5 py-3 rounded-2xl font-bold transition-all flex items-center justify-between gap-3 cursor-pointer ${
+                      isSelected
+                        ? "bg-[#E9F5F3] text-[#123B50] font-black border-2 border-[#159A91]"
+                        : "text-neutral-700 hover:bg-[#E9F5F3]/50 hover:text-[#123B50] border border-neutral-100"
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 truncate">
+                      <span
+                        className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black shrink-0 ${
+                          isSelected ? "bg-[#159A91] text-white" : "bg-neutral-100 text-neutral-600"
+                        }`}
+                      >
+                        {idx + 1}
+                      </span>
+                      <span className="truncate flex-1 text-xs">{sec.title}</span>
+                    </div>
+                    {isSelected && <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0" />}
+                  </button>
+                );
+              })}
+            </nav>
+
+            <div className="pt-4 border-t border-neutral-200 mt-4 space-y-2 text-xs">
+              <button
+                type="button"
+                onClick={() => {
+                  handleTabChange("quiz");
+                  setShowSubtopicDrawer(false);
+                }}
+                className="w-full py-3 px-4 rounded-xl bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-[#123B50] font-black transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <HelpCircle className="w-4 h-4 text-[#159A91]" />
+                <span>Practice Unit MCQs ({chapter.mcqs?.length || 0})</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Split-Screen Image Zoom & Comprehensive Landmark Guide Modal */}
       {zoomImage && (

@@ -1,6 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import { SYLLABUS_MODULES } from "../constants/biochemistryData";
 import {
   GlucoseHomeostasisSimulator,
@@ -39,6 +38,7 @@ import {
 } from "lucide-react";
 import { useCurriculumProgress } from "../services/curriculumProgress";
 
+// Standardized 7-Unit Nursing Biochemistry Curriculum
 export const BioChemistrySyllabus = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedUnitId, setSelectedUnitId] = useState("all");
@@ -105,45 +105,47 @@ export const BioChemistrySyllabus = () => {
 
   const curriculumProgressPct = Math.round((totalCompletedCount / Math.max(1, totalLessonsCount)) * 100);
 
-  return (
-    <div className="min-h-screen bg-neutral-50 text-neutral-900 antialiased selection:bg-green-500 selection:text-white pb-24">
-      <Navbar />
+  const modulesPassedCount = useMemo(() => {
+    return SYLLABUS_MODULES.filter(m => isCompleted(m.id)).length;
+  }, [isCompleted]);
 
+  return (
+    <div className="min-h-screen bg-slate-50 text-[#263746] antialiased selection:bg-[#159A91] selection:text-white pb-24">
       {/* Top Breadcrumb & Switcher Bar */}
-      <div className="bg-white border-b border-neutral-200 text-neutral-700 py-2.5 px-4 sm:px-6 lg:px-8">
+      <div className="bg-white border-b border-slate-200 text-slate-600 py-2.5 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
           <div className="flex items-center gap-2">
             <Link
-              to="/syllabus"
-              className="text-neutral-500 hover:text-green-600 font-medium inline-flex items-center gap-1 transition-colors"
+              to="/dashboard"
+              className="text-slate-500 hover:text-[#159A91] font-medium inline-flex items-center gap-1 transition-colors"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
-              <span>Syllabus Hub</span>
+              <span>Dashboard</span>
             </Link>
-            <span className="text-neutral-300">/</span>
-            <span className="text-green-700 font-bold">Biochemistry Curriculum (7 Units)</span>
+            <span className="text-slate-300">/</span>
+            <span className="text-[#123B50] font-bold">Biochemistry Curriculum (7 Units)</span>
           </div>
 
           <div className="flex items-center gap-1.5 flex-wrap">
-            <span className="text-neutral-400 text-[11px] hidden sm:inline font-semibold">Tracks:</span>
+            <span className="text-slate-400 text-[11px] hidden sm:inline font-semibold">Tracks:</span>
             <Link
               to="/anatomy-syllabus"
-              className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#E9F5F3] text-slate-700 hover:text-[#123B50] font-medium text-[11px] transition-colors"
             >
               🦴 Anatomy
             </Link>
             <Link
               to="/physiology-syllabus"
-              className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#E9F5F3] text-slate-700 hover:text-[#123B50] font-medium text-[11px] transition-colors"
             >
               ⚡ Physiology
             </Link>
-            <span className="px-2.5 py-1 rounded-lg bg-green-50 text-green-700 font-extrabold text-[11px] border border-green-200">
+            <span className="px-2.5 py-1 rounded-lg bg-[#E9F5F3] text-[#123B50] font-extrabold text-[11px] border border-[#159A91]/30">
               🧬 Biochemistry (7 Units)
             </span>
             <Link
               to="/nutrition-syllabus"
-              className="px-2.5 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 text-neutral-700 font-medium text-[11px] transition-colors"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-[#E9F5F3] text-slate-700 hover:text-[#123B50] font-medium text-[11px] transition-colors"
             >
               🥗 Nutrition
             </Link>
@@ -151,76 +153,123 @@ export const BioChemistrySyllabus = () => {
         </div>
       </div>
 
-      {/* Clean Hero Section */}
-      <section className="bg-white border-b border-neutral-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+      {/* Main Container */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        {/* Course Syllabus Hero Card (Image 6 design) */}
+        <div className="bg-[#123B50] text-white rounded-2xl p-6 sm:p-8 relative shadow-xl overflow-hidden mb-8 border border-[#1e4e66]">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-[#159A91]/10 rounded-full blur-3xl pointer-events-none" />
+
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6 relative z-10">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-green-700 text-xs font-bold border border-green-100 mb-3">
-                <Sparkles className="w-3.5 h-3.5 text-green-500" />
-                <span>INC Standardized Syllabus • Interactive Learning</span>
+              {/* Badges strip */}
+              <div className="flex flex-wrap items-center gap-2.5 mb-3">
+                <Link
+                  to="/dashboard"
+                  className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/10 hover:bg-white/20 text-white rounded-md text-xs font-semibold backdrop-blur-sm transition-colors border border-white/10"
+                >
+                  ← Dashboard
+                </Link>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-[#159A91]/20 border border-[#159A91]/40 text-[#159A91] text-xs font-bold tracking-wide uppercase">
+                  ACCREDITED ACADEMIC NOTES · BIOC 115
+                </span>
+                <span className="inline-flex items-center gap-1 px-3 py-1 rounded-md bg-[#F2B66D]/20 border border-[#F2B66D]/40 text-[#F2B66D] text-xs font-bold">
+                  ✨ Concept → Example → Application
+                </span>
               </div>
-              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-neutral-900 tracking-tight">
-                Biochemistry & Clinical Homeostasis
+
+              <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
+                Medical Biochemistry: Complete Study Notes
               </h1>
-              <p className="text-neutral-600 text-sm mt-2 leading-relaxed max-w-2xl">
-                Explore metabolic pathways with interactive non-AI physiological simulators, real-time diagnostic calculators, vector molecular models, and clinical case challenges.
+              <p className="text-slate-300 text-sm mt-2 leading-relaxed max-w-2xl font-normal">
+                Comprehensive accredited learning modules for B.Sc Nursing Semester I & II. Every topic includes detailed biochemical mechanisms, clinical pearls, nursing care plans (ADPIE), and verified assessment questions.
               </p>
 
-              {/* Minimal KPI Metric Strip & Live Completion */}
-              <div className="mt-5 flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-semibold text-neutral-600">
-                <div className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1.5 rounded-lg border border-neutral-200">
-                  <Layers className="w-3.5 h-3.5 text-green-500" />
-                  <span>7 Units</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1.5 rounded-lg border border-neutral-200">
-                  <BookOpen className="w-3.5 h-3.5 text-green-700" />
-                  <span>{totalLessonsCount} Lessons</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-neutral-100 px-3 py-1.5 rounded-lg border border-neutral-200">
-                  <Sliders className="w-3.5 h-3.5 text-green-700" />
-                  <span>Interactive Simulators</span>
-                </div>
-
-                {/* Live Progress Bar Widget */}
-                <div className="flex items-center gap-2 bg-green-50 text-green-700 px-3 py-1.5 rounded-lg border border-green-100">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-green-500" />
-                  <span>
-                    Mastery: {totalCompletedCount}/{totalLessonsCount} ({curriculumProgressPct}%)
-                  </span>
-                  <div className="w-16 h-2 bg-green-100 rounded-full overflow-hidden ml-1">
-                    <div
-                      className="h-full bg-green-500 transition-all duration-300"
-                      style={{ width: `${curriculumProgressPct}%` }}
-                    />
-                  </div>
-                </div>
+              {/* Action Buttons */}
+              <div className="mt-5 flex flex-wrap items-center gap-3">
+                <Link
+                  to="/classification-of-carb"
+                  className="bg-[#159A91] hover:bg-[#12837b] text-white font-bold px-5 py-2.5 rounded-lg flex items-center gap-2 text-sm shadow-md transition-all active:scale-95"
+                >
+                  <BookOpen className="w-4 h-4" />
+                  <span>Start Syllabus (1. Classification of Carbohydrates) →</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={() => window.dispatchEvent(new CustomEvent('open-nova-tutor'))}
+                  className="bg-white/10 hover:bg-white/20 text-white font-medium px-4 py-2.5 rounded-lg text-sm border border-white/20 flex items-center gap-2 backdrop-blur-sm transition-all cursor-pointer"
+                >
+                  <Sparkles className="w-4 h-4 text-[#F2B66D]" />
+                  <span>Ask Nova Tutor</span>
+                </button>
               </div>
             </div>
 
-            {/* Quick Action Chips */}
-            <div className="flex flex-row lg:flex-col gap-2.5 shrink-0 self-start lg:self-center">
-              <Link
-                to="/question-bank"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 font-bold text-xs shadow-2xs transition-all hover:-translate-y-0.5"
-              >
-                <BookOpen className="w-3.5 h-3.5 text-green-600" />
-                <span>Question Bank (Short & Long)</span>
-              </Link>
-              <Link
-                to="/student/quiz/comprehensive-final"
-                className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs shadow-md shadow-green-600/20 transition-all hover:-translate-y-0.5"
-              >
-                <Award className="w-3.5 h-3.5 text-green-100" />
-                <span>Grand Final Assessment (40 Qs)</span>
-              </Link>
+            {/* Right Circular Gauge Card (Image 6) */}
+            <div className="bg-[#0f2d3d]/90 backdrop-blur-md border border-white/10 rounded-xl p-5 flex items-center gap-5 min-w-[280px] shadow-lg shrink-0">
+              <div className="relative w-20 h-20 flex-shrink-0 flex items-center justify-center">
+                <svg className="w-20 h-20 -rotate-90" viewBox="0 0 36 36">
+                  <path
+                    className="text-white/15"
+                    strokeWidth="3.5"
+                    stroke="currentColor"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                  <path
+                    className="text-[#159A91] transition-all duration-700 ease-out"
+                    strokeDasharray={`${curriculumProgressPct}, 100`}
+                    strokeWidth="3.5"
+                    strokeLinecap="round"
+                    stroke="currentColor"
+                    fill="none"
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center font-bold text-white text-base">
+                  {curriculumProgressPct}%
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-[11px] font-bold text-white/50 tracking-wider uppercase">Course Completion</span>
+                <span className="text-white font-bold text-sm mt-0.5">
+                  {totalCompletedCount} of {totalLessonsCount} Topics
+                </span>
+                <span className="text-xs text-white/70 mt-0.5">
+                  {modulesPassedCount} of {SYLLABUS_MODULES.length} Modules Cleared
+                </span>
+                <span className="text-[11px] text-[#F2B66D] font-semibold mt-1 flex items-center gap-1">
+                  ↗ &gt;75.0% Pass Rule Active
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </section>
 
-      {/* Main Interactive Workspace */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8">
+        {/* Action / Quick Tab Strip below Hero (Image 6) */}
+        <div className="flex flex-wrap items-center justify-between gap-3 mb-6">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-[#123B50] text-white shadow-xs flex items-center gap-1.5">
+              <BookOpen className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>{SYLLABUS_MODULES.length} Curriculum Modules ({totalLessonsCount} Topics)</span>
+            </span>
+            <Link
+              to="/question-bank"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-white text-[#263746] hover:bg-[#E9F5F3] border border-slate-200 transition-colors flex items-center gap-1.5 shadow-2xs"
+            >
+              <FileText className="w-3.5 h-3.5 text-[#159A91]" />
+              <span>Question Bank & Formulas</span>
+            </Link>
+          </div>
+
+          <Link
+            to="/student/quiz/comprehensive-final"
+            className="px-4 py-1.5 rounded-lg text-xs font-bold bg-[#123B50] hover:bg-[#159A91] text-white shadow-xs transition-colors flex items-center gap-1.5 border border-[#1e4e66]"
+          >
+            <Award className="w-3.5 h-3.5 text-[#F2B66D]" />
+            <span>Final Capstone Assessment (40 MCQs)</span>
+          </Link>
+        </div>
         {/* Grand Final Mixed Assessment Gating Card with Live Auto-Updating Completion */}
         <div
           className={`p-6 sm:p-7 rounded-3xl border mb-6 transition-all ${
@@ -293,7 +342,7 @@ export const BioChemistrySyllabus = () => {
                 }}
                 className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-black text-xs transition-all shadow-md ${
                   gating.isFinalUnlocked
-                    ? "bg-green-500 hover:bg-green-700 text-white shadow-green-500/30 cursor-pointer hover:scale-105"
+                    ? "bg-[#159A91] hover:bg-[#123B50] text-white shadow-[#159A91]/30 cursor-pointer hover:scale-105"
                     : "bg-neutral-100 text-neutral-500 border border-neutral-200 cursor-not-allowed opacity-90"
                 }`}
               >
@@ -333,7 +382,7 @@ export const BioChemistrySyllabus = () => {
                 onClick={() => setSelectedUnitId("all")}
                 className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                   selectedUnitId === "all"
-                    ? "bg-green-500 text-white shadow-xs"
+                    ? "bg-[#159A91] text-white shadow-xs"
                     : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-800"
                 }`}
               >
@@ -346,7 +395,7 @@ export const BioChemistrySyllabus = () => {
                   onClick={() => setSelectedUnitId(mod.id)}
                   className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all whitespace-nowrap cursor-pointer flex items-center gap-1.5 ${
                     selectedUnitId === mod.id
-                      ? "bg-green-600 text-white shadow-xs"
+                      ? "bg-[#123B50] text-white shadow-xs"
                       : "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 hover:text-neutral-900"
                   }`}
                 >
@@ -368,7 +417,7 @@ export const BioChemistrySyllabus = () => {
             </p>
             <button
               onClick={() => { setSearchQuery(""); setSelectedUnitId("all"); }}
-              className="mt-4 px-4 py-2 rounded-xl bg-green-600 text-white text-xs font-bold hover:bg-green-700 cursor-pointer"
+              className="mt-4 px-4 py-2 rounded-xl bg-[#159A91] text-white text-xs font-bold hover:bg-[#123B50] cursor-pointer"
             >
               Reset Filters
             </button>
@@ -395,108 +444,108 @@ export const BioChemistrySyllabus = () => {
                 <div
                   key={mod.id}
                   id={mod.id}
-                  className="bg-white rounded-2xl border border-neutral-200 shadow-xs hover:border-green-400 transition-all overflow-hidden"
+                  className="bg-white rounded-2xl border border-slate-200 shadow-xs hover:border-[#159A91]/50 transition-all overflow-hidden mb-6"
                 >
-                      {/* Unit Top Header */}
-                      <div className="p-5 sm:p-6 border-b border-neutral-100 bg-gradient-to-r from-white to-neutral-50/50">
-                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                          <div className="flex items-start sm:items-center gap-3.5">
-                            <div className="w-11 h-11 rounded-xl bg-green-50 border border-green-100 text-green-700 flex items-center justify-center text-xl shadow-2xs shrink-0">
-                              {mod.icon}
-                            </div>
-                            <div>
-                              <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                                <span className={`px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide border ${mod.badgeColor}`}>
-                                  Unit {mod.unitNumber}
-                                </span>
-                                <span className="text-[11px] font-semibold text-neutral-500">
-                                  {mod.category}
-                                </span>
-                                
-                                {/* Automatic Real-Time Completion Status Indicator */}
-                                {unitDone ? (
-                                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-green-50 text-green-700 border border-green-400">
-                                    <CheckCircle2 className="w-3 h-3 text-green-600" />
-                                    <span>Completed • Mastered</span>
-                                  </span>
-                                ) : (
-                                  <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-neutral-100 text-neutral-500 border border-neutral-200">
-                                    <span>Not Completed</span>
-                                  </span>
-                                )}
-
-                                {/* Per-Unit Progress Badge */}
-                                <span className="text-[10px] font-bold text-neutral-400 bg-neutral-100 px-2 py-0.5 rounded-md">
-                                  {unitCompletedCount}/{mod.topics.length} done ({unitPct}%)
-                                </span>
-                              </div>
-                              <h2 className="text-base sm:text-lg font-bold text-neutral-900">
-                                {mod.title}
-                              </h2>
-                              <p className="text-xs text-neutral-500 mt-0.5 line-clamp-1">
-                                {mod.summary}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* Actions: Toggle Studied / Take Quiz */}
-                          <div className="flex flex-wrap items-center gap-2 self-start sm:self-center shrink-0">
-                            {/* 1-click automatic completion toggle */}
-                            <button
-                              type="button"
-                              onClick={() => toggleCompletion(mod.id)}
-                              className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
-                                unitDone
-                                  ? "bg-neutral-100 text-neutral-600 hover:bg-neutral-200 border border-neutral-200"
-                                  : "bg-green-50 hover:bg-green-100 text-green-700 border border-green-200 shadow-xs"
-                              }`}
-                              title="Click to toggle chapter completion and update Grand Final standing"
-                            >
-                              <CheckCircle2
-                                className={`w-3.5 h-3.5 ${
-                                  unitDone ? "text-green-600" : "text-neutral-400"
-                                }`}
-                              />
-                              <span>{unitDone ? "Mark Incomplete" : "Mark as Studied"}</span>
-                            </button>
-
-                            {/* Quick Quiz Shortcut Button */}
-                            <Link
-                              to={`/quiz/${mod.id}`}
-                              className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-green-600 hover:bg-green-700 text-white font-bold text-xs transition-colors shrink-0 shadow-2xs"
-                            >
-                              <ClipboardList className="w-3.5 h-3.5 text-white" />
-                              <span>Take Unit Quiz</span>
-                              <ArrowRight className="w-3 h-3 text-white" />
-                            </Link>
-                          </div>
+                  {/* Unit Top Header */}
+                  <div className="p-5 sm:p-6 border-b border-slate-100 bg-gradient-to-r from-white to-slate-50/50">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                      <div className="flex items-start sm:items-center gap-3.5">
+                        <div className="w-11 h-11 rounded-xl bg-[#E9F5F3] border border-[#159A91]/20 text-[#123B50] flex items-center justify-center text-lg shadow-2xs shrink-0 font-extrabold">
+                          {String(mod.unitNumber).padStart(2, '0')}
                         </div>
+                        <div>
+                          <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                            <span className="px-2 py-0.5 rounded-md text-[10px] font-extrabold uppercase tracking-wide bg-[#E9F5F3] text-[#123B50] border border-[#159A91]/30">
+                              Unit {mod.unitNumber}
+                            </span>
+                            <span className="text-[11px] font-semibold text-slate-500">
+                              {mod.category}
+                            </span>
+                            
+                            {/* Automatic Real-Time Completion Status Indicator */}
+                            {unitDone ? (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E9F5F3] text-[#159A91] border border-[#159A91]/40">
+                                <CheckCircle2 className="w-3 h-3 text-[#159A91]" />
+                                <span>Mastered</span>
+                              </span>
+                            ) : (
+                              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+                                <span>Not Completed</span>
+                              </span>
+                            )}
+
+                            {/* Per-Unit Progress Badge */}
+                            <span className="text-[10px] font-bold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md">
+                              {unitCompletedCount}/{mod.topics.length} done ({unitPct}%)
+                            </span>
+                          </div>
+                          <h2 className="text-base sm:text-lg font-bold text-[#123B50]">
+                            {mod.title}
+                          </h2>
+                          <p className="text-xs text-slate-500 mt-0.5 line-clamp-1 font-normal">
+                            {mod.summary}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Actions: Toggle Studied / Take Quiz */}
+                      <div className="flex flex-wrap items-center gap-2 self-start sm:self-center shrink-0">
+                        {/* 1-click automatic completion toggle */}
+                        <button
+                          type="button"
+                          onClick={() => toggleCompletion(mod.id)}
+                          className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                            unitDone
+                              ? "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                              : "bg-[#E9F5F3] hover:bg-[#E9F5F3] text-[#123B50] border border-[#159A91]/30 shadow-xs"
+                          }`}
+                          title="Click to toggle chapter completion and update Grand Final standing"
+                        >
+                          <CheckCircle2
+                            className={`w-3.5 h-3.5 ${
+                              unitDone ? "text-[#159A91]" : "text-slate-400"
+                            }`}
+                          />
+                          <span>{unitDone ? "Mark Incomplete" : "Mark as Studied"}</span>
+                        </button>
+
+                        {/* Quick Quiz Shortcut Button */}
+                        <Link
+                          to={`/quiz/${mod.id}`}
+                          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#159A91] hover:bg-[#12837b] text-white font-bold text-xs transition-colors shrink-0 shadow-2xs"
+                        >
+                          <ClipboardList className="w-3.5 h-3.5 text-white" />
+                          <span>Take Unit Quiz</span>
+                          <ArrowRight className="w-3 h-3 text-white" />
+                        </Link>
+                      </div>
+                    </div>
 
                     {/* Segmented Sub-Tabs */}
-                    <div className="mt-5 flex items-center gap-1.5 overflow-x-auto border-t border-neutral-100 pt-3 scrollbar-none text-xs">
+                    <div className="mt-5 flex items-center gap-1.5 overflow-x-auto border-t border-slate-100 pt-3 scrollbar-none text-xs">
                       <button
                         onClick={() => setUnitTab(mod.id, "lessons")}
                         className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                           currentTab === "lessons"
-                            ? "bg-green-600 text-white shadow-2xs"
-                            : "text-neutral-600 hover:bg-neutral-100"
+                            ? "bg-[#123B50] text-white shadow-2xs"
+                            : "text-[#263746] hover:bg-[#E9F5F3]"
                         }`}
                       >
                         <BookOpen className="w-3.5 h-3.5" />
                         <span>Lessons ({mod.topics.length})</span>
                       </button>
 
-                      {/* Scientific Non-AI Medical Diagram Tab */}
+                      {/* Scientific Vector Diagram Tab */}
                       <button
                         onClick={() => setUnitTab(mod.id, "diagram")}
                         className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                           currentTab === "diagram"
-                            ? "bg-green-600 text-white shadow-2xs"
-                            : "text-green-700 bg-neutral-100 hover:bg-neutral-200 border border-neutral-300"
+                            ? "bg-[#123B50] text-white shadow-2xs"
+                            : "text-[#263746] hover:bg-[#E9F5F3]"
                         }`}
                       >
                         <span>🎨</span>
-                        <span>Scientific Vector Diagram</span>
+                        <span>Vector Diagram</span>
                       </button>
 
                       {/* Interactive Visual Tool Tab */}
@@ -504,11 +553,11 @@ export const BioChemistrySyllabus = () => {
                         onClick={() => setUnitTab(mod.id, "simulator")}
                         className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                           currentTab === "simulator"
-                            ? "bg-green-600 text-white shadow-2xs"
-                            : "text-green-700 bg-green-50 hover:bg-green-100 border border-green-200"
+                            ? "bg-[#123B50] text-white shadow-2xs"
+                            : "text-[#159A91] bg-[#E9F5F3] hover:bg-[#E9F5F3] border border-[#159A91]/30"
                         }`}
                       >
-                        <Zap className="w-3.5 h-3.5 text-green-600" />
+                        <Zap className="w-3.5 h-3.5 text-[#159A91]" />
                         <span>{getSimulatorLabel(mod.unitNumber)}</span>
                       </button>
 
@@ -516,11 +565,11 @@ export const BioChemistrySyllabus = () => {
                         onClick={() => setUnitTab(mod.id, "objectives")}
                         className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                           currentTab === "objectives"
-                            ? "bg-green-600 text-white shadow-2xs"
-                            : "text-neutral-600 hover:bg-neutral-100"
+                            ? "bg-[#123B50] text-white shadow-2xs"
+                            : "text-[#263746] hover:bg-[#E9F5F3]"
                         }`}
                       >
-                        <CheckCircle2 className="w-3.5 h-3.5 text-green-600" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-[#159A91]" />
                         <span>Objectives ({mod.objectives.length})</span>
                       </button>
 
@@ -529,11 +578,11 @@ export const BioChemistrySyllabus = () => {
                           onClick={() => setUnitTab(mod.id, "formulas")}
                           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                             currentTab === "formulas"
-                              ? "bg-green-600 text-white shadow-2xs"
-                              : "text-neutral-600 hover:bg-neutral-100"
+                              ? "bg-[#123B50] text-white shadow-2xs"
+                              : "text-[#263746] hover:bg-[#E9F5F3]"
                           }`}
                         >
-                          <Flame className="w-3.5 h-3.5 text-neutral-800" />
+                          <Flame className="w-3.5 h-3.5 text-[#F2B66D]" />
                           <span>Equations ({mod.formulas.length})</span>
                         </button>
                       )}
@@ -543,11 +592,11 @@ export const BioChemistrySyllabus = () => {
                           onClick={() => setUnitTab(mod.id, "ranges")}
                           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                             currentTab === "ranges"
-                              ? "bg-green-600 text-white shadow-2xs"
-                              : "text-neutral-600 hover:bg-neutral-100"
+                              ? "bg-[#123B50] text-white shadow-2xs"
+                              : "text-[#263746] hover:bg-[#E9F5F3]"
                           }`}
                         >
-                          <Stethoscope className="w-3.5 h-3.5 text-green-700" />
+                          <Stethoscope className="w-3.5 h-3.5 text-[#159A91]" />
                           <span>Clinical Ranges</span>
                         </button>
                       )}
@@ -557,11 +606,11 @@ export const BioChemistrySyllabus = () => {
                           onClick={() => setUnitTab(mod.id, "hook")}
                           className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer flex items-center gap-1.5 ${
                             currentTab === "hook"
-                              ? "bg-green-600 text-white shadow-2xs"
-                              : "text-neutral-600 hover:bg-neutral-100"
+                              ? "bg-[#123B50] text-white shadow-2xs"
+                              : "text-[#263746] hover:bg-[#E9F5F3]"
                           }`}
                         >
-                          <Lightbulb className="w-3.5 h-3.5 text-neutral-800" />
+                          <Lightbulb className="w-3.5 h-3.5 text-[#F2B66D]" />
                           <span>Exam Hook</span>
                         </button>
                       )}
@@ -613,25 +662,25 @@ export const BioChemistrySyllabus = () => {
                             return (
                               <div
                                 key={idx}
-                                className={`p-3.5 rounded-xl bg-white border transition-all flex items-center justify-between group shadow-2xs hover:shadow-sm ${
+                                className={`p-3 rounded-xl bg-white border transition-all flex items-center justify-between group shadow-2xs hover:shadow-xs ${
                                   isDone
-                                    ? "border-green-400 bg-green-50/20"
-                                    : "border-neutral-200/90 hover:border-green-400"
+                                    ? "border-[#159A91]/50 bg-[#E9F5F3]/30"
+                                    : "border-slate-200 hover:border-[#159A91] hover:bg-[#E9F5F3]/20"
                                 }`}
                               >
                                 <Link
                                   to={t.route}
-                                  className="flex items-center gap-2.5 truncate mr-2 flex-1 cursor-pointer"
+                                  className="flex items-center gap-2.5 truncate mr-2 flex-1 cursor-pointer min-w-0"
                                 >
                                   <span className={`w-6 h-6 rounded-lg text-[11px] font-bold flex items-center justify-center shrink-0 transition-colors ${
                                     isDone
-                                      ? "bg-green-500 text-white"
-                                      : "bg-neutral-100 group-hover:bg-green-100 text-neutral-600 group-hover:text-green-700"
+                                      ? "bg-[#159A91] text-white"
+                                      : "bg-slate-100 group-hover:bg-[#E9F5F3] text-slate-700 group-hover:text-[#123B50]"
                                   }`}>
                                     {isDone ? "✓" : idx + 1}
                                   </span>
                                   <span className={`text-xs font-semibold truncate ${
-                                    isDone ? "text-green-900" : "text-neutral-800 group-hover:text-green-700"
+                                    isDone ? "text-[#123B50]" : "text-slate-800 group-hover:text-[#123B50]"
                                   }`}>
                                     {t.label}
                                   </span>
@@ -648,11 +697,11 @@ export const BioChemistrySyllabus = () => {
                                   title={isDone ? "Mark as Incomplete" : "Mark as Completed"}
                                   className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 transition-all cursor-pointer ${
                                     isDone
-                                      ? "bg-green-500 border-green-500 text-white"
-                                      : "border-neutral-300 hover:border-green-500 bg-neutral-50 hover:bg-green-50 text-transparent hover:text-green-500"
+                                      ? "bg-[#159A91] border-[#159A91] text-white"
+                                      : "border-slate-300 hover:border-[#159A91] bg-slate-50 hover:bg-[#E9F5F3] text-transparent hover:text-[#159A91]"
                                   }`}
                                 >
-                                  <Check className="w-3.5 h-3.5" />
+                                  <Check className="w-3.5 h-3.5 stroke-[3]" />
                                 </button>
                               </div>
                             );
@@ -766,13 +815,13 @@ export const BioChemistrySyllabus = () => {
 
           <Link
             to="/student/quiz/comprehensive-final"
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-green-600 hover:bg-green-700 text-white font-extrabold text-xs shadow-sm transition-all hover:scale-102 shrink-0"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-[#159A91] hover:bg-[#12837b] text-white font-extrabold text-xs shadow-sm transition-all hover:scale-102 shrink-0"
           >
             <span>Start Grand Final Assessment</span>
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
-      </main>
+      </div>
     </div>
   );
 };

@@ -6,12 +6,14 @@ import { ToastProvider } from './context/ToastContext';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import AppShell from './components/layout/AppShell';
 
-// Public Auth Pages (Lazy Loaded)
+// Public Auth & Landing Pages (Lazy Loaded)
+const LandingPage = lazy(() => import('./pages/LandingPage'));
 const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
 const SignupPage = lazy(() => import('./pages/auth/SignupPage'));
 
 // Core Student Pages (Lazy Loaded)
 const Home = lazy(() => import('./pages/Home'));
+const ExplorerPage = lazy(() => import('./pages/ExplorerPage'));
 const SyllabusHub = lazy(() => import('./pages/SyllabusHub'));
 const BioChemistrySyllabus = lazy(() => import('./pages/BioChemistrySyllabus'));
 const BiochemistryLessonView = lazy(() => import('./pages/BioChemistryPages/BiochemistryLessonView'));
@@ -79,9 +81,9 @@ const AppRoutes = () => {
   const location = useLocation();
   const { currentUser } = useAuth();
 
-  // Hide AI Tutor on login and signup
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/signup';
-  const showAIWidget = currentUser && !isAuthPage;
+  // Hide AI Tutor on landing, login and signup pages
+  const isPublicPage = location.pathname === '/' || location.pathname === '/login' || location.pathname === '/signup';
+  const showAIWidget = currentUser && !isPublicPage;
 
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-900 font-sans selection:bg-green-500 selection:text-white">
@@ -99,15 +101,22 @@ const AppRoutes = () => {
       <main id="main-content" tabIndex="-1" className="outline-none">
         <Suspense fallback={<PageLoader />}>
           <Routes>
-            {/* Public Auth Routes */}
+            {/* Public Routes */}
+            <Route path="/" element={<LandingPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/signup" element={<Navigate to="/login" replace />} />
+
+            {/* 3D Anatomy Interactive Explorer (Dedicated Museum Studio Layout) */}
+            <Route element={<ProtectedRoute allowedRoles={['student', 'faculty', 'admin']} />}>
+              <Route path="/explorer" element={<ExplorerPage />} />
+              <Route path="/3d-explorer" element={<ExplorerPage />} />
+            </Route>
 
             {/* Authenticated Routes wrapped in unified AppLayout */}
             <Route element={<AppLayout />}>
               {/* Student Learning & Assessment Routes (Accessible to student, faculty, admin) */}
               <Route element={<ProtectedRoute allowedRoles={['student', 'faculty', 'admin']} />}>
-                <Route path="/" element={<Home />} />
+                <Route path="/dashboard" element={<Home />} />
                 <Route path="/syllabus" element={<SyllabusHub />} />
                 <Route path="/curriculum" element={<Navigate to="/syllabus" replace />} />
                 <Route path="/bio-chem-syllabus" element={<BioChemistrySyllabus />} />

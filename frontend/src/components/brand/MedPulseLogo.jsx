@@ -10,15 +10,15 @@ export const MedPulseIcon = ({ className = 'w-8 h-8', showCross = true }) => (
     aria-hidden="true"
   >
     {/* Squircle Container */}
-    <rect width="48" height="48" rx="14" fill="#15803D" />
+    <rect width="48" height="48" rx="14" fill="#123B50" />
 
     {/* Soft Clinical Cross Motif */}
     {showCross && (
       <path
         d="M24 10V38M10 24H38"
-        stroke="#ffffff"
-        strokeOpacity="0.2"
-        strokeWidth="6"
+        stroke="#159A91"
+        strokeOpacity="0.4"
+        strokeWidth="5"
         strokeLinecap="round"
       />
     )}
@@ -26,14 +26,14 @@ export const MedPulseIcon = ({ className = 'w-8 h-8', showCross = true }) => (
     {/* Dynamic Heartbeat / Pulse Wave Line */}
     <path
       d="M8 24H16L19 15L23 33L27 19L30 27L33 24H40"
-      stroke="#ffffff"
+      stroke="#159A91"
       strokeWidth="3.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
 
     {/* Active Pulse Node */}
-    <circle cx="23" cy="33" r="2.2" fill="#ffffff" />
+    <circle cx="23" cy="33" r="2.2" fill="#F2B66D" />
   </svg>
 );
 
@@ -61,8 +61,8 @@ export const MedPulseLogo = ({
         <MedPulseIcon className={iconSizes[size] || iconSizes.md} />
       </div>
       <div className="flex flex-col leading-tight">
-        <div className={`font-black tracking-tight text-neutral-900 ${textSizes[size] || textSizes.md}`}>
-          Med<span className="text-green-600">Pulse</span>
+        <div className={`font-black tracking-tight text-[#123B50] ${textSizes[size] || textSizes.md}`}>
+          Med<span className="text-[#159A91]">Pulse</span>
         </div>
         {showTagline ? (
           <span className="text-[10px] text-neutral-500 font-semibold tracking-wide">

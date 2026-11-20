@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../../components/Navbar";
 import { ArrowRight, ClipboardList } from "lucide-react";
+import { SubtopicMedicalPlate } from "../../../components/curriculum/SubtopicMedicalPlate";
+import { SubtopicQuiz15Marks } from "../../../components/curriculum/SubtopicQuiz15Marks";
+import { SubtopicNavFooter } from "../../../components/curriculum/SubtopicNavFooter";
+import { UNIT_2_LIPID_SUBTOPICS } from "../../../constants/biochemistryLessonsData";
 
 const MUFA = () => {
   const [theme, setTheme] = useState("light");
@@ -172,6 +176,13 @@ const MUFA = () => {
             </div>
           </div>
         </section>
+
+        {/* Section Medical Plate */}
+        <SubtopicMedicalPlate
+          subtopicId="mufa"
+          subtopicTitle="Monounsaturated Fatty Acids (MUFA)"
+          subject="biochemistry"
+        />
 
         {/* Content layout: main concepts + side recap */}
         <div className="mt-8 grid gap-6 lg:grid-cols-[3fr,2fr]">
@@ -422,24 +433,24 @@ const MUFA = () => {
           </motion.aside>
         </div>
 
-        {/* Bottom Lesson Navigation */}
-        <div className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 pb-20">
-          <Link
-            to="/fatty-acids-classification"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-xs font-bold text-neutral-700 dark:text-neutral-200 hover:text-green-700 transition-all shadow-sm group"
-          >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-green-700" />
-            <span>Previous: Fatty Acids Classification</span>
-          </Link>
-
-          <Link
-            to="/pufa"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-green-500 to-green-500 hover:from-green-500 hover:to-green-500 text-xs font-bold text-white transition-all shadow-md shadow-md group"
-          >
-            <span>Next: Polyunsaturated Fatty Acids (PUFA)</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
+        {/* 15 Marks Subtopic Clinical Assessment */}
+        <div className="mt-10">
+          <SubtopicQuiz15Marks
+            subtopicId="mufa"
+            subtopicTitle="Monounsaturated Fatty Acids (MUFA)"
+            unitTitle="Unit 2: Lipids"
+          />
         </div>
+
+        {/* Sequential Subtopic Navigation Footer */}
+        <SubtopicNavFooter
+          currentIndex={1}
+          totalCount={UNIT_2_LIPID_SUBTOPICS.length}
+          prevSubtopic={{ title: "Classification of Fatty Acids", path: "/FattyAcidsClassification" }}
+          nextSubtopic={{ title: "Polyunsaturated Fatty Acids (PUFA)", path: "/PUFA" }}
+          subtopics={UNIT_2_LIPID_SUBTOPICS}
+          syllabusPath="/bio-chem-syllabus"
+        />
       </motion.div>
     </div>
   );

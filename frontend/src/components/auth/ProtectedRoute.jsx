@@ -41,7 +41,7 @@ export const ProtectedRoute = ({ allowedRoles = [] }) => {
           </p>
           <Link
             to={dashboardPath}
-            className="inline-flex items-center justify-center px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white font-bold text-xs rounded-xl shadow-md shadow-green-600/20 transition-all cursor-pointer"
+            className="inline-flex items-center justify-center px-6 py-2.5 bg-[#159A91] hover:bg-[#123B50] text-white font-bold text-xs rounded-xl shadow-md shadow-[#159A91]/20 transition-all cursor-pointer"
           >
             Return to Dashboard
           </Link>

@@ -1,0 +1,145 @@
+{
+  "id": "skin",
+  "name": "Skin",
+  "latinName": "Integumentum",
+  "system": "Integumentary System",
+  "tagline": "The living boundary",
+  "description": "The body\u2019s largest organ \u2014 a living barrier that senses touch, holds in water, and regulates temperature.",
+  "specimenImage": "/images/explorer/skin_specimen.jpg",
+  "thumbnail": "/images/explorer/skin_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "About 2 m\u00b2 spread flat"
+    },
+    {
+      "label": "Weight",
+      "value": "3.5\u20135 kg"
+    },
+    {
+      "label": "Daily",
+      "value": "Sheds around 500 million cells"
+    },
+    {
+      "label": "Location",
+      "value": "Covering the entire body"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Dermal vascular plexus"
+    },
+    {
+      "label": "Function",
+      "value": "Protects, senses, and cools"
+    }
+  ],
+  "medicalImportance": "Three layers \u2014 epidermis, dermis, and hypodermis \u2014 each with a distinct job.",
+  "didYouKnow": "A single square centimetre can hold hundreds of sweat glands and metres of blood vessels.",
+  "conditions": [
+    "Eczema",
+    "Psoriasis",
+    "Melanoma",
+    "Acne vulgaris",
+    "Cellulitis",
+    "Contact dermatitis",
+    "Rosacea",
+    "Vitiligo"
+  ],
+  "microscopicView": {
+    "title": "Epidermal layers",
+    "subtitle": "Stratum corneum to stratum basale",
+    "image": "/images/explorer/skin_microscopic.jpg",
+    "description": "Keratinocyte stratification, melanocytes, tactile Merkel cells, and dermal papillae."
+  },
+  "compareWith": "intestine",
+  "compareData": {
+    "subtitle": "Skin vs. intestine",
+    "image": "/images/explorer/skin_compare.jpg",
+    "description": "External cornified dry protective barrier vs. internal moist mucosal nutrient absorber."
+  },
+  "animation": {
+    "title": "Protects, senses, and cools",
+    "subtitle": "Thermoregulation via sweat evaporation and dermal vasodilation",
+    "poster": "/images/explorer/skin_animation.jpg"
+  },
+  "systemView": {
+    "title": "Integumentary System",
+    "subtitle": "Cutaneous envelope spanning somatic surface",
+    "image": "/images/explorer/skin_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "epidermis",
+      "name": "Epidermis",
+      "latinName": "Epidermis",
+      "color": "red",
+      "position": [
+        0.0,
+        0.2,
+        0.35
+      ],
+      "description": "The avascular stratified squamous keratinized epithelial barrier forming the outermost surface of the body, renewing completely every 28-30 days from the proliferating basal stem cell layer.",
+      "function": "Provides primary waterproof barrier (keratin and intercellular ceramides), UV photoprotection (melanin), microbial defense (acid mantle, defensins), and transcutaneous immune surveillance (Langerhans dendritic antigen-presenting cells).",
+      "connections": [
+        "Attached to underlying dermis via the undulating Dermal-Epidermal Basement Membrane Zone (BMZ)",
+        "Interlocks with dermal papillae via epidermal rete ridges to resist shearing forces",
+        "Pierced by hair follicles, sebaceous glands, and eccrine sweat gland ducts",
+        "Nutritionally dependent on passive diffusion from dermal capillary loops"
+      ],
+      "clinicalNote": "First-degree burns (erythema, pain, e.g. sunburn) affect only the epidermis. Autoimmune blistering diseases (Bullous Pemphigoid vs. Pemphigus Vulgaris) target BMZ hemidesmosomes or epidermal desmogleins respectively. Skin cancers (Melanoma, Basal Cell, Squamous Cell) arise from distinct epidermal cell lines.",
+      "keyFeatures": [
+        "Turnover time: ~28 to 30 days from basal mitosis to corneum shedding (desquamation)",
+        "Five strata in thick skin: Basale, Spinosum, Granulosum, Lucidum, and Corneum",
+        "Melanocytes transfer protective melanosomes to keratinocytes via dendritic phagocytosis",
+        "Site of initial photolytic cholecalciferol (Vitamin D3) synthesis under UVB 290-315 nm"
+      ],
+      "histology": "Keratinocytes undergoing progressive cornification from columnar mitotic basal cells to flattened anucleate, lipid-sealed squames of the stratum corneum."
+    },
+    {
+      "id": "dermis",
+      "name": "Dermis & Appendages",
+      "latinName": "Dermis / Corium",
+      "color": "blue",
+      "position": [
+        0.0,
+        -0.15,
+        0.3
+      ],
+      "description": "The tough, flexible fibroelastic connective tissue layer underlying the epidermis (1-4 mm thick). Comprises a superficial papillary dermis with delicate collagen and a deep reticular dermis packed with coarse type I collagen and elastin bundles.",
+      "function": "Provides mechanical tensile strength, shear resistance, active thermoregulation (via glomus bodies and dermal arteriovenous shunts), cutaneous sensory perception, and adnexal gland support.",
+      "connections": [
+        "Anchored to epidermis above by type VII collagen anchoring fibrils at Basement Membrane",
+        "Merges deeply with subcutaneous adipose hypodermis (superficial fascia)",
+        "Houses eccrine and apocrine sweat glands, sebaceous glands, and hair follicle pilosebaceous units",
+        "Richly innervated by Meissner corpuscles, Pacinian corpuscles, Merkel discs, and free nerve endings"
+      ],
+      "clinicalNote": "Stage II & III pressure ulcers (decubitus) erode through the dermis due to prolonged capillary ischemia (>32 mmHg pressure over bony prominences like sacrum and heels). Second-degree burns blister and damage dermal papillae; third-degree burns destroy the entire dermal depth.",
+      "keyFeatures": [
+        "Collagen fiber alignment determines Langer's cleavage lines (critical for surgical incisions)",
+        "Thermoregulatory cutaneous blood flow can vary from 50 mL/min in cold to 8 L/min in extreme heat",
+        "Houses mechanoreceptors: Meissner (light dynamic touch) and Pacinian (high-frequency vibration)",
+        "Fibroblasts produce extracellular matrix, hyaluronan, and collagen fibers"
+      ],
+      "histology": "Dense irregular connective tissue featuring thick wavy bundles of eosinophilic type I collagen, interwoven elastic fibers, blood vessels, nerve endings, and hair follicles with arrector pili smooth muscles."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "sq1",
+      "type": "mcq",
+      "prompt": "Which epidermal stratum contains dividing stem cells generating new keratinocytes?",
+      "options": [
+        "Stratum basale",
+        "Stratum corneum",
+        "Stratum granulosum",
+        "Stratum lucidum"
+      ],
+      "correctAnswer": "Stratum basale",
+      "rationale": "The deepest stratum basale rests on the basement membrane and continuously divides to regenerate the epidermis."
+    }
+  ]
+}

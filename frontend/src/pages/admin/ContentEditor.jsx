@@ -300,7 +300,7 @@ export const ContentEditor = () => {
             </button>
             <button
               onClick={() => setShowQuestionModal(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-500 hover:bg-green-500 text-white rounded-xl text-xs font-bold shadow-md shadow-green-400/20 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#159A91] hover:bg-[#123B50] text-white rounded-xl text-xs font-bold shadow-md shadow-[#159A91]/20 transition-all cursor-pointer"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Add Assessment Question</span>
@@ -489,7 +489,7 @@ export const ContentEditor = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#159A91] hover:bg-[#123B50] text-white shadow-md shadow-[#159A91]/20 cursor-pointer transition-colors"
                   >
                     Add Subject
                   </button>
@@ -599,7 +599,7 @@ export const ContentEditor = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#159A91] hover:bg-[#123B50] text-white shadow-md shadow-[#159A91]/20 cursor-pointer transition-colors"
                   >
                     Save Question
                   </button>
@@ -736,7 +736,7 @@ export const ContentEditor = () => {
                   <button
                     type="submit"
                     disabled={uploadLoading || !uploadForm.contentBody.trim()}
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#159A91] hover:bg-[#123B50] text-white shadow-md shadow-[#159A91]/20 cursor-pointer disabled:opacity-50 flex items-center gap-2 transition-colors"
                   >
                     <UploadCloud className="w-4 h-4" />
                     <span>{uploadLoading ? 'Chunking & Embedding...' : 'Upload, Chunk & Index'}</span>

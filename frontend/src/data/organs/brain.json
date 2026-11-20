@@ -1,0 +1,172 @@
+{
+  "id": "brain",
+  "name": "Brain",
+  "latinName": "Encephalon",
+  "system": "Nervous System",
+  "tagline": "The master regulator of consciousness",
+  "description": "A sophisticated organ comprising 86 billion neurons, orchestrating sensation, cognitive thought, motor action, and emotional homeostasis.",
+  "specimenImage": "/images/explorer/brain_specimen.jpg",
+  "thumbnail": "/images/explorer/brain_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "Approx. 1,400 cm\u00b3"
+    },
+    {
+      "label": "Weight",
+      "value": "1.3\u20131.4 kg"
+    },
+    {
+      "label": "Daily",
+      "value": "Consumes 20% total body oxygen & glucose"
+    },
+    {
+      "label": "Location",
+      "value": "Cranial cavity protected by meninges"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Internal carotid & vertebral arteries (Circle of Willis)"
+    },
+    {
+      "label": "Function",
+      "value": "Cognition, movement, and vital autonomic control"
+    }
+  ],
+  "medicalImportance": "Susceptible to acute ischemic stroke and herniation; zero ischemic tolerance beyond a few minutes.",
+  "didYouKnow": "The brain itself has no pain receptors; neurosurgeries can be performed while patients remain awake.",
+  "conditions": [
+    "Acute ischemic stroke",
+    "Subdural hematoma",
+    "Epilepsy",
+    "Parkinson\u2019s disease",
+    "Alzheimer\u2019s dementia",
+    "Bacterial meningitis",
+    "Glioblastoma",
+    "Multiple sclerosis"
+  ],
+  "microscopicView": {
+    "title": "Cerebral cortex neurons",
+    "subtitle": "Pyramidal cells & synaptogenesis",
+    "image": "/images/explorer/brain_microscopic.jpg",
+    "description": "Six histological layers with dendritic spines, astrocytes forming the blood-brain barrier."
+  },
+  "compareWith": "eye",
+  "compareData": {
+    "subtitle": "Brain vs. eye",
+    "image": "/images/explorer/brain_compare.jpg",
+    "description": "Central processor versus peripheral sensory transducer."
+  },
+  "animation": {
+    "title": "Synaptic transmission & rhythms",
+    "subtitle": "Action potentials and neural oscillations",
+    "poster": "/images/explorer/brain_animation.jpg"
+  },
+  "systemView": {
+    "title": "Nervous System",
+    "subtitle": "Central and peripheral neural axis",
+    "image": "/images/explorer/brain_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "cerebral-cortex",
+      "name": "Cerebral Cortex",
+      "latinName": "Cortex cerebri",
+      "color": "red",
+      "position": [
+        0.0,
+        0.25,
+        0.35
+      ],
+      "description": "The convoluted 2-4 mm thick outer grey matter mantle of the cerebral hemispheres, divided by the longitudinal fissure and major sulci into frontal, parietal, temporal, and occipital lobes.",
+      "function": "Executive cognitive control, voluntary motor initiation (primary motor cortex M1), somatosensory processing (S1), language comprehension (Wernicke) and production (Broca), and conscious perception.",
+      "connections": [
+        "Interhemispheric communication via ~200 million axonal fibers of the Corpus Callosum",
+        "Receives thalamocortical sensory projections from thalamic relay nuclei",
+        "Sends corticospinal and corticobulbar projection fibers through the internal capsule",
+        "Supplied by Circle of Willis: Anterior, Middle, and Posterior Cerebral Arteries"
+      ],
+      "clinicalNote": "Middle Cerebral Artery (MCA) ischemic stroke causes contralateral hemiparesis and hemianesthesia (face/arm > leg) plus aphasia (dominant hemisphere). Convolutions maximize surface area (~2500 cm2).",
+      "keyFeatures": [
+        "Houses ~16 billion cortical neurons arranged in six distinct horizontal laminae",
+        "Consumes 20% of total body resting glucose and oxygen despite weighing only 2% of body mass",
+        "Frontal prefrontal cortex drives executive decision-making and personality",
+        "Primary visual cortex (V1) situated along the banks of the calcarine sulcus"
+      ],
+      "histology": "Six-layered neocortex (molecular, external granular, external pyramidal, internal granular, internal pyramidal with Betz cells, multiform) supported by astrocytes, oligodendrocytes, and microglia."
+    },
+    {
+      "id": "cerebellum",
+      "name": "Cerebellum",
+      "latinName": "Cerebellum",
+      "color": "orange",
+      "position": [
+        0.2,
+        -0.3,
+        -0.2
+      ],
+      "description": "Located in the posterior cranial fossa inferior to the tentorium cerebelli and dorsal to the pons and medulla. Features an extensively folded foliate cortex with central vermis and lateral hemispheres.",
+      "function": "Coordinates voluntary motor movements, precision, timing, postural equilibrium, and vestibulo-ocular reflexes through real-time motor error detection and procedural motor learning.",
+      "connections": [
+        "Connected to brainstem via Superior, Middle, and Inferior Cerebellar Peduncles",
+        "Receives massive mossy fiber input from pontine nuclei carrying motor intent copies",
+        "Receives climbing fibers from inferior olivary nucleus signaling motor errors",
+        "Outputs via deep cerebellar nuclei (Dentate, Emboliform, Globose, Fastigial)"
+      ],
+      "clinicalNote": "Cerebellar lesions produce ipsilateral ataxia, intention tremor, dysmetria (past-pointing), dysdiadochokinesia (impaired rapid alternating movements), nystagmus, and scanning staccato speech.",
+      "keyFeatures": [
+        "Contains over 50% of all neurons in the human brain packed into 10% of total brain volume",
+        "Famous for giant Purkinje cells possessing enormous planar dendritic arborizations",
+        "Functions as an offline motor coprocessor calibrating muscular trajectories",
+        "Vulnerable to chronic alcohol toxicity (vermis degeneration and cerebellar ataxia)"
+      ],
+      "histology": "Three distinct cortical layers: outer synaptic molecular layer, middle monolayer of giant GABAergic Purkinje cells, and inner dense granule cell layer (tiniest and most numerous neurons in brain)."
+    },
+    {
+      "id": "brainstem",
+      "name": "Brainstem (Midbrain, Pons & Medulla)",
+      "latinName": "Truncus encephali",
+      "color": "blue",
+      "position": [
+        -0.05,
+        -0.4,
+        0.1
+      ],
+      "description": "The stalk-like posterior structural core of the brain extending from the diencephalon down through the foramen magnum to merge continuously with the cervical spinal cord.",
+      "function": "Houses vital autonomic regulatory centers controlling respiration (dorsal/ventral respiratory groups), cardiovascular tone (vasomotor center), heart rate, and protective reflexes (coughing, vomiting, swallowing).",
+      "connections": [
+        "Transmits all ascending somatosensory tracts (dorsal columns, spinothalamic)",
+        "Transmits all descending motor pathways (pyramidal corticospinal tracts decussating at medulla)",
+        "Houses cranial nerve nuclei III through XII",
+        "Contains the Reticular Activating System (RAS) maintaining cortical arousal and wakefulness"
+      ],
+      "clinicalNote": "Uncal or tonsillar brain herniation compresses the brainstem, producing Cushing's triad (severe hypertension, bradycardia, irregular Cheyne-Stokes breathing) indicating impending fatal brainstem death.",
+      "keyFeatures": [
+        "Anatomical crossroads: 90% of motor corticospinal fibers decussate at the medullary pyramids",
+        "Nucleus tractus solitarius receives all visceral sensory baroreceptor/chemoreceptor afferents",
+        "Damage to Reticular Activating System produces irreversible coma",
+        "Traversed by basilar artery and posterior inferior cerebellar artery (PICA)"
+      ],
+      "histology": "Complex mosaic of white matter longitudinal tracts interspersed with reticular formation multi-dendritic neuron networks and cranial nerve motor/sensory nuclei."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "bq1",
+      "type": "mcq",
+      "prompt": "What arterial anastomosis ensures collateral circulation to the brain?",
+      "options": [
+        "Circle of Willis",
+        "Coronary sinus",
+        "Celiac trunk",
+        "Dermal plexus"
+      ],
+      "correctAnswer": "Circle of Willis",
+      "rationale": "The Circle of Willis interconnects the internal carotid and vertebrobasilar systems at the base of the brain."
+    }
+  ]
+}

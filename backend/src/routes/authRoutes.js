@@ -1,6 +1,6 @@
 import express from 'express';
 import rateLimit from 'express-rate-limit';
-import { login, signup, getMe, changePassword } from '../controllers/authController.js';
+import { login, signup, getMe, changePassword, lookupUsername } from '../controllers/authController.js';
 import { authenticateUser } from '../middleware/auth.js';
 import { validateBody } from '../middleware/validate.js';
 import { loginSchema, signupSchema, changePasswordSchema } from '../schemas/index.js';
@@ -20,6 +20,7 @@ const authLimiter = rateLimit({
 });
 
 // Public auth endpoints protected by rate limiting and Zod validation
+router.get('/lookup-username', lookupUsername);
 router.post('/login', authLimiter, validateBody(loginSchema), login);
 router.post('/signup', authLimiter, validateBody(signupSchema), signup);
 

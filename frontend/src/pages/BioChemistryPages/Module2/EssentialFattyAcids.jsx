@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../../components/Navbar";
 import { ArrowRight, ClipboardList } from "lucide-react";
+import { SubtopicMedicalPlate } from "../../../components/curriculum/SubtopicMedicalPlate";
+import { SubtopicQuiz15Marks } from "../../../components/curriculum/SubtopicQuiz15Marks";
+import { SubtopicNavFooter } from "../../../components/curriculum/SubtopicNavFooter";
+import { UNIT_2_LIPID_SUBTOPICS } from "../../../constants/biochemistryLessonsData";
 
 const EssentialFattyAcids = () => {
   const [theme, setTheme] = useState("light");
@@ -173,6 +177,13 @@ const EssentialFattyAcids = () => {
             </div>
           </div>
         </section>
+
+        {/* Section Medical Plate */}
+        <SubtopicMedicalPlate
+          subtopicId="essential-fatty-acids"
+          subtopicTitle="Essential Fatty Acids & Metabolism"
+          subject="biochemistry"
+        />
 
         {/* Content layout: main concepts + side recap */}
         <div className="mt-8 grid gap-6 lg:grid-cols-[3fr,2fr]">
@@ -476,27 +487,24 @@ const EssentialFattyAcids = () => {
           </motion.aside>
         </div>
 
-        {/* Bottom Lesson Navigation */}
-        <div className="mt-12 pt-6 border-t border-neutral-200 dark:border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4 pb-20">
-          <Link
-            to="/pufa"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-2xl bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 text-xs font-bold text-neutral-700 dark:text-neutral-200 hover:text-green-700 transition-all shadow-sm group"
-          >
-            <ArrowRight className="w-4 h-4 rotate-180 group-hover:-translate-x-1 transition-transform text-green-700" />
-            <span>Previous: Polyunsaturated Fatty Acids (PUFA)</span>
-          </Link>
-
-          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-            <Link
-              to="/student/quiz/unit-2-lipids"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-2xl bg-gradient-to-r from-green-500 to-green-500 hover:from-green-500 hover:to-green-500 text-xs font-extrabold text-white transition-all shadow-md shadow-md group cursor-pointer"
-            >
-              <ClipboardList className="w-4 h-4" />
-              <span>Complete Unit 2: Take Assessment (15 Qs)</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
+        {/* 15 Marks Subtopic Clinical Assessment */}
+        <div className="mt-10">
+          <SubtopicQuiz15Marks
+            subtopicId="essential-fatty-acids"
+            subtopicTitle="Essential Fatty Acids & Metabolism"
+            unitTitle="Unit 2: Lipids"
+          />
         </div>
+
+        {/* Sequential Subtopic Navigation Footer */}
+        <SubtopicNavFooter
+          currentIndex={3}
+          totalCount={UNIT_2_LIPID_SUBTOPICS.length}
+          prevSubtopic={{ title: "Polyunsaturated Fatty Acids (PUFA)", path: "/PUFA" }}
+          nextSubtopic={{ title: "Unit 3: Protein Structure & Denaturation", path: "/biochemistry/lesson/protein-structure-denaturation" }}
+          subtopics={UNIT_2_LIPID_SUBTOPICS}
+          syllabusPath="/bio-chem-syllabus"
+        />
       </motion.div>
     </div>
   );

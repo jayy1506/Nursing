@@ -242,7 +242,7 @@ export const QuizView = () => {
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                 <Link
                   to={target.path}
-                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-green-500 hover:bg-green-500 text-white font-bold text-xs shadow-md transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#159A91] hover:bg-[#123B50] text-white font-bold text-xs shadow-md transition-all inline-flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <span>Return to {target.name} Syllabus</span>
                   <ChevronRight className="w-4 h-4" />
@@ -262,28 +262,28 @@ export const QuizView = () => {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b bg-neutral-100/50 via-white to-neutral-50 text-neutral-900 pb-16 font-sans">
+    <div className="min-h-screen bg-[#E9F5F3]/30 text-[#263746] pb-16 font-sans">
       <Navbar />
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
         {/* Assessment Header Card */}
-        <div className="bg-white border border-neutral-200/90 rounded-3xl p-6 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white border border-[#123B50]/15 rounded-3xl p-6 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="flex items-center gap-2 flex-wrap mb-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-neutral-100 text-green-700 text-xs font-extrabold border border-neutral-300">
-                <ClipboardList className="w-3.5 h-3.5 text-green-700" />
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E9F5F3] text-[#123B50] text-xs font-extrabold border border-[#159A91]/30">
+                <ClipboardList className="w-3.5 h-3.5 text-[#159A91]" />
                 <span>{questions.length}-Question Assessment Exam</span>
               </span>
 
               {/* Mode Toggle Switcher */}
-              <div className="inline-flex items-center p-0.5 rounded-xl bg-neutral-100 border border-neutral-200 text-[11px] font-bold">
+              <div className="inline-flex items-center p-0.5 rounded-xl bg-[#E9F5F3] border border-[#123B50]/10 text-[11px] font-bold">
                 <button
                   type="button"
                   onClick={() => setMode('exam')}
                   className={`px-2.5 py-1 rounded-lg transition-all cursor-pointer ${
                     mode === 'exam'
-                      ? 'bg-white text-black shadow-xs font-black'
-                      : 'text-neutral-500 hover:text-neutral-800'
+                      ? 'bg-[#123B50] text-white shadow-xs font-black'
+                      : 'text-[#263746]/70 hover:text-[#123B50]'
                   }`}
                 >
                   Exam Mode
@@ -293,20 +293,20 @@ export const QuizView = () => {
                   onClick={() => setMode('practice')}
                   className={`px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 cursor-pointer ${
                     mode === 'practice'
-                      ? 'bg-green-600 text-white shadow-xs font-black'
-                      : 'text-neutral-500 hover:text-neutral-800'
+                      ? 'bg-[#159A91] text-white shadow-xs font-black'
+                      : 'text-[#263746]/70 hover:text-[#123B50]'
                   }`}
                 >
-                  <Zap className="w-3 h-3" />
+                  <Zap className="w-3 h-3 text-[#F2B66D]" />
                   <span>Practice Mode</span>
                 </button>
               </div>
             </div>
 
-            <h1 className="text-xl sm:text-2xl font-black text-neutral-900 tracking-tight">
+            <h1 className="text-xl sm:text-2xl font-black text-[#123B50] tracking-tight">
               {assessmentData.title}
             </h1>
-            <p className="text-xs sm:text-sm text-neutral-600 mt-1">
+            <p className="text-xs sm:text-sm text-[#263746]/75 mt-1">
               {mode === 'practice'
                 ? 'Clinical Practice Mode: Instant rationales revealed as you select options. Use keyboard [A-D] or [1-4].'
                 : assessmentData.description}
@@ -319,19 +319,19 @@ export const QuizView = () => {
               className={`flex items-center gap-1.5 px-3 py-2 rounded-xl border font-mono font-bold text-xs transition-all ${
                 isTimeCritical
                   ? 'bg-rose-50 border-rose-300 text-rose-700 animate-pulse'
-                  : 'bg-neutral-50 border-neutral-200 text-neutral-700'
+                  : 'bg-[#E9F5F3] border-[#159A91]/30 text-[#123B50]'
               }`}
               title="Time Remaining / Elapsed"
             >
-              <Clock className={`w-3.5 h-3.5 ${isTimeCritical ? 'text-rose-600' : 'text-green-700'}`} />
+              <Clock className={`w-3.5 h-3.5 ${isTimeCritical ? 'text-rose-600' : 'text-[#159A91]'}`} />
               <span>{formatTime(timeLeft)} left</span>
             </div>
 
-            <div className="px-3.5 py-2 rounded-xl bg-neutral-100 border border-neutral-300 text-neutral-800 font-bold text-xs flex items-center gap-2">
+            <div className="px-3.5 py-2 rounded-xl bg-white border border-[#123B50]/15 text-[#123B50] font-bold text-xs flex items-center gap-2 shadow-2xs">
               <span>{answeredCount}/{questions.length} Answered</span>
               {flaggedCount > 0 && (
-                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-800 text-[10px] font-black">
-                  <Bookmark className="w-2.5 h-2.5 fill-amber-700 text-amber-700" />
+                <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-[#F2B66D]/20 text-[#123B50] text-[10px] font-black border border-[#F2B66D]/40">
+                  <Bookmark className="w-2.5 h-2.5 fill-[#F2B66D] text-[#F2B66D]" />
                   <span>{flaggedCount}</span>
                 </span>
               )}
@@ -340,15 +340,15 @@ export const QuizView = () => {
         </div>
 
         {/* Progress Bar */}
-        <div className="w-full bg-neutral-200/80 rounded-full h-2.5 mb-6 overflow-hidden">
+        <div className="w-full bg-[#E9F5F3] rounded-full h-2.5 mb-6 overflow-hidden border border-[#159A91]/20">
           <div
-            className="bg-linear-to-r from-green-500 to-green-600 h-2.5 rounded-full transition-all duration-300"
+            className="bg-gradient-to-r from-[#159A91] to-[#F2B66D] h-2.5 rounded-full transition-all duration-300"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
 
         {/* Question Selector Quick Grid with Flag Indicators */}
-        <div className="flex flex-wrap gap-1.5 mb-6 p-3 bg-white border border-neutral-200/90 rounded-2xl shadow-xs">
+        <div className="flex flex-wrap gap-1.5 mb-6 p-3 bg-white border border-[#123B50]/15 rounded-2xl shadow-xs">
           {questions.map((_, i) => {
             const isAnswered = selectedAnswers[i] !== undefined;
             const isCurrent = i === currentIndex;
@@ -359,15 +359,15 @@ export const QuizView = () => {
                 onClick={() => setCurrentIndex(i)}
                 className={`w-7 h-7 rounded-lg text-xs font-bold transition-all cursor-pointer relative ${
                   isCurrent
-                    ? 'bg-green-600 text-white shadow-sm ring-2 ring-neutral-400'
+                    ? 'bg-[#123B50] text-white shadow-sm ring-2 ring-[#159A91]'
                     : isAnswered
-                    ? 'bg-neutral-100 text-green-700 border border-neutral-300'
+                    ? 'bg-[#E9F5F3] text-[#159A91] border border-[#159A91]/40 font-black'
                     : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
                 }`}
               >
                 {i + 1}
                 {isFlagged && (
-                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-amber-500 rounded-full ring-1 ring-white" />
+                  <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#F2B66D] rounded-full ring-1 ring-white" />
                 )}
               </button>
             );
@@ -376,14 +376,14 @@ export const QuizView = () => {
 
         {/* Active Question Box */}
         {currentQ && (
-          <div className="bg-white rounded-3xl border border-neutral-200/90 p-6 sm:p-8 shadow-sm space-y-6">
-            <div className="flex items-center justify-between border-b border-neutral-100 pb-3 flex-wrap gap-2">
+          <div className="bg-white rounded-3xl border border-[#123B50]/15 p-6 sm:p-8 shadow-sm space-y-6">
+            <div className="flex items-center justify-between border-b border-[#123B50]/10 pb-4 flex-wrap gap-2">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-black text-green-700 bg-neutral-100 px-3 py-1 rounded-full border border-neutral-300">
+                <span className="text-xs font-black text-[#123B50] bg-[#E9F5F3] px-3.5 py-1.5 rounded-full border border-[#159A91]/30">
                   Question {currentIndex + 1} of {questions.length}
                 </span>
-                <span className="text-[11px] font-bold text-neutral-500">
-                  Standard: 75% to pass
+                <span className="text-[11px] font-bold text-[#159A91] bg-white px-2.5 py-1 rounded-full border border-[#159A91]/20">
+                  INC Benchmark: &ge; 75% to Pass
                 </span>
               </div>
 
@@ -391,24 +391,24 @@ export const QuizView = () => {
               <button
                 type="button"
                 onClick={() => toggleFlag(currentIndex)}
-                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer border ${
                   flagged[currentIndex]
-                    ? 'bg-amber-50 border-amber-300 text-amber-900 font-black'
-                    : 'bg-white border-neutral-200 text-neutral-600 hover:bg-neutral-50'
+                    ? 'bg-[#F2B66D]/20 border-[#F2B66D] text-[#123B50] font-black'
+                    : 'bg-white border-[#123B50]/15 text-[#263746]/70 hover:bg-[#E9F5F3]'
                 }`}
                 title="Mark this question to review later (Hotkey: F)"
               >
-                <Bookmark className={`w-3.5 h-3.5 ${flagged[currentIndex] ? 'fill-amber-500 text-amber-500' : 'text-neutral-400'}`} />
+                <Bookmark className={`w-3.5 h-3.5 ${flagged[currentIndex] ? 'fill-[#F2B66D] text-[#F2B66D]' : 'text-[#263746]/40'}`} />
                 <span>{flagged[currentIndex] ? 'Marked for Review' : 'Mark for Review'}</span>
-                <span className="text-[10px] text-neutral-400 font-mono hidden sm:inline">[F]</span>
+                <span className="text-[10px] text-[#263746]/40 font-mono hidden sm:inline">[F]</span>
               </button>
             </div>
 
-            <h2 className="text-base sm:text-lg font-bold text-neutral-900 leading-relaxed">
+            <h2 className="text-base sm:text-lg font-black text-[#123B50] leading-relaxed">
               {currentQ.text}
             </h2>
 
-            {/* Options List */}
+            {/* Options List with Clean Tick Indicator */}
             <div className="space-y-3">
               {currentQ.options.map((opt, optIdx) => {
                 const isSelected = selectedAnswers[currentIndex] === optIdx;
@@ -417,7 +417,7 @@ export const QuizView = () => {
                 const hasAnsweredCurrent = selectedAnswers[currentIndex] !== undefined;
                 const isCorrectAnswer = optIdx === currentQ.correctAnswer;
 
-                let optionStyles = 'bg-neutral-50/70 hover:bg-neutral-100/80 border-neutral-200 text-neutral-700';
+                let optionStyles = 'bg-white hover:bg-[#E9F5F3]/50 border-[#123B50]/15 text-[#263746]';
 
                 if (isPracticeMode && hasAnsweredCurrent) {
                   if (isCorrectAnswer) {
@@ -425,39 +425,54 @@ export const QuizView = () => {
                   } else if (isSelected && !isCorrectAnswer) {
                     optionStyles = 'bg-rose-50 border-rose-400 text-rose-950 font-medium ring-1 ring-rose-400';
                   } else {
-                    optionStyles = 'bg-white border-neutral-200 text-neutral-500 opacity-60';
+                    optionStyles = 'bg-white border-neutral-200 text-neutral-400 opacity-60';
                   }
                 } else if (isSelected) {
-                  optionStyles = 'bg-neutral-100/90 border-green-600 text-neutral-900 font-bold shadow-xs';
+                  optionStyles = 'bg-[#E9F5F3] border-[#159A91] text-[#123B50] font-bold shadow-xs ring-1 ring-[#159A91]';
                 }
 
                 return (
                   <button
                     key={optIdx}
                     onClick={() => handleSelectOption(optIdx)}
-                    className={`w-full text-left p-4 rounded-2xl border text-xs sm:text-sm transition-all flex items-start gap-3 cursor-pointer ${optionStyles}`}
+                    className={`w-full text-left p-4 rounded-2xl border text-xs sm:text-sm transition-all flex items-center justify-between gap-3 cursor-pointer ${optionStyles}`}
                   >
-                    <span
-                      className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-black shrink-0 ${
-                        isPracticeMode && hasAnsweredCurrent
-                          ? isCorrectAnswer
-                            ? 'bg-emerald-600 text-white'
+                    <div className="flex items-center gap-3 flex-1">
+                      {/* Left Badge: Letter or Tick */}
+                      <span
+                        className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-black shrink-0 transition-all ${
+                          isPracticeMode && hasAnsweredCurrent
+                            ? isCorrectAnswer
+                              ? 'bg-emerald-600 text-white'
+                              : isSelected
+                              ? 'bg-rose-600 text-white'
+                              : 'bg-neutral-200 text-neutral-500'
                             : isSelected
-                            ? 'bg-rose-600 text-white'
-                            : 'bg-neutral-200 text-neutral-500'
-                          : isSelected
-                          ? 'bg-green-600 text-white shadow-xs'
-                          : 'bg-neutral-200 text-neutral-600'
-                      }`}
-                    >
-                      {letter}
-                    </span>
-                    <span className="flex-1 mt-0.5 leading-snug">{opt}</span>
+                            ? 'bg-[#159A91] text-white shadow-xs'
+                            : 'bg-neutral-100 text-[#263746] border border-neutral-300'
+                        }`}
+                      >
+                        {isSelected && !isPracticeMode ? '✓' : letter}
+                      </span>
+                      <span className="leading-snug flex-1">{opt}</span>
+                    </div>
 
-                    {/* Subtle keyboard hint */}
-                    <span className="text-[10px] font-mono text-neutral-400 px-1.5 py-0.5 rounded bg-neutral-100 border border-neutral-200 hidden sm:inline">
-                      [{letter}]
-                    </span>
+                    {/* Right Tick Indicator */}
+                    <div className="flex items-center gap-2 shrink-0">
+                      {isSelected ? (
+                        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#159A91] text-white text-[11px] font-black shadow-2xs">
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span className="hidden sm:inline">Selected</span>
+                        </div>
+                      ) : (
+                        <div className="w-5 h-5 rounded-full border-2 border-neutral-300 hover:border-[#159A91]" />
+                      )}
+
+                      {/* Keyboard hint */}
+                      <span className="text-[10px] font-mono text-[#263746]/40 px-1.5 py-0.5 rounded bg-neutral-100 border border-neutral-200 hidden sm:inline">
+                        [{letter}]
+                      </span>
+                    </div>
                   </button>
                 );
               })}
@@ -465,35 +480,39 @@ export const QuizView = () => {
 
             {/* Instant Clinical Rationale in Practice Mode */}
             {mode === 'practice' && selectedAnswers[currentIndex] !== undefined && (
-              <div className="p-4 rounded-2xl bg-emerald-50/90 border border-emerald-200 space-y-2 mt-4 animate-in fade-in duration-200">
+              <div className="p-4 rounded-2xl bg-[#E9F5F3] border border-[#159A91]/40 space-y-2 mt-4 animate-in fade-in duration-200">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-700 shrink-0" />
-                  <span className="text-xs font-black text-emerald-950 uppercase tracking-wide">
+                  <CheckCircle2 className="w-4 h-4 text-[#159A91] shrink-0" />
+                  <span className="text-xs font-black text-[#123B50] uppercase tracking-wide">
                     Verified Clinical Rationale
                   </span>
                 </div>
-                <p className="text-xs text-emerald-900 leading-relaxed font-medium">
+                <p className="text-xs text-[#263746] leading-relaxed font-medium">
                   {currentQ.rationale || `Competency standard: ${currentQ.options[currentQ.correctAnswer]} is the verified answer.`}
                 </p>
               </div>
             )}
 
-            {/* Navigation Footer */}
-            <div className="flex items-center justify-between pt-6 border-t border-neutral-100 flex-wrap gap-3">
+            {/* Navigation Footer: Previous, Progress Counter, Next */}
+            <div className="flex items-center justify-between pt-6 border-t border-[#123B50]/10 flex-wrap gap-3">
               <button
                 disabled={currentIndex === 0}
                 onClick={() => setCurrentIndex((prev) => prev - 1)}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-bold text-neutral-600 hover:bg-neutral-100 disabled:opacity-30 cursor-pointer"
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-[#123B50] bg-white hover:bg-[#E9F5F3] border border-[#123B50]/20 disabled:opacity-30 disabled:pointer-events-none cursor-pointer transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                <span>Previous [←]</span>
+                <span>Previous Question [←]</span>
               </button>
+
+              <div className="text-xs font-bold text-[#263746]/70 hidden sm:block">
+                Question <span className="text-[#123B50] font-black">{currentIndex + 1}</span> of {questions.length}
+              </div>
 
               <div className="flex items-center gap-2">
                 {currentIndex < questions.length - 1 ? (
                   <button
                     onClick={() => setCurrentIndex((prev) => prev + 1)}
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-bold bg-green-600 hover:bg-green-700 text-white shadow-xs transition-all cursor-pointer"
+                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs font-extrabold bg-[#159A91] hover:bg-[#123B50] text-white shadow-md shadow-[#159A91]/20 transition-all cursor-pointer"
                   >
                     <span>Next Question [→]</span>
                     <ArrowRight className="w-4 h-4" />
@@ -502,10 +521,10 @@ export const QuizView = () => {
                   <button
                     onClick={handleSubmitQuiz}
                     disabled={submitting}
-                    className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-bold bg-green-600 hover:bg-green-700 text-white shadow-md shadow-green-600/20 hover:scale-105 transition-all cursor-pointer"
+                    className="inline-flex items-center gap-2 px-7 py-2.5 rounded-xl text-xs font-extrabold bg-[#123B50] hover:bg-[#159A91] text-white shadow-lg shadow-[#123B50]/25 transition-all cursor-pointer"
                   >
-                    <span>{submitting ? 'Submitting...' : 'Submit & View Results'}</span>
-                    <CheckCircle2 className="w-4 h-4" />
+                    <span className="text-[#F2B66D] font-black">{submitting ? 'Submitting...' : 'Submit Assessment'}</span>
+                    <CheckCircle2 className="w-4 h-4 text-[#F2B66D]" />
                   </button>
                 )}
               </div>

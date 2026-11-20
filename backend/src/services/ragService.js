@@ -205,6 +205,61 @@ export const queryChapterRAG = async ({ studentId, chapterId, query, mode = 'def
     process.env.RAG_CONFIDENCE_THRESHOLD || String(DEFAULT_CONFIDENCE_THRESHOLD)
   );
 
+  // Handle conversational greetings and small talk gracefully like a normal AI
+  const normalizedQuery = (query || '').trim().toLowerCase().replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9]+$/g, '');
+  const greetingPattern = /^(hi|hii|hiii|hey|heyy|heyyy|hello|hellos|greetings|howdy|sup|yo|good\s+(morning|afternoon|evening|day))$/i;
+  const statusPattern = /^(how\s+are\s+you|how\s+are\s+you\s+doing|how's\s+it\s+going|how\s+are\s+things|what's\s+up|how\s+do\s+you\s+do)$/i;
+  const identityPattern = /^(who\s+are\s+you|what\s+are\s+you|what\s+is\s+your\s+name|tell\s+me\s+about\s+yourself)$/i;
+  const thanksPattern = /^(thank\s+you|thanks|thx|thank\s+you\s+so\s+much|thanks\s+a\s+lot|appreciate\s+it)$/i;
+
+  if (greetingPattern.test(normalizedQuery)) {
+    const greetingMsg = `Hello! How can I assist you with your studies in Chapter ${chapter.order}: "${chapter.title}" today? Feel free to ask any question or select a study mode above.`;
+    return {
+      response: greetingMsg,
+      scoped: true,
+      refusal: false,
+      confidence: 1.0,
+      citations: [],
+      retrievedChunks: []
+    };
+  }
+
+  if (statusPattern.test(normalizedQuery)) {
+    const statusMsg = `I'm doing well, thank you! Ready to help you review Chapter ${chapter.order}: "${chapter.title}". What would you like to explore today?`;
+    return {
+      response: statusMsg,
+      scoped: true,
+      refusal: false,
+      confidence: 1.0,
+      citations: [],
+      retrievedChunks: []
+    };
+  }
+
+  if (identityPattern.test(normalizedQuery)) {
+    const idMsg = `I am Nova, your MedPulse Clinical AI Tutor. I'm here to help explain concepts, review chapters, and assist with your NCLEX preparation.`;
+    return {
+      response: idMsg,
+      scoped: true,
+      refusal: false,
+      confidence: 1.0,
+      citations: [],
+      retrievedChunks: []
+    };
+  }
+
+  if (thanksPattern.test(normalizedQuery)) {
+    const thanksMsg = `You're very welcome! Let me know if you need any more help as you continue studying Chapter ${chapter.order}.`;
+    return {
+      response: thanksMsg,
+      scoped: true,
+      refusal: false,
+      confidence: 1.0,
+      citations: [],
+      retrievedChunks: []
+    };
+  }
+
   // 1. Generate query embedding and extract search keywords
   const queryVector = await generateEmbedding(query);
   const queryKeywords = extractKeywords(query);

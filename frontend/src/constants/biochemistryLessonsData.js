@@ -1,5 +1,22 @@
-// Comprehensive Biochemistry Submodules & Lesson Data (Units 3 - 7)
+// Comprehensive Biochemistry Submodules & Lesson Data (Units 1 - 7)
 // INC CBME Standardized for B.Sc. Nursing & Clinical Enzymology
+
+export const UNIT_1_CARB_SUBTOPICS = [
+  { id: "classification-of-carb", title: "Classification of Carbohydrates", path: "/classification-of-carb", index: 0 },
+  { id: "digestion-of-carb", title: "Digestion of Carbohydrates", path: "/digestion-of-carb", index: 1 },
+  { id: "absorption-of-carb", title: "Absorption of Carbohydrates", path: "/absorption-of-carb", index: 2 },
+  { id: "metabolic-pathway-of-carb", title: "Metabolic Pathways & Glycolysis", path: "/MetabolicPathwaysOfCarb", index: 3 },
+  { id: "disorders-of-carb", title: "Disorders of Carbohydrate Metabolism", path: "/DisordersOfCarb", index: 4 },
+  { id: "diabetes-mellitus-type-1", title: "Diabetes Mellitus Type 1", path: "/DiabetesMellitusType1", index: 5 },
+  { id: "diabetes-mellitus-type-2", title: "Diabetes Mellitus Type 2", path: "/DiabetesMellitusType2", index: 6 }
+];
+
+export const UNIT_2_LIPID_SUBTOPICS = [
+  { id: "fatty-acids-classification", title: "Classification of Fatty Acids", path: "/FattyAcidsClassification", index: 0 },
+  { id: "mufa", title: "Monounsaturated Fatty Acids (MUFA)", path: "/MUFA", index: 1 },
+  { id: "pufa", title: "Polyunsaturated Fatty Acids (PUFA)", path: "/PUFA", index: 2 },
+  { id: "essential-fatty-acids", title: "Essential Fatty Acids & Metabolism", path: "/EssentialFattyAcids", index: 3 }
+];
 
 export const BIOCHEMISTRY_SUBMODULES = {
   // =========================================================================

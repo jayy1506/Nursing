@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg-grad-sec-anat-10-22" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#123B50" />
+      <stop offset="50%" stop-color="#18435b" />
+      <stop offset="100%" stop-color="#123B50" />
+    </linearGradient>
+    <linearGradient id="teal-grad-sec-anat-10-22" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#159A91" />
+      <stop offset="100%" stop-color="#1ea89e" />
+    </linearGradient>
+    <filter id="shadow-sec-anat-10-22" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000000" flood-opacity="0.3" />
+    </filter>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="850" height="480" rx="20" fill="url(#bg-grad-sec-anat-10-22)" stroke="#159A91" stroke-opacity="0.4" stroke-width="2" />
+
+  <!-- Top Header Bar -->
+  <g transform="translate(30, 24)">
+    <rect width="790" height="46" rx="12" fill="#0f2d3d" stroke="#ffffff" stroke-opacity="0.1" stroke-width="1" />
+    <circle cx="24" cy="23" r="5" fill="#F2B66D" />
+    <text x="38" y="27" fill="#159A91" font-family="system-ui, sans-serif" font-size="11" font-weight="900" letter-spacing="1.5">
+      INC CBME ACCREDITED • ANATOMICAL ARCHITECTURE & LANDMARKS
+    </text>
+    <text x="770" y="27" fill="#ffffff" fill-opacity="0.6" font-family="system-ui, sans-serif" font-size="10" font-weight="700" text-anchor="end">
+      Applied Anatomy
+    </text>
+  </g>
+
+  <!-- Title & Topic Overview -->
+  <g transform="translate(35, 95)">
+    <text x="0" y="0" fill="#ffffff" font-family="system-ui, sans-serif" font-size="17" font-weight="900" letter-spacing="-0.5">
+      Mnemonic for the twelve cranial nerves
+    </text>
+    <text x="0" y="20" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="11" font-weight="700">
+      Visual Schematic &amp; High-Yield Board Exam Landmark Blueprint
+    </text>
+  </g>
+
+  <!-- Central Schematic Layout: 3 Structured Panels -->
+  <!-- Panel 1: Primary Structural Components -->
+  <g transform="translate(30, 140)" filter="url(#shadow-sec-anat-10-22)">
+    <rect width="245" height="235" rx="14" fill="#1b4962" stroke="#159A91" stroke-width="1.5" />
+    <rect width="245" height="34" rx="14" fill="url(#teal-grad-sec-anat-10-22)" />
+    <text x="122" y="22" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="900" text-anchor="middle">
+      1. Morphological Boundaries
+    </text>
+    <circle cx="35" cy="65" r="14" fill="#123B50" stroke="#F2B66D" stroke-width="1.5" />
+    <text x="35" y="69" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="10" font-weight="900" text-anchor="middle">A</text>
+    <text x="60" y="64" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="800">Primary Boundary</text>
+    <text x="60" y="78" fill="#E9F5F3" font-family="system-ui, sans-serif" font-size="9" fill-opacity="0.8">Structural margin &amp; surface</text>
+
+    <circle cx="35" cy="115" r="14" fill="#123B50" stroke="#F2B66D" stroke-width="1.5" />
+    <text x="35" y="119" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="10" font-weight="900" text-anchor="middle">B</text>
+    <text x="60" y="114" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="800">Histological Layers</text>
+    <text x="60" y="128" fill="#E9F5F3" font-family="system-ui, sans-serif" font-size="9" fill-opacity="0.8">Stratified cellular tissue</text>
+
+    <circle cx="35" cy="165" r="14" fill="#123B50" stroke="#F2B66D" stroke-width="1.5" />
+    <text x="35" y="169" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="10" font-weight="900" text-anchor="middle">C</text>
+    <text x="60" y="164" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="800">Neurovascular Vector</text>
+    <text x="60" y="178" fill="#E9F5F3" font-family="system-ui, sans-serif" font-size="9" fill-opacity="0.8">Perfusion &amp; nerve pathways</text>
+
+    <line x1="20" y1="200" x2="225" y2="200" stroke="#ffffff" stroke-opacity="0.15" stroke-dasharray="3 3" />
+    <text x="122" y="218" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="9" font-weight="800" text-anchor="middle">
+      Landmark Identification: Mastered
+    </text>
+  </g>
+
+  <!-- Panel 2: Central Spatial & Functional Dynamics -->
+  <g transform="translate(300, 140)" filter="url(#shadow-sec-anat-10-22)">
+    <rect width="250" height="235" rx="14" fill="#1b4962" stroke="#ffffff" stroke-opacity="0.2" stroke-width="1.5" />
+    <rect width="250" height="34" rx="14" fill="#0f2d3d" stroke="#159A91" stroke-width="1" />
+    <text x="125" y="22" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="900" text-anchor="middle">
+      2. Spatial Axes & Coordinates
+    </text>
+    
+    <!-- Central Schematic Diagram Element -->
+    <rect x="25" y="55" width="200" height="42" rx="8" fill="#123B50" stroke="#159A91" stroke-width="1.5" />
+    <text x="125" y="74" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="10" font-weight="900" text-anchor="middle">SUPERIOR / CRANIAL AXIS</text>
+    <text x="125" y="88" fill="#E9F5F3" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle">Proximal anatomical continuity</text>
+
+    <!-- Connector Flow Arrow -->
+    <path d="M125,97 L125,122" stroke="#159A91" stroke-width="2" stroke-dasharray="4 2" />
+    <polygon points="121,120 125,127 129,120" fill="#159A91" />
+
+    <!-- Center Hub -->
+    <rect x="20" y="128" width="210" height="45" rx="10" fill="#159A91" fill-opacity="0.2" stroke="#159A91" stroke-width="2" />
+    <text x="125" y="148" fill="#ffffff" font-family="system-ui, sans-serif" font-size="11" font-weight="900" text-anchor="middle">ANATOMICAL CORE REGION</text>
+    <text x="125" y="163" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="9" font-weight="800" text-anchor="middle">Active Homeostatic Equilibrium</text>
+
+    <!-- Bottom Arrow -->
+    <path d="M125,173 L125,188" stroke="#159A91" stroke-width="2" stroke-dasharray="4 2" />
+    <polygon points="121,186 125,193 129,186" fill="#159A91" />
+
+    <!-- Inferior Axis -->
+    <rect x="25" y="195" width="200" height="30" rx="6" fill="#123B50" stroke="#ffffff" stroke-opacity="0.2" />
+    <text x="125" y="214" fill="#ffffff" font-family="system-ui, sans-serif" font-size="9" font-weight="800" text-anchor="middle">INFERIOR / DISTAL CONTINUITY</text>
+  </g>
+
+  <!-- Panel 3: Bedside Clinical Interventions & NCLEX Pearls -->
+  <g transform="translate(575, 140)" filter="url(#shadow-sec-anat-10-22)">
+    <rect width="245" height="235" rx="14" fill="#1b4962" stroke="#F2B66D" stroke-width="1.5" />
+    <rect width="245" height="34" rx="14" fill="#0f2d3d" stroke="#F2B66D" stroke-width="1" />
+    <text x="122" y="22" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="11" font-weight="900" text-anchor="middle">
+      3. Clinical Bedside Landmarks
+    </text>
+
+    <!-- Clinical Point 1 -->
+    <rect x="15" y="50" width="215" height="52" rx="10" fill="#123B50" stroke="#ffffff" stroke-opacity="0.15" />
+    <text x="28" y="70" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="10" font-weight="900">Bedside Verification:</text>
+    <text x="28" y="87" fill="#E9F5F3" font-family="system-ui, sans-serif" font-size="9" font-weight="500">Palpate landmarks &amp; verify</text>
+
+    <!-- Clinical Point 2 -->
+    <rect x="15" y="112" width="215" height="52" rx="10" fill="#123B50" stroke="#ffffff" stroke-opacity="0.15" />
+    <text x="28" y="132" fill="#159A91" font-family="system-ui, sans-serif" font-size="10" font-weight="900">Physiological Safety:</text>
+    <text x="28" y="149" fill="#E9F5F3" font-family="system-ui, sans-serif" font-size="9" font-weight="500">Maintain perfusion &amp; stability</text>
+
+    <!-- NCLEX Exam Priority -->
+    <rect x="15" y="174" width="215" height="48" rx="10" fill="#159A91" fill-opacity="0.2" stroke="#159A91" />
+    <text x="28" y="193" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="9" font-weight="900">NCLEX High-Yield Pearl:</text>
+    <text x="28" y="208" fill="#ffffff" font-family="system-ui, sans-serif" font-size="8.5" font-weight="700">Correlate structure with ABCs</text>
+  </g>
+
+  <!-- Bottom Educational Footer Banner -->
+  <g transform="translate(30, 400)">
+    <rect width="790" height="55" rx="12" fill="#0f2d3d" stroke="#159A91" stroke-opacity="0.3" stroke-width="1" />
+    <text x="25" y="25" fill="#F2B66D" font-family="system-ui, sans-serif" font-size="10" font-weight="900">
+      CLINICAL EVIDENCE BASE:
+    </text>
+    <text x="175" y="25" fill="#ffffff" font-family="system-ui, sans-serif" font-size="10" font-weight="600">
+      Mastery of structural topography and physiological feedback coordinates underpins safe nursing practice.
+    </text>
+    <text x="25" y="42" fill="#159A91" font-family="system-ui, sans-serif" font-size="9" font-weight="700">
+      MedPulse Healthcare Education • Accredited BSc Nursing Curriculum • Indian Nursing Council (INC)
+    </text>
+  </g>
+</svg>

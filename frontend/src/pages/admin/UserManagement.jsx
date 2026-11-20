@@ -447,7 +447,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
             </button>
             <button
               onClick={() => setShowAddModal(true)}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-green-500 hover:bg-green-700 text-white rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-[#159A91] hover:bg-[#123B50] text-white rounded-xl text-xs font-bold shadow-xs transition-all cursor-pointer"
             >
               <UserPlus className="w-4 h-4" />
               <span>Add Student / Faculty</span>
@@ -735,7 +735,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                   <button
                     type="submit"
                     disabled={loading}
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer disabled:opacity-50"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#159A91] hover:bg-[#123B50] text-white shadow-md shadow-[#159A91]/20 cursor-pointer disabled:opacity-50 transition-colors"
                   >
                     {loading ? 'Creating...' : 'Provision User'}
                   </button>
@@ -856,7 +856,7 @@ Dr. Gregory House,house@nursing-lms.edu,faculty,FacultyPass@2026,COLLEGE_001`;
                   <button
                     type="submit"
                     disabled={bulkLoading || !csvInput.trim()}
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer disabled:opacity-50 flex items-center gap-2"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#159A91] hover:bg-[#123B50] text-white shadow-md shadow-[#159A91]/20 cursor-pointer disabled:opacity-50 flex items-center gap-2 transition-colors"
                   >
                     <UploadCloud className="w-4 h-4" />
                     <span>{bulkLoading ? 'Processing Import...' : 'Import CSV Users'}</span>

@@ -1,0 +1,172 @@
+{
+  "id": "liver",
+  "name": "Liver",
+  "latinName": "Hepar",
+  "system": "Digestive System",
+  "tagline": "The quiet alchemist",
+  "description": "A remarkable metabolic organ that filters blood, processes nutrients, and produces bile.",
+  "specimenImage": "/images/explorer/liver_specimen.jpg",
+  "thumbnail": "/images/explorer/liver_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "About the size of a football"
+    },
+    {
+      "label": "Weight",
+      "value": "1.4\u20131.6 kg"
+    },
+    {
+      "label": "Daily",
+      "value": "Performs more than 500 functions"
+    },
+    {
+      "label": "Location",
+      "value": "Upper right abdomen"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Hepatic artery and portal vein"
+    },
+    {
+      "label": "Function",
+      "value": "Metabolism, detoxification & bile"
+    }
+  ],
+  "medicalImportance": "It can regenerate a substantial portion of lost tissue.",
+  "didYouKnow": "It is the only human organ that can regrow to full size from a fraction of itself.",
+  "conditions": [
+    "Fatty liver disease",
+    "Hepatitis",
+    "Cirrhosis",
+    "Gallstones",
+    "Hemochromatosis",
+    "Liver cancer",
+    "Autoimmune hepatitis",
+    "Portal hypertension"
+  ],
+  "microscopicView": {
+    "title": "Hepatic lobules",
+    "subtitle": "Hexagonal functional units",
+    "image": "/images/explorer/liver_microscopic.jpg",
+    "description": "Hexagonal lobules with central veins, hepatocytes, and portal triads filtering portal blood."
+  },
+  "compareWith": "intestine",
+  "compareData": {
+    "subtitle": "Liver vs. intestine",
+    "image": "/images/explorer/liver_compare.jpg",
+    "description": "Metabolic biochemical factory versus luminal nutrient absorption and peristalsis."
+  },
+  "animation": {
+    "title": "Metabolism, detoxification & bile",
+    "subtitle": "Bile production and first-pass hepatic clearance",
+    "poster": "/images/explorer/liver_animation.jpg"
+  },
+  "systemView": {
+    "title": "Digestive System",
+    "subtitle": "Hepatobiliary tree and portal venous drainage",
+    "image": "/images/explorer/liver_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "right-lobe",
+      "name": "Right Hepatic Lobe",
+      "latinName": "Lobus hepatis dexter",
+      "color": "red",
+      "position": [
+        -0.15,
+        -0.05,
+        0.3
+      ],
+      "description": "The largest lobe of the liver, accounting for approximately 5/6th of total hepatic mass. Occupies the right hypochondrium, extends across epigastrium, and is bounded anteriorly by the falciform ligament and posteriorly by the IVC fossa. Encompasses functional Couinaud segments V, VI, VII, and VIII.",
+      "function": "Primary biochemical clearinghouse executing Phase I & II drug biotransformation, gluconeogenesis, glycogen storage, albumin synthesis, amino acid transamination, and continuous bile salt secretion.",
+      "connections": [
+        "Divided from left lobe on diaphragmatic surface by Falciform Ligament",
+        "Inferior surface indented by Colic (hepatic flexure), Renal, and Duodenal impressions",
+        "Supplied by Right Branch of Hepatic Artery and Right Portal Vein division",
+        "Drained by Right Hepatic Vein directly into the Inferior Vena Cava"
+      ],
+      "clinicalNote": "Hepatomegaly is detected below the right costal margin during deep inspiration. Common site for hepatic metastases (due to dual portal-arterial perfusion) and amoebic abscesses. Evaluated with liver function tests (ALT, AST, ALP, Total Bilirubin).",
+      "keyFeatures": [
+        "Comprises Couinaud functional segments V through VIII",
+        "Receives ~75% of total hepatic portal blood flow",
+        "Contains millions of classic hexagonal hepatic lobules",
+        "Regenerative capacity: can recover normal volume within weeks after 70% resection"
+      ],
+      "histology": "Hexagonal lobules with radiating hepatocyte cords, fenestrated sinusoidal capillaries lined with Kupffer phagocytic macrophages, and central collection veins."
+    },
+    {
+      "id": "left-lobe",
+      "name": "Left Hepatic Lobe",
+      "latinName": "Lobus hepatis sinister",
+      "color": "orange",
+      "position": [
+        0.18,
+        0.15,
+        0.25
+      ],
+      "description": "The smaller, thinner, flattened lobe occupying the epigastrium and extending into the left hypochondrium. Bounded on the diaphragmatic surface by the attachment of the falciform ligament and on the visceral surface by the fissure for ligamentum venosum and round ligament. Comprises Couinaud segments II, III, and IV.",
+      "function": "Executes metabolic clearing, plasma protein and coagulation factor synthesis (Factors II, VII, IX, X, fibrinogen), and carbohydrate buffering in coordination with systemic enteric absorption.",
+      "connections": [
+        "Visceral surface bears prominent Gastric Impression resting over stomach anterior wall",
+        "Connected to anterior abdominal wall via Falciform Ligament containing Ligamentum Teres",
+        "Supplied by Left Hepatic Artery branch and Left Portal Vein trunk",
+        "Drained by Left Hepatic Vein into IVC; shares Middle Hepatic Vein"
+      ],
+      "clinicalNote": "Frequently utilized for living donor liver transplantation (Segments II & III for pediatric recipients, or lateral left segmentectomy). Cirrhotic micronodular remodeling frequently blunts the sharp inferior border.",
+      "keyFeatures": [
+        "Encompasses Couinaud Segments II, III, and medial Segment IV (Quadrate)",
+        "Thinner anterior edge sits palpable in subxiphoid epigastric notch in asthenic patients",
+        "Embryological remnant Ligamentum Teres (closed umbilical vein) runs in its free border",
+        "Synthesizes vitamin K-dependent clotting factors"
+      ],
+      "histology": "Continuous trabecular plates of hepatocytes interspersed with Space of Disse where hepatic stellate (Ito) cells store Vitamin A and drive fibrosis when chronically stimulated."
+    },
+    {
+      "id": "portal-vein",
+      "name": "Hepatic Portal Vein",
+      "latinName": "Vena portae hepatis",
+      "color": "blue",
+      "position": [
+        0.05,
+        -0.05,
+        0.35
+      ],
+      "description": "A wide (10-12 mm diameter) valveless venous trunk formed behind the neck of the pancreas by the confluence of the Superior Mesenteric Vein (SMV) and Splenic Vein at the L2 vertebral level. Traverses the hepatoduodenal ligament within the porta hepatis alongside the proper hepatic artery and common bile duct.",
+      "function": "Delivers 75-80% of total hepatic blood volume (approx. 1000-1200 mL/min) rich in gastrointestinal nutrients, pancreatic hormones (insulin, glucagon), toxins, and bacterial byproducts directly to hepatic sinusoids for first-pass metabolism.",
+      "connections": [
+        "Formed by union of Superior Mesenteric Vein and Splenic Vein",
+        "Joined by Left and Right Gastric Veins and Cystic Vein",
+        "Ascends in free edge of Lesser Omentum posterior to Bile Duct (right) and Proper Hepatic Artery (left)",
+        "Divides at Porta Hepatis into Right and Left Portal Vein branches within liver parenchyma"
+      ],
+      "clinicalNote": "Portal Hypertension (portal venous pressure >10-12 mmHg) secondary to cirrhosis leads to portosystemic collateral dilation: esophageal varices (fatal hematemesis risk), caput medusae (paraumbilical), and hemorrhoids, accompanied by splenomegaly and ascites.",
+      "keyFeatures": [
+        "Provides 50% of the liver's total oxygen requirements despite low PaO2",
+        "Normal portal venous pressure: 5 - 10 mmHg",
+        "Valveless nature allows retrograde transmission of elevated sinusoidal pressures",
+        "Decompressed surgically via Transjugular Intrahepatic Portosystemic Shunt (TIPS)"
+      ],
+      "histology": "Large venous vessel with well-developed adventitia, longitudinal smooth muscle bundles, and thin muscularis media adapted for high-flow low-resistance capacitance."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "lq1",
+      "type": "mcq",
+      "prompt": "What dual blood supply nourishes the liver?",
+      "options": [
+        "Hepatic Artery & Portal Vein",
+        "Renal Artery & Celiac Trunk",
+        "Superior Mesenteric Artery",
+        "Splenic Vein"
+      ],
+      "correctAnswer": "Hepatic Artery & Portal Vein",
+      "rationale": "The hepatic artery provides oxygenated arterial blood, while the portal vein supplies nutrient-rich blood from the digestive tract."
+    }
+  ]
+}

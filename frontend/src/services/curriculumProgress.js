@@ -75,6 +75,46 @@ export const toggleUnitCompletion = (unitId, forceState) => {
 };
 
 /**
+ * Completely resets all curriculum progress and quiz attempts across all subjects back to 0.
+ */
+export const resetAllStudentProgress = async () => {
+  try {
+    localStorage.setItem(COMPLETED_UNITS_KEY, JSON.stringify([]));
+    localStorage.setItem('nursing_lms_all_attempts', JSON.stringify([]));
+    localStorage.setItem('nursing_biochem_completed_lessons', JSON.stringify({}));
+    localStorage.removeItem('medpulse_last_lesson');
+    localStorage.removeItem('medpulse_last_lesson_title');
+    localStorage.removeItem('medpulse_last_lesson_chapter');
+    localStorage.removeItem('nursing_quiz_attempts');
+    localStorage.removeItem('nursing_student_results');
+    localStorage.removeItem('medpulse_student_progress');
+
+    window.dispatchEvent(new CustomEvent(COMPLETION_EVENT, { detail: { reset: true } }));
+    window.dispatchEvent(new Event('storage'));
+
+    // Non-blocking sync to backend
+    try {
+      const token =
+        localStorage.getItem('nursing_token') ||
+        localStorage.getItem('token') ||
+        localStorage.getItem('firebase_token');
+      if (token && navigator.onLine) {
+        await fetch('/api/progress/sync', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({ completedUnitIds: [], attempts: [] })
+        });
+      }
+    } catch {}
+  } catch (err) {
+    console.warn('[CurriculumProgress] Reset error:', err);
+  }
+};
+
+/**
  * React hook to listen to real-time curriculum progress and gating for any subject
  */
 export const useCurriculumProgress = (subject = 'physiology') => {

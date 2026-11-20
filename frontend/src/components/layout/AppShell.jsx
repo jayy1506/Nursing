@@ -14,7 +14,6 @@ import {
   Users,
   Bell,
   Search,
-  ChevronRight,
   ChevronDown,
   LogOut,
   Sparkles,
@@ -22,23 +21,28 @@ import {
   Layers,
   Menu,
   X,
-  PanelLeftClose,
-  PanelLeftOpen,
   Bone,
   Activity,
   Dna,
-  Utensils
+  Utensils,
+  HelpCircle,
+  RotateCcw,
+  Compass,
+  Box,
+  Shield
 } from 'lucide-react';
 import { CloudSyncButton } from '../ui/CloudSyncButton';
 import { initAutoSync } from '../../services/mongoSyncService';
+import { resetAllStudentProgress } from '../../services/curriculumProgress';
 
 export const AppShell = ({ children }) => {
-  const [collapsed, setCollapsed] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchOpen, setSearchOpen] = useState(false);
+  const [helpOpen, setHelpOpen] = useState(false);
+  const [resetModalOpen, setResetModalOpen] = useState(false);
 
   const { currentUser, role, logout } = useAuth();
   const navigate = useNavigate();
@@ -48,17 +52,6 @@ export const AppShell = ({ children }) => {
   useEffect(() => {
     initAutoSync();
   }, []);
-
-  // Auto-collapse sidebar when student enters syllabus, lesson, or quiz views for full-screen focus
-  useEffect(() => {
-    const isCurriculumView =
-      location.pathname.includes('syllabus') ||
-      location.pathname.includes('/lesson/') ||
-      location.pathname.includes('/quiz/');
-    if (isCurriculumView) {
-      setCollapsed(true);
-    }
-  }, [location.pathname]);
 
   const handleLogout = async () => {
     setUserMenuOpen(false);
@@ -75,11 +68,33 @@ export const AppShell = ({ children }) => {
   };
 
   const nickname = getNickname();
-  const fullName = currentUser?.displayName || currentUser?.name || nickname;
+  const savedUsername = localStorage.getItem('medpulse_saved_username');
+  const fullName = savedUsername || currentUser?.displayName || currentUser?.name || nickname;
+
+  const getInitials = () => {
+    if (!currentUser) return 'U';
+    try {
+      const savedUser = JSON.parse(localStorage.getItem('nursing_user') || '{}');
+      const uName = savedUser.username || currentUser.displayName || currentUser.name || currentUser.email || 'Jay';
+      if (role === 'admin' && (uName.toLowerCase().includes('jay') || uName.toLowerCase().includes('admin'))) {
+        return 'JA';
+      }
+      const parts = uName.trim().split(/[\s._@-]+/);
+      if (parts.length >= 2 && parts[1]) {
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+      }
+      return uName.slice(0, 2).toUpperCase();
+    } catch {
+      return 'JA';
+    }
+  };
+
+  const initials = getInitials();
 
   // Navigation Items by Role
   const studentNavItems = [
-    { label: 'Dashboard', to: '/', icon: <Home className="w-5 h-5 shrink-0" /> },
+    { label: 'Dashboard', to: '/dashboard', icon: <Home className="w-5 h-5 shrink-0" /> },
+    { label: '3D Explorer', to: '/explorer', icon: <Compass className="w-5 h-5 shrink-0" /> },
     { label: 'Curriculum Hub', to: '/syllabus', icon: <BookOpen className="w-5 h-5 shrink-0" /> },
     { label: 'Question Bank', to: '/question-bank', icon: <Layers className="w-5 h-5 shrink-0" /> },
     { label: 'Assessments', to: '/student/quiz/comprehensive', icon: <ClipboardList className="w-5 h-5 shrink-0" /> },
@@ -88,6 +103,7 @@ export const AppShell = ({ children }) => {
 
   const facultyNavItems = [
     { label: 'Faculty Hub', to: '/faculty/dashboard', icon: <Stethoscope className="w-5 h-5 shrink-0" /> },
+    { label: '3D Explorer', to: '/explorer', icon: <Compass className="w-5 h-5 shrink-0" /> },
     { label: 'Question Bank', to: '/faculty/questions', icon: <BookOpen className="w-5 h-5 shrink-0" /> },
     { label: 'Cohort Results', to: '/faculty/results', icon: <BarChart3 className="w-5 h-5 shrink-0" /> },
     { label: 'Curriculum View', to: '/syllabus', icon: <Layers className="w-5 h-5 shrink-0" /> },
@@ -106,10 +122,10 @@ export const AppShell = ({ children }) => {
   if (role === 'admin') navItems = adminNavItems;
 
   const curriculumTracks = [
-    { label: 'Applied Anatomy', to: '/anatomy-syllabus', icon: <Bone className="w-4 h-4 shrink-0 text-green-600" />, units: '12 Units' },
-    { label: 'Applied Physiology', to: '/physiology-syllabus', icon: <Activity className="w-4 h-4 shrink-0 text-green-700" />, units: '12 Units' },
-    { label: 'Applied Biochemistry', to: '/bio-chem-syllabus', icon: <Dna className="w-4 h-4 shrink-0 text-green-600" />, units: '8 Units' },
-    { label: 'Nutrition & Dietetics', to: '/nutrition-syllabus', icon: <Utensils className="w-4 h-4 shrink-0 text-green-600" />, units: '10 Units' },
+    { label: 'Applied Anatomy', to: '/anatomy-syllabus', icon: <Bone className="w-4 h-4 shrink-0 text-[#159A91]" />, units: '12 Units' },
+    { label: 'Applied Physiology', to: '/physiology-syllabus', icon: <Activity className="w-4 h-4 shrink-0 text-[#159A91]" />, units: '12 Units' },
+    { label: 'Applied Biochemistry', to: '/bio-chem-syllabus', icon: <Dna className="w-4 h-4 shrink-0 text-[#159A91]" />, units: '8 Units' },
+    { label: 'Nutrition & Dietetics', to: '/nutrition-syllabus', icon: <Utensils className="w-4 h-4 shrink-0 text-[#159A91]" />, units: '10 Units' },
   ];
 
   const filteredTracks = curriculumTracks.filter(t =>
@@ -117,7 +133,7 @@ export const AppShell = ({ children }) => {
   );
 
   return (
-    <div className="min-h-screen bg-white text-black flex flex-col selection:bg-green-500 selection:text-white">
+    <div className="min-h-screen bg-white text-black flex flex-col selection:bg-[#159A91] selection:text-white">
       {/* Top Header Bar */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200 h-16 flex items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center gap-3">
@@ -125,167 +141,172 @@ export const AppShell = ({ children }) => {
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 rounded-xl text-neutral-700 hover:bg-neutral-100 lg:hidden focus-visible:ring-2 focus-visible:ring-green-600 cursor-pointer"
+            className="p-2 rounded-xl text-neutral-700 hover:bg-[#E9F5F3] lg:hidden focus-visible:ring-2 focus-visible:ring-[#159A91] cursor-pointer"
             aria-label="Toggle navigation menu"
           >
-            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </button>
-
-          {/* Icon-only toggle with tooltip and aria-label */}
-          <button
-            type="button"
-            onClick={() => setCollapsed(!collapsed)}
-            className="hidden lg:flex items-center justify-center p-2 rounded-xl bg-white hover:bg-neutral-100 text-black border border-neutral-300 text-xs font-bold transition-all cursor-pointer shadow-xs focus-visible:ring-2 focus-visible:ring-green-600"
-            aria-label="Toggle sidebar"
-            title={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-          >
-            {collapsed ? (
-              <PanelLeftOpen className="w-4 h-4 text-green-700" />
-            ) : (
-              <PanelLeftClose className="w-4 h-4 text-neutral-700" />
-            )}
-            <span className="sr-only">Toggle sidebar</span>
+            {mobileMenuOpen ? <X className="w-5 h-5 text-[#123B50]" /> : <Menu className="w-5 h-5 text-[#123B50]" />}
           </button>
 
           {/* Logo with Tagline */}
           <MedPulseLogo showTagline={true} />
         </div>
 
-        {/* Global Search & Action Center */}
-        <div className="flex items-center gap-2 sm:gap-3">
-          {/* Search Trigger */}
+        {/* Global Action Navigation Center (Matching User Images 1, 2 & 3) */}
+        <div className="flex items-center gap-2 sm:gap-2.5">
+          {/* 3D Anatomy Playground Link (Enters Anatomy Playground on click) */}
+          <Link
+            to="/explorer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#159A91]/40 bg-[#E9F5F3] hover:bg-[#159A91] hover:text-white text-xs font-black text-[#123B50] transition-all shadow-2xs cursor-pointer group"
+            title="Enter 3D Anatomy Playground"
+          >
+            <Box className="w-3.5 h-3.5 text-[#159A91] group-hover:text-white group-hover:scale-110 transition-transform" />
+            <span className="hidden sm:inline">Playground</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#159A91] group-hover:bg-white animate-pulse" />
+          </Link>
+
+          {/* Quick Curriculum Bank Link */}
+          <Link
+            to="/question-bank"
+            className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-neutral-200 bg-white hover:bg-[#E9F5F3] text-xs font-bold text-[#123B50] transition-colors shadow-2xs cursor-pointer"
+          >
+            <Layers className="w-3.5 h-3.5 text-[#159A91]" />
+            <span>Curriculum Bank</span>
+          </Link>
+
+          {/* Quick Curriculum Dashboard Link */}
+          <Link
+            to="/dashboard"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-neutral-200 bg-white hover:bg-[#E9F5F3] text-xs font-bold text-[#123B50] transition-colors shadow-2xs cursor-pointer"
+          >
+            <BookOpen className="w-3.5 h-3.5 text-[#159A91]" />
+            <span>Curriculum Dashboard</span>
+          </Link>
+
+          {/* Faculty Studio (for Faculty / Admin) */}
+          {(role === 'faculty' || role === 'admin') && (
+            <Link
+              to="/faculty/dashboard"
+              className="hidden xl:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-[#159A91]/30 bg-[#E9F5F3] text-xs font-bold text-[#123B50] hover:bg-[#159A91] hover:text-white transition-all shadow-2xs cursor-pointer group"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-[#159A91] group-hover:text-white" />
+              <span>Faculty Studio</span>
+            </Link>
+          )}
+
+          {/* Separator */}
+          <div className="hidden md:block w-[1px] h-5 bg-neutral-200 mx-1" />
+
+          {/* Reset Learning Progress Circular Button (Image 3 & 4) */}
           <button
             type="button"
-            onClick={() => setSearchOpen(true)}
-            className="flex items-center gap-2 px-3 py-1.5 text-xs text-neutral-700 bg-white hover:bg-neutral-100 rounded-xl border border-neutral-300 transition-colors cursor-pointer shadow-xs"
+            onClick={() => setResetModalOpen(true)}
+            className="w-8 h-8 rounded-full border border-neutral-200 hover:border-rose-400 bg-white text-neutral-600 hover:text-rose-600 hover:bg-rose-50 flex items-center justify-center transition-all cursor-pointer shadow-2xs"
+            title="Reset Learning Progress"
+            aria-label="Reset Learning Progress"
           >
-            <Search className="w-3.5 h-3.5 text-neutral-600" />
-            <span className="hidden md:inline font-medium">Quick search curriculum...</span>
-            <kbd className="hidden md:inline-block px-1.5 py-0.5 text-[10px] font-mono bg-neutral-100 border border-neutral-300 rounded text-neutral-600 font-semibold">
-              Ctrl+K
-            </kbd>
+            <RotateCcw className="w-4 h-4" />
           </button>
 
-          {/* Theme Mode Toggle */}
-          <ThemeToggle />
-
-          {/* MongoDB Cloud Sync Button */}
-          <CloudSyncButton compact={true} />
-
-          {/* Notifications Placeholder */}
-          <div className="relative">
-            <button
-              type="button"
-              onClick={() => setNotificationsOpen(!notificationsOpen)}
-              className="relative p-2 rounded-xl text-neutral-700 hover:text-black hover:bg-neutral-100 transition-colors focus-visible:ring-2 focus-visible:ring-green-600 cursor-pointer"
-              aria-label="Notifications"
-            >
-              <Bell className="w-4 h-4" />
-              <span className="absolute top-1 right-1 w-2 h-2 bg-green-600 rounded-full ring-2 ring-white" />
-            </button>
-
-            {notificationsOpen && (
-              <div
-                className="absolute right-0 mt-2 w-80 bg-white border border-neutral-200 rounded-2xl shadow-xl p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-black"
-                onMouseLeave={() => setNotificationsOpen(false)}
-              >
-                <div className="flex items-center justify-between pb-2 border-b border-neutral-200 mb-3">
-                  <h4 className="text-xs font-bold text-black uppercase tracking-wider">
-                    Notifications
-                  </h4>
-                  <Badge variant="high" size="sm">New</Badge>
-                </div>
-                <div className="space-y-2 text-xs">
-                  <div className="p-2.5 rounded-xl bg-green-50 border border-green-200">
-                    <p className="font-bold text-green-900">Welcome to MedPulse</p>
-                    <p className="text-neutral-700 text-[11px] mt-0.5">
-                      Explore all 4 foundational tracks with chapter-scoped AI tutoring.
-                    </p>
-                  </div>
-                  <div className="p-2.5 rounded-xl bg-neutral-50 border border-neutral-200">
-                    <p className="font-semibold text-black">Formative Assessments Ready</p>
-                    <p className="text-neutral-600 text-[11px] mt-0.5">
-                      Practice INC question bank with bedside rationales.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* User Profile Menu */}
+          {/* User Profile Avatar Circle (Matching Images 1, 2, 3, 5) */}
           {currentUser ? (
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 p-1.5 sm:px-2.5 rounded-full border border-neutral-300 bg-white hover:border-green-600 transition-colors cursor-pointer focus-visible:ring-2 focus-visible:ring-green-600 shadow-xs"
-                aria-label="User navigation menu"
+                className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#123B50] to-[#159A91] text-white flex items-center justify-center text-xs font-black shadow-md cursor-pointer hover:scale-105 transition-transform ring-2 ring-[#E9F5F3]"
+                aria-label="User account"
+                title="Account menu"
               >
-                <Avatar name={nickname} size="sm" />
-                <div className="hidden sm:flex flex-col text-left leading-none">
-                  <span className="text-xs font-bold text-black">
-                    {nickname}
-                  </span>
-                  <span className="text-[9px] uppercase tracking-wider font-extrabold text-green-700 mt-0.5">
-                    {role}
-                  </span>
-                </div>
-                <ChevronDown className="w-3.5 h-3.5 text-neutral-500 hidden sm:block" />
+                {initials}
               </button>
 
+              {/* Exact Popover Dropdown matching Reference Image 5 */}
               {userMenuOpen && (
                 <div
-                  className="absolute right-0 mt-2 w-56 bg-white border border-neutral-200 rounded-2xl shadow-xl py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-black"
+                  className="absolute right-0 mt-2 w-64 bg-white border border-neutral-200/90 rounded-3xl shadow-2xl py-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150 text-neutral-900"
                   onMouseLeave={() => setUserMenuOpen(false)}
                 >
-                  <div className="px-4 py-2.5 border-b border-neutral-200">
-                    <p className="text-xs font-bold text-black truncate">
-                      {fullName}
-                    </p>
-                    <p className="text-[11px] text-neutral-600 truncate">
-                      {currentUser.email}
-                    </p>
-                    <div className="mt-1.5 flex items-center gap-1.5">
-                      <Badge variant="medium" size="sm">{role}</Badge>
-                      {role === 'student' && (
-                        <span className="text-[10px] font-bold text-green-700 bg-green-50 px-2 py-0.5 rounded-full border border-green-200">
-                          B.Sc Nursing • Year 1
+                  {/* Popover Header Card with JT Circle & Email */}
+                  <div className="px-4 py-2.5 border-b border-neutral-100 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#123B50] to-[#159A91] text-white flex items-center justify-center text-xs font-black shrink-0 shadow-inner">
+                      {initials}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-black text-[#123B50] truncate">
+                        {fullName}
+                      </p>
+                      <p className="text-[11px] text-neutral-500 truncate">
+                        {currentUser.email}
+                      </p>
+                      <div className="mt-1 flex items-center gap-1.5">
+                        <span className="text-[9px] font-extrabold uppercase px-2 py-0.5 rounded-full bg-[#E9F5F3] text-[#123B50] border border-[#159A91]/30">
+                          {role === 'admin' ? 'Super-Admin' : role}
                         </span>
-                      )}
+                      </div>
                     </div>
                   </div>
 
-                  <div className="py-1">
+                  {/* Links matching Reference Image 5 */}
+                  <div className="py-2 space-y-0.5">
                     <Link
-                      to="/"
+                      to="/dashboard"
                       onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-800 hover:bg-neutral-100"
+                      className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-[#123B50] hover:bg-[#E9F5F3] transition-colors"
                     >
-                      <Home className="w-3.5 h-3.5 text-neutral-500" />
-                      <span>Home Hub</span>
+                      <BookOpen className="w-4 h-4 text-[#159A91]" />
+                      <span>Course Dashboard</span>
                     </Link>
-                    <Link
-                      to="/syllabus"
-                      onClick={() => setUserMenuOpen(false)}
-                      className="flex items-center gap-2.5 px-4 py-2 text-xs text-neutral-800 hover:bg-neutral-100"
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        window.dispatchEvent(new CustomEvent('open-nova-tutor'));
+                        const aiBtn = document.querySelector('[aria-label="Ask Nova AI Clinical Tutor"]');
+                        if (aiBtn) aiBtn.click();
+                      }}
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-[#123B50] hover:bg-[#E9F5F3] transition-colors text-left cursor-pointer"
                     >
-                      <BookOpen className="w-3.5 h-3.5 text-neutral-500" />
-                      <span>Curriculum Tracks</span>
-                    </Link>
-                  </div>
+                      <Sparkles className="w-4 h-4 text-[#159A91]" />
+                      <span>Nova Clinical Tutor</span>
+                    </button>
 
-                  <div className="p-2 border-t border-neutral-100 bg-neutral-50/60">
-                    <CloudSyncButton compact={false} className="border-0 bg-transparent p-0" />
-                  </div>
+                    {/* Admin Console (for Admin) */}
+                    {role === 'admin' && (
+                      <Link
+                        to="/admin/dashboard"
+                        onClick={() => setUserMenuOpen(false)}
+                        className="flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-[#123B50] hover:bg-[#E9F5F3] transition-colors"
+                      >
+                        <Shield className="w-4 h-4 text-[#159A91]" />
+                        <span>Admin Console</span>
+                      </Link>
+                    )}
 
-                  <div className="pt-1 border-t border-neutral-200">
+                    <div className="my-1 border-t border-neutral-100" />
+
+                    {/* Help & Documentation */}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setUserMenuOpen(false);
+                        setHelpOpen(true);
+                      }}
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-semibold text-neutral-700 hover:bg-neutral-100 transition-colors text-left cursor-pointer"
+                    >
+                      <HelpCircle className="w-4 h-4 text-neutral-500" />
+                      <span>Help & Documentation</span>
+                    </button>
+
+                    <div className="my-1 border-t border-neutral-100" />
+
+                    {/* Sign Out in red */}
                     <button
                       type="button"
                       onClick={handleLogout}
-                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-black hover:bg-neutral-100 transition-colors cursor-pointer"
+                      className="w-full flex items-center gap-2.5 px-4 py-2 text-xs font-bold text-rose-600 hover:bg-rose-50 transition-colors cursor-pointer text-left"
                     >
-                      <LogOut className="w-3.5 h-3.5 text-neutral-600" />
+                      <LogOut className="w-4 h-4 text-rose-600" />
                       <span>Sign Out</span>
                     </button>
                   </div>
@@ -295,7 +316,7 @@ export const AppShell = ({ children }) => {
           ) : (
             <Link
               to="/login"
-              className="px-4 py-1.5 text-xs font-bold text-white bg-green-600 hover:bg-green-700 rounded-xl shadow-xs transition-colors"
+              className="px-4 py-1.5 text-xs font-bold text-white bg-[#123B50] hover:bg-[#159A91] rounded-xl shadow-xs transition-colors"
             >
               Sign In
             </Link>
@@ -303,122 +324,22 @@ export const AppShell = ({ children }) => {
         </div>
       </header>
 
-      {/* Main Shell Layout (Sidebar + Content) */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Floating Quick Menu Access Tab when collapsed */}
-        {collapsed && (
-          <button
-            type="button"
-            onClick={() => setCollapsed(false)}
-            className="hidden lg:flex fixed left-0 top-20 z-30 items-center gap-1.5 px-3 py-1.5 bg-white text-black hover:border-green-600 rounded-r-xl shadow-md text-xs font-bold transition-all hover:translate-x-0.5 cursor-pointer border border-neutral-300 border-l-0"
-            title="Open Navigation Menu"
-            aria-label="Toggle sidebar"
-          >
-            <ChevronRight className="w-3.5 h-3.5 text-green-700" />
-            <span className="text-[11px] uppercase tracking-wider font-extrabold text-green-700">Menu</span>
-          </button>
-        )}
-
-        {/* Desktop Sidebar: Pure White Background with Black Text */}
-        <aside
-          className={`hidden lg:flex flex-col bg-white text-black border-r border-neutral-200 transition-all duration-300 shrink-0 select-none ${
-            collapsed
-              ? 'w-0 opacity-0 overflow-hidden border-none pointer-events-none'
-              : 'w-64 opacity-100'
-          }`}
-        >
-          <div className="p-3.5 flex-1 flex flex-col space-y-6 overflow-y-auto">
-            {/* Primary Nav Links */}
-            <div className="space-y-1">
-              {!collapsed && (
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-500 px-3">
-                  Main Navigation
-                </span>
-              )}
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.to}
-                  to={item.to}
-                  end={item.to === '/'}
-                  className={({ isActive }) =>
-                    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-all ${
-                      isActive
-                        ? 'border-l-4 border-green-600 bg-green-50 text-green-800 font-extrabold pl-2.5'
-                        : 'text-neutral-700 hover:text-black hover:bg-neutral-100 border-l-4 border-transparent'
-                    } ${collapsed ? 'justify-center' : ''}`
-                  }
-                  title={collapsed ? item.label : undefined}
-                >
-                  {item.icon}
-                  {!collapsed && <span className="truncate">{item.label}</span>}
-                </NavLink>
-              ))}
-            </div>
-
-            {/* Single style monochrome line icons for curriculum tracks */}
-            {!collapsed && (
-              <div className="space-y-1.5 pt-3 border-t border-neutral-200">
-                <span className="text-[10px] font-extrabold uppercase tracking-wider text-neutral-500 px-3">
-                  Curriculum Tracks
-                </span>
-                {curriculumTracks.map((track) => (
-                  <Link
-                    key={track.to}
-                    to={track.to}
-                    className="flex items-center justify-between px-3 py-2 text-xs font-medium text-neutral-700 hover:text-black hover:bg-neutral-100 rounded-xl transition-colors"
-                  >
-                    <span className="flex items-center gap-2.5">
-                      {track.icon}
-                      <span className="truncate">{track.label}</span>
-                    </span>
-                    <span className="text-[10px] text-neutral-500 font-semibold">{track.units}</span>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar Footer info */}
-          <div className="p-4 border-t border-neutral-200 text-[11px] text-neutral-500">
-            {!collapsed ? (
-              <div className="flex flex-col gap-1.5">
-                <div className="flex items-center justify-between">
-                  <span>INC CBME v2026</span>
-                  <span className="w-2 h-2 rounded-full bg-green-600" title="System Operational" />
-                </div>
-                <div className="text-[10px] text-neutral-500 font-medium flex items-center justify-between pt-1 border-t border-neutral-100">
-                  <span>Developed by</span>
-                  <span className="font-bold text-black bg-neutral-100 px-2 py-0.5 rounded-md border border-neutral-200">
-                    Jay
-                  </span>
-                </div>
-              </div>
-            ) : (
-              <div className="flex flex-col items-center gap-1">
-                <span className="w-2 h-2 rounded-full bg-green-600" title="Online" />
-                <span className="text-[8px] font-bold text-neutral-400">JAY</span>
-              </div>
-            )}
-          </div>
-        </aside>
-
-        {/* Content Outlet Container */}
-        <div className="flex-1 flex flex-col overflow-y-auto bg-white text-black min-h-screen">
-          <main className="flex-1 pb-16 lg:pb-8">
-            {children}
-          </main>
-          <footer className="mt-auto border-t border-neutral-200 py-3.5 px-6 text-xs text-neutral-500 bg-neutral-50/80 mb-14 lg:mb-0">
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto">
-              <span>MedPulse &copy; {new Date().getFullYear()} &bull; Foundational Medical Sciences & Clinical Nursing LMS</span>
-              <span className="font-medium text-neutral-600 flex items-center gap-1.5">
-                <span>Developed by</span>
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200 shadow-xs">
-                  Jay
-                </span>
+      {/* Main Content Area (Full-Width Clean Layout matching reference) */}
+      <div className="flex-1 flex flex-col overflow-y-auto bg-white text-black min-h-screen">
+        <main className="flex-1 pb-16 lg:pb-8 w-full">
+          {children}
+        </main>
+        <footer className="mt-auto border-t border-neutral-200 py-3.5 px-6 text-xs text-neutral-500 bg-neutral-50/80 mb-14 lg:mb-0">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-2 max-w-7xl mx-auto">
+            <span>MedPulse &copy; {new Date().getFullYear()} &bull; Foundational Medical Sciences &amp; Clinical Nursing LMS</span>
+            <span className="font-medium text-neutral-600 flex items-center gap-1.5">
+              <span>Developed by</span>
+              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-[#E9F5F3] text-[#123B50] border border-[#159A91]/30 shadow-2xs">
+                Jay
               </span>
-            </div>
-          </footer>
-        </div>
+            </span>
+          </div>
+        </footer>
       </div>
 
       {/* Mobile Drawer Navigation (When hamburger tapped) */}
@@ -447,10 +368,9 @@ export const AppShell = ({ children }) => {
                   to={item.to}
                   onClick={() => setMobileMenuOpen(false)}
                   className={({ isActive }) =>
-                    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${
-                      isActive
-                        ? 'border-l-4 border-green-600 bg-green-50 text-green-800 font-extrabold pl-2.5'
-                        : 'text-neutral-700 hover:bg-neutral-100'
+                    `flex items-center gap-3 px-3 py-2.5 rounded-xl text-xs font-semibold transition-colors ${isActive
+                      ? 'border-l-4 border-[#159A91] bg-[#E9F5F3] text-[#123B50] font-extrabold pl-2.5'
+                      : 'text-neutral-700 hover:bg-[#E9F5F3]/50'
                     }`
                   }
                 >
@@ -504,8 +424,7 @@ export const AppShell = ({ children }) => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-green-700' : 'text-neutral-600'
+            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${isActive ? 'text-[#159A91]' : 'text-neutral-600'
             }`
           }
         >
@@ -516,8 +435,7 @@ export const AppShell = ({ children }) => {
         <NavLink
           to="/syllabus"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-green-700' : 'text-neutral-600'
+            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${isActive ? 'text-[#159A91]' : 'text-neutral-600'
             }`
           }
         >
@@ -528,8 +446,7 @@ export const AppShell = ({ children }) => {
         <NavLink
           to="/question-bank"
           className={({ isActive }) =>
-            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-              isActive ? 'text-green-700' : 'text-neutral-600'
+            `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${isActive ? 'text-[#159A91]' : 'text-neutral-600'
             }`
           }
         >
@@ -541,8 +458,7 @@ export const AppShell = ({ children }) => {
           <NavLink
             to="/student/quiz/comprehensive"
             className={({ isActive }) =>
-              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-green-700' : 'text-neutral-600'
+              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${isActive ? 'text-[#159A91]' : 'text-neutral-600'
               }`
             }
           >
@@ -555,8 +471,7 @@ export const AppShell = ({ children }) => {
           <NavLink
             to="/faculty/dashboard"
             className={({ isActive }) =>
-              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-green-700' : 'text-neutral-600'
+              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${isActive ? 'text-[#159A91]' : 'text-neutral-600'
               }`
             }
           >
@@ -569,8 +484,7 @@ export const AppShell = ({ children }) => {
           <NavLink
             to="/admin/dashboard"
             className={({ isActive }) =>
-              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${
-                isActive ? 'text-green-700' : 'text-neutral-600'
+              `flex flex-col items-center gap-0.5 px-3 py-1 rounded-xl text-[10px] font-bold ${isActive ? 'text-[#159A91]' : 'text-neutral-600'
               }`
             }
           >
@@ -625,7 +539,7 @@ export const AppShell = ({ children }) => {
                     {track.icon}
                     <span>{track.label}</span>
                   </span>
-                  <span className="text-[10px] text-green-700 font-semibold">{track.units}</span>
+                  <span className="text-[10px] text-[#123B50] font-bold">{track.units}</span>
                 </Link>
               ))}
 
@@ -639,6 +553,97 @@ export const AppShell = ({ children }) => {
                   <span>University Question Bank (All Modules)</span>
                 </Link>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Institutional Help & Support Modal */}
+      {helpOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-neutral-200 space-y-4 text-left">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <HelpCircle className="w-5 h-5 text-[#159A91]" />
+                <h3 className="font-black text-sm text-[#123B50]">MedPulse Help & Support</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setHelpOpen(false)}
+                className="p-1 rounded-lg hover:bg-neutral-100 text-neutral-500 cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+            <p className="text-xs text-neutral-600 leading-relaxed">
+              Welcome to the MedPulse Clinical Nursing LMS. If you need assistance with curriculum access,
+              assessment gating, or institutional account credentials:
+            </p>
+            <div className="space-y-2 text-xs text-[#263746]">
+              <div className="p-3 bg-[#E9F5F3] rounded-2xl border border-[#159A91]/25">
+                <div className="font-extrabold text-[#123B50]">Academic Administration</div>
+                <div className="text-[11px] text-neutral-600 mt-0.5">Dept. of Nursing Sciences &bull; admin@nursing.edu</div>
+              </div>
+              <div className="p-3 bg-neutral-50 rounded-2xl border border-neutral-200">
+                <div className="font-extrabold text-[#123B50]">INC Assessment Benchmark</div>
+                <div className="text-[11px] text-neutral-600 mt-0.5">Passing score is strictly &ge; 75% for unit clearance and Grand Final unlocking.</div>
+              </div>
+              <div className="p-3 bg-neutral-50 rounded-2xl border border-neutral-200">
+                <div className="font-extrabold text-[#123B50]">Nova AI Clinical Tutor</div>
+                <div className="text-[11px] text-neutral-600 mt-0.5">Tap the floating Nova icon on any learning page for instant chapter-scoped clinical rationale.</div>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => setHelpOpen(false)}
+              className="w-full py-2.5 rounded-xl bg-[#123B50] text-white text-xs font-bold hover:bg-[#159A91] transition-colors cursor-pointer"
+            >
+              Close Help
+            </button>
+          </div>
+        </div>
+      )}
+      {/* Reset Learning Progress Modal (Exact Match to User Reference Image 4) */}
+      {resetModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+          <div className="bg-white rounded-3xl max-w-sm w-full p-6 sm:p-7 shadow-2xl border border-neutral-200 text-left space-y-4 animate-in zoom-in-95 duration-150">
+            {/* Red Tinted Circular Icon */}
+            <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center border border-rose-100 shadow-2xs">
+              <RotateCcw className="w-6 h-6 text-rose-600" />
+            </div>
+
+            <div>
+              <h3 className="text-base sm:text-lg font-black text-neutral-900 tracking-tight">
+                Reset Learning Progress?
+              </h3>
+              <p className="text-xs text-neutral-500 mt-1.5 leading-relaxed">
+                This will reset your completed syllabus topics and quiz scores back to 0%.
+                This action cannot be undone.
+              </p>
+            </div>
+
+            <div className="pt-2 flex items-center justify-end gap-2.5">
+              <button
+                type="button"
+                onClick={() => setResetModalOpen(false)}
+                className="px-4 py-2 rounded-xl text-xs font-bold text-neutral-700 hover:bg-neutral-100 transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={async () => {
+                  try {
+                    await resetAllStudentProgress();
+                  } catch (e) {
+                    console.warn(e);
+                  }
+                  setResetModalOpen(false);
+                  window.location.reload();
+                }}
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-rose-600 hover:bg-rose-700 text-white shadow-md shadow-rose-600/20 transition-all cursor-pointer"
+              >
+                Yes, Reset Progress
+              </button>
             </div>
           </div>
         </div>

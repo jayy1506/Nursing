@@ -1,0 +1,172 @@
+{
+  "id": "lungs",
+  "name": "Lungs",
+  "latinName": "Pulmones",
+  "system": "Respiratory System",
+  "tagline": "The vital breath of life",
+  "description": "Paired spongy organs executing rapid alveolar gas exchange, oxygenating blood and expelling metabolic carbon dioxide.",
+  "specimenImage": "/images/explorer/lungs_specimen.jpg",
+  "thumbnail": "/images/explorer/lungs_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "Spanning the thoracic cavity"
+    },
+    {
+      "label": "Weight",
+      "value": "~1.1\u20131.2 kg combined"
+    },
+    {
+      "label": "Daily",
+      "value": "Breathes ~20,000 times, processing 10,000 L of air"
+    },
+    {
+      "label": "Location",
+      "value": "Pleural cavities within the ribcage"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Pulmonary & bronchial arteries"
+    },
+    {
+      "label": "Function",
+      "value": "Gas exchange & acid-base pH regulation"
+    }
+  ],
+  "medicalImportance": "Surfactant prevents alveolar collapse; ventilation-perfusion mismatch leads to hypoxia.",
+  "didYouKnow": "The total alveolar surface area exceeds 70 square meters \u2014 equivalent to a tennis court.",
+  "conditions": [
+    "Pneumonia",
+    "COPD",
+    "Asthma",
+    "Pneumothorax",
+    "Pulmonary embolism",
+    "Pulmonary edema",
+    "Pleural effusion",
+    "ARDS"
+  ],
+  "microscopicView": {
+    "title": "Alveolar capillary unit",
+    "subtitle": "Type I and Type II pneumocytes",
+    "image": "/images/explorer/lungs_microscopic.jpg",
+    "description": "Ultra-thin alveolar-capillary membrane allowing rapid passive gas diffusion."
+  },
+  "compareWith": "heart",
+  "compareData": {
+    "subtitle": "Lungs vs. heart",
+    "image": "/images/explorer/lungs_compare.jpg",
+    "description": "Pulmonary capillary oxygenation paired with cardiac pressure pump."
+  },
+  "animation": {
+    "title": "Ventilation and gas diffusion",
+    "subtitle": "Diaphragmatic excursion and alveolar partial pressure gradient",
+    "poster": "/images/explorer/lungs_animation.jpg"
+  },
+  "systemView": {
+    "title": "Respiratory System",
+    "subtitle": "Tracheobronchial arbor and pleural spaces",
+    "image": "/images/explorer/lungs_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "right-lung",
+      "name": "Right Lung",
+      "latinName": "Pulmo dexter",
+      "color": "red",
+      "position": [
+        -0.25,
+        0.05,
+        0.3
+      ],
+      "description": "The larger, heavier, but slightly shorter lung (due to elevation of the right hemidiaphragm by the liver). Divided into three lobes (Superior, Middle, Inferior) by the Horizontal and Oblique fissures.",
+      "function": "Facilitates alveolar gas exchange, oxygenating mixed venous pulmonary arterial blood and clearing metabolic carbon dioxide; contributes ~55% of total pulmonary ventilatory capacity.",
+      "connections": [
+        "Horizontal fissure divides Superior and Middle lobes; Oblique fissure divides Inferior lobe",
+        "Hilum transmits eparterial and hyparterial bronchi, two pulmonary veins, pulmonary artery, bronchial vessels",
+        "Mediastinal surface bears impressions for Heart, Superior Vena Cava, Azygos vein, and Esophagus",
+        "Diaphragmatic base rests concave upon the right muscular cupola of diaphragm"
+      ],
+      "clinicalNote": "Foreign body aspiration (peanuts, dental crowns) preferentially lodges in the Right Main Bronchus and right lower lobe because it is wider, shorter (2.5 cm), and courses more vertically (25\u00b0 angle) than the left.",
+      "keyFeatures": [
+        "Possesses 10 distinct bronchopulmonary segments",
+        "Accounts for ~55% of total ventilatory and oxygenation capacity",
+        "Middle lobe syndrome: recurrent atelectasis due to extrinsic lymph node compression",
+        "Auscultated across anterior 4th intercostal space (middle lobe) and posterior lower chest"
+      ],
+      "histology": "Branching respiratory bronchioles, alveolar ducts, and 300 million alveoli lined with Type I pneumocytes (thin gas exchange) and Type II pneumocytes (secreting dipalmitoylphosphatidylcholine surfactant)."
+    },
+    {
+      "id": "left-lung",
+      "name": "Left Lung",
+      "latinName": "Pulmo sinister",
+      "color": "blue",
+      "position": [
+        0.25,
+        0.05,
+        0.3
+      ],
+      "description": "The narrower, longer lung divided by a single deep Oblique Fissure into two lobes (Superior and Inferior). Features the prominent anterior Cardiac Notch and a tongue-shaped inferior projection called the Lingula.",
+      "function": "Collaborates in bidirectional gas exchange; the Lingula functions as the anatomical homologue to the right middle lobe, aerating the anteromedial lower thorax.",
+      "connections": [
+        "Single Oblique Fissure descends obliquely from T3 vertebra to 6th costochondral junction",
+        "Anterior margin deeply indented by Cardiac Impression accommodating the left ventricle",
+        "Hilum features pulmonary artery positioned highest (above hyparterial main bronchus)",
+        "Mediastinal surface grooved by the Aortic Arch and Descending Thoracic Aorta"
+      ],
+      "clinicalNote": "Tension pneumothorax on the left collapses the lung, shears mediastinal vessels, shifts trachea to the contralateral right, compresses IVC return, and precipitates rapid obstructive shock requiring immediate needle thoracostomy.",
+      "keyFeatures": [
+        "Possesses 8 to 9 bronchopulmonary segments",
+        "Cardiac notch accommodates the apical displacement of the human heart",
+        "Lingula of left upper lobe is susceptible to bronchiectasis and atypical mycobacterial infection",
+        "Dual blood supply: Pulmonary circulation (gas exchange) and Bronchial arteries (airway nourishment)"
+      ],
+      "histology": "Extensive alveolar capillary network with ultra-thin blood-air barrier (<0.5 \u00b5m) comprising capillary endothelium, fused basal lamina, and Type I alveolar epithelial cytoplasm."
+    },
+    {
+      "id": "trachea-carina",
+      "name": "Trachea & Carina",
+      "latinName": "Trachea et Carina tracheae",
+      "color": "green",
+      "position": [
+        0.0,
+        0.45,
+        0.2
+      ],
+      "description": "A flexible, dynamic cartilaginous conduit (10-12 cm long, 2-2.5 cm diameter) extending from the cricoid cartilage (C6) down to T4/T5 where it divides at the Carina into primary bronchi.",
+      "function": "Conducts warm, humidified, filtered inspired air down into the lungs; the carina possesses extremely sensitive cough mechanoreceptors that trigger explosive expulsive clearing reflexes.",
+      "connections": [
+        "Supported by 16-20 C-shaped hyaline cartilage rings open posteriorly",
+        "Posterior gap bridged by the smooth Trachealis muscle abutting the anterior esophagus",
+        "Divides at the Carina into Right and Left Principal (Mainstem) Bronchi",
+        "Descends through superior mediastinum accompanied by recurrent laryngeal nerves"
+      ],
+      "clinicalNote": "Tracheal deviation is a hallmark diagnostic sign of tension pneumothorax (deviates away) or large-scale unilateral lung atelectasis (deviates toward affected side). Tracheostomy is performed between the 2nd and 3rd tracheal rings.",
+      "keyFeatures": [
+        "Cartilaginous C-rings prevent luminal collapse during negative inspiratory pleural pressure",
+        "Carina mucosa is the most sensitive tactile zone for triggering cough reflex (CN X)",
+        "Posterior trachealis muscle relaxes during swallowing to allow esophageal food bolus passage",
+        "Lined by the mucociliary escalator sweeping inhaled particulate matter upward at 1 cm/min"
+      ],
+      "histology": "Pseudostratified ciliated columnar respiratory epithelium with abundant goblet cells and submucosal seromucous glands overlying perichondrium and hyaline cartilage."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "luq1",
+      "type": "mcq",
+      "prompt": "Which cells secrete pulmonary surfactant to reduce alveolar surface tension?",
+      "options": [
+        "Type II Alveolar Cells (Pneumocytes)",
+        "Type I Alveolar Cells",
+        "Alveolar Macrophages",
+        "Goblet Cells"
+      ],
+      "correctAnswer": "Type II Alveolar Cells (Pneumocytes)",
+      "rationale": "Type II pneumocytes produce surfactant, preventing end-expiratory alveolar collapse."
+    }
+  ]
+}

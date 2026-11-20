@@ -113,7 +113,7 @@ export const FacultyQuestions = () => {
 
           <button
             onClick={() => setShowQuestionModal(true)}
-            className="inline-flex items-center gap-2 px-4 py-2.5 bg-green-500 hover:bg-green-500 text-white rounded-xl text-xs font-bold shadow-md shadow-green-400/20 transition-all cursor-pointer self-start sm:self-auto"
+            className="inline-flex items-center gap-2 px-4 py-2.5 bg-[#159A91] hover:bg-[#123B50] text-white rounded-xl text-xs font-bold shadow-md shadow-[#159A91]/20 transition-all cursor-pointer self-start sm:self-auto"
           >
             <PlusCircle className="w-4 h-4" />
             <span>Add Question Item</span>
@@ -316,7 +316,7 @@ export const FacultyQuestions = () => {
                   </button>
                   <button
                     type="submit"
-                    className="px-5 py-2 rounded-xl text-xs font-bold bg-green-500 hover:bg-green-500 text-white shadow-md shadow-green-400/20 cursor-pointer"
+                    className="px-5 py-2 rounded-xl text-xs font-bold bg-[#159A91] hover:bg-[#123B50] text-white shadow-md shadow-[#159A91]/20 cursor-pointer transition-colors"
                   >
                     Add Question
                   </button>

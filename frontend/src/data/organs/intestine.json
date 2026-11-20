@@ -1,0 +1,172 @@
+{
+  "id": "intestine",
+  "name": "Intestine",
+  "latinName": "Intestinum",
+  "system": "Digestive System",
+  "tagline": "The inner garden",
+  "description": "A folded digestive passage where nutrients are absorbed and the microbiome supports whole-body health.",
+  "specimenImage": "/images/explorer/intestine_specimen.jpg",
+  "thumbnail": "/images/explorer/intestine_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "About 6\u20137 m when extended"
+    },
+    {
+      "label": "Weight",
+      "value": "Varies with contents"
+    },
+    {
+      "label": "Daily",
+      "value": "Hosts trillions of microorganisms"
+    },
+    {
+      "label": "Location",
+      "value": "Central and lower abdomen"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Superior and inferior mesenteric arteries"
+    },
+    {
+      "label": "Function",
+      "value": "Digestion and nutrient absorption"
+    }
+  ],
+  "medicalImportance": "Its surface is amplified by folds, villi, and microvilli.",
+  "didYouKnow": "Its lining renews itself every few days \u2014 the fastest turnover of any tissue in the body.",
+  "conditions": [
+    "Irritable bowel syndrome",
+    "Inflammatory bowel disease",
+    "Celiac disease",
+    "Diverticulitis",
+    "Intestinal obstruction",
+    "Colorectal polyps",
+    "Crohn\u2019s disease",
+    "Lactose intolerance"
+  ],
+  "microscopicView": {
+    "title": "Intestinal villi",
+    "subtitle": "Lacteal core and brush border",
+    "image": "/images/explorer/intestine_microscopic.jpg",
+    "description": "Finger-like projections with microvillar brush border enzymes, goblet cells, and crypts of Lieberk\u00fchn."
+  },
+  "compareWith": "liver",
+  "compareData": {
+    "subtitle": "Intestine vs. liver",
+    "image": "/images/explorer/intestine_compare.jpg",
+    "description": "Luminal absorption pathway delivering nutrients through the mesenteric venules to the liver."
+  },
+  "animation": {
+    "title": "Digestion and nutrient absorption",
+    "subtitle": "Segmental contractions and coordinated migrating motor complexes",
+    "poster": "/images/explorer/intestine_animation.jpg"
+  },
+  "systemView": {
+    "title": "Digestive System",
+    "subtitle": "Duodenum, jejunum, ileum and colon framework",
+    "image": "/images/explorer/intestine_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "duodenum",
+      "name": "Duodenum & C-Loop",
+      "latinName": "Duodenum",
+      "color": "orange",
+      "position": [
+        0.1,
+        0.2,
+        0.25
+      ],
+      "description": "The first and shortest (approx. 25 cm / 10 inches), widest, and most fixed C-shaped segment of the small intestine. Wraps snugly around the head of the pancreas and is divided into four anatomical parts: superior (bulb), descending, horizontal, and ascending.",
+      "function": "Receives acidic chyme from stomach pylorus; neutralizes gastric acid with bicarbonate-rich secretions; receives bile and pancreatic digestive enzymes to execute primary enzymatic hydrolysis of lipids, proteins, and complex carbohydrates.",
+      "connections": [
+        "Begins at Pyloric Sphincter at L1 level (Duodenal Bulb)",
+        "2nd (descending) part receives Common Bile Duct and Main Pancreatic Duct at Major Duodenal Papilla (Ampulla of Vater)",
+        "Guarded by Hepatopancreatic Sphincter of Oddi",
+        "Terminates at Duodenojejunal Flexure anchored by Suspensory Muscle (Ligament of Treitz)"
+      ],
+      "clinicalNote": "Primary site for peptic duodenal ulcers (95% in first part / duodenal bulb, often driven by H. pylori and gastric acid hypersecretion). Ampullary adenocarcinoma blocks biliary outflow, presenting with painless progressive jaundice and dilated palpable gallbladder (Courvoisier sign).",
+      "keyFeatures": [
+        "Length: 25 cm (corresponds to 12 fingerbreadths / 'duodeni')",
+        "Site of Major Duodenal Papilla of Vater delivering pancreatic and biliary juices",
+        "Characterized histologically by branched submucosal Brunner's glands",
+        "Marks transition from foregut to midgut at the Ampulla of Vater"
+      ],
+      "histology": "Simple columnar epithelium with microvilli; hallmark presence of extensive submucosal Brunner glands secreting alkaline mucous (pH 8.1-9.3) to protect mucosal lining."
+    },
+    {
+      "id": "jejunum-ileum",
+      "name": "Jejunum & Ileum",
+      "latinName": "Jejunum et Ileum",
+      "color": "red",
+      "position": [
+        0.0,
+        -0.05,
+        0.35
+      ],
+      "description": "The highly convoluted, mobile, mesentery-suspended distal segments of small intestine measuring 5-6 meters in length (proximal 2/5ths jejunum, distal 3/5ths ileum). Suspended from the posterior abdominal wall by the root of the mesentery.",
+      "function": "Absorbs water, amino acids, monosaccharides, fatty acids, vitamins, and minerals. The terminal ileum uniquely reabsorbs conjugated bile salts via enterohepatic circulation and Vitamin B12 bound to intrinsic factor.",
+      "connections": [
+        "Begins at Duodenojejunal Flexure (Ligament of Treitz)",
+        "Coiled throughout umbilical and hypogastric abdominal regions",
+        "Suspended by Mesentery proper containing Superior Mesenteric Artery / Vein arcades",
+        "Terminates at Ileocecal Junction with the Cecum guarded by the Ileocecal Valve"
+      ],
+      "clinicalNote": "Crohn's disease classically manifests as transmural 'skip lesions' predominantly in the terminal ileum, causing malabsorption, B12 deficiency (pernicious megaloblastic anemia), fistula formation, and intestinal obstruction. Celiac disease causes immune-mediated enteropathy with villous atrophy in the jejunum.",
+      "keyFeatures": [
+        "Total length: 5 to 6 meters; Surface area ~30 m2 (size of a studio apartment)",
+        "Jejunum: thicker wall, taller plicae circulares (valves of Kerckring), longer vasa recta",
+        "Ileum: hallmark aggregate lymphoid nodules (Peyer's patches) and complex arterial arcades",
+        "Terminal ileum failure impairs bile salt recycling and triggers steatorrhea"
+      ],
+      "histology": "Mucosal plicae circulares with intestinal villi and microvilli ('brush border'); ileal lamina propria features aggregated lymphoid follicles (Peyer patches) with M-cells sampling luminal antigens."
+    },
+    {
+      "id": "colon",
+      "name": "Large Intestine & Colon",
+      "latinName": "Intestinum crassum",
+      "color": "blue",
+      "position": [
+        -0.15,
+        -0.2,
+        0.3
+      ],
+      "description": "The terminal 1.5-meter segment of the digestive tract framing the small intestine loop like an inverted U. Comprises the cecum with vermiform appendix, ascending colon, transverse colon, descending colon, sigmoid colon, and rectum.",
+      "function": "Reabsorbs water (approx. 1.2-1.5 L/day) and electrolytes from liquid ileal effluent to form solid feces; hosts trillions of symbiotic gut microbiome bacteria synthesizing Vitamin K and biotin; executes mass peristaltic defecation propulsion.",
+      "connections": [
+        "Begins at Cecum with Ileocecal Valve and Vermiform Appendix in right iliac fossa",
+        "Ascends retroperitoneally to Right Colic (Hepatic) Flexure",
+        "Crosses intraperitoneally via Transverse Mesocolon to Left Colic (Splenic) Flexure",
+        "Descends into S-shaped Sigmoid colon connecting to the Rectum at S3 vertebra"
+      ],
+      "clinicalNote": "Appendicitis (McBurney point tenderness, Rovsing sign) requires emergency intervention before perforation. Diverticulitis typically occurs in the high-pressure sigmoid colon. Colorectal adenocarcinoma develops via the adenoma-carcinoma sequence (screening colonoscopy gold standard).",
+      "keyFeatures": [
+        "Three classic macroscopic hallmarks: Taeniae coli, Haustra sacculations, Appendices epiploicae",
+        "Hosts over 100 trillion gut microbes comprising ~1000 species",
+        "Water extraction converts ~1500 mL liquid chyme into ~150 g formed stool daily",
+        "Dual autonomic innervation: Vagus (to distal transverse) and Pelvic Splanchnic (S2-S4)"
+      ],
+      "histology": "Abundant straight vertical crypts of Lieberk\u00fchn densely packed with mucous-secreting goblet cells; lacks villi; outer longitudinal muscularis condensed into three taeniae coli bands."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "iq1",
+      "type": "mcq",
+      "prompt": "What structures increase the surface area of the small intestine by up to 600-fold?",
+      "options": [
+        "Plicae circulares, villi, and microvilli",
+        "Rugae and gastric pits",
+        "Haustra and appendices epiploicae",
+        "Teniae coli"
+      ],
+      "correctAnswer": "Plicae circulares, villi, and microvilli",
+      "rationale": "Circular folds, mucosal villi, and microvilli expand the absorptive area to over 30 square meters."
+    }
+  ]
+}

@@ -16,42 +16,42 @@ export const Badge = ({
 
   const variantStyles = {
     // Neutral gray
-    neutral: 'bg-neutral-100 text-black border-neutral-300',
+    neutral: 'bg-neutral-100 text-[#263746] border-neutral-300',
     // Success / Primary
-    primary: 'bg-green-50 text-green-900 border-green-300',
-    success: 'bg-green-600 text-white border-transparent font-extrabold',
-    // Active / In-progress: green outline
-    active: 'bg-transparent text-green-700 border-green-600',
+    primary: 'bg-[#E9F5F3] text-[#123B50] border-[#159A91]/30',
+    success: 'bg-[#159A91] text-white border-transparent font-extrabold',
+    // Active / In-progress: teal outline
+    active: 'bg-transparent text-[#159A91] border-[#159A91]',
     // Locked
     locked: 'bg-neutral-100 text-neutral-500 border-neutral-300',
-    // Warning: white filled pill with black text
-    warning: 'bg-neutral-100 text-black border-neutral-300',
-    // Danger / Error: heavy 2px border, no red
-    danger: 'bg-white text-black border-2 border-neutral-800 font-extrabold',
-    error: 'bg-white text-black border-2 border-neutral-800 font-extrabold',
+    // Warning: Amber
+    warning: 'bg-[#F2B66D]/20 text-[#123B50] border-[#F2B66D]/40 font-bold',
+    // Danger / Error
+    danger: 'bg-rose-50 text-rose-700 border border-rose-200 font-extrabold',
+    error: 'bg-rose-50 text-rose-700 border border-rose-200 font-extrabold',
     // High-Yield Priority Chips
-    high: 'bg-green-600 text-white border-transparent font-extrabold',
-    medium: 'bg-transparent text-green-700 border border-green-600 font-bold',
+    high: 'bg-[#159A91] text-white border-transparent font-extrabold',
+    medium: 'bg-transparent text-[#159A91] border border-[#159A91] font-bold',
     low: 'bg-transparent text-neutral-600 border-transparent font-medium',
     // Legacy mapping aliases for safety
-    info: 'bg-neutral-100 text-black border-neutral-300',
-    accent: 'bg-green-50 text-green-900 border-green-400'
+    info: 'bg-[#E9F5F3] text-[#123B50] border-[#159A91]/30',
+    accent: 'bg-[#E9F5F3] text-[#123B50] border-[#159A91]/40'
   };
 
   const dotStyles = {
     neutral: 'bg-neutral-400',
-    primary: 'bg-green-600',
+    primary: 'bg-[#159A91]',
     success: 'bg-white',
-    active: 'bg-green-600 animate-pulse',
+    active: 'bg-[#159A91] animate-pulse',
     locked: 'bg-neutral-400',
-    warning: 'bg-black',
-    danger: 'bg-black',
-    error: 'bg-black',
+    warning: 'bg-[#F2B66D]',
+    danger: 'bg-rose-600',
+    error: 'bg-rose-600',
     high: 'bg-white',
-    medium: 'bg-green-600',
+    medium: 'bg-[#159A91]',
     low: 'bg-neutral-400',
-    info: 'bg-neutral-500',
-    accent: 'bg-green-600'
+    info: 'bg-[#159A91]',
+    accent: 'bg-[#159A91]'
   };
 
   return (

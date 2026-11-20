@@ -1,0 +1,172 @@
+{
+  "id": "eye",
+  "name": "Eye",
+  "latinName": "Oculus",
+  "system": "Sensory System",
+  "tagline": "A window made of light",
+  "description": "A precision sensory organ that converts focused light into neural signals interpreted as vision.",
+  "specimenImage": "/images/explorer/eye_specimen.jpg",
+  "thumbnail": "/images/explorer/eye_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "About 24 mm across"
+    },
+    {
+      "label": "Weight",
+      "value": "Around 7.5 g"
+    },
+    {
+      "label": "Daily",
+      "value": "Makes thousands of tiny movements"
+    },
+    {
+      "label": "Location",
+      "value": "Within the bony orbit"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Ophthalmic artery"
+    },
+    {
+      "label": "Function",
+      "value": "Captures and focuses light"
+    }
+  ],
+  "medicalImportance": "The retina is an extension of the central nervous system.",
+  "didYouKnow": "The cornea carries no blood vessels at all; it takes oxygen directly from the air.",
+  "conditions": [
+    "Myopia",
+    "Cataract",
+    "Glaucoma",
+    "Macular degeneration",
+    "Retinal detachment",
+    "Dry eye disease",
+    "Astigmatism",
+    "Conjunctivitis"
+  ],
+  "microscopicView": {
+    "title": "Retinal layers",
+    "subtitle": "Photoreceptor rods & cones",
+    "image": "/images/explorer/eye_microscopic.jpg",
+    "description": "Ten distinct histological layers of rods, cones, bipolar cells, and ganglion cell axons."
+  },
+  "compareWith": "brain",
+  "compareData": {
+    "subtitle": "Eye vs. brain",
+    "image": "/images/explorer/eye_compare.jpg",
+    "description": "Photoreceptive optical lens vs. occipital visual cortex processing and perception."
+  },
+  "animation": {
+    "title": "Captures and focuses light",
+    "subtitle": "Ciliary accommodation and pupillary light reflex",
+    "poster": "/images/explorer/eye_animation.jpg"
+  },
+  "systemView": {
+    "title": "Sensory System",
+    "subtitle": "Optic chiasm and retro-orbital tracts",
+    "image": "/images/explorer/eye_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "cornea",
+      "name": "Cornea",
+      "latinName": "Cornea",
+      "color": "blue",
+      "position": [
+        0.0,
+        0.0,
+        0.45
+      ],
+      "description": "The crystal-clear, transparent anterior 1/6th of the eyeball fibrous tunic. Possesses a curved dome shape (average diameter 11.5 mm, central thickness 550 \u00b5m) with a powerful refractive power of approximately +43 diopters (accounting for roughly 70% of the eye's total optical focusing capacity).",
+      "function": "Acts as the principal refractive optical interface focusing incoming light rays onto the crystalline lens and retina, while providing a mechanical and immunological barrier protecting internal intraocular structures.",
+      "connections": [
+        "Merges peripherally with opaque white sclera at the Corneoscleral Limbus",
+        "Encloses the anterior boundary of the Anterior Chamber containing aqueous humor",
+        "Covered externally by tear film (lipid, aqueous, and mucin layers)",
+        "Densely innervated by the ophthalmic division of Trigeminal Nerve (CN V1) via long ciliary nerves"
+      ],
+      "clinicalNote": "Avascular tissue receiving oxygen directly from atmospheric air and glucose from aqueous humor; hence ideal for corneal transplantation without systemic immunosuppression. Corneal reflex (blinking upon light touch) tests CN V1 afferent and CN VII efferent pathways.",
+      "keyFeatures": [
+        "Refractive power: ~+43 to +44 Diopters (~70% of ocular refraction)",
+        "Central corneal thickness (CCT): ~540 - 560 \u00b5m",
+        "Highest sensory nerve density in the human body (300-400\u00d7 skin)",
+        "Complete avascularity maintains crystalline optical transparency"
+      ],
+      "histology": "Five distinct architectural layers: (1) Stratified non-keratinized epithelium, (2) Bowman layer, (3) Stroma (parallel orthogonal lamellae of type I collagen), (4) Descemet membrane, (5) Monolayer endothelial pump regulating deturgescence."
+    },
+    {
+      "id": "lens",
+      "name": "Crystalline Lens & Ciliary Body",
+      "latinName": "Lens crystallina",
+      "color": "orange",
+      "position": [
+        0.0,
+        0.0,
+        0.25
+      ],
+      "description": "A transparent, biconvex, flexible intraocular optical structure suspended directly behind the iris and pupil by the zonular fibers of Zinn, positioned anterior to the vitreous humor.",
+      "function": "Provides dynamic variable optical accommodation (+15 to +20 diopters in youth), changing curvature to focus light from near or distant objects precisely onto the fovea centralis; ciliary body epithelia continuously secrete aqueous humor.",
+      "connections": [
+        "Suspended circumferentially from Ciliary Body by Zonular Fibers (Zonules of Zinn)",
+        "Separates Anterior Segment from the Vitreous Chamber (Posterior Segment)",
+        "Anterior surface in variable contact with Iris pupillary margin",
+        "Parasympathetic innervation via CN III (Oculomotor / Edinger-Westphal) to Ciliary Muscle"
+      ],
+      "clinicalNote": "Age-related protein cross-linking and oxidative aggregation cause Cataract (opacification), the leading cause of reversible blindness worldwide. Presbyopia (loss of near accommodation) occurs progressively after age 40 due to lens nucleus hardening and zonular elasticity decline.",
+      "keyFeatures": [
+        "Refractive power: +15 to +20 Diopters (dynamic variable focus)",
+        "Contraction of ciliary muscle relaxes zonules, allowing lens to round up for near vision",
+        "Completely avascular; derives nutrition exclusively from aqueous humor",
+        "High protein concentration (~35-40%), primarily alpha, beta, and gamma crystallins"
+      ],
+      "histology": "Elastic capsule enclosing anterior cuboidal subcapsular epithelium which elongates at the equatorial bow into concentric layers of anucleate lens fibers packed with crystallin proteins."
+    },
+    {
+      "id": "retina",
+      "name": "Retina & Macula",
+      "latinName": "Retina",
+      "color": "red",
+      "position": [
+        0.0,
+        0.0,
+        -0.3
+      ],
+      "description": "The delicate, multi-layered neurosensory tissue lining the posterior 2/3rds of the eyeball interior. Features the yellowish Macula Lutea (5.5 mm diameter) and central Fovea Centralis (1.5 mm), the specialized point of maximum visual acuity.",
+      "function": "Transduces optical photons into electrochemical nerve impulses via rhodopsin and photopsin photopigment bleaching in rods (~120 million, scotopic night vision) and cones (~6 million, photopic color and sharp central vision).",
+      "connections": [
+        "Rests externally against Retinal Pigment Epithelium (RPE) and Choroid vascular bed",
+        "Interior surface borders Vitreous Body with internal limiting membrane",
+        "Axons converge at Optic Disc to form Optic Nerve (CN II)",
+        "Nourished by Central Retinal Artery (inner layers) and Choroidal choriocapillaris (photoreceptors)"
+      ],
+      "clinicalNote": "Diabetic retinopathy (microaneurysms, cotton wool spots, neovascularization) and Age-Related Macular Degeneration (AMD) destroy central vision. Retinal detachment occurs when neurosensory retina separates from RPE, presenting as sudden painless flashers, floaters, and curtain-like visual loss.",
+      "keyFeatures": [
+        "Photoreceptor count: ~120 million rods, ~6 million cones",
+        "Fovea centralis has 1:1 cone to ganglion cell ratio for maximum resolving power",
+        "Optic disc lacks photoreceptors, producing the anatomical 'blind spot'",
+        "Metabolically most active tissue per gram in the human body"
+      ],
+      "histology": "10 organized cellular layers including RPE, photoreceptor inner/outer segments, outer nuclear layer, outer plexiform, inner nuclear, inner plexiform, ganglion cell layer, and nerve fiber layer."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "eq1",
+      "type": "mcq",
+      "prompt": "Why does the human cornea lack blood vessels?",
+      "options": [
+        "To maintain optical transparency for clear vision",
+        "Because it lacks living cells",
+        "Due to high intraocular pressure",
+        "It is shielded by the iris"
+      ],
+      "correctAnswer": "To maintain optical transparency for clear vision",
+      "rationale": "Avascularity prevents light scattering, allowing the cornea to function as a crystal-clear focusing lens."
+    }
+  ]
+}

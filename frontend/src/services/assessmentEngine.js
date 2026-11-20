@@ -556,18 +556,18 @@ export function getStudentGatingStatus(subject = 'physiology') {
         if (!id || id.includes('grand-final') || id.includes('comprehensive')) return;
         if (id.startsWith('phys-unit-') || id.startsWith('phys-')) {
           const m = id.match(/\d+/);
-          if (m && parseInt(m[0]) <= 12) unitNums.add(parseInt(m[0]));
+          if (m && parseInt(m[0]) <= 11) unitNums.add(parseInt(m[0]));
         }
       });
       const count = unitNums.size;
       return {
         subject,
-        totalUnits: 12,
+        totalUnits: 11,
         completedCount: count,
-        completionPercent: Math.min(100, Math.round((count / 12) * 100)),
+        completionPercent: Math.min(100, Math.round((count / 11) * 100)),
         completedUnits: Array.from(unitNums).map(n => `phys-unit-${n}`),
-        isFinalUnlocked: count >= 12,
-        remainingCount: Math.max(0, 12 - count)
+        isFinalUnlocked: count >= 11,
+        remainingCount: Math.max(0, 11 - count)
       };
     } else if (subject === 'anatomy') {
       const unitNums = new Set();
@@ -575,18 +575,18 @@ export function getStudentGatingStatus(subject = 'physiology') {
         if (!id || id.includes('grand-final') || id.includes('comprehensive')) return;
         if (id.startsWith('anatomy-unit-') || id.startsWith('anat-unit-') || id.startsWith('anat-')) {
           const m = id.match(/\d+/);
-          if (m && parseInt(m[0]) <= 12) unitNums.add(parseInt(m[0]));
+          if (m && parseInt(m[0]) <= 10) unitNums.add(parseInt(m[0]));
         }
       });
       const count = unitNums.size;
       return {
         subject,
-        totalUnits: 12,
+        totalUnits: 10,
         completedCount: count,
-        completionPercent: Math.min(100, Math.round((count / 12) * 100)),
+        completionPercent: Math.min(100, Math.round((count / 10) * 100)),
         completedUnits: Array.from(unitNums).map(n => `anatomy-unit-${n}`),
-        isFinalUnlocked: count >= 12,
-        remainingCount: Math.max(0, 12 - count)
+        isFinalUnlocked: count >= 10,
+        remainingCount: Math.max(0, 10 - count)
       };
     } else if (subject === 'biochemistry') {
       const unitNums = new Set();

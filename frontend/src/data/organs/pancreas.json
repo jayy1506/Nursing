@@ -1,0 +1,145 @@
+{
+  "id": "pancreas",
+  "name": "Pancreas",
+  "latinName": "Pancreas",
+  "system": "Endocrine System",
+  "tagline": "The quiet regulator",
+  "description": "A dual-purpose gland that releases digestive enzymes into the gut and the hormones that steady blood sugar.",
+  "specimenImage": "/images/explorer/pancreas_specimen.jpg",
+  "thumbnail": "/images/explorer/pancreas_thumb.jpg",
+  "keyFacts": [
+    {
+      "label": "Size",
+      "value": "About 15 cm long"
+    },
+    {
+      "label": "Weight",
+      "value": "70\u2013100 g"
+    },
+    {
+      "label": "Daily",
+      "value": "Makes about 1.5 L of enzyme-rich juice"
+    },
+    {
+      "label": "Location",
+      "value": "Behind the stomach, across the upper abdomen"
+    },
+    {
+      "label": "Blood supply",
+      "value": "Splenic and pancreaticoduodenal arteries"
+    },
+    {
+      "label": "Function",
+      "value": "Digestive enzymes and insulin"
+    }
+  ],
+  "medicalImportance": "Islets of Langerhans release insulin and glucagon to balance blood sugar.",
+  "didYouKnow": "Barely 2% of it makes hormones; the rest is given over to digestive enzymes.",
+  "conditions": [
+    "Pancreatitis",
+    "Type 1 diabetes",
+    "Type 2 diabetes",
+    "Pancreatic cancer",
+    "Exocrine insufficiency",
+    "Pancreatic cysts",
+    "Gallstone pancreatitis",
+    "Insulinoma"
+  ],
+  "microscopicView": {
+    "title": "Pancreatic acini",
+    "subtitle": "Islets of Langerhans & zymogen granules",
+    "image": "/images/explorer/pancreas_microscopic.jpg",
+    "description": "Exocrine acinar clusters surrounding endocrine islets containing alpha and beta cells."
+  },
+  "compareWith": "liver",
+  "compareData": {
+    "subtitle": "Pancreas vs. liver",
+    "image": "/images/explorer/pancreas_compare.jpg",
+    "description": "Endocrine glucose regulation and enzymatic digestion paired with hepatic metabolism."
+  },
+  "animation": {
+    "title": "Digestive enzymes and insulin",
+    "subtitle": "Exocrine ductal secretion and endocrine beta-cell insulin exocytosis",
+    "poster": "/images/explorer/pancreas_animation.jpg"
+  },
+  "systemView": {
+    "title": "Endocrine System",
+    "subtitle": "C-loop duodenum cradling pancreatic head",
+    "image": "/images/explorer/pancreas_where_works.jpg"
+  },
+  "quote": {
+    "text": "Learning is an act of curiosity.",
+    "highlight": "Keep exploring!"
+  },
+  "parts": [
+    {
+      "id": "pancreas-head",
+      "name": "Head of Pancreas & Uncinate",
+      "latinName": "Caput pancreatis",
+      "color": "orange",
+      "position": [
+        -0.15,
+        -0.05,
+        0.3
+      ],
+      "description": "The expanded, disc-shaped rightmost portion nestled within the concavity of the C-shaped duodenal loop at L2 vertebra, featuring the hook-like Uncinate Process projecting posteroinferiorly behind the superior mesenteric vessels.",
+      "function": "Major exocrine digestive factory producing over 1 liter/day of alkaline pancreatic juice containing trypsinogen, chymotrypsinogen, pancreatic lipase, and amylase for macronutrient breakdown.",
+      "connections": [
+        "Intimately embraced by 1st, 2nd, and 3rd parts of Duodenum",
+        "Traversed posteriorly by the terminal Common Bile Duct as it heads to the Ampulla of Vater",
+        "Uncinate process crossed anteriorly by Superior Mesenteric Artery and Vein",
+        "Empties exocrine juice via Main Duct of Wirsung and Accessory Duct of Santorini"
+      ],
+      "clinicalNote": "Pancreatic head adenocarcinoma (~70% of all pancreatic malignancies) compresses the distal common bile duct early, causing painless obstructive jaundice with pruritus, pale acholic stools, dark tea urine, and palpable gallbladder (Courvoisier sign).",
+      "keyFeatures": [
+        "Nestled in duodenal C-loop; sharing pancreaticoduodenal arterial arcade vascularization",
+        "Uncinate process hook wraps behind the Superior Mesenteric Artery / Vein",
+        "Surgically resected via the Whipple procedure (pancreaticoduodenectomy)",
+        "Acinar cells package digestive pro-enzymes into protective zymogen granules"
+      ],
+      "histology": "Densely packed serous acini with apical zymogen granules surrounding narrow central intercalated ducts lined with centroacinar cells that secrete bicarbonate under Secretin stimulus."
+    },
+    {
+      "id": "pancreas-tail",
+      "name": "Body & Tail of Pancreas",
+      "latinName": "Corpus et Cauda pancreatis",
+      "color": "red",
+      "position": [
+        0.2,
+        0.1,
+        0.25
+      ],
+      "description": "The elongated prism-shaped body crossing horizontally to the left over the aorta and left renal vessels, tapering into the narrow mobile tail which enters the splenorenal ligament to contact the splenic hilum.",
+      "function": "Concentrated endocrine powerhouse containing dense clusters of Islets of Langerhans that directly regulate glucose metabolism via insulin and glucagon secretion.",
+      "connections": [
+        "Posterior surface grooved by the tortuous Splenic Artery and straight Splenic Vein",
+        "Rests anterior to Left Kidney, Left Suprarenal Gland, and Renal Hilum",
+        "Anterior surface covered by peritoneum forming the posterior wall of the lesser sac",
+        "Tail tip terminates within Splenorenal Ligament touching the visceral surface of Spleen"
+      ],
+      "clinicalNote": "During splenectomy, accidental ligation or crushing of the pancreatic tail in the splenic hilum leads to pancreatic fistula or postoperative pseudocyst formation. Acute pancreatitis (gallstones or alcohol) releases activated elastase causing retroperitoneal auto-digestion and Grey Turner / Cullen signs.",
+      "keyFeatures": [
+        "Highest density of endocrine Islets of Langerhans (~1 million islets total in gland)",
+        "Beta cells (~70% of islet mass) secrete Insulin in response to elevated blood glucose",
+        "Alpha cells (~20%) secrete Glucagon; Delta cells (~5%) secrete Somatostatin",
+        "Tail is the only intraperitoneal mobile portion of the otherwise retroperitoneal gland"
+      ],
+      "histology": "Vascularized spherical Islets of Langerhans embedded like cellular islands within exocrine acinar parenchyma, enveloped by fenestrated capillaries allowing rapid hormone release into portal circulation."
+    }
+  ],
+  "quizBank": [
+    {
+      "id": "pq1",
+      "type": "mcq",
+      "prompt": "What proportion of pancreatic parenchyma performs endocrine vs exocrine functions?",
+      "options": [
+        "~1-2% endocrine, ~98% exocrine",
+        "50% endocrine, 50% exocrine",
+        "80% endocrine, 20% exocrine",
+        "10% endocrine, 90% exocrine"
+      ],
+      "correctAnswer": "~1-2% endocrine, ~98% exocrine",
+      "rationale": "Islets of Langerhans occupy only about 1 to 2% of total pancreatic mass; the vast majority produces digestive pancreatic juice."
+    }
+  ]
+}
