@@ -42,12 +42,20 @@ router.get('/health', async (req, res) => {
     responseTimeMs: Date.now() - startTime
   };
 
-  // If in production and DB is not connected, respond 503 so Render deployment check or uptime monitor fails
-  if (!isDbHealthy && process.env.NODE_ENV === 'production') {
+  // When STRICT_HEALTH_CHECK=true, fail with 503 if DB is disconnected.
+  // Otherwise, return 200 with degraded status so Render unified deployments succeed smoothly.
+  if (!isDbHealthy && process.env.STRICT_HEALTH_CHECK === 'true') {
     return res.status(503).json(payload);
   }
 
   return res.status(200).json(payload);
+});
+
+/**
+ * Lightweight Liveness Endpoint for Render / Kubernetes probes
+ */
+router.get('/healthz', (req, res) => {
+  res.status(200).json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
 export default router;

@@ -53,10 +53,11 @@ export const AuthProvider = ({ children }) => {
     try {
       const isLocal = typeof window !== 'undefined' && 
         (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+      const isRender = typeof window !== 'undefined' && window.location.hostname.includes('onrender.com');
       const hasBaseUrl = Boolean((import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || '').trim());
       
       // On static hosting (Vercel) without explicit backend URL, skip to prevent proxy 404/delays
-      if (!isLocal && !hasBaseUrl) {
+      if (!isLocal && !hasBaseUrl && !isRender) {
         return;
       }
 

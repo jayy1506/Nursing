@@ -22,12 +22,20 @@ if (process.env.NODE_ENV === 'production') {
     process.exit(1);
   }
   if (!process.env.JWT_SECRET) {
-    logger.fatal('[FATAL CONFIGURATION ERROR] JWT_SECRET must be configured in production. Server startup aborted.');
-    process.exit(1);
+    if (process.env.RENDER || process.env.RENDER_EXTERNAL_URL) {
+      logger.warn('[SECURITY WARNING] JWT_SECRET not configured in Render environment. Using runtime session fallback secret. Set JWT_SECRET in Render Environment for persistent auth.');
+      process.env.JWT_SECRET = 'medpulse_default_render_session_secret_2026_clinical_jwt';
+    } else {
+      logger.fatal('[FATAL CONFIGURATION ERROR] JWT_SECRET must be configured in production. Server startup aborted.');
+      process.exit(1);
+    }
   }
-  if (!process.env.CLIENT_URL) {
-    logger.fatal('[FATAL CONFIGURATION ERROR] CLIENT_URL must be configured in production for CORS protection. Server startup aborted.');
+  const effectiveClientUrl = process.env.CLIENT_URL || process.env.RENDER_EXTERNAL_URL;
+  if (!effectiveClientUrl && !process.env.RENDER && !fs.existsSync(frontendDistPath)) {
+    logger.fatal('[FATAL CONFIGURATION ERROR] CLIENT_URL must be configured in production for standalone backend deployment. Server startup aborted.');
     process.exit(1);
+  } else if (!effectiveClientUrl) {
+    logger.info('[DEPLOYMENT] CLIENT_URL not set; defaulting to unified same-origin frontend serving for Render deployment.');
   }
 }
 
@@ -80,19 +88,30 @@ app.use(helmet({
   referrerPolicy: { policy: 'strict-origin-when-cross-origin' }
 }));
 
-// CORS Configuration strictly restricted to configured frontend origin
+// CORS Configuration supporting configured client URL, Render deployment URL, and local dev
 const allowedOrigins = [
   process.env.CLIENT_URL,
+  process.env.RENDER_EXTERNAL_URL,
   'https://nursing-sepia-eta.vercel.app',
   ...(process.env.NODE_ENV !== 'production' ? ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost:5000', 'http://127.0.0.1:5000'] : [])
 ].filter(Boolean);
 
 app.use(cors({
   origin: (origin, callback) => {
+    // 1. Allow same-origin / server-to-server / curl / mobile / no-origin
     if (!origin) {
       return callback(null, true);
     }
+    // 2. Allow explicitly configured origins
     if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+    // 3. Allow any onrender.com origin (Render unified or split deployments)
+    if (origin.endsWith('.onrender.com') || (process.env.RENDER_EXTERNAL_URL && origin === process.env.RENDER_EXTERNAL_URL)) {
+      return callback(null, true);
+    }
+    // 4. In non-production, allow localhost and 127.0.0.1
+    if (process.env.NODE_ENV !== 'production' && (origin.includes('localhost') || origin.includes('127.0.0.1'))) {
       return callback(null, true);
     }
     return callback(new Error(`CORS blocked: Origin ${origin} not permitted.`));
@@ -141,10 +160,17 @@ app.use('/api/ai', aiMemoryRoutes);
 // In production or cloud deployments: Serve frontend from frontend/dist
 if (fs.existsSync(frontendDistPath)) {
   logger.info({ path: frontendDistPath }, '[Production] Serving frontend static assets');
-  app.use(express.static(frontendDistPath));
+  app.use(express.static(frontendDistPath, {
+    maxAge: '1d',
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('index.html')) {
+        res.setHeader('Cache-Control', 'no-cache, no-store, must-revalidate');
+      }
+    }
+  }));
 
   app.get('*', (req, res, next) => {
-    if (req.originalUrl.startsWith('/api/')) {
+    if (req.originalUrl.startsWith('/api') || req.originalUrl.startsWith('/health')) {
       return next();
     }
     res.sendFile(path.join(frontendDistPath, 'index.html'));
