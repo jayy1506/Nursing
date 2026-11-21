@@ -19,7 +19,7 @@
     "lucide-react": "^1.47.0",
     "medpulse-workspace": "file:..",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react-dom": "^19.3.1",
     "react-router-dom": "^7.10.1",
     "tailwindcss": "^4.1.17",
     "three": "^0.187.0"
@@ -27,7 +27,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3",
+    "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^5.1.1",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
