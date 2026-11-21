@@ -18,7 +18,7 @@
     "gsap": "^3.14.1",
     "lucide-react": "^1.47.0",
     "medpulse-workspace": "file:..",
-    "react": "^19.2.0",
+    "react": "^19.3.1",
     "react-dom": "^19.2.0",
     "react-router-dom": "^7.10.1",
     "tailwindcss": "^4.1.17",
